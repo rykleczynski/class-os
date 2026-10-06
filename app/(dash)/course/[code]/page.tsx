@@ -64,7 +64,7 @@ export default async function CoursePage({ params }: PageProps<"/course/[code]">
                   <pre className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap rounded-xl bg-muted p-3 text-xs leading-relaxed">{text}</pre>
                 </details>
               ) : (
-                <p className="mt-2 text-sm text-muted-foreground">Transcript is not stored in the local fixtures. Use the Wispr link.</p>
+                <p className="mt-2 text-sm text-muted-foreground">No transcript stored for this recording. Use the Wispr link.</p>
               )}
             </li>
           ))}
@@ -72,9 +72,4 @@ export default async function CoursePage({ params }: PageProps<"/course/[code]">
       </section>
     </div>
   );
-}
-
-export async function generateStaticParams() {
-  const { courses } = await import("@/lib/fixtures/courses");
-  return courses.map((c) => ({ code: c.slug }));
 }

@@ -34,7 +34,7 @@ async function run(label: string, viewport: { width: number; height: number }) {
   // Dashboard
   await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
   await shot("dashboard", true);
-  check(`${label} dashboard has 5 course cards`, (await page.getByTestId("course-card").count()) === 5);
+  check(`${label} dashboard has 4 course cards`, (await page.getByTestId("course-card").count()) === 4);
 
   // Lesson player
   await page.goto(`${BASE}/lesson/econ106f-class3`, { waitUntil: "networkidle" });

@@ -55,14 +55,14 @@ export const courses: Course[] = [
     title: "Environmental Economics",
     category: "Economics",
     instructor: "Rafey",
-    schedule: "Wed 2:00-3:15",
+    schedule: "Mon/Wed 2:00-3:15",
     color: "#16181d",
     tone: "light",
     calendar_event_series_id: null,
     aliases: ["Econ 134", "Econ 134 Environmental"],
     term: "Fall 2026",
     generation_notes:
-      "Graphical. Use supplyDemand blocks with shifts and shaded areas (deadweight loss, externalities, taxes), marginal-damage versus marginal-benefit curves, and charts of costs. Pair every curve with a one-line takeaway. Check whether ECON 134 also meets Mondays.",
+      "Graphical. Use supplyDemand blocks with shifts and shaded areas (deadweight loss, externalities, taxes), marginal-damage versus marginal-benefit curves, and charts of costs. Pair every curve with a one-line takeaway.",
   },
   {
     id: "c-econ106fb",
@@ -79,22 +79,6 @@ export const courses: Course[] = [
     term: "Fall 2026",
     generation_notes:
       "Applied case work. Reuse the ECON 106F toolkit (steppers, sliders with plots, timelines) but organize around the lab case: state the decision, the cash flows, then the answer. Link back to the concept from the lecture.",
-  },
-  {
-    id: "c-span002v",
-    code: "SPAN 002V",
-    slug: "span-002v",
-    title: "Spanish",
-    category: "Language",
-    instructor: null,
-    schedule: "Mon 4:10 (Zoom)",
-    color: "#7c4ddb",
-    tone: "light",
-    calendar_event_series_id: null,
-    aliases: ["Span 002V", "Spanish 002V", "Spanish 2V"],
-    term: "Fall 2026",
-    generation_notes:
-      "No Wispr recordings yet. When they exist: flip cards for vocabulary, sortOrMatch for conjugations, short MCQs. Handle the no-lessons state gracefully.",
   },
 ];
 
