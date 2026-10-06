@@ -64,14 +64,14 @@ async function run(label: string, viewport: { width: number; height: number }) {
   await picker.waitFor();
   await page.waitForTimeout(400);
   const rows = await picker.getByTestId("lesson-row").count();
-  check(`${label} picker lists the course's lessons`, rows === 1, `${rows} rows`);
-  check(`${label} picker shows Not started + Up next`, (await picker.getByText("Not started").count()) === 1 && (await picker.getByText("Up next").count()) === 1);
+  check(`${label} picker lists the course's lessons`, rows === 3, `${rows} rows`);
+  check(`${label} picker shows Not started + Up next`, (await picker.getByText("Not started").count()) === 3 && (await picker.getByText("Up next").count()) === 1);
   check(`${label} picker has View course link`, (await picker.getByRole("link", { name: "View course" }).getAttribute("href")) === "/course/econ-106f");
   await shot("picker-not-started");
   await page.keyboard.press("Escape");
   check(`${label} Escape closes the picker`, await picker.waitFor({ state: "detached" }).then(() => true, () => false));
   await econCard().getByRole("button", { name: /Start/ }).click();
-  await picker.getByRole("link", { name: /^Start / }).click();
+  await picker.getByRole("link", { name: /^Start Value, price/ }).click();
   await page.waitForURL(/\/lesson\/econ106f-class3$/);
   await next();
   await next();
