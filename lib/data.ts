@@ -158,7 +158,7 @@ async function sb_getCourses(): Promise<Course[]> {
   return data.map(toCourse);
 }
 
-async function sb_getLessonRows(): Promise<Array<LessonRecord & { course: Course }>> {
+async function sb_getLessonRows(): Promise<Array<LessonRecord & { course: Course; starts_at: string | null }>> {
   const [courses, lessons, lectures] = await Promise.all([
     sb_getCourses(),
     db().from("lessons").select("*").eq("status", "published").order("created_at", { ascending: false }),
@@ -166,10 +166,11 @@ async function sb_getLessonRows(): Promise<Array<LessonRecord & { course: Course
   ]);
   if (lessons.error) throw new Error(`lessons: ${lessons.error.message}`);
   if (lectures.error) throw new Error(`lectures: ${lectures.error.message}`);
-  const lectureCourse = new Map(lectures.data.map((l) => [l.id, l.course_id]));
+  const lectureById = new Map(lectures.data.map((l) => [l.id, l]));
   return lessons.data.flatMap((r) => {
-    const course = courses.find((c) => c.id === lectureCourse.get(r.lecture_id));
-    return course ? [{ ...toLesson(r, course.id), course }] : [];
+    const lecture = lectureById.get(r.lecture_id);
+    const course = courses.find((c) => c.id === lecture?.course_id);
+    return course ? [{ ...toLesson(r, course.id), course, starts_at: lecture?.starts_at ?? null }] : [];
   });
 }
 
@@ -295,10 +296,9 @@ export async function getLessonTimeline(): Promise<LessonSummary[]> {
     starts = new Map(lectures.map((l) => [l.id, l.starts_at]));
   } else {
     await connection();
-    const [rows, lec] = await Promise.all([sb_getLessonRows(), db().from("lectures").select("id, starts_at")]);
-    if (lec.error) throw new Error(`lectures: ${lec.error.message}`);
+    const rows = await sb_getLessonRows();
     all = rows;
-    starts = new Map(lec.data.map((l) => [l.id, l.starts_at]));
+    starts = new Map(rows.map((l) => [l.lecture_id, l.starts_at]));
   }
   return all
     .map((l) => ({
@@ -313,8 +313,21 @@ export async function getLessonTimeline(): Promise<LessonSummary[]> {
     .sort((a, b) => (Date.parse(a.date) || 0) - (Date.parse(b.date) || 0));
 }
 
-/** Slug of the most recent lesson (lecture starts_at, then created_at). Null when there are none. */
+/**
+ * Slug of the most recent lesson (lecture starts_at, then created_at). Null when
+ * there are none. Used by the sidebar on every page, so in Supabase mode it reads
+ * only slugs and dates, not lesson specs.
+ */
 export async function getLatestLessonSlug(): Promise<string | null> {
-  const t = await getLessonTimeline();
-  return t.at(-1)?.id ?? null;
+  if (!supabaseEnabled) return (await getLessonTimeline()).at(-1)?.id ?? null;
+  await connection();
+  const [lessonRows, lectureRows] = await Promise.all([
+    db().from("lessons").select("slug, lecture_id, created_at").eq("status", "published"),
+    db().from("lectures").select("id, starts_at"),
+  ]);
+  if (lessonRows.error) throw new Error(`lessons: ${lessonRows.error.message}`);
+  if (lectureRows.error) throw new Error(`lectures: ${lectureRows.error.message}`);
+  const starts = new Map(lectureRows.data.map((l) => [l.id, l.starts_at]));
+  const when = (r: (typeof lessonRows.data)[number]) => Date.parse(starts.get(r.lecture_id) || r.created_at) || 0;
+  return lessonRows.data.reduce<(typeof lessonRows.data)[number] | null>((best, r) => (best && when(best) >= when(r) ? best : r), null)?.slug ?? null;
 }
