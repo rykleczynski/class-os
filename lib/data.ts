@@ -125,6 +125,7 @@ const toCourse = (r: CourseRow): Course => ({
   category: r.category,
   instructor: r.instructor,
   schedule: r.schedule,
+  meetings: [], // fixture-only; scripts/pending.ts reads lib/fixtures/courses.ts
   color: r.color,
   tone: r.tone === "dark" ? "dark" : "light",
   calendar_event_series_ids: r.calendar_event_series_ids,

@@ -2,24 +2,80 @@
  * Upserts lesson JSON and transcript text from lib/fixtures into Supabase with the
  * service-role key. Files go from disk straight to Supabase; content is never printed.
  *
- *   npm run sync -- [--dry-run] [--only <slug>]
+ *   npm run sync -- [--dry-run] [--only <slug>] [--content-only]
+ *
+ * Sources: the repo manifest (lib/fixtures) plus the gitignored content/ directory,
+ * where each generated lecture is content/<slug>/{lesson.json,meta.json,transcript.txt?}.
+ * --content-only skips the manifest. Directories starting with "_" are ignored.
  *
  * Requires SUPABASE_SECRET_KEY (server-only; see .env.example).
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { lessonSchema } from "../lib/lesson/schema";
-import { manifest } from "../lib/fixtures/manifest";
+import { z } from "zod";
+import { manifest, type ManifestEntry } from "../lib/fixtures/manifest";
 
 const TERM = "Fall 2026";
 const MIN_TRANSCRIPT_CHARS = 1000;
 const root = join(__dirname, "..", "lib", "fixtures");
+const contentRoot = join(__dirname, "..", "content");
+
+const metaSchema = z.object({
+  slug: z.string().min(1),
+  courseCode: z.string().min(1),
+  sourceId: z.string().min(1),
+  startsAt: z.string().min(1),
+  endsAt: z.string().min(1),
+  wisprShareLink: z.string().nullable(),
+  transcriptFile: z.string().nullable(),
+  summary: z.string().nullable(),
+});
+
+type Entry = ManifestEntry & { lessonPath: string; transcriptPath: string | null };
+
+function manifestEntries(): Entry[] {
+  return manifest.map((e) => ({
+    ...e,
+    lessonPath: join(root, "lessons", `${e.slug}.json`),
+    transcriptPath: e.transcriptFile ? join(root, "transcripts", e.transcriptFile) : null,
+  }));
+}
+
+/** Reads content/<slug>/meta.json for every non-underscore directory. Bad meta is reported and skipped. */
+function contentEntries(): { entries: Entry[]; bad: number } {
+  const entries: Entry[] = [];
+  let bad = 0;
+  if (!existsSync(contentRoot)) return { entries, bad };
+  for (const d of readdirSync(contentRoot, { withFileTypes: true })) {
+    if (!d.isDirectory() || d.name.startsWith("_")) continue;
+    const dir = join(contentRoot, d.name);
+    const metaPath = join(dir, "meta.json");
+    if (!existsSync(metaPath)) continue;
+    try {
+      const meta = metaSchema.parse(JSON.parse(readFileSync(metaPath, "utf8")));
+      if (meta.slug !== d.name) throw new Error("slug does not match directory name");
+      const tf = meta.transcriptFile ?? (existsSync(join(dir, "transcript.txt")) ? "transcript.txt" : null);
+      entries.push({
+        ...meta,
+        transcriptFile: tf,
+        lessonPath: join(dir, "lesson.json"),
+        transcriptPath: tf ? join(dir, tf) : null,
+      });
+    } catch (err) {
+      console.error(`${d.name}: skipped: bad meta.json (${(err as Error).message.split("\n")[0]})`);
+      bad++;
+    }
+  }
+  return { entries, bad };
+}
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
 const onlyIdx = args.indexOf("--only");
 const only = onlyIdx >= 0 ? args[onlyIdx + 1] : undefined;
+const contentOnly = args.includes("--content-only");
 if (onlyIdx >= 0 && !only) {
   console.error("--only needs a slug");
   process.exit(2);
@@ -34,9 +90,8 @@ if (!key) {
 const db = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
 
 /** Returns the transcript text if the file is usable, else a reason string. */
-function readTranscript(file: string | null): { text: string } | { reason: string } {
-  if (!file) return { reason: "no transcript file in manifest" };
-  const p = join(root, "transcripts", file);
+function readTranscript(p: string | null): { text: string } | { reason: string } {
+  if (!p) return { reason: "no transcript file" };
   if (!existsSync(p)) return { reason: "transcript file missing" };
   const text = readFileSync(p, "utf8");
   if (text.length <= MIN_TRANSCRIPT_CHARS) return { reason: `transcript too short (${text.length} chars)` };
@@ -45,16 +100,20 @@ function readTranscript(file: string | null): { text: string } | { reason: strin
 }
 
 async function main() {
-  const entries = manifest.filter((e) => !only || e.slug === only);
+  const content = contentEntries();
+  const bySlug = new Map<string, Entry>();
+  if (!contentOnly) for (const e of manifestEntries()) bySlug.set(e.slug, e);
+  for (const e of content.entries) bySlug.set(e.slug, e); // content/ wins on a slug clash
+  const entries = [...bySlug.values()].filter((e) => !only || e.slug === only);
   if (only && entries.length === 0) {
-    console.error(`no manifest entry for ${only}`);
+    console.error(`no manifest or content entry for ${only}`);
     process.exit(2);
   }
   const courseIds = new Map<string, string>();
-  let failed = 0;
+  let failed = content.bad;
 
   for (const e of entries) {
-    const lessonPath = join(root, "lessons", `${e.slug}.json`);
+    const lessonPath = e.lessonPath;
     if (!existsSync(lessonPath)) {
       console.warn(`${e.slug}: skipped: lesson file missing`);
       failed++;
@@ -75,7 +134,7 @@ async function main() {
       continue;
     }
     const lesson = parsed.data;
-    const t = readTranscript(e.transcriptFile);
+    const t = readTranscript(e.transcriptPath);
     const transcriptNote = "text" in t ? `transcript ${t.text.length} chars` : `transcript kept existing (${t.reason})`;
 
     if (dryRun) {
