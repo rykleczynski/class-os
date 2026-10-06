@@ -2,10 +2,10 @@ import Link from "next/link";
 import { ArrowRight, Layers } from "lucide-react";
 import { CourseCard } from "@/components/CourseCard";
 import { courseStyle } from "@/lib/course-theme";
-import { getAllLessons, getCourses, getFlashcardCount, getLessonsForCourse } from "@/lib/data";
+import { getAllLessons, getCourses, getFlashcardCount, getLatestLessonSlug, getLessonsForCourse } from "@/lib/data";
 
 export default async function Dashboard() {
-  const [courses, all, cards] = await Promise.all([getCourses(), getAllLessons(), getFlashcardCount()]);
+  const [courses, all, cards, latest] = await Promise.all([getCourses(), getAllLessons(), getFlashcardCount(), getLatestLessonSlug()]);
   const perCourse = await Promise.all(courses.map(async (c) => ({ c, lessons: await getLessonsForCourse(c.id) })));
 
   return (
@@ -63,9 +63,11 @@ export default async function Dashboard() {
               {cards} flashcards from your lessons. Weak spots from missed questions will show up here once attempts are saved.
             </p>
           </div>
-          <Link href="/lesson/econ106f-class3?stage=flashcards" className="mt-6 inline-flex min-h-10 w-fit items-center gap-2 rounded-full bg-coral px-4 text-sm font-semibold text-coral-foreground transition-opacity hover:opacity-90">
-            Start review <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
+          {latest && (
+            <Link href={`/lesson/${latest}?stage=flashcards`} className="mt-6 inline-flex min-h-10 w-fit items-center gap-2 rounded-full bg-coral px-4 text-sm font-semibold text-coral-foreground transition-opacity hover:opacity-90">
+              Start review <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          )}
         </aside>
       </div>
     </div>

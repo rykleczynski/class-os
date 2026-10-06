@@ -182,7 +182,7 @@ async function sb_getLessonRows(): Promise<Array<LessonRecord & { course: Course
   const [courses, lessons, lectures] = await Promise.all([
     sb_getCourses(),
     db().from("lessons").select("*").eq("status", "published").order("created_at", { ascending: false }),
-    db().from("lectures").select("id, course_id"),
+    db().from("lectures").select("id, course_id, starts_at"),
   ]);
   if (lessons.error) throw new Error(`lessons: ${lessons.error.message}`);
   if (lectures.error) throw new Error(`lectures: ${lectures.error.message}`);
@@ -266,4 +266,51 @@ export async function getFlashcardCount(): Promise<number> {
   if (!supabaseEnabled) return fixture_getFlashcardCount();
   const all = await getAllLessons();
   return all.reduce((n, l) => n + ((l.spec as Lesson).flashcards?.length ?? 0), 0);
+}
+
+export type Assessment = {
+  id: string;
+  course_id: string;
+  title: string;
+  kind: string;
+  due_at: string | null;
+  weight: number | null;
+};
+
+/**
+ * Assessments due from today on, soonest first. Fixtures mode has no assessments
+ * data, so it returns []. Supabase mode reads the public `assessments` table.
+ */
+export async function getUpcomingAssessments(): Promise<Assessment[]> {
+  if (!supabaseEnabled) return [];
+  await connection();
+  const today = new Date().toISOString().slice(0, 10);
+  const { data, error } = await db()
+    .from("assessments")
+    .select("id, course_id, title, kind, due_at, weight")
+    .gte("due_at", today)
+    .order("due_at");
+  if (error) throw new Error(`assessments: ${error.message}`);
+  return data;
+}
+
+/**
+ * Slug of the most recent lesson, by its lecture's starts_at, falling back to the
+ * lesson's created_at. Null when there are no lessons.
+ */
+export async function getLatestLessonSlug(): Promise<string | null> {
+  let starts: Map<string, string | null>;
+  let all: LessonRecord[];
+  if (!supabaseEnabled) {
+    all = lessons;
+    starts = new Map(lectures.map((l) => [l.id, l.starts_at]));
+  } else {
+    await connection();
+    const [rows, lec] = await Promise.all([sb_getLessonRows(), db().from("lectures").select("id, starts_at")]);
+    if (lec.error) throw new Error(`lectures: ${lec.error.message}`);
+    all = rows;
+    starts = new Map(lec.data.map((l) => [l.id, l.starts_at]));
+  }
+  const when = (l: LessonRecord) => Date.parse(starts.get(l.lecture_id) || l.created_at) || 0;
+  return all.reduce<LessonRecord | null>((best, l) => (best && when(best) >= when(l) ? best : l), null)?.id ?? null;
 }

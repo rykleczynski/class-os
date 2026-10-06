@@ -2,16 +2,23 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, FlaskConical, GraduationCap, LayoutGrid, Layers } from "lucide-react";
+import { BookOpen, GraduationCap, LayoutGrid, Layers } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
-const items = [
-  { href: "/", label: "Overview", short: "Overview", icon: LayoutGrid },
-  { href: "/course/econ-106f", label: "Courses", short: "Courses", icon: BookOpen },
-  { href: "/lesson/econ106f-class3", label: "Latest lesson", short: "Lesson", icon: GraduationCap },
-  { href: "/lesson/econ106f-class3?stage=flashcards", label: "Review", short: "Review", icon: Layers },
-  { href: "/dev/blocks", label: "Block gallery", short: "Blocks", icon: FlaskConical },
-];
+type NavItem = { href: string; label: string; short: string; icon: typeof LayoutGrid };
+
+function navItems(latestLesson: string | null): NavItem[] {
+  return [
+    { href: "/", label: "Overview", short: "Overview", icon: LayoutGrid },
+    { href: "/courses", label: "Courses", short: "Courses", icon: BookOpen },
+    ...(latestLesson
+      ? [
+          { href: `/lesson/${latestLesson}`, label: "Latest lesson", short: "Lesson", icon: GraduationCap },
+          { href: `/lesson/${latestLesson}?stage=flashcards`, label: "Review", short: "Review", icon: Layers },
+        ]
+      : []),
+  ];
+}
 
 /** Brand mark: a small coral cluster, echoing the Learnspring logo without copying it. */
 function Mark() {
@@ -25,10 +32,11 @@ function Mark() {
   );
 }
 
-export function AppSidebar() {
+export function AppSidebar({ latestLesson }: { latestLesson: string | null }) {
   const path = usePathname();
-  // Only "/" and "/course/*" render inside this layout, so the lesson links are never active here.
-  const active = (href: string) => (href === "/" ? path === "/" : href.startsWith("/course") && path.startsWith("/course"));
+  const items = navItems(latestLesson);
+  // Only "/", "/courses" and "/course/*" render inside this layout, so the lesson links are never active here.
+  const active = (href: string) => (href === "/" ? path === "/" : href === "/courses" ? path === "/courses" || path.startsWith("/course/") : false);
   return (
     <>
       {/* Desktop: labeled nav */}
