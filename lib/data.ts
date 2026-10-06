@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { courses, courseBySlug, type Course } from "./fixtures/courses";
 import econLesson from "./fixtures/lessons/econ106f-class3.json";
 import commLesson from "./fixtures/lessons/comm187-class3.json";
+import econ134Lesson from "./fixtures/lessons/econ134-2026-10-05.json";
 import { connection } from "next/server";
 import type { Lesson } from "./lesson/schema";
 import { getSupabase, supabaseEnabled } from "./supabase/client";
@@ -56,6 +57,15 @@ const lectures: LectureRecord[] = [
     transcript_file: null,
     status: "generated",
   },
+  {
+    id: "lec-econ134-2026-10-05",
+    course_id: "c-econ134",
+    wispr_meeting_id: "panopto-econ134-2026-10-05",
+    starts_at: "2026-10-05T21:00:00Z",
+    wispr_share_link: null,
+    transcript_file: "econ134-2026-10-05.txt",
+    status: "generated",
+  },
 ];
 
 function record(id: string, lectureId: string, courseId: string, spec: Lesson, summary: string, created: string): LessonRecord {
@@ -75,6 +85,7 @@ function record(id: string, lectureId: string, courseId: string, spec: Lesson, s
 const lessons: LessonRecord[] = [
   record("econ106f-class3", "lec-econ106f-3", "c-econ106f", econLesson as Lesson, "Value vs price, the NPV decision rule, and the first look at time value of money.", "2026-10-05T16:20:00Z"),
   record("comm187-class3", "lec-comm187-3", "c-comm187", commLesson as Lesson, "Fairness, personal vs professional ethics, objectivity, and conflicts of interest.", "2026-10-05T18:00:00Z"),
+  record("econ134-2026-10-05", "lec-econ134-2026-10-05", "c-econ134", econ134Lesson as Lesson, "Pigouvian taxes at marginal damage, who gets the revenue, and the Coase theorem with what breaks it.", "2026-10-06T16:00:00Z"),
 ];
 
 async function fixture_getCourses(): Promise<Course[]> {
