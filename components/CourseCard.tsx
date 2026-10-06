@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Course } from "@/lib/fixtures/courses";
+import { courseStyle } from "@/lib/course-theme";
 import { useCompletedIds } from "@/lib/progress";
 
 export function CourseCard({ course, lessonIds, firstLessonId }: { course: Course; lessonIds: string[]; firstLessonId?: string }) {
@@ -10,46 +11,47 @@ export function CourseCard({ course, lessonIds, firstLessonId }: { course: Cours
   const done = lessonIds.filter((id) => completed.includes(id)).length;
   const total = lessonIds.length;
   const nextId = lessonIds.find((id) => !completed.includes(id)) ?? firstLessonId;
-  const dark = course.tone === "dark";
-  const text = dark ? "text-[#16181d]" : "text-white";
-  const lime = course.color.toLowerCase() === "#9bd84e";
   return (
     <article
-      className={`relative flex min-h-56 flex-col justify-between gap-4 overflow-hidden rounded-3xl p-5 ${text}`}
-      style={{ background: course.color }}
+      className="group relative flex min-h-56 flex-col justify-between gap-5 rounded-3xl border border-border bg-card p-5 shadow-soft transition-colors hover:border-control"
+      style={courseStyle(course.slug)}
       data-testid="course-card"
     >
       <div>
-        <div className="flex items-start justify-between gap-2">
-          <span className={`rounded-full px-3 py-1 text-xs font-bold ${dark ? "bg-black/10" : "bg-white/20"}`}>{course.category}</span>
-          <span className="text-xs font-semibold opacity-80">{course.code}</span>
+        <div className="flex items-center justify-between gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-(--course-soft) px-2.5 py-1 text-xs font-semibold text-(--course)">
+            <span className="h-1.5 w-1.5 rounded-full bg-(--course)" aria-hidden />
+            {course.category}
+          </span>
+          <span className="text-xs font-medium tabular-nums text-muted-foreground">{course.code}</span>
         </div>
-        <h2 className="mt-4 text-xl font-extrabold leading-tight">
-          <Link href={`/course/${course.slug}`} className="after:absolute after:inset-0 hover:underline">
+        <h2 className="mt-4 text-lg font-semibold leading-snug tracking-tight">
+          <Link href={`/course/${course.slug}`} className="after:absolute after:inset-0 after:rounded-3xl hover:underline hover:underline-offset-4">
             {course.title}
           </Link>
         </h2>
-        <p className="mt-1 text-sm opacity-80">
+        <p className="mt-1 text-sm text-muted-foreground">
           {course.instructor ? `${course.instructor} · ` : ""}
           {course.schedule}
         </p>
       </div>
       <div>
-        <div className="mb-1.5 flex justify-between text-xs font-semibold">
-          <span>{total === 0 ? "No lessons yet" : `${done}/${total} lessons`}</span>
+        <div className="mb-2 flex justify-between text-xs font-medium text-muted-foreground">
+          <span>Progress</span>
+          <span className="tabular-nums">{total === 0 ? "No lessons yet" : `${done}/${total} lessons`}</span>
         </div>
-        <div className={`h-2 overflow-hidden rounded-full ${dark ? "bg-black/15" : "bg-white/25"}`} role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done} aria-label={`${course.code} progress`}>
-          <div className={`h-full rounded-full ${dark ? "bg-black/70" : "bg-white"}`} style={{ width: total ? `${(done / total) * 100}%` : "0%" }} />
+        <div className="h-1.5 overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done} aria-label={`${course.code} progress`}>
+          <div className="h-full rounded-full bg-(--course)" style={{ width: total ? `${(done / total) * 100}%` : "0%" }} />
         </div>
         {nextId ? (
           <Link
             href={`/lesson/${nextId}`}
-            className={`relative z-10 mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold ${lime ? "bg-[#16181d] text-white" : "bg-lime text-lime-foreground"}`}
+            className="relative z-10 mt-5 inline-flex min-h-10 items-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
           >
-            {done > 0 ? "Continue" : "Start"} <ArrowRight className="h-4 w-4" />
+            {done > 0 ? "Continue" : "Start"} <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         ) : (
-          <span className={`mt-4 inline-block rounded-full px-4 py-2 text-sm font-semibold opacity-80 ${dark ? "bg-black/10" : "bg-white/15"}`}>Waiting for a recording</span>
+          <span className="mt-5 inline-flex min-h-10 items-center rounded-full bg-muted px-4 text-sm font-medium text-muted-foreground">Waiting for a recording</span>
         )}
       </div>
     </article>
