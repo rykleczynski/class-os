@@ -1,7 +1,7 @@
 /**
  * Smoke test + screenshots. Needs the app running (fixtures mode expected).
  * BASE_URL defaults to http://localhost:3000. Override: BASE_URL=http://localhost:3100 npx tsx scripts/screenshots.ts
- * Expects 4 course cards on the dashboard (ECON 106F, COMM 187, ECON 134, ECON 106FB).
+ * Expects 4 course cards on the dashboard and on /courses (ECON 106F, COMM 187, ECON 134, ECON 106FB).
  * Usage: npm run smoke
  */
 import { chromium } from "playwright";
@@ -37,6 +37,22 @@ async function run(label: string, viewport: { width: number; height: number }) {
   await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
   await shot("dashboard", true);
   check(`${label} dashboard has 4 course cards`, (await page.getByTestId("course-card").count()) === 4);
+
+  // Courses index + sidebar links
+  await page.goto(`${BASE}/courses`, { waitUntil: "networkidle" });
+  await shot("courses", true);
+  check(`${label} /courses lists 4 course cards`, (await page.getByTestId("course-card").count()) === 4);
+  const sidebar = page.locator(`nav[aria-label="Main"]:visible`);
+  check(`${label} Courses nav is active on /courses`, (await sidebar.locator('a[aria-current="page"]').getAttribute("aria-label").catch(() => null)) === "Courses" || (await sidebar.locator('a[aria-current="page"]').innerText()).includes("Courses"));
+  check(`${label} no Block gallery in nav`, (await sidebar.getByText(/Block gallery|Blocks/).count()) === 0);
+  for (const name of ["Courses", "Latest lesson", "Review"]) {
+    const href = await sidebar.getByRole("link", { name }).first().getAttribute("href");
+    const res = href ? await page.request.get(`${BASE}${href}`) : null;
+    check(`${label} sidebar "${name}" resolves`, !!res && res.ok(), `${href} -> ${res?.status()}`);
+  }
+  check(`${label} Latest lesson is the newest lesson`, (await sidebar.getByRole("link", { name: "Latest lesson" }).first().getAttribute("href")) === "/lesson/econ134-2026-10-05");
+  await page.goto(`${BASE}/course/econ-106f`, { waitUntil: "networkidle" });
+  check(`${label} Courses nav stays active on /course/*`, (await sidebar.locator('a[aria-current="page"]').innerText()).includes("Courses") || (await sidebar.locator('a[aria-current="page"]').getAttribute("aria-label")) === "Courses");
 
   // Lesson player
   await page.goto(`${BASE}/lesson/econ106f-class3`, { waitUntil: "networkidle" });
