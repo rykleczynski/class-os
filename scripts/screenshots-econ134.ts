@@ -48,7 +48,8 @@ const check = (n: string, ok: boolean, d = "") => results.push(`${ok ? "PASS" : 
   await s.fill("0");
   await page.waitForTimeout(250);
   const at0 = await out.innerText();
-  check("slider DWL 75 at tau=30, 0 at tau=20, 300 at tau=0", /75/.test(at30) && /^0/.test(at20.trim().replace(/[^0-9.]/g, "")) && /300/.test(at0), `${at30} | ${at20} | ${at0}`);
+  const num = (t: string) => Number(t.trim().replace(/[^0-9.-]/g, ""));
+  check("slider DWL 75 at tau=30, 0 at tau=20, 300 at tau=0", num(at30) === 75 && num(at20) === 0 && num(at0) === 300, `${at30} | ${at20} | ${at0}`);
   await s.fill("30");
   await page.waitForTimeout(250);
   check("step 3 overtax graph", (await page.locator("svg[aria-label='Too high: τ = D′(Q_M) = 30']").count()) === 1);
@@ -60,7 +61,7 @@ const check = (n: string, ok: boolean, d = "") => results.push(`${ok ? "PASS" : 
   await next();
   await page.getByTestId("scenario").getByRole("button").nth(1).click();
   check("step 5 scenario outcome", await page.getByTestId("scenario-outcome").isVisible());
-  await shot("step5-coase-gains", "Gains from trade = 1200");
+  await shot("step5-coase-gains", "Total surplus at the efficient output = 1200");
   await shot("step5-coase-scenario");
   await next();
   check("step 6 news block", (await page.getByText("EnerKnol").count()) > 0);

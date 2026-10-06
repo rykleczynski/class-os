@@ -377,7 +377,7 @@
         {
           "type": "supplyDemand",
           "id": "sd-coase",
-          "title": "Gains from trade = 1200",
+          "title": "Total surplus at the efficient output = 1200",
           "curves": [
             {
               "label": "MB",
@@ -394,7 +394,7 @@
           ],
           "areas": [
             {
-              "label": "Gains from trade = 1200",
+              "label": "Total surplus at Q = 40 = 1200",
               "curves": [
                 "MB",
                 "MD"
@@ -404,7 +404,7 @@
               "color": "var(--chart-2)"
             }
           ],
-          "caption": "The surplus bargainers can share is the area between MB and MD up to Q = 40: 1/2 x 40 x 60 = 1200. Takeaway: they stop at 40 because beyond it there is nothing left to split.",
+          "caption": "Total surplus at Q = 40 is the area between MB and MD: 1/2 x 40 x 60 = 1200. How much bargaining adds depends on the starting point. If the neighbor owns the right, production starts at 0 and bargaining creates all 1200. If the firm owns the right, it starts at Q = 60 with surplus 900, so bargaining adds 300. Takeaway: either way they stop at 40 because beyond it there is nothing left to split.",
           "xLabel": "Output Q",
           "yLabel": "$ per unit",
           "xMax": 70,
@@ -463,7 +463,7 @@
               "target": 1
             },
             {
-              "label": "A seller knows the box holds $1 or $5 million; you offer $4.5 million",
+              "label": "You hold a box whose contents only your friend knows; you ask $4.5 million to give it back",
               "target": 2
             }
           ],
