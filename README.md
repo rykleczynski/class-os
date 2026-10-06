@@ -21,6 +21,7 @@ npm run schema       # regenerate lib/lesson/lesson.schema.json from the zod sch
 npm run typecheck    # next typegen && tsc --noEmit
 npm run test:eval    # slider evaluator self-test (blocks evaluate, parse, import, ...)
 npm run seed:build   # regenerate supabase/seed.sql from the fixtures
+npm run sync        # upsert lessons + transcripts from lib/fixtures into Supabase (service key from SYNC_ENV_FILE, default ../class_OS/.env.local; flags: -- --dry-run, --only <slug>)
 npm run build && npm run lint
 npm run smoke        # Playwright smoke test + screenshots (needs the dev server running;
                      # BASE_URL defaults to http://localhost:3000)
