@@ -15,7 +15,7 @@ export function CourseCard({ course, lessonIds, firstLessonId }: { course: Cours
   const lime = course.color.toLowerCase() === "#9bd84e";
   return (
     <article
-      className={`relative flex min-h-56 flex-col justify-between overflow-hidden rounded-3xl p-5 ${text}`}
+      className={`relative flex min-h-56 flex-col justify-between gap-4 overflow-hidden rounded-3xl p-5 ${text}`}
       style={{ background: course.color }}
       data-testid="course-card"
     >

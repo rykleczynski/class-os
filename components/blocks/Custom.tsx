@@ -33,7 +33,6 @@ export function Custom({ block }: BlockProps<CustomBlock>) {
         srcDoc={srcDoc}
         style={{ height: block.height }}
         className="block w-full border-0 bg-white"
-        loading="lazy"
       />
     </BlockFrame>
   );
