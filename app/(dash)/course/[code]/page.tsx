@@ -1,14 +1,15 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
+import { LessonList } from "@/components/LessonList";
 import { courseStyle } from "@/lib/course-theme";
-import { getCourse, getLecturesForCourse, getLessonsForCourse, getTranscript, transcriptsPrivate } from "@/lib/data";
+import { getCourse, getLecturesForCourse, getLessonTimeline, getTranscript, transcriptsPrivate } from "@/lib/data";
 
 export default async function CoursePage({ params }: PageProps<"/course/[code]">) {
   const { code } = await params;
   const course = await getCourse(code);
   if (!course) notFound();
-  const [lessons, lectures] = await Promise.all([getLessonsForCourse(course.id), getLecturesForCourse(course.id)]);
+  const [timeline, lectures] = await Promise.all([getLessonTimeline(), getLecturesForCourse(course.id)]);
+  const lessons = timeline.filter((l) => l.course_id === course.id);
   const transcripts = await Promise.all(lectures.map(async (l) => ({ lecture: l, text: await getTranscript(l) })));
 
   return (
@@ -33,18 +34,9 @@ export default async function CoursePage({ params }: PageProps<"/course/[code]">
         {lessons.length === 0 ? (
           <p className="mt-2 text-sm text-muted-foreground">No lessons yet. They appear after the first recording is processed.</p>
         ) : (
-          <ul className="mt-3 divide-y divide-border">
-            {lessons.map((l) => (
-              <li key={l.id} className="py-3">
-                <Link href={`/lesson/${l.id}`} className="font-semibold hover:underline">
-                  {l.title}
-                </Link>
-                <p className="text-sm text-muted-foreground">
-                  {l.summary} · {l.est_minutes} min
-                </p>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-3">
+            <LessonList lessons={lessons} />
+          </div>
         )}
       </section>
 

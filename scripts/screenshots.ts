@@ -54,8 +54,47 @@ async function run(label: string, viewport: { width: number; height: number }) {
   await page.goto(`${BASE}/course/econ-106f`, { waitUntil: "networkidle" });
   check(`${label} Courses nav stays active on /course/*`, (await sidebar.locator('a[aria-current="page"]').innerText()).includes("Courses") || (await sidebar.locator('a[aria-current="page"]').getAttribute("aria-label")) === "Courses");
 
+  // Lesson picker: Start opens a sheet listing the course's lessons with progress
+  const econCard = () => page.getByTestId("course-card").filter({ hasText: /ECON 106F(?!B)/ });
+  await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
+  check(`${label} card starts at 0 completed`, /^0\/\d+ lessons$/.test((await econCard().getByTestId("card-count").innerText()).trim()));
+  await shot("card-before-start");
+  await econCard().getByRole("button", { name: /Start|Continue/ }).click();
+  const picker = page.getByTestId("lesson-picker");
+  await picker.waitFor();
+  await page.waitForTimeout(400);
+  const rows = await picker.getByTestId("lesson-row").count();
+  check(`${label} picker lists the course's lessons`, rows === 3, `${rows} rows`);
+  check(`${label} picker shows Not started + Up next`, (await picker.getByText("Not started").count()) === 3 && (await picker.getByText("Up next").count()) === 1);
+  check(`${label} picker has View course link`, (await picker.getByRole("link", { name: "View course" }).getAttribute("href")) === "/course/econ-106f");
+  await shot("picker-not-started");
+  await page.keyboard.press("Escape");
+  check(`${label} Escape closes the picker`, await picker.waitFor({ state: "detached" }).then(() => true, () => false));
+  await econCard().getByRole("button", { name: /Start/ }).click();
+  await picker.getByRole("link", { name: /^Start Value, price/ }).click();
+  await page.waitForURL(/\/lesson\/econ106f-class3$/);
+  await next();
+  await next();
+  // Reload mid-lesson: the player must resume at step 3, with a Start over option.
+  await page.reload({ waitUntil: "networkidle" });
+  check(`${label} reload resumes at step 3`, (await page.locator('section[aria-labelledby="step-title"]').getByText(/Step 3 of \d+/).count()) === 1);
+  check(`${label} resume banner offers Start over`, await page.getByTestId("resume-banner").getByRole("button", { name: "Start over" }).isVisible());
+  await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
+  await econCard().getByRole("button", { name: "Continue" }).click();
+  await picker.waitFor();
+  await page.waitForTimeout(400);
+  check(`${label} picker shows Step 3 of N + Resume`, (await picker.getByText(/Step 3 of \d+/).count()) === 1 && (await picker.getByRole("link", { name: /^Resume / }).count()) === 1);
+  await shot("picker-in-progress");
+  await page.keyboard.press("Escape");
+  await page.goto(`${BASE}/course/econ-106f`, { waitUntil: "networkidle" });
+  check(`${label} course page shows the same progress`, (await page.getByTestId("lesson-list").getByText(/Step 3 of \d+/).count()) === 1);
+
   // Lesson player
   await page.goto(`${BASE}/lesson/econ106f-class3`, { waitUntil: "networkidle" });
+  // Opening the lesson resumes at step 3; Start over returns to step 1.
+  await page.getByTestId("resume-banner").getByRole("button", { name: "Start over" }).click();
+  await page.waitForTimeout(600);
+  check(`${label} Start over returns to step 1`, (await page.locator('section[aria-labelledby="step-title"]').getByText(/Step 1 of \d+/).count()) === 1);
   await shot("lesson-step1");
   // step 1 mcq feedback
   await page.getByRole("radio").nth(0).click();
@@ -90,6 +129,14 @@ async function run(label: string, viewport: { width: number; height: number }) {
   await page.getByRole("button", { name: "On to flashcards" }).click();
   await page.waitForTimeout(450);
   await shot("lesson-flashcards");
+  await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
+  check(`${label} card counts the finished lesson`, (await econCard().getByTestId("card-count").innerText()).trim().startsWith("1/"));
+  await econCard().getByRole("button", { name: "Continue" }).click();
+  await picker.waitFor();
+  await page.waitForTimeout(400);
+  check(`${label} picker shows Completed with quiz score + Review`, (await picker.getByText(/Completed · Quiz \d\/5/).count()) === 1 && (await picker.getByRole("link", { name: /^Review / }).count()) === 1);
+  await shot("picker-completed");
+  await page.keyboard.press("Escape");
 
   // Comm 187 scenario
   await page.goto(`${BASE}/lesson/comm187-class3`, { waitUntil: "networkidle" });

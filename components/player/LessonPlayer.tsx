@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { lessonShellSchema, type OnAttempt } from "@/lib/lesson/schema";
 import { recordAttempt } from "@/lib/attempts";
 import { courseStyle } from "@/lib/course-theme";
-import { markCompleted } from "@/lib/progress";
+import { markCompleted, recordStep, recordQuizScore, resetProgress, useProgress, type LessonProgress } from "@/lib/progress";
 import { Checklist } from "./Checklist";
 import { Flashcards } from "./Flashcards";
 import { Quiz } from "./Quiz";
@@ -35,20 +35,32 @@ export function LessonPlayer({ lessonId, spec, course, initialStage }: Props) {
       </div>
     );
   }
-  return <Player lessonId={lessonId} lesson={parsed.data} course={course} initialStage={initialStage} />;
+  return <ResumeGate lessonId={lessonId} lesson={parsed.data} course={course} initialStage={initialStage} />;
 }
 
-function Player({ lessonId, lesson, course, initialStage }: Omit<Props, "spec"> & { lesson: ReturnType<typeof lessonShellSchema.parse> }) {
+type Parsed = ReturnType<typeof lessonShellSchema.parse>;
+
+/** Reads saved progress after mount (localStorage is client-only), then starts the player where the learner left off. */
+function ResumeGate(props: Omit<Props, "spec"> & { lesson: Parsed }) {
+  const { ready, map } = useProgress();
+  if (!ready) return <div className="min-h-dvh bg-paper" aria-busy="true" data-testid="player-loading" />;
+  return <Player {...props} saved={map[props.lessonId]} />;
+}
+
+function Player({ lessonId, lesson, course, initialStage, saved }: Omit<Props, "spec"> & { lesson: Parsed; saved?: LessonProgress }) {
   const nSteps = lesson.steps.length;
   const quizIdx = nSteps;
   const cardsIdx = nSteps + 1;
   const items = [...lesson.steps.map((s) => ({ id: s.id, title: s.title })), { id: "quiz", title: "Quiz" }, { id: "cards", title: "Flashcards" }];
 
-  const start = initialStage === "flashcards" ? cardsIdx : 0;
+  // Saved position only applies when it is a valid screen for this lesson.
+  const savedStep = saved && saved.lastStep >= 0 && saved.lastStep <= cardsIdx ? saved.lastStep : 0;
+  const start = initialStage === "flashcards" ? cardsIdx : savedStep;
+  const [resumed, setResumed] = useState(initialStage !== "flashcards" && savedStep > 0);
   const [idx, setIdx] = useState(start);
-  const [maxReached, setMaxReached] = useState(start);
+  const [maxReached, setMaxReached] = useState(Math.max(start, saved?.maxStep ?? 0));
   const [dir, setDir] = useState(1);
-  const [quizDone, setQuizDone] = useState(initialStage === "flashcards");
+  const [quizDone, setQuizDone] = useState(initialStage === "flashcards" || saved?.completedAt !== undefined || (saved?.maxStep ?? 0) > quizIdx);
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const reduce = useReducedMotion();
 
@@ -63,6 +75,19 @@ function Player({ lessonId, lesson, course, initialStage }: Omit<Props, "spec"> 
     setIdx(next);
     setMaxReached((m) => Math.max(m, next));
     if (typeof window !== "undefined") window.scrollTo({ top: 0 });
+  };
+  // Persist the current step on every change so a reload or return resumes here.
+  useEffect(() => {
+    recordStep(lessonId, idx);
+  }, [lessonId, idx]);
+  const startOver = () => {
+    resetProgress(lessonId);
+    setAttempts([]);
+    setResumed(false);
+    setQuizDone(false);
+    setMaxReached(0);
+    go(0);
+    recordStep(lessonId, 0);
   };
   const finishQuiz = () => {
     setQuizDone(true);
@@ -100,6 +125,14 @@ function Player({ lessonId, lesson, course, initialStage }: Omit<Props, "spec"> 
 
       <div className="mx-auto grid max-w-5xl gap-8 px-4 pb-32 pt-6 lg:grid-cols-[minmax(0,1fr)_16rem]">
         <main className="min-w-0">
+          {resumed && (
+            <p className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl border border-paper-border bg-paper-card px-4 py-2.5 text-sm" data-testid="resume-banner">
+              <span className="text-muted-foreground">Picked up where you left off.</span>
+              <button type="button" onClick={startOver} className="font-semibold underline underline-offset-4 hover:no-underline">
+                Start over
+              </button>
+            </p>
+          )}
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={idx}
@@ -138,7 +171,7 @@ function Player({ lessonId, lesson, course, initialStage }: Omit<Props, "spec"> 
                 <section>
                   <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Check yourself</h1>
                   <div className="mt-5">
-                    <Quiz lesson={lesson as never} onAttempt={onAttempt} onDone={finishQuiz} />
+                    <Quiz lesson={lesson as never} onAttempt={onAttempt} onDone={finishQuiz} onScore={(score, total) => recordQuizScore(lessonId, score, total)} />
                   </div>
                 </section>
               )}
