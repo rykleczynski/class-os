@@ -1,0 +1,614 @@
+{
+  "schema_version": 1,
+  "title": "Fixing externalities: taxes, property rights, and Coase",
+  "hook": "A factory can overshoot by 20 units and nobody in the market notices. Two very different fixes: price the harm, or let the neighbors negotiate.",
+  "est_minutes": 11,
+  "objectives": [
+    "Locate the market output and the social optimum, and measure the deadweight loss between them.",
+    "Set a Pigouvian tax at marginal damage at Q_FB, and compute who receives the revenue.",
+    "Explain why Coase's bargaining reaches the same output under either property-right assignment, and name the three ways it breaks."
+  ],
+  "steps": [
+    {
+      "id": "externality",
+      "title": "When the market overshoots",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "> \"This is the most important lecture of the entire course.\"\n\nA firm picks output where its marginal profit hits zero: **Q_M = 60**. But its neighbor suffers damage that grows with output. Society wants the point where the firm's marginal profit equals the neighbor's marginal damage: **Q_FB = 40**, the *first best*.\n\nBetween 40 and 60, each unit costs the neighbor more than it earns the firm. That shaded triangle is the deadweight loss. (The professor's Q* is the free-market output; we call it Q_M here.)"
+        },
+        {
+          "type": "supplyDemand",
+          "id": "sd-externality",
+          "title": "The externality and the social optimum",
+          "curves": [
+            {
+              "label": "MB",
+              "kind": "demand",
+              "intercept": 60,
+              "slope": -1
+            },
+            {
+              "label": "MD",
+              "kind": "supply",
+              "intercept": 0,
+              "slope": 0.5
+            }
+          ],
+          "areas": [
+            {
+              "label": "DWL = 300",
+              "curves": [
+                "MB",
+                "MD"
+              ],
+              "from": 40,
+              "to": 60,
+              "color": "var(--chart-5)"
+            }
+          ],
+          "caption": "Illustrative numbers: MB = 60 - Q, MD = 0.5Q. Dot: social optimum (40, $20). Takeaway: the market keeps producing until profit hits zero, long after the neighbor's pain exceeds it.",
+          "xLabel": "Output Q",
+          "yLabel": "$ per unit",
+          "xMax": 70,
+          "yMax": 70
+        },
+        {
+          "type": "keyIdea",
+          "text": "Market failure here is a quantity problem: output of 60 instead of 40. Area DWL = 1/2 x 20 x 30 = 300."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-overshoot",
+          "q": "At Q = 60 the firm's marginal profit is $0 and marginal damage is $30. Why is 60 too much?",
+          "options": [
+            "Extra units cost the neighbor more than they earn",
+            "The firm is losing money on every unit it sells",
+            "The neighbor would rather the firm shut down entirely",
+            "Marginal damage always exceeds marginal profit, at any output"
+          ],
+          "answer": 0,
+          "why": "At Q = 60 an extra unit adds $0 to profit and $30 to damage, so cutting back raises total surplus. Zero output is not optimal either: at Q = 0 marginal profit is $60 and damage is $0."
+        }
+      ]
+    },
+    {
+      "id": "pigou-tax",
+      "title": "The Pigouvian tax",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "To fix this, make the firm feel the damage. Charge a per-unit tax **τ = D′(Q_FB)**: the marginal damage *at the efficient output*. Here τ = 0.5 x 40 = **$20**.\n\nThe firm just maximizes profit minus τ·Q and lands on Q_FB by itself. No quota, no calculation on its side.\n\n> \"The Pigouvian tax is really just turning the externality into something that's not an externality.\""
+        },
+        {
+          "type": "stepper",
+          "title": "What the firm now solves",
+          "frames": [
+            {
+              "title": "Before the tax",
+              "text": "The firm maximizes profit. Its first-order condition ignores the neighbor.",
+              "math": "P - C'(Q) = 0   ->   Q_M = 60"
+            },
+            {
+              "title": "Add one column to the spreadsheet",
+              "text": "For every unit it produces, the firm pays τ. In the professor's words, it's just another column in the Excel spreadsheet.",
+              "math": "max  Pi(Q) - tau * Q"
+            },
+            {
+              "title": "Set the price of harm",
+              "text": "The new first-order condition matches the social planner's exactly when τ equals marginal damage.",
+              "math": "P - C'(Q) = tau = D'(Q_FB) = 20   ->   Q = 40"
+            }
+          ]
+        },
+        {
+          "type": "supplyDemand",
+          "id": "sd-tax",
+          "title": "A tax of $20 puts the firm at Q_FB",
+          "curves": [
+            {
+              "label": "MB",
+              "kind": "demand",
+              "intercept": 60,
+              "slope": -1
+            },
+            {
+              "label": "MD",
+              "kind": "supply",
+              "intercept": 0,
+              "slope": 0.5
+            },
+            {
+              "label": "Tax τ = 20",
+              "kind": "other",
+              "intercept": 20,
+              "slope": 0,
+              "color": "var(--chart-3)"
+            },
+            {
+              "label": "0",
+              "kind": "other",
+              "intercept": 0,
+              "slope": 0,
+              "color": "var(--muted-foreground)"
+            }
+          ],
+          "areas": [
+            {
+              "label": "Firm's lost profit = 200",
+              "curves": [
+                "MB",
+                "0"
+              ],
+              "from": 40,
+              "to": 60,
+              "color": "var(--chart-4)"
+            }
+          ],
+          "caption": "The firm stops where MB meets the tax line, at Q = 40. It gives up 1/2 x 20 x 20 = 200 of profit, but the neighbor avoids 500 of damage (net +300 = the old DWL). Takeaway: the tax's cost is real but dominated by the benefit.",
+          "xLabel": "Output Q",
+          "yLabel": "$ per unit",
+          "xMax": 70,
+          "yMax": 70
+        }
+      ]
+    },
+    {
+      "id": "set-it-right",
+      "title": "Where you set the tax matters",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "The marginal damage curve slopes upward, so *where* you read it matters. Reading it at the free-market output gives D′(60) = **$30**, which is too high.\n\nDrag the tax and watch output (Q = 60 - τ) and deadweight loss. At τ = 20 the loss is zero. The professor's warning: set τ = D′(Q_M) and the firm \"will pull it back farther than we want it to.\""
+        },
+        {
+          "type": "slider",
+          "id": "slider-tax-dwl",
+          "title": "Tax rate vs deadweight loss",
+          "formula": "0.75 * (tau - 20)^2",
+          "vars": [
+            {
+              "name": "tau",
+              "label": "Tax per unit (τ)",
+              "min": 0,
+              "max": 40,
+              "step": 1,
+              "default": 30,
+              "unit": "$"
+            }
+          ],
+          "output": {
+            "label": "Deadweight loss",
+            "format": "number",
+            "decimals": 0
+          },
+          "plot": {
+            "x": "tau",
+            "range": [
+              0,
+              40
+            ],
+            "yLabel": "Deadweight loss",
+            "zeroLine": true
+          },
+          "caption": "Output is Q = 60 - τ. DWL = 1/2 x |Q - 40| x |60 - 1.5Q| = 0.75(τ - 20)^2. At τ = 30: Q = 30 and DWL = 75."
+        },
+        {
+          "type": "supplyDemand",
+          "id": "sd-overtax",
+          "title": "Too high: τ = D′(Q_M) = 30",
+          "curves": [
+            {
+              "label": "MB",
+              "kind": "demand",
+              "intercept": 60,
+              "slope": -1
+            },
+            {
+              "label": "MD",
+              "kind": "supply",
+              "intercept": 0,
+              "slope": 0.5
+            },
+            {
+              "label": "Tax = 30",
+              "kind": "other",
+              "intercept": 30,
+              "slope": 0,
+              "color": "var(--chart-3)"
+            }
+          ],
+          "areas": [
+            {
+              "label": "DWL = 75",
+              "curves": [
+                "MB",
+                "MD"
+              ],
+              "from": 30,
+              "to": 40,
+              "color": "var(--chart-5)"
+            }
+          ],
+          "caption": "Output falls to 30, below Q_FB. Area = 1/2 x 10 x 15 = 75. Takeaway: a tax at the wrong point trades one deadweight loss for a smaller one.",
+          "xLabel": "Output Q",
+          "yLabel": "$ per unit",
+          "xMax": 70,
+          "yMax": 70
+        }
+      ]
+    },
+    {
+      "id": "revenue",
+      "title": "Where does the tax money go?",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Unlike a quota, a tax raises money: **R = τ·Q_FB = D′(Q_FB)·Q_FB = 20 x 40 = 800**. That rectangle splits into the neighbor's total damage (400) and the part above it (400).\n\nRevenue can go to the neighbor, the firm, or anyone. One rule: it must preserve incentives.\n\n> \"We can write the firm a check for any amount of money. But what's critical is that the firm doesn't believe that what it does will affect what's on the check.\""
+        },
+        {
+          "type": "supplyDemand",
+          "id": "sd-revenue",
+          "title": "Revenue R = 20 x 40 = 800",
+          "curves": [
+            {
+              "label": "MB",
+              "kind": "demand",
+              "intercept": 60,
+              "slope": -1
+            },
+            {
+              "label": "MD",
+              "kind": "supply",
+              "intercept": 0,
+              "slope": 0.5
+            },
+            {
+              "label": "Tax τ = 20",
+              "kind": "other",
+              "intercept": 20,
+              "slope": 0,
+              "color": "var(--chart-3)"
+            },
+            {
+              "label": "0",
+              "kind": "other",
+              "intercept": 0,
+              "slope": 0,
+              "color": "var(--muted-foreground)"
+            }
+          ],
+          "areas": [
+            {
+              "label": "Damage = 400",
+              "curves": [
+                "MD",
+                "0"
+              ],
+              "from": 0,
+              "to": 40,
+              "color": "var(--chart-5)"
+            },
+            {
+              "label": "Revenue above damage = 400",
+              "curves": [
+                "Tax τ = 20",
+                "MD"
+              ],
+              "from": 0,
+              "to": 40,
+              "color": "var(--chart-2)"
+            }
+          ],
+          "caption": "Because MD slopes upward, D′(Q_FB)·Q_FB always exceeds total damage D(Q_FB). Takeaway: hand all the revenue to the neighbor and they end up better off than if the firm never existed.",
+          "xLabel": "Output Q",
+          "yLabel": "$ per unit",
+          "xMax": 70,
+          "yMax": 70
+        },
+        {
+          "type": "compare",
+          "title": "Who ends up with what (illustrative payoffs)",
+          "columns": [
+            "Firm",
+            "Neighbor",
+            "Government"
+          ],
+          "highlight": 1,
+          "rows": [
+            {
+              "label": "Free market (Q = 60)",
+              "cells": [
+                "1800",
+                "-900",
+                "0"
+              ]
+            },
+            {
+              "label": "Tax of 20, revenue kept",
+              "cells": [
+                "800",
+                "-400",
+                "800"
+              ]
+            },
+            {
+              "label": "Revenue all to neighbor",
+              "cells": [
+                "800",
+                "+400",
+                "0"
+              ]
+            },
+            {
+              "label": "Lump-sum 800 to firm",
+              "cells": [
+                "1600",
+                "-400",
+                "0"
+              ]
+            }
+          ],
+          "caption": "Firm profit at Q = 40 is 1600; the tax takes 800. Even with a full lump-sum check the firm sits 200 below its free-market 1800, which is the cost of being distorted."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-rebate",
+          "q": "The firm complains about the tax. Which compensation keeps Q at 40?",
+          "options": [
+            "Refund τ to the firm for every unit it produces",
+            "A fixed check sized to its pre-policy output",
+            "A check that grows with how much the firm produces",
+            "Rebate the tax in proportion to the firm's sales"
+          ],
+          "answer": 1,
+          "why": "A per-unit rebate cancels the tax at the margin, so the firm is back to maximizing pure profit (Q = 60). A fixed check does not depend on what the firm does, so the incentive survives."
+        }
+      ]
+    },
+    {
+      "id": "coase",
+      "title": "Or just let them bargain",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Third solution: define property rights and let the two parties contract. Gains from trade exist at every unit where the firm's marginal profit exceeds the neighbor's marginal damage, so they trade until **Q = 40**, whoever owns the right.\n\nThe professor's proof is by contradiction: any Q̃ other than Q_FB leaves a deal on the table. Ownership changes the *split*, not the output."
+        },
+        {
+          "type": "supplyDemand",
+          "id": "sd-coase",
+          "title": "Gains from trade = 1200",
+          "curves": [
+            {
+              "label": "MB",
+              "kind": "demand",
+              "intercept": 60,
+              "slope": -1
+            },
+            {
+              "label": "MD",
+              "kind": "supply",
+              "intercept": 0,
+              "slope": 0.5
+            }
+          ],
+          "areas": [
+            {
+              "label": "Gains from trade = 1200",
+              "curves": [
+                "MB",
+                "MD"
+              ],
+              "from": 0,
+              "to": 40,
+              "color": "var(--chart-2)"
+            }
+          ],
+          "caption": "The surplus bargainers can share is the area between MB and MD up to Q = 40: 1/2 x 40 x 60 = 1200. Takeaway: they stop at 40 because beyond it there is nothing left to split.",
+          "xLabel": "Output Q",
+          "yLabel": "$ per unit",
+          "xMax": 70,
+          "yMax": 70
+        },
+        {
+          "type": "scenario",
+          "id": "scn-coase",
+          "title": "A judge asks: who should own the right?",
+          "prompt": "Marginal profit is 60 - Q and marginal damage is 0.5Q. Bargaining is free, everyone knows everything, and both sides can pay. The court can give the right to the neighbor (firm must buy permission) or to the firm (neighbor must pay it to cut back).",
+          "choices": [
+            {
+              "label": "Give it to the neighbor",
+              "outcome": "The firm buys permission up to Q = 40 and pays between 400 and 1600. At the top price the neighbor captures all 1200 of surplus and the firm gets 0.",
+              "verdict": "best"
+            },
+            {
+              "label": "Give it to the firm",
+              "outcome": "The neighbor pays the firm to cut from 60 to 40, at a price between 200 and 500. At the top price the firm earns 2100 and the neighbor is at -900, no better than the free market.",
+              "verdict": "best"
+            },
+            {
+              "label": "Neither works unless we first calculate the right tax",
+              "outcome": "Not so: with zero transaction costs, output is 40 either way and no damage calculation is needed. You would be doing Pigou's hard arithmetic for nothing.",
+              "verdict": "poor"
+            }
+          ],
+          "debrief": "Same Q = 40 under both assignments. What changes is who is rich: the owner can extract nearly all the surplus. Efficiency is untouched, distribution is not."
+        }
+      ]
+    },
+    {
+      "id": "coase-fails",
+      "title": "When Coase breaks",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Coase needs three things: **costless transacting, payoff-maximizing parties, and shared information.** Break any one and bargaining stops short of Q_FB. Policy then falls back to a tax or a quantity rule.\n\nMatch each case to the assumption it breaks."
+        },
+        {
+          "type": "sortOrMatch",
+          "id": "match-coase",
+          "mode": "match",
+          "prompt": "Which assumption fails in each case?",
+          "items": [
+            {
+              "label": "Tens of thousands of people breathe the same smog",
+              "target": 0
+            },
+            {
+              "label": "Nine years of litigation over a shared oil field (Talos and Pemex)",
+              "target": 0
+            },
+            {
+              "label": "The neighbor owes the firm more than they can borrow",
+              "target": 1
+            },
+            {
+              "label": "A seller knows the box holds $1 or $5 million; you offer $4.5 million",
+              "target": 2
+            }
+          ],
+          "targets": [
+            "Transaction costs",
+            "Can't maximize (cash constraint)",
+            "Private information"
+          ],
+          "why": "Air pollution is Coase's own example of costs too high to bargain. A wealth-constrained neighbor can't buy Q_FB when the firm owns the right, so ownership changes output. A take-it-or-leave-it offer under hidden information misses trades the low-profit type would have taken."
+        },
+        {
+          "type": "inTheNews",
+          "id": "news-carbon",
+          "headline": "Carbon Pricing September 2026 Update: RGGI hits a record price; California-Québec auction clears 13% higher",
+          "source": "EnerKnol",
+          "url": "https://enerknol.com/carbon-pricing-september-2026-update/",
+          "date": "2026-09-21",
+          "tieIn": "California uses a quantity rule (a cap with traded permits) where South Africa chose a carbon tax in 2019. The auction price here is the market finding the 'tax' the cap implies, and RGGI's auction proceeds topped $1 billion: real revenue, and the question of who gets it."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-coasefail",
+          "q": "Which setting is the worst fit for a Coasean bargain?",
+          "options": [
+            "A factory next to one neighbor with clear titles",
+            "Two firms that know each other's costs and have cash",
+            "A landowner and tenant with a written lease",
+            "Thousands of residents downwind of one plant"
+          ],
+          "answer": 3,
+          "why": "Each resident would need a lawyer and a contract, and each could hold out. That is transaction costs at scale, so a tax or regulation fits better."
+        }
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "type": "mcq",
+      "id": "quiz-tax",
+      "q": "Marginal profit is 60 - Q and marginal damage is 0.5Q. Which tax makes the firm choose the efficient output?",
+      "options": [
+        "$40, the efficient quantity",
+        "$30, marginal damage at the market output",
+        "$20, marginal damage at Q = 40",
+        "$60, the firm's top marginal profit"
+      ],
+      "answer": 2,
+      "why": "Efficient Q solves 60 - Q = 0.5Q, so Q = 40. The tax is marginal damage there: 0.5 x 40 = 20."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-overtax",
+      "q": "A regulator sets the tax at marginal damage at the free-market output (30) instead. What happens?",
+      "options": [
+        "Output drops below 40; a deadweight loss of 75 appears",
+        "Output stays at 60 because the tax is only a transfer",
+        "Output lands exactly at 40, since any tax gets it there",
+        "Output rises because the firm earns more on each unit"
+      ],
+      "answer": 0,
+      "why": "The firm cuts to Q = 60 - 30 = 30, past the optimum. Because marginal damage is rising, the right tax is read at Q_FB, not Q_M."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-revenue",
+      "q": "The government rebates the tax to the firm for every unit produced. What does the firm do?",
+      "options": [
+        "Produces 40, because it is still formally being taxed",
+        "Produces 0, because it is no better off than before",
+        "Produces 60, since the tax is cancelled at the margin",
+        "Produces 30, halfway between the two outputs it knows"
+      ],
+      "answer": 2,
+      "why": "Returning τ per unit means the firm's marginal condition is back to P - C' = 0. A fixed lump-sum check keeps the incentive."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-coase",
+      "q": "With zero transaction costs, the court switches the right from the neighbor to the firm. What changes?",
+      "options": [
+        "Output rises to 60 now that the firm owns the right",
+        "Output falls to 0 because the neighbor can block it",
+        "Who pays whom and who ends richer, but not output",
+        "Nothing at all, since payments and output both stay put"
+      ],
+      "answer": 2,
+      "why": "Coase: Q = 40 either way. The firm-owns case has the neighbor paying 200 to 500; the neighbor-owns case has the firm paying 400 to 1600."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-fail",
+      "q": "Which is the best reason Coasean bargaining often fails for air pollution?",
+      "options": [
+        "Firms refuse to maximize profit when asked to bargain",
+        "Too many affected people to contract with each one",
+        "Marginal damage is not increasing in output at all",
+        "The tax revenue is too large for anyone to rebate"
+      ],
+      "answer": 1,
+      "why": "Coase himself gave air pollution as the high-transaction-cost case: tens of thousands of people, each needing a deal. Regulation or a tax steps in."
+    }
+  ],
+  "flashcards": [
+    {
+      "front": "Externality",
+      "back": "A cost or benefit that falls on someone who doesn't take part in the decision, so the decider ignores it."
+    },
+    {
+      "front": "Pigouvian tax",
+      "back": "A per-unit tax equal to marginal damage at the efficient output: τ = D′(Q_FB). It turns the externality into a cost the firm feels."
+    },
+    {
+      "front": "Why read D′ at Q_FB, not Q_M?",
+      "back": "Marginal damage rises with output. D′(Q_M) is higher than D′(Q_FB), so taxing there overshoots and cuts output below the optimum."
+    },
+    {
+      "front": "Tax revenue formula",
+      "back": "R = τ·Q_FB = D′(Q_FB)·Q_FB. With the lesson's numbers: 20 x 40 = 800."
+    },
+    {
+      "front": "Coase theorem",
+      "back": "With costless transacting, payoff-maximizing parties and shared information, bargaining reaches the efficient Q however property rights are assigned."
+    },
+    {
+      "front": "Three ways Coase fails",
+      "back": "Transaction costs, parties that can't maximize (e.g., cash constraints), and private information (no-trade results)."
+    }
+  ],
+  "recap": [
+    "Market output (Q_M = 60) overshoots the social optimum (Q_FB = 40); the gap costs 300 of surplus.",
+    "A Pigouvian tax equals marginal damage at Q_FB ($20), not at the market output ($30). Revenue is 800 and can be returned lump-sum, never per unit.",
+    "With zero transaction costs, bargaining finds Q = 40 under either ownership rule; ownership only moves the money.",
+    "Coase fails with transaction costs, cash constraints, or private information, which is why taxes and quotas exist."
+  ],
+  "concepts": [
+    "Externality",
+    "Marginal damage",
+    "Social optimum (first best)",
+    "Deadweight loss",
+    "Pigouvian tax",
+    "Tax revenue and incentives",
+    "Lump-sum transfer",
+    "Property rights",
+    "Coase theorem",
+    "Transaction costs",
+    "Private information"
+  ]
+}

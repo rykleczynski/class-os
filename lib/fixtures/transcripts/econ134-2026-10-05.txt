@@ -1,0 +1,1336 @@
+	•	Yeah. And.
+0:05
+	•	So there should be some space in there. But you might have to.
+0:15
+	•	If there's open space, you might have to move in. Um. All right.
+0:19
+	•	So welcome back to economics 134. Uh, this is the most important lecture of the entire course.
+0:28
+	•	Before I start, I just want to briefly make a remark about what we did in the past.
+0:37
+	•	In particular,
+0:44
+	•	I had spent a lot of time writing down a number of equations that specified the payoffs of agents in an economy and agents with some functions.
+0:45
+	•	You and then I made some statements about how we can or cannot aggregate those preferences,
+0:54
+	•	and the goal was to try to make some statements about when we can use cost benefit analysis.
+1:00
+	•	That was done at a pretty high level. And so I just want to briefly introduce a metaphor that may or may not be helpful for you to understand.
+1:07
+	•	Really the core distinction I'm trying to make.
+1:14
+	•	And so if you imagine it's not in the middle of a heat wave, and we're instead in the winter and we're baking a pie,
+1:17
+	•	conceptually you could imagine asking two distinct questions, right?
+1:24
+	•	One, what is the best recipe to bake the largest pie given a set of ingredients?
+1:29
+	•	And then two, how we might split the pie up among the different people in the economy.
+1:34
+	•	The core takeaway I want you to have from our discussion of social choice is that these are just two different questions.
+1:40
+	•	And so you might think the Pareto criterion would say, well, let's change the recipe.
+1:48
+	•	If it's the case that everyone gets a slice at least as big as what they had, and then someone gets at least a bit more.
+1:54
+	•	The Pareto criterion with transfers are what we call Caldor hicks,
+2:02
+	•	or what we called efficient, is a more general assessment that says, well, you know,
+2:05
+	•	we could also change the recipe if it gives a larger pie and there is some way to
+2:11
+	•	divide it such that no one's worse off than at least one person is better off, right?
+2:17
+	•	Critically, we don't need to actually do that Division. If we were doing that division, then we would just be using the Pareto criterion.
+2:20
+	•	And you could imagine a number of reasons why, even though we now have this much,
+2:28
+	•	much bigger pie with our new recipe, perhaps someone is not as well off as they were.
+2:32
+	•	And so that's just all I wanted to say. And so we'll really think about many problems in this course.
+2:38
+	•	First, what is the efficient outcome.
+2:43
+	•	And then second, how the distributional implications are different across changing the rule that we were potentially using.
+2:46
+	•	All right, so that's my, uh, toy example. Let me now dive into the lecture.
+2:56
+	•	So the core result that we had from the models that we studied last week were that, you know, market failures might be pretty general.
+3:01
+	•	In particular, equilibrium outcomes when firms create externalities, like by definition of the way we say something is an externality.
+3:10
+	•	Those are inefficient. And so today I want to talk about four different ways to restore efficiency.
+3:18
+	•	And so these are policies that can change the decisions that individuals make in order to then deliver the efficient outcome.
+3:27
+	•	All four of these policies will get us to the first best, but they will have different properties.
+3:37
+	•	And so it will be quite useful to have thought about all four of them separately.
+3:42
+	•	I have crossed out quantity regulation. We did quantity regulation at the very end of Wednesday.
+3:47
+	•	Right. So there we said the firm cannot produce above the level Q first best,
+3:53
+	•	and we showed that was efficient because the firm would in fact take production all the way to that Q first, best level.
+3:58
+	•	I just have one remark I want to make about the regulation,
+4:04
+	•	and that's in the spirit of this sort of, well, we can bake the pie or we can slice the pie.
+4:08
+	•	I want to just briefly comment on how we would do distributional analysis, like given this quantity regulation.
+4:12
+	•	And so we showed that that quantity regulation gives you the the first best outcome.
+4:20
+	•	And we had calculated some capital delta which was the net benefits of the policy.
+4:26
+	•	And so to think about just the distributional effects of the policy, we just need to think about how the policy affects everyone in the economy.
+4:32
+	•	And there are only two agents in the economy that the first agent is the neighbor.
+4:41
+	•	So the neighbor is quite pleased with moving from the free market outcome Q star to Q first best, We know that CU first best is less than Q star.
+4:46
+	•	We know that D is increasing and convex, so there's a lot of value that the neighbor obtains from moving the economy away from
+4:56
+	•	what the firm wanted to what the society would want if we maximized joint surplus.
+5:02
+	•	If you remember the figure that we drew on Wednesday, we had like a slice, uh,
+5:10
+	•	we had a triangle that was the area under the curve of the marginal social cost curve and then the marginal cost of the firm.
+5:17
+	•	And we said that entire I guess it was sort of like a wobbly parallelogram. That object was the total benefits to the neighbor.
+5:25
+	•	And then we showed how, like the lower part of that triangle was this difference in the firm's profits Pi q star minus pi q best.
+5:33
+	•	So at least based on what we know about this regulation, which is that it is just a rule that says,
+5:42
+	•	okay, firm, we're taking away your freedom to be a free market operator.
+5:47
+	•	We're not letting you produce beyond Q for as best.
+5:52
+	•	The regulation will have sort of this additional economic outcome in addition to getting us to the first best.
+5:55
+	•	If all it does is, say firm, you can't produce beyond Q star.
+6:03
+	•	Then there is a real distributional effect on the firm, and we can quantify what it is.
+6:07
+	•	We know it's not as big as the benefit to the neighbor. We showed that last week.
+6:12
+	•	But it's still interesting right? It's important for us to sort of communicate the different effects the policy would have.
+6:17
+	•	And it's also important for us to think about incidence of the policy and then how we could get back to Pareto efficient outcome.
+6:23
+	•	I see you looking for a seat. I think there should be a couple of seats up here.
+6:34
+	•	Um, as a just side announcement, if you're in lecture two and you're here in lecture one, you're not supposed to be here.
+6:39
+	•	It's okay if you are, but not if there's not enough space for people in lecture one.
+6:48
+	•	So try to be like responsible and create space for students who want to stay.
+6:52
+	•	Not that I think you're not being responsible. Okay, so this is all I have to say about the quantity regulation.
+6:57
+	•	Let me just do it geometrically and then we can. Uh, sorry.
+7:02
+	•	Let me introduce our next policy, and then we'll talk about the geometry of the distributional effects.
+7:07
+	•	So the first policy just mandated what the firm could do.
+7:13
+	•	The second policy will influence the firm in a different way.
+7:18
+	•	And it will be something that you may have seen in other microeconomics classes.
+7:22
+	•	We'll have a different perspective on it today.
+7:26
+	•	And I want to start by just taking the first order condition of the problem that we have been studying for the last week.
+7:28
+	•	And so this first order condition, right. Recall we're maximizing total surplus of the economy just has two pieces.
+7:36
+	•	The firms profits Pi. And then the damage to the neighbor D.
+7:41
+	•	So that we call that object W? And if we were thinking about finding the Q first best, which is the efficient level,
+7:45
+	•	we just could take the first order condition with respect to that objective.
+7:52
+	•	And so these three lines are just three different ways of writing down that first order condition.
+7:56
+	•	The first is just okay. Well, we want that Q to be such that kind of like, uh, on either side welfare or false.
+8:01
+	•	And that's why we get to w prime being zero. It's like the peak of that curve.
+8:09
+	•	The parabola. The second line is just saying okay. Another way to think about that is just break w into the two pieces pi and d.
+8:14
+	•	And so there we equate the marginal profits of the firm with the marginal social cost.
+8:21
+	•	And then this third line is just further breaking the profit function pi prime into its two constituent components.
+8:26
+	•	When the firm changes q by a little bit it gets P because it sold the good for P, and then it incurs this C prime, which is the marginal cost.
+8:33
+	•	The reason that I wrote this down is because I want us to then directly proceed from this
+8:44
+	•	characterization of the first best to another policy that we could obtain the first best with,
+8:52
+	•	which is, well, think about what the firm solves. So the firm is maximizing their profits.
+8:59
+	•	And so one natural solution to thinking about how to restore efficiency in this
+9:06
+	•	imperfect market is to ask the firm to directly internalize the externality.
+9:12
+	•	And so in particular, you can see, like if the firm is already maximizing its profits.
+9:20
+	•	The only difference between the firms problem here without any intervention is p minus C prime equaling zero.
+9:27
+	•	And then the social planner's problem which is p minus C prime minus d prime is just that d prime.
+9:32
+	•	And so this is our second solution which is tax tau We say tax.
+9:38
+	•	Really, it's just a relative price. So what's important is that the firm's problem changes for every unit of output.
+9:46
+	•	So that in particular it maximizes some objective. Here we've written it as pi tilde of q.
+9:56
+	•	And this objective is the same objective that the firm had before.
+10:02
+	•	But then it has this additional ingredient which is the minus tau times q.
+10:06
+	•	And so you can verify the first order condition that the firm now faces under this transform problem.
+10:10
+	•	When it's trying to maximize this pi tilde is just going to be p equals c prime sorry plus d or tau which is this definition of the tax.
+10:16
+	•	And so this is the second main solution that we have.
+10:30
+	•	We don't need to interfere with the firm beyond specifying this relative price.
+10:35
+	•	All we need to do is set up this regime and then let the firm do what it does best, which is maximize profits.
+10:41
+	•	And so in some of the same way that our quantity regulation was allowing the firm to sort of produce up until that point at which it hit the cap.
+10:48
+	•	This is a rule that's sort of combining what we know about the equilibrium play of the firm with what we intend to have happen,
+10:57
+	•	which is this first best outcome. And this is something that is named for a very distinguished British economist, Arthur Pigou.
+11:05
+	•	Any comments or thoughts or questions about this? Before we dive a little bit deeper into the big Vivien tax?
+11:14
+	•	Yes. And tell us your name too. Aha.
+11:24
+	•	So your question is why we made the tax the derivative of D. Yeah.
+11:33
+	•	So this is a tax for each unit of output. So that's critical right.
+11:37
+	•	And so the firm is when it's deciding how much to produce. Right.
+11:42
+	•	You could think before it had an Excel spreadsheet. And it was it had the price of the good and it had the cost function.
+11:46
+	•	And now it just has another column in the Excel spreadsheet, which is that for every unit of output that it produces, it has to pay the tax tore.
+11:51
+	•	Um. All right.
+11:59
+	•	So this I mean, I said that this is the most important lecture.
+12:05
+	•	This is the most important concept in this lecture because it's just immensely powerful.
+12:08
+	•	And I want to emphasize sort of some of its power and arguably beauty in a few different ways.
+12:13
+	•	First, I just want to geometrically discuss how this tax works.
+12:23
+	•	So this is our marginal diagram. So remember the horizontal axis here is the firm deciding how much to produce.
+12:26
+	•	The vertical axis you could think about as like in dollar units right.
+12:33
+	•	There were two curves. We had the horizontal curve align here P that's just the value of the firm for every unit.
+12:37
+	•	And then the firm was subtracting the costs this purple line that it had.
+12:44
+	•	And so we had an equilibrium that was Q star. And so well what's Q first best.
+12:48
+	•	We want to shift this marginal cost curve upwards to take into account that there is this harm.
+12:54
+	•	Now to our our neighbor friend. And now I'm just writing that transformation.
+13:01
+	•	This is the same curve as before. But instead of writing D prime I'm just writing tau.
+13:06
+	•	Because recall tau is this marginal damage to the neighbor.
+13:09
+	•	And so you can see how like with if you just say, all right, we can pick some tau with.
+13:15
+	•	As you trace out the firm's solution to different tau's, you can really make the firm produce anything.
+13:20
+	•	What we wanted to do is produce this Q first best, which is why we have tau exactly equal to this D prime.
+13:27
+	•	All right. How many of you have seen, like, deadweight loss associated with taxation?
+13:40
+	•	All right. Quite a lot of you. And so this is a this is a tax, right.
+13:47
+	•	The idea of deadweight loss is well, people wanted to do a thing before you showed up to tax them.
+13:55
+	•	And then when you tax them, if it changes their behavior, then you've created what we call loss.
+14:01
+	•	We call it like deadweight loss. But that's just for historical reasons.
+14:08
+	•	Like what is the loss you've created? Well, we know that the person was interested in doing a thing before you showed up to intervene.
+14:12
+	•	And so the fact that you've intervened and then changed what they're doing. If we believe revealed preference,
+14:18
+	•	that person can't be better off and probably is worse off because they probably had
+14:24
+	•	a reason for picking the thing they wanted to do before you showed up to interview.
+14:29
+	•	In this model, there is also deadweight loss, right?
+14:35
+	•	We are distorting the allocation. And something interesting about this model is that if you look at the deadweight loss triangle,
+14:38
+	•	so so we calculate it just the way we do in a standard micro class,
+14:45
+	•	where we just take the point that we were before the tax here, this Q star,
+14:51
+	•	and then the point where we are now after the tax, and then we just integrate under the curve of the payoffs of the agents.
+14:55
+	•	This is really just the firm wanting to have profited this additional slice by being able to produce a Q star in star Q first.
+15:03
+	•	But what's interesting here is that the deadweight loss is dominated by the protection of the neighbor.
+15:12
+	•	Right. So there is deadweight loss. We're not trying to pretend that there isn't.
+15:22
+	•	It's just in this class of models where the firm is producing efficiently.
+15:26
+	•	But then there is an externality The distortion created by the externality is always
+15:31
+	•	greater than the distortion that we use to correct the choice that the firm made.
+15:36
+	•	So that's the sense in which you should absolutely find this, these results consistent with what you've done before.
+15:43
+	•	But in this class of models we want a tax because it brings us to efficiency.
+15:50
+	•	There's a cost. And this is of course a distributional effect. But it's dominated by the benefit as we showed on Wednesday.
+15:54
+	•	All right. Let me say a couple more things about the provision tax.
+16:04
+	•	So the pavilion tax is defined here as it was on two slides ago.
+16:09
+	•	It's just a tax that is equal to this marginal social cost.
+16:14
+	•	Right. A few comments. Right. So you should just think intuitively in coming back to what we did at the very beginning of our very first lecture,
+16:19
+	•	not quite the very beginning, but we had the definition of externality. And we wave your hands about how well an externality is exactly when the agent
+16:28
+	•	is doing something that's affecting someone that they don't think about.
+16:35
+	•	So the Peruvian tax is really just turning the externality into something that's not an externality.
+16:40
+	•	It's just saying, well, look, the firm now needs to kind of take into account this harm that they're doing to the neighbor.
+16:45
+	•	And this is the sense in which not only do markets generically fail,
+16:53
+	•	but it's also we have kind of a very clear prescription to then restore efficiency.
+16:57
+	•	One very critical comment I'd like to emphasize, and it's not so intuitive.
+17:05
+	•	So the marginal damage function is this non-linear thing.
+17:11
+	•	So depending on how much the firm produces the marginal harm to the neighbor changes.
+17:16
+	•	So if the firm isn't doing anything the neighbor is kind of okay with what's happening.
+17:22
+	•	But then as soon as the firm as the firm starts to take Q way out into very high values.
+17:26
+	•	The marginal damage in addition to the total damage is increasing.
+17:31
+	•	So it's important to think about where we pin down the marginal damage function to restore efficiency.
+17:36
+	•	And as you can see from the definition, this is like a function that's evaluated at a specific point.
+17:42
+	•	It's evaluated at the Q first best. And why is that?
+17:47
+	•	Well, you could just think about the algebra that we had with the algebra just said we want w prime equals zero.
+17:51
+	•	We know w prime equals zero when we're at q first best.
+18:01
+	•	And so if you look at that expression that we had of w prime I'm sorry to go back.
+18:06
+	•	Um, that's exactly vanishing when d prime is evaluated at the Q first best.
+18:14
+	•	Right. So in particular,
+18:21
+	•	one corollary of this remark at the end of this slide Is that if you see an economy that's in a free market and the firm is producing some Q star,
+18:23
+	•	and you can calculate its marginal damage. If damages are non linear, like if there's any convexity in the damage function,
+18:35
+	•	then that marginal damage that you calculate IQ star is not actually the tax you want.
+18:45
+	•	In fact you want something a little bit less generically.
+18:51
+	•	And the intuition for that you should think well so okay suppose we we set the tax at D prime Q star.
+18:57
+	•	Right. Then the firm is going to pull output back a lot because it has this very high tax.
+19:04
+	•	And actually we'll pull it back farther than we want it to put to do.
+19:10
+	•	And so that's another way of potentially seeing why this tax needs to be evaluated at Q first best.
+19:15
+	•	Okay. So this is our provision tax. We can think now about, I guess, a few properties of this tax, right?
+19:24
+	•	So in particular I want to think about these distributional outcomes. Of course, in bigger economies with lots of different people.
+19:32
+	•	I think about everyone here. We just have two entities.
+19:41
+	•	And there's an interesting twist that we didn't have in regulation, which is that now we collect this tax revenue.
+19:44
+	•	And so it might be interested in doing something with it. So some of the environmental markets that we study, like collect quite a lot of tax revenue.
+19:53
+	•	And how you use the tax revenue can have pretty different consequences for the distributional effects of the policy.
+20:04
+	•	So to think about the distributional consequences of our specific tax, let's define the revenue that we collect some capital R.
+20:12
+	•	That's just going to be the per unit tax tor times the total amount that the firm produces shares best.
+20:22
+	•	And you could also think about it as d prime of Q first best times Q first best the same objects.
+20:30
+	•	Just substituting the definition for Tor here okay.
+20:37
+	•	So now I want you to think, all right we've imposed a tax.
+20:41
+	•	And now we have this revenue. And so we actually have a lot of options as a designer of the policy.
+20:46
+	•	Because we can allocate this revenue in a lot of ways.
+20:54
+	•	Uh, the most natural thing you might think about or maybe not,
+20:59
+	•	but I think it's pretty natural to think about is, well, like, who's being harmed by the policy?
+21:04
+	•	So the firm, of course, is being harmed. The firm is the one that's very sad to no longer play its free market game.
+21:11
+	•	And so there's no reason we can't just give the firm more resources,
+21:19
+	•	But I want to emphasize this bullet point here, which is what I've written as, but must preserve incentives.
+21:23
+	•	What I mean by that is that we can't distribute resources back to the firm in a way that undoes the Peruvian tax.
+21:31
+	•	So that's a little weird to think about.
+21:43
+	•	Let me say it another way, which is, well, you could transfer resources lump sum, but not rebate resources in a per unit fashion.
+21:44
+	•	So we can parse that. Like what does that mean. It's kind of philosophical.
+21:56
+	•	It just it means that we can give the we can write the firm a check for any amount of money.
+22:02
+	•	But what's critical is that the firm doesn't believe that what it does will affect what's on the check.
+22:08
+	•	So suppose you wanted to make the firm, I guess, whole.
+22:18
+	•	And you're like, okay, firm, well, you're paying the tax, so let's just rebate you the tax.
+22:22
+	•	Um, that won't also equal make the firm hold because they are also producing at a lower level.
+22:27
+	•	So it's not just that they pay the tax. They also need to be compensated for operating at a different level of production,
+22:34
+	•	which is suppose you were giving the firm back Tor every time you took Tor away from the firm.
+22:40
+	•	Then the firm's problem would just be the original firms problem. It would just be the maximization of Pi.
+22:48
+	•	And so surely we've made the firm kind of better off or not as as bad off, but we've totally undone the incentive that the tax creates.
+22:54
+	•	So I want you to think as of us compensating the firm, but really like in sort of.
+23:06
+	•	Ways that don't depend on how the firm behaves. So in practice,
+23:14
+	•	one example of this is if we are setting up a big market or a big tax program and say there are 100 firms that are doing something that's really evil.
+23:19
+	•	And so we've decided that there's a certain amount that they should all pay in taxes, right?
+23:30
+	•	We could say, all right, every time any of these firms produce one unit of that, good, we assess them the tax law.
+23:35
+	•	Right. But then we say, all right. In addition to doing this.
+23:42
+	•	We know all the sizes of the firms initially.
+23:49
+	•	And we will write all the firm's checks or transfer them money into their like, whatever financial intermediation platform they're using.
+23:52
+	•	Um, we transfer to every one of those firms just a fixed amount.
+24:05
+	•	That's the size of the firm that they are before we've implemented the policy times something say like the tax we expect, Right.
+24:10
+	•	All that's important is that this is is making the firm kind of no longer as worse off.
+24:19
+	•	But as long as the firm is paying at the margin for this externality, we're still in the first place.
+24:25
+	•	Okay. We could also think about transferring some of the revenue to the neighbor.
+24:34
+	•	So often this happens in practice. It's interesting because the neighbor we sort of showed is already strictly better off.
+24:38
+	•	And so if we're giving them revenue than that, even that makes them even better.
+24:45
+	•	Right. And interestingly, and this is partly why I just emphasized this D prime of times Q being another way to express revenue.
+24:49
+	•	You can see that if we give the revenue entirely to the firm, then the neighbor is actually better off than if the firm ceased to produce.
+24:58
+	•	In the case in which we both implement the tax and transfer all the resources that we collect from the tax to the firm.
+25:06
+	•	Right. The reason for that is just that if you have like a damage function which is increasing, right, you can see like this is d of q and so d prime.
+25:15
+	•	Of q is going to be here and it's increasing.
+25:37
+	•	And so in particular the like integral from zero to q first best of d prime of q
+25:42
+	•	DK right is always bounded below by this tax revenue amount at the upper bound.
+25:52
+	•	But this is more of just a curiosity. What I'm attempting to emphasize is just that as soon as we now have all this tax revenue,
+26:07
+	•	it's possible to attain a wide range of allocations in the economy.
+26:17
+	•	So let me trace some of them out now. On the horizontal axis I'm showing the payoff to the neighbor vertical axis I'm showing the payoff to the firm.
+26:20
+	•	And so I want us to imagine we're in a world where we've had we've posed the Pagadian tax.
+26:30
+	•	And so we would want to contrast that world with where we were in the free market.
+26:36
+	•	So that would be this point here at the first best.
+26:41
+	•	We now have moved the payoffs to the neighbor to the right,
+26:45
+	•	because the damages the neighbor incurs under the first best are less than under the free market.
+26:49
+	•	The firm's payoffs have fallen right a little bit, because now the firm is producing Q first best.
+26:54
+	•	So we could think about like,
+27:01
+	•	this frontier as being like the class of allocations that are efficient and then just choose to reallocate resources across these two entities.
+27:02
+	•	So in particular, if you look here at this point, this minus d q first best plus r,
+27:11
+	•	this is imagining the world that we posited at the very end of the previous slide, which was let's just give all the money to the neighbor.
+27:18
+	•	I'm not saying that that's something we want to do. It's something we can imagine doing, and it's something we can calculate and think about.
+27:27
+	•	We could give the neighbor less than the revenue, right?
+27:38
+	•	So suppose, for example, we parameterize like the share of revenue that we give to the neighbor with some theta.
+27:43
+	•	Then I apologize.
+27:54
+	•	This is parameterizing the amount of revenue that we give to the firm with theta one minus theta is the share that we keep to the neighbor.
+27:55
+	•	You can see how if we change theta from 0 to 1, we effectively are moving the payoffs upwards for the firm,
+28:05
+	•	and downwards for or to the left for the neighbor, because we're just taking away some of the resources from the neighbor.
+28:15
+	•	But I, as I emphasized, like this, revenue is never going to make the firm fully better off than it was before the intervention.
+28:25
+	•	And you can see that by just looking at where the firm is here at Pixar.
+28:40
+	•	We need to transfer some additional resources to the firm, at least in this world where the firm is paying the tax.
+28:47
+	•	Right, because the firm is paying the tax. So if we take theta to one, then the firm's payoffs go all the way back to Q for its best.
+28:53
+	•	But there's still a little bit of resources that the firm needs, because in addition to having to pay the tax, it's had to distort its allocation.
+28:59
+	•	Okay. Thoughts or comments about this before we think about comparing like the tax with the regulation in a slightly more sophisticated way.
+29:08
+	•	Yes. And tell us your name. What if we were to give like conditions on the lump sum back to the first place?
+29:24
+	•	If you have to invest in like a more sustainable practice? If you're believing in like non nonrenewable resources,
+29:32
+	•	what if like that money gets given with the condition that you have to invest in solar or something like that.
+29:38
+	•	Yeah. Yeah. So that's a great question.
+29:44
+	•	We'll actually think about a model where there's also clean technology at the very end of the lecture, or at the very end of the course,
+29:46
+	•	you should think about like if there are multiple actions you want the firm to undertake, they create different externalities.
+29:54
+	•	Then you want a correction for each of them.
+30:01
+	•	So you might think like we want the firm to stop producing Because the act of producing the smog is really hurting the neighbor.
+30:04
+	•	But then maybe also like the firm is well situated to make a nice park because perhaps the neighbors have already experienced a lot of suffering,
+30:12
+	•	and so they need the park to make them healthier because they'll be outside.
+30:20
+	•	So in that case, you would think, well, all right, let's tax the firm's output.
+30:24
+	•	But then also let's ask it to do the park so we can subsidize its production of the park.
+30:28
+	•	So that would be how I would think about conditioning different policies on other actions the firm takes.
+30:33
+	•	It's a very good question. All right.
+30:40
+	•	So these are the some of the distributional effects of the tax.
+30:46
+	•	Remember the regulation was only able to give us one distributional effect which was just to put us at this point here.
+30:51
+	•	Pie q first best. Uh d q first best.
+30:59
+	•	But the tax is sort of allowing us to do something more since we have the revenue.
+31:04
+	•	Okay, so let me we have four.
+31:09
+	•	We have four policy solutions. Right? We've done two. I want to compare these first two before we go into the third one to do that comparison.
+31:13
+	•	I want us to imagine the world is slightly more complicated than it is in in the model that we've studied so far.
+31:25
+	•	So before that, I wanted to just emphasize, like up until now, like a tax and a quota look very similar.
+31:32
+	•	There's no difference in terms of efficiency because they both get to queue first best.
+31:39
+	•	And when we ask whether something is efficient, we just say, well is it at the Q first best.
+31:43
+	•	We showed there could be different distributional outcomes.
+31:48
+	•	What we might be interested in, in knowing when or when not to kind of propose a quantity or a price mechanism.
+31:53
+	•	And you could think about that maybe as it's being related to the kind of cost of implementing these different policies,
+32:02
+	•	maybe related to simplicity, etc..
+32:09
+	•	And so what I'd like to do in the next few slides is just think a little bit about a certain kind of implementation cost,
+32:12
+	•	and I want to do it by imagining that now we have a bit less information than we've had so far.
+32:18
+	•	So as a starting point, if we are trying to decide, do we calculate the tax or calculate the regulation?
+32:26
+	•	Both of those problems require the same amount of computation. And the reason comes from this observation that we had made,
+32:41
+	•	which is that the marginal damage is changing with Q and so it's not enough to just know the damage function.
+32:51
+	•	To get to the tax, we have to also calculate where we should be on that damage function.
+33:00
+	•	And so the Peruvian tax requires solving precisely the same optimization problem as the regulation.
+33:06
+	•	There are two exceptions to that statement. Right.
+33:16
+	•	So this this is what this is saying is well like the information requirements of both policies are the same.
+33:20
+	•	So there's no difference a priori. But there are these two special cases which I'd like to emphasize.
+33:29
+	•	So the first is that if D prime is linear sorry if D is linear.
+33:36
+	•	If d prime is a constant, then we don't need to know where q first best is.
+33:43
+	•	We just impose the tax at new prime, and then we let the firm do what it wants to do.
+33:51
+	•	So that seems plausible. There's a reverse way of getting to a similar story in the opposite direction,
+33:59
+	•	which is, you could suppose damages, instead of being very flat, are very, very curved.
+34:08
+	•	In particular, imagine like there's just some threshold level.
+34:17
+	•	Q4 is best where we don't really care about damages up until that point,
+34:21
+	•	but then we absolutely care so much that we never want to go beyond that threshold level cue for stress.
+34:26
+	•	And there are a lot of examples in environmental economics and the natural environment and in medicine,
+34:34
+	•	where certain phase transitions do create these kinds of thresholds where above certain levels,
+34:40
+	•	something that's very safe suddenly becomes highly hazardous or highly toxic.
+34:45
+	•	A very good example of these kinds of thresholds are species. You might want a river to to be there.
+34:51
+	•	And as soon as the river is dry, everything dies. And then there's no going back.
+34:59
+	•	But as long as there's some water going through the river, maybe it's okay.
+35:03
+	•	And so what I'd like to do is generalize this intuition by talking through a very famous result in environmental economics,
+35:07
+	•	which shows that this kind of intuition actually extends to a much wider class of environments,
+35:16
+	•	which are environments where we don't actually know exactly what the firm's payoffs are.
+35:23
+	•	But we need to make a policy decision under that uncertainty.
+35:30
+	•	And so in that case, we might be able to decide whether like a tax or a quantity instrument is is preferable.
+35:37
+	•	And so this is due to Marty Weitzman who is passed away,
+35:44
+	•	but was until his death a very active and exuberant economist, primarily at at Harvard, at MIT before that.
+35:48
+	•	So, Marty sort of imagines a world where, okay, the only source of uncertainty is about the marginal cost of the firm.
+35:57
+	•	So suppose the firm's marginal cost might be higher or might be low.
+36:04
+	•	We don't know. And as I said in my, uh, on the previous slide,
+36:08
+	•	I want you to imagine that we have to commit to something before we learn what the firm costs look like, specifically to a quarter or a tax.
+36:14
+	•	Once we've decided what the tax or the quota is, then the firm learns its cost and then it decides how much to produce.
+36:27
+	•	And it does that by maximizing profits given its learning of the cost.
+36:35
+	•	So in that class of models, you could think about sort of where the sources of uncertainty end up getting loaded onto.
+36:40
+	•	By which I mean like under the tax. We don't actually know what quantity will prevail in equilibrium.
+36:48
+	•	Why is that? Because we commit to the tax. Then the firm draws its costs.
+36:56
+	•	And then we'll maximize profits by setting the price equal to the marginal cost that it's drawn.
+37:01
+	•	Plus the tax that it pays. And so there will be fluctuations in the Q that solves that first order condition
+37:08
+	•	for the firm in proportion to how much the firm's costs are moving around.
+37:14
+	•	But we know how much we've changed the cost of the firm.
+37:20
+	•	And so another way to think about that is, well, now the firm kind of can respond to its cost shocks.
+37:24
+	•	So if it gets a really high cost shock it will produce less. And if it gets a low cost shock it will produce more.
+37:29
+	•	In contrast, if we fix the quota right, we load uncertainty onto the cost component of the production schedule.
+37:37
+	•	Because we've said firm, you have to produce Q no matter what. And so then whatever happens to the firm will I leave the firm to have to produce.
+37:46
+	•	Q and so sometimes that will be very costly and sometimes it won't.
+37:56
+	•	And so the core Weitzman point is that we can use this logic to decide which policy we should or should not prefer.
+37:59
+	•	And we can do that just by looking at the curvature of the damage and the cost functions, and which is more or less curved.
+38:08
+	•	Yes. Is this the same kind of reasoning why we don't have Q star as the quantity for the product?
+38:17
+	•	Like that's not what we did. That's not where we defined the damages. I hadn't thought about that connection until now.
+38:28
+	•	Um, I think you so I'm not.
+38:36
+	•	I won't derive this. The we won't do the algebra for this model because it's involved.
+38:40
+	•	But if you were to do it, the way you do it is you're.
+38:47
+	•	So suppose you're doing the quantity instrument, right? You are still picking like a first best quantity at the start.
+38:51
+	•	But the way you pick that first best quantity is to maximize the expected utility to society based on the different cost shocks of the firms.
+38:59
+	•	So you know that the firm is going to have these different kinds of costs.
+39:10
+	•	You don't know which costs they're going to draw, but you do pick the the first best quantity.
+39:13
+	•	And so your quantity looks like a first best.
+39:18
+	•	But it's kind of second best because you don't have the full information. But it does maximize the payoff that you have at the start of this game.
+39:21
+	•	And similarly like if you pick the price, the tax, right, you are also effectively doing something that looks promising.
+39:28
+	•	It's kind of like t equals d prime of Q, but it's taking into account the randomness associated with the decision.
+39:37
+	•	So all of this and it's a great question because something that's underlying
+39:44
+	•	this Model is that the regulators are trying to do the best thing they can,
+39:50
+	•	in the precise sense that it's trying to maximize total welfare. And this isn't trying to stack the deck in favor of a tax or a quantity.
+39:56
+	•	They're both being set as intelligently as they can be to maximize total surplus.
+40:05
+	•	The core point is that if you have to pick one or the other, it can.
+40:12
+	•	It's actually the case that one of them is more efficient than the other, depending on this relative curvature.
+40:17
+	•	And so in particular if damages are steeper then you do want to pin down the quantity.
+40:22
+	•	And then if the costs are steeper.
+40:27
+	•	And this in the exact sense of like C double prime being greater than double prime, that's when you want to fix the tax.
+40:29
+	•	So to draw this together. Without any uncertainty We have already shown that the Peruvian tax and the regulation are both first best.
+40:41
+	•	They're both efficient. In a world where we don't have information about the firms.
+40:55
+	•	The outcome that we eventually get won't necessarily be first best,
+41:02
+	•	but we can get an outcome that's better than the outcome that we would get under an alternative policy.
+41:08
+	•	If in the case where damages are steeper, we use a quantity instrument rather than a tax instrument,
+41:16
+	•	and then vice versa for the case in which the costs are steeper.
+41:22
+	•	Let me be concrete about this kind of comparison and the result in this paper.
+41:27
+	•	And I'll do that by giving a couple of examples. So I do a lot of work on hydrology and water rights.
+41:33
+	•	So you could think about like a river system. And so dams are very large scale civil infrastructure, and they can be sensitive to too much water.
+41:40
+	•	So you can kind of break the dam. And if you don't have any water, then that can cause a lot of irreversible consequences to the ecosystems.
+41:50
+	•	And so you might think that we shouldn't necessarily use prices to allocate water.
+42:00
+	•	We might want engineers to just calculate explicit quantities,
+42:06
+	•	because the damage of getting that quantity just a little bit wrong might be very, very, very large, whereas the costs might not be so steep.
+42:10
+	•	Another example could be one that we'll think a little bit about when we talk about climate change.
+42:22
+	•	So we talked about South Africa in lecture one.
+42:28
+	•	And I had asserted that it was at a certain point in time, like the most coal intensive country in the world in terms of electricity generation.
+42:31
+	•	And so we think about the damage of climate change. One way to think about the damage function is in terms of like a specific unit of carbon.
+42:39
+	•	And so even if you think the way we affect the climate is very non-linear,
+42:49
+	•	which I think there is some good reasons to think that if you ask the narrower question,
+42:54
+	•	like if I put one more ton of carbon dioxide from South Africa in a given year into the atmosphere, will that change the marginal damage?
+42:59
+	•	Well, that's like one out of 42 billion of the different units that are all going into the atmosphere in a given year.
+43:11
+	•	And so you could say, well, maybe the damage function is pretty flat, at least around where South Africa is going to affect the global climate.
+43:17
+	•	But you might think there's like very non-linear costs. So in particular,
+43:26
+	•	you could think that certain industries that are very reliant on electricity might be
+43:31
+	•	very sensitive to small changes in commodity prices or input prices like electricity.
+43:37
+	•	And in that case, you might want to use a tax rather than a quantity.
+43:42
+	•	And this is a passage from the National Treasury, which is just full of a bunch of economists.
+43:48
+	•	In 2013, they did a study to try to think about climate policy. And they articulate exactly this logic.
+43:54
+	•	So they say, look, taxes. Give certainty with respect to the price, but not regards to the quantity or emissions reductions.
+43:59
+	•	Caps give you certainty for the emissions reductions, but not of the price.
+44:05
+	•	In South Africa they had concluded, well,
+44:09
+	•	carbon tax makes more sense to give us the flexibility while also addressing environmental problems such as climate change.
+44:11
+	•	And indeed, in 2019, South Africa did implement a carbon tax.
+44:17
+	•	In contrast to many other places, such as, for example, here in California where we have a quantity rule, that's not a price rule.
+44:24
+	•	Okay. So this is my diversion into comparing taxes or the tax and then the quantity regulation.
+44:34
+	•	Now, I want us to step back to our outline of these four policies and think about a third policy.
+44:45
+	•	And to think about that, I want you to put your head back into the model that we've had through policy one and two.
+44:55
+	•	So there's no more uncertainty. We have our neighbor.
+45:03
+	•	We have our firm, we know Pi, we know D, and we're just interested in thinking about how we can use the structure of the problem,
+45:07
+	•	what the neighbor wants, what the firm wants, and what we as society wants to maybe get to the efficient outcome.
+45:16
+	•	And so in order to do that, I want to define sort of two classes of policy solutions.
+45:24
+	•	There'll be three A and three b. So this is three A. And we'll call this solution private property rights.
+45:29
+	•	And let me be a bit more specific by what I mean when I say private property rights.
+45:37
+	•	So the firm and the neighbor are private entities.
+45:42
+	•	And I want you to imagine that prior to producing the output, the firm has to get permission from the neighbor to produce some level, say.
+45:45
+	•	Now, now let's call it Q tilde, because I want us to imagine that the firm could get permission to produce some quantities, but maybe not others.
+45:52
+	•	So that's just our q tilde, which is going to be floating around changing.
+46:03
+	•	So this is really a property, right? I would argue like we're giving the property right to the the neighbor.
+46:07
+	•	So one very simple way of thinking about this is maybe like the neighbor actually just owns like a big piece of land.
+46:16
+	•	And the firm is a farm farmer who's operating on the land.
+46:23
+	•	The neighbors say they don't actually they're not interested in agricultural production. The farmer is the one that would produce.
+46:27
+	•	But before the farmer can produce, they have to get permission from the neighbor to do their they're growing on whatever amount of land,
+46:32
+	•	and so then that amount of land would be safe.
+46:41
+	•	So this is a model where we've now changed the setup because we've added this extra layer of kind of permission and ownership.
+46:43
+	•	Whereas before we just said okay, the firm could do whatever it wanted.
+46:53
+	•	And then the neighbors suffered. But there was no point at which the two parties got together to talk about this situation.
+46:57
+	•	So you could think about, like this private property rights class of solutions as getting the two parties together to try to talk about a solution.
+47:04
+	•	And particular I want you to think about, well,
+47:13
+	•	like the firm being able to sign a binding contract with the neighbor that lets them produce a Q tilde.
+47:15
+	•	And I want you to think of that contract in terms of like an amount of money that the firm gives the neighbor, say t.
+47:24
+	•	So this is be consistent with like renting some amount of space for the firm's factory.
+47:33
+	•	And so they decide on the amount of space. And maybe they offer the neighbor like a full menu.
+47:40
+	•	They say, well, if you give me this much space, I'll pay you that much. But then if you twice as much space, I'll pay you maybe not twice as much,
+47:44
+	•	but a bit more than what I would pay you just for, like the first amount of space. So this could be just some arbitrary thing that depends on q tilde.
+47:50
+	•	And so we can then think about the payoffs in this extended game or this enriched game.
+47:56
+	•	Well the neighbor now is going to have two things that it cares about.
+48:02
+	•	The first is the damage function. This minus d. And the second is the contract that it signs with the firm.
+48:06
+	•	And this is something that the neighbor cares about because they just directly get that transfer t.
+48:16
+	•	And then the firm's payoffs have changed because now they have to pay some amount to the neighbor.
+48:22
+	•	Okay. So then the question, I think a potentially that you would be not surprised that we're going to ask is what happens in this, in this world.
+48:33
+	•	And to think about what happens in this world, I want us to think about it from the perspective of the two different agents in the model.
+48:43
+	•	Right. So think about the neighbor first, that the neighbor is only interested in the firm's output before we have the contract stuff.
+48:49
+	•	To the extent that they are harmed through the damage function D.
+48:59
+	•	And so because we know the damage function D, we know that if we increase q a little bit, then the neighbor suffers by d prime of q.
+49:03
+	•	And so the marginal value for increasing the output of the firm right is just minus d prime of q.
+49:13
+	•	That's how much the neighbor sort of needs to be paid in order to accept an offer.
+49:20
+	•	That sort of pushes us into an additional increment of output.
+49:25
+	•	Q so that's just coming straight from the firm's problem or the neighbor's problem.
+49:31
+	•	The firm will have kind of a symmetric perspective.
+49:37
+	•	So the firm's payoff function is just pi prime of Q. And so the firm will be interested in buying the right to do the production,
+49:41
+	•	buying some amount of q tilde only to the extent that it can then use that room that it creates to create value, which is that p minus c prime.
+49:53
+	•	And so we know that the firm is never going to pay more than what it can actually do with the additional rights that it's bought at the margin.
+50:02
+	•	Okay. So this is the payoff structure of the model.
+50:16
+	•	And I now want to just assert that in this environment we will get to the first best.
+50:21
+	•	And so that's a claim. And we can prove the claim and we'll prove it by contradiction.
+50:32
+	•	Because it will turn out to not be difficult to show that if the allocation q tilde is anything that isn't the first best.
+50:41
+	•	There would have been a contract that the neighbor and the firm could have signed that would have made them a better off.
+50:53
+	•	And as a consequence, we know they would have contracted to the efficient allocation.
+51:02
+	•	So to start, just imagine that Q tilde is strictly above q first best.
+51:06
+	•	So that means that the neighbor and the firm have somehow agreed on a level of output that's above the Q first best.
+51:13
+	•	So we know a few things about that. So one thing we know is that the marginal damage to the neighbor at this q tilde,
+51:21
+	•	which is strictly greater than Q first best is greater than the marginal profit of the firm greater than p minus c prime q tilde.
+51:29
+	•	Right. Why do we know that? Well remember like the structure of the the problem.
+51:39
+	•	The point at which Q was above q first best was the point at which the marginal
+51:46
+	•	damage to the neighbor had moved beyond that marginal profit of the firm.
+51:54
+	•	And so we've gone too far.
+52:02
+	•	And so if but but if this is the case right then and we know that the neighbor needs at least d prime of Q to be compensated,
+52:05
+	•	we can use the other piece of what we have on the previous slide, which is like,
+52:14
+	•	look, the firm doesn't want to pay more than its marginal profit to do this.
+52:17
+	•	So if somehow the firm and the neighbor had reached some Q tilde, that's a lot higher than Q first best.
+52:21
+	•	Not even a lot. Any epsilon above Q4 is best. Then we know that can't have been the case,
+52:29
+	•	because there would never have been a world where the neighbor would have accepted a deal that the firm would have been willing to pay.
+52:37
+	•	Because we've moved beyond that point where there are positive gains from trade.
+52:45
+	•	The the reverse holds in the same effectively the same way.
+52:54
+	•	So if we have a q tilde that's less than q first best.
+52:58
+	•	Now we know that we could go a little further to give the firm some more profits before harming the neighbor by too much.
+53:01
+	•	And so in that case, the marginal damage to the neighbor is less than the marginal profits of the firm.
+53:12
+	•	But in that case, the firm has an opportunity to buy additional rights from the neighbor.
+53:19
+	•	Right. Specifically,
+53:26
+	•	any transfer that's between like the marginal damage to the neighbor tilde and then that marginal profit for the firm P minus c prime of q tilde.
+53:28
+	•	Right. Any transfer that the firm could offer in that interval will be something that the neighbor will accept.
+53:37
+	•	And then also the the firm is is excited about doing. Okay.
+53:45
+	•	And then so this proves the claim. Tell us your name.
+53:52
+	•	Sorry. Yeah. Essentially the same argument.
+54:08
+	•	Absolutely. Yeah. And you'll see. And Coase is coming next.
+54:17
+	•	So you're at. Exactly. Um, yeah.
+54:21
+	•	So if you don't know about ghosts, just pretend you didn't hear it.
+54:24
+	•	We'll get there. Um, yes. So I'm. That's.
+54:28
+	•	Yeah, something I will. This example is going to turn out to be a much more powerful and much more general proposition in economics.
+54:32
+	•	It's not an artifact of just the specific facts of assumptions in in the model.
+54:40
+	•	Let me first, just before we get to the cost theorem, I want us to go back to the fact that I promised to Policy Solutions three a.
+54:47
+	•	And so I want to also think about three b. Three B is a very similar setup.
+54:57
+	•	But now we're giving the property rights to the firm, not the neighbor.
+55:02
+	•	So if you're thinking like a farm like now, the farmer also owns all the land.
+55:08
+	•	But what's different in this model than like our very canonical initial model is that now
+55:15
+	•	the neighbor can talk to the firm and the neighbor can make offers to the firm and say,
+55:22
+	•	hey, firm, before you choose to produce your Q star that I know you're going to produce.
+55:27
+	•	Can we make a deal that leads you to produce a bit less?
+55:32
+	•	Because I have a valuation for you producing that lower output that's going to exceed the valuation
+55:36
+	•	you have for that additional increment of output that's between q star and Q for as best.
+55:42
+	•	And so we can apply the same logic. So the proof by contradiction works.
+55:47
+	•	Again if the contract level that they that prevails in equilibrium is above the q first best,
+55:52
+	•	then there's an offer that the neighbor wants to make because q tilde is above q first best.
+55:58
+	•	But the neighbors being really hurt, the firm is getting some profits, but just not that much.
+56:05
+	•	So it's a great trade for both parties. And they would reach that trade.
+56:10
+	•	And then similarly, like if the firm is interested in producing something that's less than Q first Cooper's best.
+56:16
+	•	Then it actually won't be worth it for the neighbor to pay the firm to not produce,
+56:24
+	•	because the amount of firm demands to produce that like to not produce that smaller quantity is going to be less than what the neighbor wants to pay.
+56:30
+	•	And that's because we have this model where, like your marginal profits are declining as Q rises.
+56:41
+	•	So the first amounts of production that you engage in as a firm are very valuable to you.
+56:48
+	•	And then they slowly start to diminish. And so that initial part of production, the initial region of production,
+56:54
+	•	is a place where the firm is is very profitable and the neighbor is not harmed by very much.
+57:00
+	•	Okay. So that's that's our property rights solution.
+57:06
+	•	Before I take us to Coase. I want to briefly just talk about some of the distributional stuff,
+57:11
+	•	and hopefully the distributional analysis will also clarify some of the different payoffs that are happening in this economy.
+57:19
+	•	Right. So the total surplus is the W that we have.
+57:25
+	•	And so you could think about how it's being allocated across the agents as depending on the initial property rights.
+57:29
+	•	So interestingly in three A like your intuition that while it makes a big economic difference to give the neighbor all these property rights is right,
+57:39
+	•	it makes a huge economic difference in a distributional sense, not in an efficiency sense,
+57:49
+	•	because distributional now the neighbor can effectively extort the firm.
+57:54
+	•	And by extort I just mean they can appropriate all of the the rent.
+57:59
+	•	The firm would get all of the value that the firm would get from doing any production.
+58:03
+	•	And that's because the neighbor has all the property rights.
+58:07
+	•	And so they effectively can charge the firm up until the point at which the firm is indifferent.
+58:10
+	•	And so this is a sense in which these property rights systems start to have really dramatic distributional implications.
+58:17
+	•	Three b will have the reverse, which is actually now the firm can basically appropriate all of the neighbors surplus because
+58:27
+	•	the neighbor has no ability to negotiate in the sense that the firm has all the property rights.
+58:35
+	•	So the firm's outside option is always to just do whatever it wants.
+58:40
+	•	The neighbors outside option is actually just unfortunately, that the firm does what it wants.
+58:44
+	•	And so in that sense, like these property rights can have really dramatic distributional implications.
+58:51
+	•	So let me show that just geometrically same picture as before.
+58:57
+	•	Recall horizontal axis is the neighbor's payoffs and the vertical axis is the firm's payoffs.
+59:00
+	•	And so we had an allocation that was first best.
+59:06
+	•	So we move to the Q first best. And you can think about this whole region here.
+59:10
+	•	That's sort of purple. And then teal. Like a weird ribbed caterpillar.
+59:17
+	•	Thing is the range of payoffs that you might think that would arrive arise in this bargaining game,
+59:21
+	•	and in particular at this point here at the very edge, gives the firm nothing but the neighbor everything.
+59:29
+	•	And so this is what you could think about as like the distributive outcomes of three a the story I told you on the previous slide is, well,
+59:40
+	•	maybe we think the neighbor really would take us here to this point,
+59:46
+	•	but you could imagine other bargaining protocols where maybe they arrive at some other point on this curve.
+59:51
+	•	The core point is just that there are dramatic implications for distributional outcomes.
+1:00:00
+	•	When we assign property rights to the neighbor. And the reverse will be true for the firm.
+1:00:05
+	•	So under three b when we give the property rights to the firm, Now the firm can take everything.
+1:00:10
+	•	And so we've had this black point here where the neighbor has been pushed all the way to their level of utility when they can't bargain at all.
+1:00:17
+	•	Dick Starr and now the firm gets all of the all of the surplus here.
+1:00:28
+	•	Yes. They they produce Q4 as best.
+1:00:36
+	•	Yes. So that's a very important, uh, thing. So this this frontier is all under the assumption that the production level is Q first best.
+1:00:41
+	•	And that's what I mean by the sort of, uh, propositions here.
+1:00:51
+	•	When I say like the allocation is efficient, I mean that we're at the first best.
+1:00:58
+	•	And so you should think, like in both of these models in three A when the neighbor has the property rights,
+1:01:03
+	•	and in three B when the firm has the property rights, both of the outcomes are efficient.
+1:01:08
+	•	And if they're efficient, they have to be producing at the Q first best.
+1:01:13
+	•	What's different is sort of how they transfer resources across one another, and that depends on the nature of the distribution of property rights.
+1:01:17
+	•	Okay. So we have 15 minutes and in about sort of two thirds of that,
+1:01:29
+	•	I want to elevate this principle of the sort of property rights solution is our third solution to the externalities,
+1:01:40
+	•	to the theorem that Catherine wanted to see, which is the cost theorem.
+1:01:48
+	•	And the goal will be sort of two related objectives.
+1:01:54
+	•	Like a theorem is cool because it says things, but then also it won't be satisfied in many cases.
+1:01:58
+	•	And so it's just as important to me that you understand, like the theorem.
+1:02:05
+	•	And when it works as. As when you understand. As.
+1:02:09
+	•	As you understand. When it doesn't work. And so that will be the goal of talking about the cost theorem.
+1:02:13
+	•	And this is due to Coase, who was a Nobel laureate who's at University of Chicago.
+1:02:20
+	•	The paper is on the website. And I want to state this theorem kind of in with three critical assumptions.
+1:02:25
+	•	So if we define these property rights for the externality and the following three assumptions hold.
+1:02:32
+	•	First, everyone can transact costless to everyone maximizes their payoffs,
+1:02:39
+	•	and then three, everyone has the same information under those three assumptions.
+1:02:46
+	•	Then the allocation is efficient regardless of how we assign the property rights.
+1:02:52
+	•	And so you can see that these assumptions were satisfied in the model that we just looked at.
+1:03:02
+	•	So transactions were costless, right? We just had some function tea and they were able to transfer resources with that tea.
+1:03:08
+	•	It was just moving stuff directly from the neighbor to the firm or vice versa.
+1:03:15
+	•	They didn't have to hire any lawyers. They didn't have to waste any time writing the contract.
+1:03:19
+	•	They could just transport the resources instantaneously.
+1:03:25
+	•	Both parties were maximizing their payoffs, so the neighbor was maximizing sort of minus D of Q plus maybe the transfers.
+1:03:29
+	•	The firm was maximizing Pi of Q plus or minus the transfers. And then they had the same information.
+1:03:38
+	•	Everyone had the same information. We all knew Pi. We all knew D.
+1:03:44
+	•	And so there was nothing confusing about everyone being able to understand that we could, in fact, get to the efficient allocation.
+1:03:48
+	•	And so this theorem tells us something that I would argue is pretty powerful,
+1:03:57
+	•	because it has a direct implication for policy prescriptions, which is that, Well?
+1:04:04
+	•	What do we want the government to do?
+1:04:08
+	•	Like our first two solutions said what we regulate when there's an externality or we tax when there's an externality.
+1:04:11
+	•	And this is saying, actually we don't want to do either of those things if we can just define and enforce property rights.
+1:04:17
+	•	So maybe there are a lot of different ways that different landowners can have disputes about who
+1:04:24
+	•	they think is being helped or harmed by the different things that people are doing on their land.
+1:04:31
+	•	One thing you could do is try to tax all the different activities that are negative externalities or regulate them, but another under this theory is,
+1:04:35
+	•	well,
+1:04:44
+	•	just have a clear ledger that says sort of who owns what pieces of land and then let them sign contracts with each other to resolve their disputes.
+1:04:44
+	•	And so this is something that relies on strong assumptions. Before I talk about the three assumptions.
+1:04:54
+	•	And when they're they're satisfiable or not,
+1:04:58
+	•	I just want to emphasize that it's an incredibly useful thing because it saves us tons of work having to do any calculations.
+1:05:01
+	•	So this is one of the things that coast says. So coast is actually responding to Bagudu.
+1:05:08
+	•	He's kind of dismissive of Pigou. As you can see.
+1:05:13
+	•	He's complaining about lack of detail, context.
+1:05:17
+	•	Uh, Pigou is a law professor. Sorry. Coase is a law professor. Pigou is an economist.
+1:05:21
+	•	So you can see that he's definitely a law professor. And as we proceed, the imagine he has trouble imagining data that you could use.
+1:05:25
+	•	It would be just super complicated bristles with difficulties calculating things, distinguishing marginal damage, doing all the interrelations.
+1:05:34
+	•	It's just a really hard calculation. Don't want to do it.
+1:05:42
+	•	Um, but there is like a nice spirit of this, which is that we have a very elegant and simple solution.
+1:05:45
+	•	When this assumptions are satisfied, we avoid all this problem of calculation and in some sense,
+1:05:53
+	•	the comparison of the prices versus quantities that we did suggested that those calculations can be
+1:05:59
+	•	quite hard because there can be lots of different worlds that we might need to take into account.
+1:06:04
+	•	Okay, so this is the power of the cost theorem. I now want to talk about the different ways it can fail.
+1:06:10
+	•	So transaction costs I hope, should be pretty obviously important to not have in order for the bargaining to get us to the first best allocation.
+1:06:19
+	•	So if you have a fixed cost of doing the transaction, you might not bother to contract at all.
+1:06:29
+	•	So then you end up at Q star, not Q first best. You could think maybe every time.
+1:06:34
+	•	Like the size of the contract also has costs.
+1:06:40
+	•	And so then maybe you do end up somewhere that's not quite Q star, but you don't get all the way to Q first best.
+1:06:42
+	•	And this of course is something that costs S does recognize.
+1:06:49
+	•	And there are some examples where you might think transaction costs are very high.
+1:06:53
+	•	So air pollution is an example that Coase gives, which is look, there are like tens of thousands of people who might suffer from that,
+1:06:56
+	•	and it's hard to imagine them all hiring lawyers and then contracting away the problem.
+1:07:02
+	•	Maybe you want direct regulation,
+1:07:07
+	•	but then there are other settings where you might think that some of these transaction or bargaining costs might be fairly low.
+1:07:10
+	•	And so in particular, in order to even just sell your output, you have to sign a contract to do that.
+1:07:15
+	•	And so it's maybe not crazy to imagine that these solutions could be quite useful in a lot of settings.
+1:07:22
+	•	And this is just the sense in which kind of if we're interested in applying Coase a very natural question is to say,
+1:07:29
+	•	okay, like how costly are transactions or what are the transaction costs?
+1:07:36
+	•	And then to the extent that those transaction costs are very significant, maybe we need to rely on a regulation like a tax or a quantity instrument.
+1:07:42
+	•	But if the transaction costs are very low, then maybe we should ask ourselves, well, why haven't these agents gotten to the efficient outcome?
+1:07:51
+	•	Maybe they have. We just are wrong about what we think that they want.
+1:08:01
+	•	Utility maximization is a little, uh, a little subtler.
+1:08:07
+	•	Let me give you an example,
+1:08:11
+	•	which is suppose like the neighbor can't actually maximize its utility because it has some limit on its ability to borrow resources.
+1:08:12
+	•	Right. So suppose concretely that it has some initial level of wealth.
+1:08:21
+	•	Why. And it can't go into debt. So in three A when the neighbor owns the property rights nothing changes when we add this
+1:08:25
+	•	because the neighbor is just getting a lot of money from selling the property rights, and so their wealth doesn't matter.
+1:08:35
+	•	But in three B if if the neighbor doesn't have enough money to pay up front to the firm,
+1:08:40
+	•	the amount that they need to compensate them for moving from Q star to queue first best,
+1:08:46
+	•	then by assumption they're not able to do that, so then they don't contract on.
+1:08:51
+	•	Q first best, and this violates Coase the room, because we've shown that the property rights,
+1:08:56
+	•	the distribution of property rights, which is the only difference between three A and three B, leads to different outcomes.
+1:09:04
+	•	And so this is the sense in which it is important that the two agents can kind of.
+1:09:11
+	•	Unconstrained. Like they can solve unconstrained optimization problems that let them maximize their objectives.
+1:09:19
+	•	And this is in fact a very common reason why we won't, why we will regulate or impose taxes.
+1:09:25
+	•	Because often the amount of compensation that a given firm might need might be something
+1:09:32
+	•	that's a lot greater than the wealth on hand of some of the individuals that are involved.
+1:09:38
+	•	The final assumption I want us to think about is perfect information.
+1:09:45
+	•	So suppose that in three A, the firm has more information than the neighbor, right.
+1:09:49
+	•	In particular, suppose that they know that they are either very or profitable or very unprofitable.
+1:09:57
+	•	And in that case, then you could imagine that the neighbor has some uncertainty about the type of the firm.
+1:10:06
+	•	And I want you to think that, well, okay, if the neighbor is not sure about the firm's profitability,
+1:10:14
+	•	then maybe there are some cases where the neighbor could be interested in taking all the profit for the really,
+1:10:24
+	•	really profitable firm, even if in the world where the firm is a low profit firm, they don't get anything.
+1:10:32
+	•	So they might want a take it or leave it offer. Right.
+1:10:40
+	•	Like imagine you have a box and your friend knows how much money is in the box.
+1:10:44
+	•	And you know the box either has $1 or has $5 million.
+1:10:50
+	•	This example is saying you might be interested in saying, all right, friend, I'll give you the box back, but for $4.5 million.
+1:10:56
+	•	So in that case, like you, the neighbor will will say, or your friend will say, sure, I'll take the box if it has 5 million, but not if it has one.
+1:11:06
+	•	So in the case where it has one, you haven't contracted on the first best.
+1:11:17
+	•	And so this is the sense in which the outcome is inefficient. This is like a no trade theorem a no trade result.
+1:11:22
+	•	All right. So three assumptions right.
+1:11:30
+	•	No transaction costs. Both agents or all agents maximize their payoffs and perfect information if any of them are satisfied, Coase fails.
+1:11:35
+	•	Three minutes. One more policy solution. And it only takes three minutes because it's really almost kind of a version of Kose, which is well,
+1:11:48
+	•	it's just suppose like the neighbor is a firm and their damages are really just revenues of the firm.
+1:11:57
+	•	Then if they merge into a single entity that maximizes the joint profits, they should be able to solve any externalities between them.
+1:12:03
+	•	And so this is one rationale for sort of letting firms contract.
+1:12:11
+	•	It's a little different because we're not defining property rights.
+1:12:16
+	•	Instead we're just letting entities combine themselves into larger entities that can then make collective decisions.
+1:12:19
+	•	One example that I'd like to give in the last two minutes is unit ization, which is a feature of oil production.
+1:12:28
+	•	This is an example of an oil producing field operated by Pemex, which is the Mexican government oil company that is the largest.
+1:12:36
+	•	It's the most indebted oil company in the world. It's like more than $100 billion of debt.
+1:12:45
+	•	This is an oil field that was discovered by Talos Energy, which is a company based in Houston, Texas, in 2017.
+1:12:51
+	•	It's like the largest oil discoveries in the last 20 years. It's between 700 million barrels to two 2 billion barrels.
+1:12:57
+	•	So if oil prices are like $100, that's like $200 billion worth of oil.
+1:13:06
+	•	That's like almost three times what SpaceX's IPO raised on their IPO, which is about $75 million.
+1:13:13
+	•	This is $1 billion. So this is a huge amount of oil. And initially there was like some hope that they would unifies.
+1:13:21
+	•	The problem was that the oil was discovered between the property that was owned by Talos Energy and then owned by Pemex, the state company.
+1:13:27
+	•	And so the idea was, okay, we can pull the oil out together,
+1:13:36
+	•	because if one of them is pulling oil out from one part of the reservoir, they'll take oil from the other.
+1:13:39
+	•	And this is a classic externality. Um, this is also, I guess, a kind of a cozy example.
+1:13:45
+	•	The they haven't really agreed, even though it's been about nine years.
+1:13:55
+	•	So there was lots of litigation. There were very clear transaction costs. Timex was not interested in admitting that Talos had discovered the oil.
+1:14:01
+	•	For context, this was the first private oil exploration that was authorized in Mexico for almost 50 years.
+1:14:08
+	•	Anyway, the point is that if they're able to jointly exploit the resource, which I think all allocations will inevitably allow them to do,
+1:14:14
+	•	then they can correct this externality because they're acting as a single entity that's maximized.
+
