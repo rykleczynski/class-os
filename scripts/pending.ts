@@ -17,7 +17,7 @@
  * ("needs a manual source") and the session stops being pending. --record bumps the
  * attempt counter for every pending session (run.sh passes it right before claude runs).
  */
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { courses } from "../lib/fixtures/courses";
@@ -114,6 +114,29 @@ function computeSessions(now: number): Session[] {
   return out.sort((a, b) => a.startsAt.localeCompare(b.startsAt));
 }
 
+const lockDir = join(contentRoot, "_state", "attempts.lock");
+
+/** Serializes read-modify-write of attempts.json between the gate and --retry. Waits up to 10s; a lock older than 60s is stale. */
+function lockAttempts(): void {
+  mkdirSync(join(contentRoot, "_state"), { recursive: true });
+  for (let i = 0; i < 100; i++) {
+    try {
+      mkdirSync(lockDir);
+      process.on("exit", () => rmSync(lockDir, { recursive: true, force: true }));
+      return;
+    } catch {
+      try {
+        if (Date.now() - statSync(lockDir).mtimeMs > 60_000) rmSync(lockDir, { recursive: true, force: true });
+      } catch {
+        /* released between the two calls; try again */
+      }
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 100);
+    }
+  }
+  console.error("pending: could not lock attempts.json");
+  process.exit(4);
+}
+
 type Attempts = Record<string, { count: number; last: string; retryAt?: string }>;
 
 function readAttempts(): Attempts {
@@ -129,6 +152,7 @@ function retry(slug: string) {
     console.error("pending: --retry needs a session slug such as econ106f-2026-10-07");
     process.exit(2);
   }
+  lockAttempts();
   const attempts = readAttempts();
   const now = new Date().toISOString();
   attempts[slug] = { count: 0, last: now, retryAt: now };
@@ -170,6 +194,7 @@ async function main() {
     return { code: Array.isArray(c) ? c[0]?.code : c?.code, start: Date.parse(l.starts_at as string), hasLesson };
   });
 
+  lockAttempts(); // held until exit so --record cannot overwrite a concurrent --retry
   const attempts = readAttempts();
   const pending: Session[] = [];
   const gaveUp: string[] = [];
