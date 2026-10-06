@@ -1,0 +1,344 @@
+Source: Wispr Flow meeting 9597e442-c9bf-495c-83dc-8ae39f6fb5c7 "Econ 134 Class One", Mon 2026-09-28. Auto-captioned; speaker labels are unreliable (the professor is Speaker 2, then Speaker 1). Pre-lecture small talk is omitted. Caption garbles left as-is (e.g. P prime / D prime / FV = first best / Q star = market output).
+
+Speaker 2: Uh, so yeah. This is economics. This is a course.
+Speaker 2: Fundamental economics. So it's customer to begin by defining what we're trying to do.
+Speaker 2: So, uh, hopefully by now you know what economics is. It can be defined in a lot of ways.
+Speaker 2: Uh, the definition I think that encompasses much of what we do here is the study of the allocation of scarce resources. Uh, that will include the study of incentives, because we only care about incentives when effort and other things are scarce.
+Speaker 2: If we want to think about environmental economics, we can do it in two ways which are related. On the one hand, we can take economics and then we can add the environment to it.
+Speaker 2: And we can see how the way we think about economics changes when we take seriously, uh, the environment. Uh, we could also do the reverse, which is ask, uh, what can we learn about how the economy affects the environment and how that changes our view of the environment.
+Speaker 2: Uh, so we'll do both in this class. Uh, a common if there is sort of one theme of the course, uh, it is that we'll want to take kind of the foundational assumptions in micro theory.
+Speaker 2: Uh, the competitive outcomes are efficient. Uh, that markets work.
+Speaker 2: And then see what happens when we can relax those assumptions. And for that reason, uh, this is an upper-level course, because you really need to have a very clear understanding of how markets work in these ideal cases, because that is necessary to then think about some of the departures from those assumptions.
+Speaker 2: So let me start with a concrete example. Uh, I'm going to give you three sets of facts, uh, and we can think a little bit about how they relate, uh, to environmental economics.
+Speaker 2: So, uh, the first fact is that, uh, climate change is already happening. Uh, so this is data that's showing the last, uh, 2,000 years, approximately, on the horizontal axis.
+Speaker 2: The vertical axis is just showing perturbations of global temperature from long-run averages. Uh, you have a very fuzzy caterpillar because there's a lot of fluctuations in natural temperature.
+Speaker 2: Uh, but if you, uh, look closely, uh, at this black line, you can see a very clear spike, uh, of more than one degree centigrade. Uh, and this is something that has happened just in the last 170 years.
+Speaker 2: And so this, uh, ongoing change in the climate is a major, uh, environmental change. It has a lot of consequences for a variety of economic activities.
+Speaker 2: This is showing a map of the globe. These hexagons are, uh, just different regions of the globe.
+Speaker 2: The shading of the map, uh, is, uh, illustrating places that have already seen unusual extreme heat, uh, relative to their historical record. Uh, in almost all of these places, with the exception, for example, of Eastern North America, the East Coast, uh, we see red.
+Speaker 2: Uh, this is consistent with, uh, a global temperature rise that's affecting a lot of people. Uh, this should sort of immediately trigger in your mind, uh, a number of economic consequences.
+Speaker 2: Because, uh, where everyone lives, uh, has been, uh, predicated on the distribution of the climate. And so when places become much hotter than, uh, people had expected them before, you know, very important consequences for where people live, which is a fundamental aspect of economic choice.
+Speaker 2: Uh, and similarly, a, a huge amount of, uh, the economy is predicated on where water is. And so this is showing, uh, changes in precipitation.
+Speaker 2: Uh, you see a much more mixed pattern than the temperature. Uh, this is consistent with the fact that the hydrological cycle is closed.
+Speaker 2: And so what, uh, raising global temperatures does is, is accelerate the hydrological cycle. And so you move where water is.
+Speaker 2: And so in some places there, uh, are serious, uh, inundations that are atypical. In other places, uh, water is just curing.
+Speaker 2: Uh, and, uh, this kind of precipitation has pretty dramatic consequences, uh, for economic activity that is predicated on, for example, the coastline, which assumes, like, the stable, uh, delineation between what land is typically, uh, not wet and then what land is underneath the ocean. Uh, you could do the same thing for, uh, intense, uh, heat waves, uh, from an agricultural perspective.
+Speaker 2: So this is showing places that have had agricultural or ecological drops. Uh, again, uh, species choose to live in places where they have adapted to the climate.
+Speaker 2: Uh, and farmers grow crops that are adapted to the climate. So these massive changes could have really fundamental after-effects.
+Speaker 2: All right. So fact one, uh, there is climate change.
+Speaker 2: Uh, I would argue that's already economically consistent. We might think about adaptation, uh, and what, uh, all of these changes in the climate will do to the various economic development contexts.
+Speaker 2: Uh, fact two is something you also, uh, will be familiar with, uh, being educated citizens in 2026. Uh, and that is that, uh, it is largely the view of most scientists that, uh, the actions we take today have consequences for the future.
+Speaker 2: So, uh, there has been warming. Uh, there's likely to be future warming.
+Speaker 2: Uh, but it turns out that, uh, there could be even more than there will be. Uh, and we know that, uh, primarily because we already have deduced that, uh, human actions are largely responsible for this last, uh, century and a half of global warming.
+Speaker 2: Uh, and the reason for that, uh, is, uh, sort of a well-known physics principle from the early 19th century that is the, the greenhouse gas effect. Uh, we're not a physics class.
+Speaker 2: This is not about, uh, kind of physics. Uh, but the, the concern that scientists have is that, uh, human activities in particular, uh, carbon dioxide emissions are, uh, key driver of these changes in climate.
+Speaker 2: So it's not a coincidence from this perspective, uh, that this recent rise in temperature has coincided with the Industrial Revolution. Uh, the Industrial Revolution involved, uh, huge amounts of coal, uh, being burnt to create energy.
+Speaker 2: That creates carbon dioxide. Uh, and so that has some implications for the future of the global climate.
+Speaker 2: This is basically showing the same relationship in a slightly different perspective. The horizontal axis is now a global, uh, stock of carbon and deeper tons of carbon dioxide.
+Speaker 2: And so carbon dioxide stays in the atmosphere for a few hundred years. So really the stock is what's relevant, not the flow.
+Speaker 2: It's the first order. The vertical axis is showing, uh, this perturbation of global temperature.
+Speaker 2: And so what you see here, uh, is effectively, uh, revisiting this rise in temperature over the last century and a half from the perspective of us putting carbon dioxide emissions into the atmosphere. And the temperature is rising.
+Speaker 2: And so, of course, like, in order to imagine what would happen if, for example, we doubled the amount of carbon dioxide that's in the atmosphere, uh, we would need a physics model to do that. Uh, assume that we had that physics model.
+Speaker 2: We can do that relationship. Uh, and the physicists, uh, tell us that it's approximately, uh, linear.
+Speaker 2: Uh, then, uh, you can imagine a number of different trajectories here, not very, uh, clearly depicted in the figure. Uh, most clearly depicted down here, which is showing the distance into, uh, carbon dioxide emission space that we're traveling under these different features.
+Speaker 2: So there are five features. They have different colors.
+Speaker 2: This scarier, uh, red color feature is, uh, as you can see, significantly more carbon dioxide by 2050. And so why is it useful to do these projections?
+Speaker 2: Well, because we might think that there could be consequences, uh, for, uh, global temperature, uh, based on this relationship. And so, uh, above and beyond the existing global warming, we might care about the kinds of economic decisions that lead, uh, these emissions, uh, futures to be realized or, or not realized.
+Speaker 2: Uh, so the next figure will show exactly this pattern, uh, but just from a slightly different perspective. Uh, it's just showing now annual emissions, right, uh, that are, uh, then aggregated into these five lines.
+Speaker 2: So you can see the global, uh, temperature, uh, rate at which we're putting, uh, carbon dioxide in the atmosphere is still rising all the way to 2100 under this, uh, most extreme feature. It does kind of level out.
+Speaker 2: That's because even in the most aggressive visions of the world, we expect kind of the economy to slowly transition away from more industrial production. Uh, there are, uh, some alternatives.
+Speaker 2: Uh, this blue line, for example, shows significantly lower carbon dioxide emissions. So the last, uh, thing why we should care, I guess, about this is that these lines then translate into, uh, economically meaningful differences, uh, at least from the perspective of these climate physics models.
+Speaker 2: Uh, so this just shows what would happen to temperature under these different scenarios. Uh, you can avoid, uh, uh, temperature rise of really more than what we already have baked into the climate already.
+Speaker 2: If you can go from, uh, red version of the world to blue version of the world. Uh, these are just calculations, uh, that scientists are doing by taking that relationship between carbon dioxide and, and temperature, and then just feeding in different scenarios for how much carbon dioxide it takes up.
+Speaker 2: Uh, and this has consequences for things we do actually care about, uh, economically. So temperature is a driver of things, but we don't per se care about temperature.
+Speaker 2: We might care about, uh, the level of the ocean. Uh, and so we might in particular care about how ice melts.
+Speaker 2: And so this is just showing that, uh, the implications for ice melting are different. And that translates into different probabilities, uh, of sea level rise and, and average sea level rise in some of these scenarios.
+Speaker 2: Sea level rise being, uh, not great for economic activity predicated on, on coastal production. And people who are interested in living in coastal regions, uh, such as, uh, a lot of parks and bathing facilities.
+Speaker 2: All right. So I said three facts.
+Speaker 2: These are two, right? These are all known facts.
+Speaker 2: I think many of you will not be surprised by seeing any of these before. Uh, the third fact I think is also, uh, pretty clear.
+Speaker 2: But the third fact is going to now feel like we're really in, uh, an economics lecture. The vertical axis is our, uh, friend carbon dioxide.
+Speaker 2: Uh, it's, it's currently, uh, or in this figure, it's normalized by the number of people in each country. The vertical axis is showing the GDP per capita.
+Speaker 2: So recall gross domestic product, where GDP is a measure of just total output of a country. It's like a good proxy for the size of the economy.
+Speaker 2: These bubbles are countries, right, with the size of the bubble corresponding to the number of people in the country.
+Speaker 2: If, I mean, if you look at these points, I mean, this is a pretty striking linear relationship, I would argue, right? It's a, it's a very clearly upward sloping relationship.
+Speaker 2: Uh, and if you've spent enough time in econometrics, when you see points like this, you'll start to try to draw lines that are the best guess of, uh, how we approximate the full relationship of all of these points, right? That slope is upward sloping.
+Speaker 2: What would that mean from the perspective of, of, uh, climate change? Well, it could mean a lot of things, right?
+Speaker 2: So, uh, if these much richer countries are also emitting a lot of carbon dioxide, then, uh, one might be concerned that if we were to try to lower the amount of carbon dioxide emissions, we would potentially, uh, be sacrificing huge amounts of economics. This is just a, a this is data, right?
+Speaker 2: A-as you've heard before, uh, and we'll hear again in this class, uh, correlation is not causation. This is a correlation in the data, right?
+Speaker 2: It's saying that, uh, as we, uh, look across countries, richer countries are contributing much more to climate change. Uh, it doesn't answer the question of whether or not necessarily if we were to start, uh, changing the way we emit carbon dioxide, uh, that will necessarily, uh, constrict economic output.
+Speaker 2: And of course, uh, we'd be consistent with that story. Uh, all right.
+Speaker 2: Uh, let me, uh, cut this data just a few more ways, uh, just to show kind of how very similar data can be used to make very different points. So another way to think about this sort of relationship in the data between economic output and carbon dioxide, which is environmentally relevant, uh, could be to look over time, uh, and ask kind of a similar measure, uh, how has, like, the, uh, total output per person worldwide, uh, depended on the total amount of carbon dioxide worldwide in use.
+Speaker 2: So that's what this figure does. It has cool two cool stories.
+Speaker 2: Cool, uh, so horizontal axis is from 1820 to 2022. So this is 200 years.
+Speaker 2: Vertical axis is just carbon dioxide over, uh, GDP. So higher numbers mean that the economy is using more carbon dioxide per unit of economic output.
+Speaker 2: And so you can see, uh, in this sort of first century, from 1800 to 1900, really all the way through to about World War II, uh, it's the case that, uh, we're becoming more carbon intense, right? Activities in the economy that do not rely on carbon dioxide are being displaced by more carbon intensive activities.
+Speaker 2: Uh, that, of course, is, is very bad news for a story that is interested in thinking about whether we can do something about climate change without hurting the economy.
+Speaker 2: But I said there are two stories. And of course, the, the second story is that if you look after 1950, this number is actually falling.
+Speaker 2: So it looks like we're, uh, getting better at producing economic output, uh, in, in terms of needing fewer carbon emissions to, uh, generate that output. So that's potentially some caution, uh, against just concluding, well, if we do something about climate change, we destroy the economy.
+Speaker 2: Full stop. It doesn't prove the opposite.
+Speaker 2: There, there could be many reasons why this change is happening. Uh, we don't have information about why they are.
+Speaker 2: But, uh, hopefully all of these different puzzles, uh, are suggesting to you why it could be productive to do some work, uh, in environmental economics. Because you don't need to take a class, like, uh, at, at, like, public number one public university to be able to look at these figures and this data.
+Speaker 2: We might wanna be able to think about how they can fit together and how we can sort out competing explanations and what implications there might be. Uh, and there are reasons, especially now in a world where it's so easy to just download, uh, a, a bot's summary of the world, uh, to really want to be able to arrive at those conclusions yourself so you understand how they work and whether you can, uh, trust them.
+Speaker 2: Uh, I'm going to decompose this last half century or 70 years or so, uh, into four different countries because I think that's also somewhat interesting. Uh, and then, uh, we'll finish our example and talk at a more high level about what we're doing in class.
+Speaker 2: Uh, so here's, uh, this decomposition just looking at the last 50 years, this world. Here's the United States.
+Speaker 2: Uh, not so surprisingly, the US is, uh, a very large part of the world economy, uh, and subtracts closely the world's, uh, change. So in the United States, it seems like, uh, we are, uh, becoming better at producing output relative to carbon, uh, units of carbon, uh, which is a, like, optimistic story.
+Speaker 2: This is kind of cool, in contrast to some of the doom and gloom in facts one and facts two. Uh, we could look, uh, more carefully.
+Speaker 2: So, right, this is, uh, a fraction. Uh, and whenever, like, you ever see, like, so ratios are very useful because they're often, uh, dimensionless, so they're very interpretable.
+Speaker 2: But, uh, it's good to look at the numerator and the denominator separately 'cause the two different things could be driving changes in, in the ratio. So this is what this figure does.
+Speaker 2: This is just looking out from 1990 to 2020. It's asking kind of, uh, by how much, uh, is the economy growing?
+Speaker 2: That's GDP is blue thing. Uh, and then, uh, the second question is by how much are emissions growing?
+Speaker 2: And these are an-annual, uh, emissions, right? So you should think, uh, this is the amount that's going into the atmosphere.
+Speaker 2: Uh, and the red and blue are just two slightly different measures of how much carbon dioxide the US economy is producing. Uh, red is consumption based.
+Speaker 2: So that's just sort of related to the amount of consumption that we have. Uh, blue is production based.
+Speaker 2: Uh, so that's related to the production that we have. Uh, why is, uh, why are we distinguishing them?
+Speaker 2: Because we, we do import a lot of goods. And so the reason why this red line is higher than the blue line is because, uh, the US imports more carbon intensive goods than it exports.
+Speaker 2: So you can't just take all of the different people in the US who are producing things and count up all their carbon emissions. You also might wanna think about the fact that there are things being produced in other countries, uh, for example, up until recently in China, uh, that were using carbon emissions and then came to the US.
+Speaker 2: Okay. Uh, so this is, I think you could interpret as some kind of evidence of decoupling, uh, in the precise sense that kind of output seems to be growing while we're able to really, uh, discipline the growth rate in things, right?
+Speaker 2: Uh, we might, uh, not think that's enough. Uh, most, uh, many people, uh, do.
+Speaker 2: Uh, you could look at another country. This is the United Kingdom.
+Speaker 2: So their economy is growing. I'll note, uh, it's not growing nearly as, as fast as the United States in terms of its size.
+Speaker 2: But you can see they're, uh, actually successfully lowering the emissions that they're putting into the atmosphere in absolute terms. Uh, and there are some reasons for this.
+Speaker 2: Uh, they're shutting down a lot of coal-fired power plants. Uh, their economy is really transitioning more towards, uh, service sectors.
+Speaker 2: Uh, and they're also, uh, changing some of their, uh, trade patterns, uh, as you can see. Uh, so the UK is, I guess, uh, maybe a, a more, uh, optimistic story, although, as I emphasized, uh, the economy's grown a lot less quickly than the US.
+Speaker 2: So maybe there are trade-offs. Uh, third of four countries I want to look at is China.
+Speaker 2: It's an interesting case because you don't see much change in emissions intensity. It's, it's slightly declining, right?
+Speaker 2: Not nearly as, as, uh, uh, quickly as in, uh, the United States, right? But still a decline.
+Speaker 2: But there's something, uh, in the background that's interesting in China. When you really look at this number, you really need to look at the numerator and the denominator separately because, uh, as, uh, I hope all of you are very familiar with, one of the, if not, like, the most consequential change in the global economy, uh, in the last 30 years has just been the, uh, tremendous rise, uh, of China.
+Speaker 2: Uh, and so, uh, China's GDP, uh, is more than 10 times what it was in 1990. Uh, its emissions are also, uh, much, much higher, about three times as much.
+Speaker 2: So I, I guess you could see good and bad news here. On the one hand, there's a tremendous amount of carbon dioxide that's going in the atmosphere.
+Speaker 2: On the other hand, uh, it's not growing as quickly as the economy. And then my final example, just 'cause I spent some time there and I think it's a pretty interesting case, is South Africa.
+Speaker 2: Uh, and you might not, uh, know, but South Africa, uh, was for a long period of time actually, like, the most coal-intensive economy, uh, as a proportion of electricity generation in the entire world. Uh, so South Africa, like, Johannesburg, which is the capital of South Africa, uh, is the largest city in the world that is not adjacent to a body of water.
+Speaker 2: Uh, and the reason is the mines. So South Africa, uh, is a major exporter of different, uh, commodities.
+Speaker 2: Uh, it has, uh, many minerals. So one might think that the economy is somewhat, uh, dependent on, uh, coal.
+Speaker 2: Like, in particular, there was a, a period in the '70s when the electricity prices were so low in South Africa that, uh, raw aluminum would be imported to South Africa to be smelted and then exported back out of South Africa because smelting is effectively just running electricity through the raw materials. And electricity prices were lower in South Africa than anywhere in the world because they had more coal than they knew what to do with.
+Speaker 2: Uh, so we can look at this, uh, emissions intensity. Uh, you can see an interesting pattern that's quite different than any of the other countries we've looked at.
+Speaker 2: Uh, growth in the economy and growth in emissions are effectively offset for the first 15 years. And then there's a fun divergence that happens around 2010.
+Speaker 2: Uh, in fact, like, the global, uh, climate change conference parties happened to be in government South Africa, uh, right around, uh, 2010 or '11. But, uh, there are various reasons we could understand this gap, but, uh, I just would like to emphasize for clo-closing the discussion, right?
+Speaker 2: There are facts and there are facts, by which I mean, like, we can look at, uh, a number of patterns in the data, but then often zooming in, we see a lot, uh, more interesting things that the initial cut of the data didn't reveal. Again, uh, a reason why we need to be thoughtful and think about the economics of the world.
+Speaker 2: All right. So, uh, this is our first example of an environmental economics problem.
+Speaker 2: Uh, the course is going to have a lot of them. Uh, if you want to kind of organize your, uh, thinking about what we'd like to do here, uh, or alternatively, if you'd like to contemplate sort of the three course objectives, uh, it's like, uh, I, I want to give you something useful, uh, to think about, uh, when you leave.
+Speaker 2: And so, uh, we wanna think that environmental economics, uh, could be something that you can use not just to solve problems in this course, but also other problems. And so at that end, our approach to solving all of these kinds of problems, which will generally be true for things that we don't discuss in the course, first is to describe, uh, the world, right?
+Speaker 2: Specifically how, uh, economic outcomes will affect, uh, environmental outcomes and vice versa. So that's, like, a purely descriptive class of arguments.
+Speaker 2: I argue this is just science. Like, there's really nothing about this that is, uh, not subjected to, uh, the possibility of falsification, uh, experimentation, uh, accumulative evidence.
+Speaker 2: Uh, the second, uh, class of, uh, questions we want to answer, uh, are, are more in the realm of sort of philosophy or, or political theory, which are, well, we can do calculations and they can be right or wrong. We also might want to have some view on what we think should have happened, uh, or who we think was hurt by what happened.
+Speaker 2: Some of that will be in one. But to ask what it means to be hurt is taking you to two.
+Speaker 2: And so try to be careful about, uh, what we do in this. Uh, but if we make some additional assumptions, then we can say some even more interesting things, uh, about this relationship between, uh, economic behavior and the environment.
+Speaker 2: And then the most natural thing to do, given, uh, some beliefs or results on one and two, is to think, okay, well, if, uh, we do have some framework for comparing outcomes, then what would happen if we wanted to attain certain outcomes and not others? And that's what we'll call sort of policies.
+Speaker 2: Anyone want to ask any questions? You should always feel free to jump in and ask questions.
+Speaker 2: I know it's intimidating because all of your classmates, uh, will be looking at you, but they'll all forget what you asked, uh, tomorrow. So it shouldn't matter.
+Speaker 2: All right. So everything is, uh, either very clear, uh, or, uh, so boring that you can't be interested.
+Speaker 2: Uh, and so let me go a bit more in detail into each of these three categories. Uh, and then I will do what I promised, which is talk about some of the organization.
+Speaker 2: Uh, and then we can do some kind of real economics, uh, in the lecture. So when I say kind of describe the world, we'll want to use theory, uh, and data, right?
+Speaker 2: So the theory will, uh, give us, uh, a way to predict kind of how different equilibrium behavior will work. Uh, and then the data is going to allow us to try to disentangle some of the different forces, uh, and assess kind of how important the stories that we can tell with theory might be given what, what we see.
+Speaker 2: Uh, and the theory will be especially helpful because if we want to make kind of claims about causality, claims about causality are, uh, fundamentally, uh, theoretical claims. B-by which I mean, like, they posit a counterfactual world that, that does not happen.
+Speaker 2: To say that something, like, say X caused something, say Y, right, is something that relies on, uh, knowing what would have happened if not X. And you only e-ever see either X or not X.
+Speaker 2: And so it is fundamentally something you have to think about with theory to get to something, uh, causal, right? Of course, uh, our standard approaches will, will suppose, well, we see a lot of things that look like X many times.
+Speaker 2: Uh, and then we see a lot of things that look like not X many times. And under the assumption that those are all kind of observations from the same underlying process, we can learn something about that underlying process.
+Speaker 2: But it's all, uh, resting on some assumption. Uh, to evaluate outcomes, we want theory.
+Speaker 2: Uh, in particular, a lot of the theory will take us towards cost-benefit analysis. Uh, but then the empirics will allow us to think a little bit about what to prioritize.
+Speaker 2: Uh, because as in life, uh, environmental economics has, like, an infinite number of possible things you can do. So you might want to have some criteria for thinking about which ones you most likely pay attention to.
+Speaker 2: Uh, and then policy design is, uh, mostly a theoretical exercise. But and one of the really fun things about teaching this class, uh, here in California, especially in Southern California, uh, is there's a huge, uh, history of really progressive environmental policies.
+Speaker 2: And there is, at this point, an extensive analysis of what has happened after those policies. And so we'll be able to take a very, uh, empirical look, uh, at some of these policy designs and connect that to the theory.
+Speaker 2: Uh, and it's not an overstatement to say, like, a, a lot of the reasons why we have these policies is because of the work that was purely theoretical that was done, uh, by economists, uh, starting from the 1970s and 1980s. Obviously, there are many reasons why policies, uh, happen.
+Speaker 2: Economists are, uh, only one of those reasons. But, uh, you'll see policies that look so much like they were taken from economics textbooks, there's really no way they could have existed but for those economics.
+Speaker 2: Uh, all right. Uh, so th uh, more specifically, kind of the you should think about this class is broken into three pieces.
+Speaker 2: Uh, so the first third of the class is going to be, like, mostly high level in the precise sense that we're going to focus on, like, a number of key concepts, uh, that will then be, uh, very helpful for the subsequent work in the course. Uh, this second third of the class will just focus on climate change.
+Speaker 2: Uh, and the reason is because, uh, climate change really satisfies both of our, uh, criteria for good environmental economics. Like, it's both, like, a really important environmental question that we want to use economics to sort of think about.
+Speaker 2: But it also raises a lot of very cool economic questions, uh, just by the nature of how hard the problem is. Uh, and so even if you don't care about climate change at all, I would argue that there's a lot to learn, uh, for example, about risk and uncertainty, about equity and distributional outcomes.
+Speaker 2: Uh, and then the third, uh, third of the class is just thinking, uh, more about some specific applications, uh, such as environmental markets, uh, natural resources, uh, and then also the role of innovation and, uh, new technologies. All right.
+Speaker 2: So, uh, I get lo--lots of emails about, uh, trying to enroll in the course. So I, I know that, uh, these are enforced.
+Speaker 2: Um, and I hopefully, uh, it's clear why sort of microeconomic theory is a good, uh, or necessary ingredient. It might be a little less clear why you need a kind of metrics.
+Speaker 2: Uh, we're not going to have any kind of coding-based problem sets that will require you to actually estimate things. But I do need you to be able to think like, uh, an empirical researcher.
+Speaker 2: And so it's important to be able to look at an equation that has kind of, uh, an observable term and think about how we might estimate that equation. Uh, from a practical standpoint, in terms of the actual work that I, uh, am, uh, will ask you to do, uh, there are three problem sets.
+Speaker 2: There are two midterms, and then there is a final exam. Um, the exams are cumulative.
+Speaker 2: Uh, and they, uh, are designed to test kind of your ability to understand problems and to think about problems you may or may not have seen before. Uh, and there are more details, uh, on all of this, uh, in the syllabus of the course, which is posted on the website.
+Speaker 2: Uh, all right.
+Speaker 2: So that-that's the course, right? Uh, I think now we can do some economics.
+Speaker 2: Uh, so we start with the definition. That's typically a good way to start.
+Speaker 2: Um, and this definition feels really fuzzy, and I'm sorry. Uh, I want to argue that this definition is hand-wavy because there's really no way we could define it in another in a in a better way.
+Speaker 2: Uh, although if you have a better way, I'm interested. Although I don't think there is one.
+Speaker 2: So, uh, an externality is, is any external effect of an action not internalized by the actor. And so what does that mean?
+Speaker 2: Well, so it means, like, that there's some action being taken, right? Some decision.
+Speaker 2: We decide to invest capital or not. We, uh, buy a good and consume it or not.
+Speaker 2: And then there's some agent that's doing that decision, an actor. It could be you deciding something to buy.
+Speaker 2: Uh, it could be a firm deciding, uh, whether to expand to a new, uh, production site. Uh, it could be, uh, a government making choices about how to regulate its citizens.
+Speaker 2: Uh, the important thing about this sort of decision-maker, the actor, uh, is that they have in mind some, uh, theory of the way they're making decisions. And we need that to be the case because the externality is just anything that they haven't considered in their decision.
+Speaker 2: And that's what the externality will be. So you really can't think about, like, an externality without a model of someone doing something for some reasons.
+Speaker 2: So that's what this is. Uh, you could specialize this concept of an externality, uh, to kind of like, uh, markets and from an economic perspective.
+Speaker 2: Uh, so William Nordhaus, who was the last person to win the Nobel Prize for work in environmental economics, climate change, uh, says, like, an externality, uh, is created by an activity when that sort of activity's costs or benefits, uh, spill outside the market and are not captured in market prices, right? So here, this is just having in mind an agent who is solving, like, a very simple microeconomic problem.
+Speaker 2: Uh, for example, they're, uh, choosing their what to consume. So they see a lot of prices of the different things they consume.
+Speaker 2: They have a budget constraint. They solve what they consume.
+Speaker 2: Uh, and if there are effects of that consumption choice, uh, if it has costs or benefits that kind of aren't priced into this, then we would call that an externality, right? That's really a special case of this really fuzzy definition above because here the actor is, like, the economic agent, uh, and sort of the theory of the decision is looking at prices and solving something based on all those prices that you see.
+Speaker 2: Uh, and, uh, further, we'll sort of think about, uh, two, two types of, of externalities. Uh, this is kind of really a it will always be clear from the context, right?
+Speaker 2: Uh, whether something is sort of a positive or negative externality, but it always often depends on the perspective that you take. Uh, we'll sort of think, well, positive is, like, beneficial.
+Speaker 2: And then negative we'll sort of colloquially think as, uh, something that's harming someone else. Uh, how do we feel about this, this definition?
+Speaker 2: Do we feel good? Yeah.
+Speaker 2: Okay. Uh, yeah.
+Speaker 2: So, uh, it yes, it can be applied to anything. Any for, for any object, we can always ask, uh, or for any effect, right, we can ask whether it's an externality.
+Speaker 2: Uh, but to do that, we have to think about, uh, the action that is causing that effect, the individual or agent or actor that's taking the action, and, and why is it they're taking that action. But you're right.
+Speaker 2: It's, it's very general. And, uh, that's precisely why we're going to consider a robust analysis.
+Speaker 2: So if it's helpful for you to organize your thinking at this level of generality, that's good. Uh, if you are wanna think about, uh, the examples, uh, and work towards a definition, that's also, of course, totally fine.
+Speaker 2: Uh, yes. And sorry, if when you raise your hand, if you can say your name too.
+Speaker 2: So, so the first person who asked the question, what's your name?
+Speaker 2: Oh. Sid?
+Speaker 1: Sid. All right. So Sid has asked the first question.
+Speaker 1: All right. Yeah.
+Speaker 1: Sorry. Hillary.
+Speaker 1: Okay.
+Speaker 1: Uh, yes.
+Speaker 1: You could absolutely say, uh, not considered by. That's another an absolute way of thinking.
+Speaker 1: I think I use internalize even though it's, like, a many, uh, syllable word because, like, it's in contrast to external. Uh, yeah.
+Speaker 2: Hi, my name is Steve Elvis Wandering. Why does it have to be an actor? Does it does the externality have to be caused by an individual in this case or?
+Speaker 1: Yeah. It's interesting because you might think there are, like, inanimate objects or maybe there are, like, animals that are doing things. Um, and so we will think about cases.
+Speaker 1: Like, for example, we will think about, uh, wolves. Uh, wolves are sort of roaming around.
+Speaker 1: Uh, they will often eat livestock. You could think, well, like, having the wolves around is creating a negative externality on these farmers, right, who just wanna be able to raise their cows without them being eaten by the wolves.
+Speaker 1: Uh, who is the actor in that case? We'll typically think, well, there's some, like, uh, conservation authority or some, uh, parks manager who is letting the wolves roam around, right?
+Speaker 1: So usually, we wanna think about someone who can turn on or off the effect. But it's a great question.
+Speaker 1: All right. So let me go through some examples then.
+Speaker 1: Uh, one example is, uh, well, it's motivated by the fact that, uh, we just finished up summer. Uh, noise is a very classic externality.
+Speaker 1: Uh, some people like to listen to loud music. Uh, that could affect kind of people who are nearby.
+Speaker 1: Uh, if we think that the people who are throwing the party, uh, don't take into account the neighbor, uh, then that would be an externality, right? It would be a negative externality, uh, if we assume that sleep is good for the neighbor.
+Speaker 1: Um, you could tell the reverse story, though. Uh, you could imagine someone who's, like, in a really bad mood, and then through their window, they hear a song that's, like, their favorite song, and it makes them happy.
+Speaker 1: It wasn't something that people kind of thought about, uh, when they planned the party, but it could have delivered something. Uh, and you could already sort of think about some of the policy implications of these different theories of externalities.
+Speaker 1: Sort of if you really were in that world of the first one, then you might wanna ban parties, uh, from going too late, ban people from playing music at certain volumes, uh, tax people who have parties. Whereas if you were kind of in the world of two, you might want to subsidize parties, uh, and encourage people to, uh, hang out with each other and listen to loud music.
+Speaker 1: Uh, congestion is a very classic example. Uh, hopefully, uh, you don't have to experience too much of it, uh, if you sort of stay on campus.
+Speaker 1: But, uh, it should be sort of clear, uh, or I guess we hope pretty much everyone who gets in a car isn't actively trying to slow everyone else down, right? Usually, they're just trying to trying to drive for make me.
+Speaker 1: Uh, so they're not taking into account the effect of their choice, but they can really change, uh, the pattern of traffic in ways that are not great. There, there are also you can imagine positive externalities associated with driving.
+Speaker 1: Uh, so I, I had to go up to Stanford, uh, in January. Uh, and if you've driven through the Central Valley, uh, which you typically drive through, like, Highway 5, it's about 300 miles, uh, from LA to the Bay Area.
+Speaker 1: Uh, and there is this, uh, very treacherous, uh, Tully fog, which is, like, T-U-L-E. You can go and read about it.
+Speaker 1: And it sort of descends on the valley, and it's very difficult to see. And it can be very helpful if you have, like, a Sprinter van that goes the highway really well that's driving in front of you with their lights on, uh, if you're going at, like, 5:00 AM to get to a conference that starts at 10:00 in Stanford, like me.
+Speaker 1: Uh, so there are positive externalities too with driving. Uh, the last example I'll give, uh, is just sort of a, a weird one, but something that I kind of like because it really highlights kind of, like, we have to think about what the dec agent, agent is deciding.
+Speaker 1: Uh, so here I'm saying, well, like, you paying not paying attention today could have an externality on your future self. So what does that mean?
+Speaker 1: Well, I mean, it means sort of two things. Like, one, it means the things you do today that we assume will affect kind of what you can do tomorrow or long in the future.
+Speaker 1: And then there's kind of this idea that, well, maybe kind of in the future, you'll be a future version of yourself, but you today maybe aren't fully taking into account all of the things that future self wants, right? Then it could be that there's an externality of the actions that you take, right?
+Speaker 1: This could very obviously, I think, be a very a positive or a negative externality, right? So you might be trying to maximizing, like, maximize doing very well in this class.
+Speaker 1: Then you could think if you don't pay attention right now, that might be a negative externality, uh, unless you're the kind of person who, like, does all their best work when their back is against the wall. Uh, you could imagine it being a positive externality if, like, the reason you're not paying attention is because you're, uh, investing in a friendship that turns out to be really important, etc.
+Speaker 1: Anyway, these are some examples. As I've emphasized.
+Speaker 1: Right? They, uh, really just depend on what we assume.
+Speaker 1: And so they're all different stories. Uh, and we do have to think about what the story is to be able to decide whether something's an externality.
+Speaker 1: Nothing is sort of, like, it's not like noise in and of itself is an externality. It's rather someone who is creating the noise, uh, harming or affecting someone else who is not involved in that initial decision.
+Speaker 1: Um, we'll also focus, uh, in this class, a, a lot on, like, environmental externalities. And usually, that means, like, the externality is being mediated through the environment.
+Speaker 1: So a very classic example, uh, is, uh, like, cross-fertilization of, like, agricultural productivity, uh, where, like, bees are very useful for the production of, uh, tree trees. Uh, so, uh, if you think, like, someone is keeping bees, uh, and then, uh, their neighbor sort of has an apple orchard, that would be a, an environmental externality.
+Speaker 1: Uh, it wouldn't be an externality if the beekeeper was also the owner of the apple orchard. Uh, burning coal is the example that we thought about at the very beginning, right?
+Speaker 1: Their concern, uh, was that by burning coal, uh, we create carbon dioxide, right? This is very plausibly an externality because, uh, the global atmosphere, uh, is where this carbon dioxide goes.
+Speaker 1: And the individual who's burning the coal is really not thinking about the billions of other people and many future generations or their decision that their decision might affect. Uh, and driving also, uh, can create, uh, in addition to congestion, create, uh, air pollution, which is an environmental externality.
+Speaker 1: It's, like, affecting the quality of the air. Uh, and then, uh, another example which, unfortunately, we've had to think about in the last couple of years, uh, a lot, like, you could imagine, like, infrastructure that's just designed to deliver power, for example, uh, having consequences for, um, wildfires, which would be, uh, a natural disaster that we think about very clearly as, like, an environmental externality.
+Speaker 1: And so then we sort of take these examples, and then we, uh, want to do some work to understand. So if we already have, like, the key ingredients for micro, we have some equilibrium notion of the supply of bumblebees, the supply of coal, the supply of drivers, the supply of electricity, right?
+Speaker 1: Uh, then we can overlay that with some, uh, environmental models that allow us to sort of study those externalities. So you might have some, uh, physical relationship that characterizes the productivity benefits of bumblebees or apple orchards.
+Speaker 1: We might use what we just did at the very beginning of the lecture, which is, like, a, a physics model that converts units of carbon dioxide into a bunch of different potential effects or economic activity. Uh, we might have a model that, uh, predicts how air pollution levels change when we change the number of drivers on the road.
+Speaker 1: Uh, and we might, uh, also want to be interested in how air pollution harms, uh, people's health and how costly that is. Uh, and then we might also be interested in kind of, like, the origins, uh, and consequences of wildfires.
+Speaker 1: And we'll, we'll study all these problems, uh, in this class with the exception of the bumblebees. Uh, you know, I don't have much to say about bumblebees.
+Speaker 1: All right. Uh, so I have, uh, now kind of one more, uh, piece of work to do, which is, uh, thinking creative.
+Speaker 1: Uh, and so and then this is an example which is not a toy example. This is, like, the core foundation of the kinds of models we'll look at really through the entire class.
+Speaker 1: So, uh, we'll have a firm that produces some non-negative quantity Q.
+Speaker 1: This is output. Uh, and, uh, the firm, uh, w-we'll say makes a decision to maximize its profit or net output.
+Speaker 1: So output is measured as, uh, P times Q, uh, in terms of revenue. Uh, and then, uh, the firm will incur some cost C that's a function of the amount of quantity that it produces.
+Speaker 1: This is a standard framework for thinking about, uh, supply of some amount of good. Uh, we have a theory of how the firm makes the decision.
+Speaker 1: Uh, for the entire, uh, course with one possible exception, we'll, uh, like to assume, like, competitive output markets. So that, that will imply, like, that the price is fixed.
+Speaker 1: Uh, so the firm or rather the firm is taking as given that price being. So there are, of course, lots of interesting economics when the firm is, uh, acting with some market power and when they're able to influence the price through their choices of quantity.
+Speaker 1: Uh, but that's a distortion that we, uh, will add some new list complication to a lot of our analysis. Uh, for now, just suppose, like, the firm, uh, is maximizing their revenue P times Q, net of their costs.
+Speaker 1: The cost function C is going to be increasing and convex. So the first and second derivative of C are positive.
+Speaker 1: So that just means that, uh, every additional increment of Q that you want to produce, uh, costs some amount of money that's positive. And then that amount per unit is rising as you start to become market fixed.
+Speaker 1: And the reason for that convexity is just, uh, mathematically, uh, we can then guarantee a unique, uh, interior output level because there's always going to be some point where, like, your revenue, uh, at the margin, which is just P, uh, will fall below your marginal cost C prime because C prime is always increasing. So this is sort of the standard, uh, production function.
+Speaker 1: And, uh, today, we'll look at, like, two different worlds, uh, to think about, like, the economics in this setting. And they're each equilibrium outcomes.
+Speaker 1: So the first, uh, we'll call, like, a free market outcome. Uh, in the very real sense that, like, this is a firm, they're operating in the market.
+Speaker 1: Uh, and by free, we mean they can do whatever they, they want. What do they want?
+Speaker 1: They want to maximize Pi. And so we can think about, uh, the precise solution that they would reach, uh, if they were to maximize Pi, uh, to find that object is Q star.
+Speaker 1: So here, I've just written the first order condition of the firm's problem. Uh, and that sort of has a few intuitive interpretations.
+Speaker 1: Uh, the first is kind of you, uh, produce Q star exactly, uh, at the point where your profits, uh, stop rising and start to decline. Uh, the other is sort of the, uh, point at which sort of the marginal revenue P, uh, is exactly counterbalanced by the marginal profit C of Pi.
+Speaker 1: Uh, either of these conditions, uh, will sort of give you this Q star. And this is, uh, just a, a standard, uh, first order condition.
+Speaker 1: Uh, and we can, uh, define that object, uh, and now think about some of the implications. Uh, let me, uh, briefly just kind of give you some geometric information for what this will look like.
+Speaker 1: Uh, so here, the horizontal axis is Q. And the line that's denoted P is just the marginal revenue of the firm.
+Speaker 1: So every time the firm increases its u its production, it's getting P. But the firm's also incurring this cost.
+Speaker 1: We have this nice purple line, uh, that's upward sloping. This is the marginal cost the firm faces.
+Speaker 1: And so then the equilibrium outcome is just, uh, the intersection of these two lines, uh, which is just going to be Q star. Okay.
+Speaker 1: Any, uh, questions or, or comments or thoughts about this very standard economic 101 block? 'Cause it's been a long summer.
+Speaker 1: You're welcome. Yeah.
+Speaker 1: And, and tell us your name, too.
+Speaker 2: Oh, I'm Joseph.
+Speaker 1: Joseph.
+Speaker 2: Just to confirm, what's on the vertical axis in this case?
+Speaker 1: Vertical axis, you can think just, like, dollars, right?
+Speaker 2: Okay.
+Speaker 1: It's like the this is the units of the thing the firm values. Um, so whatever denomination of price. And then by assumption, like, the, the units of the price are the same as the units of, of cost.
+Speaker 1: All right. Uh, one more way of thinking about this optimum, as I'd said, you could also do it kind of geometrically thinking in profit space.
+Speaker 1: So this is a parabola because we know that, uh, profits sort of are rising, uh, as we increase output, but then there's a point where, uh, the profit function starts to tip below its maximum. And that's because of the convexity cost function.
+Speaker 1: And so then to maximize this, uh, objective, you just find the point at which you, uh, are the highest, uh, which is here Q star, right? And this, of course, is, like, your classic intuition for why the first order condition works.
+Speaker 1: 'Cause the first order condition is the tangent along this curve. And so if you, like, think and you have this curve and you take the tangent line and have it, like, skateboard all the way up the hill, the point at which it is precisely horizontal, right, i.e., the slope is zero is exactly where you maximize this, uh, function.
+Speaker 1: Okay. Uh, so, uh, now I want you to think kind of about this problem, right, as it an ex involving some externality.
+Speaker 1: So suppose we have some neighbor. Uh, we'll just, uh, imagine that they have some, uh, damage that they experience from the output, which is just some function, uh, d2.
+Speaker 1: It's a negative externality. We can do positive externalities as well.
+Speaker 1: There's, uh, no difference really. What's important, uh, is that sort of this Q is, uh, is being chosen by the firm.
+Speaker 1: And right now, we don't actually have any, uh, theory for, uh, what would happen, uh, if the firm is producing their output, uh, to the neighbor. But we can immediately arrive at that by taking the results we have for this free market outcome.
+Speaker 1: Uh, I want you to assume, uh, that the damage function is also increasing and convex. Uh, so when they're, uh, whenever you add output, the neighbor is worse off.
+Speaker 1: They're always, uh, sad at the margin. And then they become increasingly sad with higher levels of.
+Speaker 1: So you could think, uh, like, certain models of toxicity, for example, uh, where initial levels you can tolerate, uh, but don't really like. And then there is a point where kind of, like, there's really extreme, uh, danger associated with the level of the, the toxin that's being put into the water.
+Speaker 1: Maybe the firm, uh, is just producing, uh, some goods, but then putting, uh, effluent into the river. Uh, maybe the neighbor uses the river for something.
+Speaker 1: Of course, it could be, uh, any of, of many stories. Uh, what's important, uh, is that this convexity will then give us an interior solution for the, uh, first best, uh, solution that we'll think about most heavily.
+Speaker 1: Geometrically, right, we can, uh, introduce this, uh, marginal damage, uh, directly by shifting kind of the, uh, curve that is the marginal cost curve, uh, up to include this increment of marginal damage P prime, right? Uh, this is, like, not just a level shift.
+Speaker 1: It could be a rotation. Uh, we're not making assumptions about, uh, the shape of the damage function, uh, other than, uh, its convexity.
+Speaker 1: Uh, what's important and this comes from this, uh, D prime always being positive. Its first derivative always being positive.
+Speaker 1: Like, there is, uh, never a point at which these two curves overlap. There is always at least a little bit of space between the black line and the purple line.
+Speaker 1: And that's just because there's always something that hurts the neighbor a little bit. And that's important because it will drive, uh, the results we can then prove in this setting, uh, simply because we are assuming there is some amount of marginal damage.
+Speaker 1: Okay. Uh, so let's, let's do that.
+Speaker 1: Um, uh, let's, uh, first think about, uh, some measure of total surplus in the economy where, uh, now we just combine the profits of the firm Pi of Q and subtract damages d2. Call it just capital W.
+Speaker 1: We might want to be, uh, we want we might want to evaluate sort of what this measure looks like under different models. Under the free market, we can already answer that question correctly.
+Speaker 1: And that's because we've calculated Q star. So Q star was that, uh, quantity level that satisfied the Pi prime of Q star vanishing, right?
+Speaker 1: Or equivalently that, like, price was equal to marginal cost at Q star, P equals C prime Q star. Uh, that's what we know from the model of how the firm makes the decision.
+Speaker 1: And so to then ask, well, how does society, uh, get affected? We just put Q star into this expression for this total surplus.
+Speaker 1: Uh, and we get this, uh, total revenue of the product of the good, the total cost of producing that good. And then we also now want to think about the neighbor.
+Speaker 1: Any questions or concerns about how we've now introduced this, uh, new feature into just the model of one production?
+Speaker 1: Yes. Sit.
+Speaker 1: Exactly. And so these two curves are labeled.
+Speaker 1: So this purple one is the curve we had before, marginal cost. And then the black line is now marginal cost plus, uh, marginal damage.
+Speaker 1: Yeah. The marginal social cost we would call, like, C prime plus P prime, uh, because it's the question of, like, if we at the margin change Q, what is the total cost to society?
+Speaker 1: And here, it's the cost of the firm in terms of using the resources to generate the good and then also the cost to the neighbor.
+Speaker 1: All right. So this is a, a general model of firm production with, uh, externalities.
+Speaker 1: Uh, I want to now sort of, uh, think about, uh, one more, uh, case, uh, which is sort of what happens, uh, to welfare, uh, when, uh, the free market outcome sort of differs from what we might prefer, uh, as a society. And so in lecture three, uh, we'll think a lot about, uh, what it means to call this sort of sum of the payoffs to the firm and to the neighbor, uh, welfare.
+Speaker 1: And that's sort of a somewhat complicated, uh, problem because we have to make assumptions about how to compare utility across these different entities. Uh, for now, just sort of, like, take it as a definition that W is welfare.
+Speaker 1: Uh, and ask just the mathematical question, how do we maximize W, right? And further, like, how does the answer to that question, uh, differ from what we got on the previous slide, which was this, uh, W Q star.
+Speaker 1: You can see, uh, already from this geometry that W Q star, uh, might not be maximizing welfare. This purple curve is just, uh, taking Pi and then subtracting D.
+Speaker 1: So this purple curve is the total welfare. Uh, and Q star is what we had before that maximized this original allocation.
+Speaker 1: Uh, it looks like there is a, a market there. Uh, we can be a bit more, uh, precise about that by defining, uh, the efficient outcome.
+Speaker 1: And so, uh, we'll use, uh, FV superscript, like a superscript of FV, often to describe efficiency, right? FV is, uh, for first best.
+Speaker 1: It's like a it's a little redundant. It's like best has to be the first best.
+Speaker 1: Uh, but we call it the first best because we will want to think about, uh, second best at some point. Uh, and also, we just really want that best to be the whole space that's going to be the first best, uh, or FV.
+Speaker 1: And this is just defined as the maximum, uh, sorry. It's just defined as that Q which maximizes itself.
+Speaker 1: That's just a, a definition of what we'll call the efficient outcome. And so with these two definitions and the assumptions we've imposed on the model, we can, uh, now get to some results, right?
+Speaker 1: And, uh, the two results I want to emphasize here are just, uh, what happens, uh, when we compare the Q star to Q first best, how we might interpret that in terms of welfare, and then the implications, uh, for the firm and the firm's payoffs. Uh, so to do that, we want to think about, uh, how to solve for Q first best.
+Speaker 1: And so to solve for Q first best, you can, uh, just do a brute force algebraically in the same way we solved the firm's problem. So that was, uh, we had WQ now.
+Speaker 1: And so we just differentiate WQ with respect to Q, and then we find the Q such that the derivative of W is zero. And so that derivative is going to consist of three components, right?
+Speaker 1: The first two components are the components we already had for the firm's problem. So P, uh, minus C prime of Q.
+Speaker 1: And then the third component is the new feature, which is the neighbor's payoff or harm. So that's a minus D prime term, right?
+Speaker 1: And so that is the, the derivative of welfare. Here, it's, uh, something you could think about, uh, geometrically, uh, by looking here at our friend P, the marginal revenue to the firm.
+Speaker 1: Uh, and now looking at where this, uh, new shifted, uh, to Sids question, like, the marginal social cost curve, uh, has, has moved, uh, to now this, like, sort of, uh, thickly, uh, teal Q first best that's in the model.
+Speaker 1: Okay. So, uh, two, uh, results so far, right?
+Speaker 1: Proceeding from the assumptions that, uh, costs are convex, uh, and the firm maximizes their profits, and that harm to the neighbor is also convex, and the neighbor's payoffs are not taken into account by the firm. Those two results are, uh, what happens, uh, in the free market, Q star.
+Speaker 1: This is, like, a prediction about the equilibrium. And then the, the next result is just what we would like as a society to obtain, which is this Q first best.
+Speaker 1: And so we can comment on, uh, these two findings, uh, in a somewhat more, uh, systematic way. So I, the first comment is just, uh, welfare at, at Q star is strictly less than welfare at Q first best.
+Speaker 1: I don't think this is that surprising given how we've walked through the problem, but it's a really powerful result. But by which I mean, like, that it tells us that the market has failed.
+Speaker 1: A-as soon as you introduce an externality, the market fails in the sense that welfare is less than it could be. So that's, I mean, a, a really, uh, significant finding 'cause it's, it's very general.
+Speaker 1: There's an additional, uh, result, which is, uh, nearly as general, which follows from the fact that the, uh, marginal damage is, uh, non-negative and that this is a negative externality.
+Speaker 1: And so we actually also have a prediction about how, uh, the market outcome Q differs from the, uh, social, uh, first best outcome, which is that, uh, we would like less if we were society than what the firm wants. And that's, that's pretty useful too.
+Speaker 1: Like, it at least tells us what direction to go to get to something that's closer to what society wants.
+Speaker 1: And, uh, uh, geometrically, right, you can verify this because you can see that, uh, the marginal social cost curve, right, is shifted to the left of the marginal, uh, or the cost that the firm faces, right? So that has to move Q first best below or to the left depending on your orientation, uh, Q star.
+Speaker 1: And that's because that there is always a gap between these two curves. And that's just our assumptions of, of convexity and these non-negative derivatives.
+Speaker 1: Questions about this, this result?
+Speaker 1: All right.
+Speaker 1: Uh, I just have one more result. Uh, it's that I, I will be ready.
+Speaker 1: Uh, and, uh, that is, uh, the following, uh, which is that, uh, if we, uh, want to ask, well, what can we assign the difference between profits to the firm under the free market versus, uh, what society wants?
+Speaker 1: Can we do that? Right.
+Speaker 1: And the answer is also just a, a very stark yes. And it's, it's the reverse, right, of the welfare finding, right?
+Speaker 1: I-i-in the sense that the firm is better off under the free market than in the first place, right? And this follows just from the geometry of the occupational problem the firm solves.
+Speaker 1: The firm was doing exactly what they did actually. Any change from what that firm loves to do makes it, uh, c-cannot by definition ever make it worse off, right?
+Speaker 1: But further makes it strictly worse off, uh, because, uh, of the convexity of the cost.
+Speaker 1: W-why can it never make the firm, uh, better off, right? Because, uh, otherwise, uh, the firm would have chosen that point that has asserted to have made the firm better.
+Speaker 1: So we know that, uh, any Q that's not Q star can never give you a profit that's greater than Pi of Q star. And then to get this inequality to be strict, uh, we rely on the fact that there is only one Q star that the firm would like to maximize.
+Speaker 1: Uh, and so I and yeah, it's kind of cut off at the bottom. Um, I don't know if you know that they, they took all the computers out of all the classrooms last week, which was when they told us they were taking them all out.
+Speaker 1: You think they might have told us, like, a little sooner, but, uh, they didn't. Anyway, uh, I apologize for this final sentence being, uh, cut off.
+Speaker 1: It just says because the firm is not internalizing the neighbor's well-being, uh, which doesn't, uh, really deliver the most important punchline, right? The most important punchline is that this, uh, fact, uh, which is just as general as this result that markets fail, suggests there's a, a strong incentive, uh, by at least one of the parties in the economy to, uh, not move to first best because they're, they're worse off unless we add other things.
+Speaker 1: And so this, I think, sets up some really. Economics.
+Speaker 1: So the problems that we'll focus on, uh, generically, have the opportunity to really, uh, change outcomes for people in ways that could be good. Uh, but there's also maybe a lot of reasons why, uh, systems might not change.
+Speaker 1: Uh, and so these, this kind of framework will let us diagnose them, uh, and be more precise about, uh, how important they are, uh, and when they are the most important. All right.
+Speaker 1: Uh, so I'll see you on Wednesday. Uh, we'll talk about this model again.

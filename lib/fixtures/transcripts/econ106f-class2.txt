@@ -1,0 +1,407 @@
+Speaker 1: Okay.
+Speaker 2:  I'll do a slideshow. Just a slideshow of all this.
+Speaker 2:  It's obvious it's all this, yeah. It's just the mistake.
+Speaker 2:  It's kind of not as solid formulas for the ratio as it was, so I'm not correct as well. It's okay.
+Speaker 1:  What?
+Speaker 2:  I mean, yeah, it's perfect.
+Speaker 1:  All right. So before we get to the main lecture, a few notes up here I want to talk about. These are more food for thought, not something that would be tested on necessarily.
+Speaker 1:  So, FYI, I was told by the department, if you're still trying to get enrolled in this class, there are two other lab classes that currently have seats available: 106P, which is pricing, and 106M, which is something to do with banking and money. I don't know if that conference is that one, but they both have lab lectures, so they will satisfy that component.
+Speaker 1:  As I was driving to work today, I was listening—which I often do—to a podcast called Professor G. Markets.
+Speaker 1:  Professor G. is Professor Scott Galloway at NYU. He's kind of out there now.
+Speaker 1:  He's getting kind of famous. He's written some books.
+Speaker 1:  He's a successful entrepreneur. He's also teaching at NYU Stern Business School.
+Speaker 1:  I think he made his money in marketing, but I don't know exactly. And so he started this podcast.
+Speaker 1:  I put a screen capture down here that is sort of the host, which I think was one of his graduate students. And then this person here was on the podcast today.
+Speaker 1:  And the reason I bring it up is just more things to kind of supplement your learning and with real tangible applications. So today, this person on the right there, the black T-shirt, brought up—so Anthropic is one of the big AI companies.
+Speaker 1:  OpenAI is another one. SpaceX has Grok.
+Speaker 1:  And so on and so forth. Anthropic is considering an initial public offering on the order of around $2 trillion, which I think might be the biggest ever, at least in the United States.
+Speaker 1:  So anyways, it's relevant. And when a company has an IPO, they go from a private company, which they are today, to a public company.
+Speaker 1:  And there are many reasons they may want to do that, many good reasons. One would be, as I mentioned on Monday, they can liquidate some of their ownership stake and get proceeds to invest in the company.
+Speaker 1:  They could also, a lot of the employees, have stock in the company when they join the company, but they really—it's not as liquid. They can't simply sell it that easily on the public market because it's not a public company.
+Speaker 1:  So they will get to liquidate if they want and buy things with that if it goes public. The question that's relevant to this class is the valuation.
+Speaker 1:  Why is it worth $2 trillion? And so this guest today—and you can listen to it.
+Speaker 1:  It's like a 15-minute interview—basically is saying Anthropic and all of these AI companies, if you're not following, they're taking in lots of data, and they basically—this is a massive oversimplification—they're basically doing ECOM 103 on it, a massive regression to forecast something in the future. Now, maybe don't quote me on that, but at the root cause, they're trying to figure out, based on the data, what is a better prediction model for what's going to happen next.
+Speaker 1:  But there's fierce competition because everyone in the world is trying to do that, all of course the other big companies, but also startups, and so on and so forth. So they must constantly improve their models.
+Speaker 1:  And that's the thing is that this guest speaker said today, when a company goes—it's going to have an IPO—they publish something called a prospectus.
+Speaker 1:  And that prospective, it's for potential investors, and it says, "Here's what we do. Here's how we make money.
+Speaker 1:  Here's why we think we're going to be worth this much money. And here's a bunch of risks."
+Speaker 1:  And that prospective will be coming out shortly, but it was leaked, apparently, and so now it's all on social media and everything. And inside that, they indicated that they have something called adjusted income or something like this.
+Speaker 1:  It's right there. Accounting, on the one hand, may be seemed very straightforward, very black and white, very maybe even dry.
+Speaker 1:  But in reality, there is a lot of room for judgment, a lot of gray area in there. And this company is making statements like, "We have operationally, we are profitable."
+Speaker 1:  But if you read into it, they're excluding things like training costs. Training costs are the single biggest and massive cost of the company.
+Speaker 1:  So you're either saying that we're going to train our models. We are spending money to train models today, but we're going to stop because we've perfected it.
+Speaker 1:  Or you're saying, I don't know what the other argument would be, why you would exclude that from your operating costs. And so the guest is saying that basically made that point.
+Speaker 1:  And here's the thing. If you stop training because, "Hey, we have a really awesome model," it will probably be months, if not days, before a competitor surpasses your model because they are constantly updating it.
+Speaker 1:  And so then the question becomes, "Well, are your costs growing faster than your revenues?" Because if your revenues are growing, and in fact, their revenues are growing—it's a ridiculous number—1,000% over last year.
+Speaker 1:  And their costs tripled. So on that sense, you could say, "Well, in time, the revenues will just grow so fast, and the costs will grow fast, but not as fast."
+Speaker 1:  Eventually, revenue minus costs eventually will be like this in terms of our cash flow. The problem is that that 1,000% growth rate per year, in about six years though, if that was to be continuing, they will have revenues greater than the revenue of the planet Earth.
+Speaker 1:  So that should make you think, "Well, wait a minute. Maybe 1,000% growth per year is not realistic."
+Speaker 1:  And all of these types of questions, although probably not as extreme, you'll encounter in lab number two, where we're going to actually do a net present value calculation of a company of your choosing. You could choose Anthropic if you want.
+Speaker 1:  It becomes complicated. It's usually advised to do something a little more traditional, like Coca-Cola is a common one.
+Speaker 1:  But anyways, when we get to that, you can pick whatever company you want, but I'm trying to give you an appreciation for at the end of the day, we're trying to forecast the future, and nobody knows that for sure. So you can get these kind of forward-looking statements that make the net present value look good.
+Speaker 1:  That doesn't mean it is good. And I'm not trying to give you investment advice.
+Speaker 1:  I'm saying this is an interesting question about revenues versus costs and the growth rate of each of those.
+Speaker 1:  The next thing I want to mention is this person on the right, Professor D'Amadoran, also at NYU, by the way. And he's famous.
+Speaker 1:  And you might be thinking, "Well, why NYU? What's so good about that?"
+Speaker 1:  Well, really, both of these people are UCLA alumni, so. Anyways, D'Amadoran is famous because he's a professor, and he basically teaches this type of class primarily.
+Speaker 1:  That's his focus. And he does realistic net present value calculations.
+Speaker 1:  He's all over YouTube. He has some spreadsheets and stuff if you want to learn more.
+Speaker 1:  In my class, we'll have one or two weeks to focus on it, and we'll have that big lab, lab number two. But if you really want more experience, I highly encourage you to check out him online.
+Speaker 1:  And you can just watch a 20-minute video. He'll do an NPV.
+Speaker 1:  He'll walk you through it for whatever company, Google or whatever is in the news those days. So if you really want that experience.
+Speaker 1:  The last thing I want to mention is, on Monday, if you're paying attention, I talked about Buffett and his alpha was 10%. He makes about 20% a year.
+Speaker 1:  The market is about 10% a year. You subtract 20, subtract 10 from 20, that's a 10% alpha.
+Speaker 1:  And I said, "The best investor of all time only makes 10% more than an average person." And then I used my mom as an average person.
+Speaker 1:  So I felt bad about that because my mom is actually an exceptional investor, although she's never had an economics class or a finance class. So I kind of panicked in the moment.
+Speaker 1:  Intuitively, the reason my mom is a great investor—and this is a little bit TMI, but I do have a point—intuitively, she understood, and my dad as well, this basic idea of cash flow. They've never done NPV.
+Speaker 1:  They probably don't know what NPV means, but intuitively, cash flow. Your cash coming in needs to pay your expenses and this.
+Speaker 1:  That's why I mentioned last time that it would be fantastic education to start your own small business, although I know we don't all have that luxury. But even just a simple business for a few weeks, like for example, if you went to a farmer's market or a flea market or something and opened a table and started trying to make money, you'll realize a lot of these simple concepts are quite powerful for business, and not to mention in this class and in complicated fancy NPVs.
+Speaker 1:  And the final point on alpha, ironically, in the same podcast, the one on the left, the person—no, it was somewhere—anyways, the point is, 10% alpha is massive. In fact, it's so large that if anyone today said they can achieve that, they're probably lying or they're delusional or maybe a little bit of both.
+Speaker 1:  It's just really, really difficult. And like I said, there may be the next Warren Buffett in the world today, a 30-year-old, maybe some one of you, maybe.
+Speaker 1:  It's possible. It's just that I just want you to appreciate how difficult that is.
+Speaker 1:  On the flip side, having zero alpha, which is just matching the market in the United States at least, and the jury is out on other countries, but in the United States, over a few hundred years, it's a massive way to build wealth. So even zero alpha can build incredible wealth.
+Speaker 1:  We'll get way more into that in the second half of the quarter. The last thing I want to mention, let's see, I will review the lab syllabus next, but there is no lab lecture this Friday.
+Speaker 1:  I'll show you that in the syllabus. Again, we have 10 Friday slots.
+Speaker 1:  I'm going to use probably eight or nine of them, but not this one. So don't come to class.
+Speaker 1:  Okay. So let me pull up.
+Speaker 1:  Oh, I wanted to show you back to the Anthropic. So I googled R Anthropic—excuse me—R Anthropic's cash flows becoming increasingly negative due to the training costs, even as its revenue grows exceptionally fast.
+Speaker 1:  So this is just Google take it for what it's worth. And basically, the points I mentioned, surging revenue versus widening operating costs.
+Speaker 1:  And this is another lesson that's relevant to the class. You can have a fantastic business and a fantastic technology like AI.
+Speaker 1:  It's definitely changing the world. It already is, and it will continue to do so.
+Speaker 1:  That does not mean it's a fantastic business. And that, for me, was very hard to understand when I was your age.
+Speaker 1:  Obviously, it's a great business. It's a great company.
+Speaker 1:  In my day, the Anthropic of my day was Microsoft in the '90s. Fantastic.
+Speaker 1:  Wow, very exciting. It's all over the world.
+Speaker 1:  Doesn't mean it was a great business. It turned out it was a great business, but it doesn't mean that.
+Speaker 1:  And Anthropic, I would say, we don't know yet. You can also look to the internet era in the early, late '90s, early 2000s.
+Speaker 1:  Obviously, the internet changed our lives. You don't even know what it's like without an internet.
+Speaker 1:  It's just part of your life. But a lot of companies, and probably most of them, failed.
+Speaker 1:  A lot of internet companies. Most famously, Amazon did not fail, but there was a moment there after the dot-com crash where it was almost—it was literally almost worth nothing to Amazon.
+Speaker 1:  I think it was at one point, it was about 80 cents per share. So my point is that we need to understand the difference between a great business and a great investment.
+Speaker 1:  One of the main differences is the price you have to pay for it. And when you talk about price, you oftentimes will relate price to the earnings you're getting for that, which is a price-to-earnings ratio.
+Speaker 1:  Again, we'll get into more of that in the second half of the class, but I did want to kind of bring it in a little bit of relevance. And so you can learn stuff, and you always have to have a skeptical eye.
+Speaker 1:  This point here, the adjusted profit illusion versus delayed cash flow. This is something that when I was in business school, my professor emphasized to us, and for whatever reason, I didn't quite wrap my mind around it.
+Speaker 1:  He said, "To justify today's valuation, the future cash flows have to be massive." And he would say, "You're going to have to get a huge ton of revenue, and it's going to go through the roof and all that."
+Speaker 1:  And I was like, "I'm not sure what you're saying." But what he's saying is to justify the NPV today, with all the losses today in the next few years, the future cash flows must be so huge.
+Speaker 1:  Because for one, they're way out in the future. So discounting them makes them smaller.
+Speaker 1:  And for number two, you're digging a huge hole of negative cash flows right now. And so to compensate for that, the future must be super optimistic.
+Speaker 1:  And maybe it is for AI. I mean, it's pretty unique.
+Speaker 1:  I think we would all agree. Okay.
+Speaker 1:  So now let's get back to our lecture notes.
+Speaker 1:  Okay. So we left off on the financial statements.
+Speaker 1:  We talked about, well, we're right in the middle of the balance sheet. And so as I mentioned last time, there are various vocabulary words that you need to be aware of as part of accounting being the language of finance.
+Speaker 1:  Book value and market value are the recent ones here. So market value is what you're probably most familiar with.
+Speaker 1:  So if I have a company and there's a billion shares in the world for my company, my public company, and the share price is $120, then the market value is very simply $120 billion. That's the market value of my company.
+Speaker 1:  Book value is something much more sort of muted, something a lot more rooted in the assets and liabilities of the company.
+Speaker 1:  So market value, if you are not—if you're not seeing it, can be highly influenced by investor psychology, right? So one day, the internet index fund was way up here, and a few days later, it was way down here.
+Speaker 1:  What changed about the assets and liabilities of the company? Not very much.
+Speaker 1:  But investor psychology changed a lot. So the market value climbed.
+Speaker 1:  But if you look on the balance sheet, they probably had the same assets and liabilities that they had a few years ago. And that's what book value will tell you.
+Speaker 1:  And so to compare these two, so book value is basically an accounting way to say, "What is the company worth?" Simply assets minus liabilities.
+Speaker 1:  That is not to say market value is wrong, because market value will say, "Well, I'm an expert. I'm analyzing the balance sheet.
+Speaker 1:  And well, the assets maybe only are a billion dollars more than the liabilities. I think the company's worth 5 billion.
+Speaker 1:  And let me tell you why." And you could have an argument about growth prospects, intellectual property.
+Speaker 1:  You could have a moat, which is to say, "Other companies can't compete with me because I have some either regulatory protection or intellectual property that cannot be duplicated." So Coca-Cola might be one.
+Speaker 1:  Because anyone, including all of us, could make a soda company tomorrow. It's sugar and bubbly water.
+Speaker 1:  That's it. You got a soda, right?
+Speaker 1:  But you're not going to compete with Coca-Cola. And why is that?
+Speaker 1:  Because they have a moat, which is a brand and also a special secret sauce and other ingredients. But anyway, so my point is, you may ascribe a higher market value for reasonable reasons than a book value.
+Speaker 1:  Buffett uses the ratio of these two as a sort of a quick check of, "Are we getting ahead of ourselves?" So if the market value is more than twice or three times or four times the book value, Buffett might look into that and say, "I think the market is adding a valuation to this that's really disconnected from reality."
+Speaker 1:  So that's Buffett. And he's always looking for bargains.
+Speaker 1:  And there's another extreme investment philosophy, which does not do that sort of analysis. Oftentimes, market values are far more in excess of book values because of high-tech or biotech.
+Speaker 1:  They have huge potential upside. And that's reflected in the market value, but it won't be reflected in the book value.
+Speaker 1:  Okay. And so here's a page that kind of looks at this ratio.
+Speaker 1:  There's another couple more words, value stocks and growth stocks. Value stocks would tend to have low ratios.
+Speaker 1:  So the market value is not much more than the book value, maybe a 1.5, 2.0 or something ratio. And growth stocks, as I just said, could have—there is no limit.
+Speaker 1:  In fact, you could have a negative book value. If your liabilities are greater than your assets, that would be negative.
+Speaker 1:  And still have massive upside potential, depending on what your business is and your technology. So growth stocks are kind of a whole nother category.
+Speaker 1:  All right. That brings us to the income statement.
+Speaker 1:  So the three statements: income, statement, balance, and statement of cash flows. They are three distinct things.
+Speaker 1:  They're telling you different perspectives of the same business, but they themselves are also interconnected. They're not separate in that sense.
+Speaker 1:  So what I mean by that, on the balance sheet, you have assets and liabilities. As the CEO, a part of the management team, you're using those assets and managing those liabilities to produce income.
+Speaker 1:  So in that sense, they're connected.
+Speaker 1:  So the income statement shows the flow of those revenues and those expenses over a calendar year, typically. And it always starts with total sales.
+Speaker 1:  It starts with total sales or your revenue. And then you have a bunch of line items, all different types of costs.
+Speaker 1:  And at the very, very end, you have your income statement. And so here's a visual representation.
+Speaker 1:  Total sales, you have a couple of years, one after the other. So you can kind of see the progress from last year to this year.
+Speaker 1:  And then total sales in the green box there. And then everything else are different costs.
+Speaker 1:  Cost of sales. Then you have SG&A, selling general administrator.
+Speaker 1:  Those can be things like marketing and just not necessarily related to building your product, but related to selling your product, if you will. Research and development, depreciation, amortization.
+Speaker 1:  We didn't really define those or amortization. Depreciation, I did mention last time, you have a physical structure or really a piece of equipment.
+Speaker 1:  There is a standard lifetime of that asset that is published by the IRS. So you don't just make it up yourself.
+Speaker 1:  So like I said, real estate is usually 27 and a half years. And so if it was worth $2.75 million, that's every single year on your income statement, you have a minus $100,000 for depreciation.
+Speaker 1:  So you might think, "Well, who cares? What's that all about?"
+Speaker 1:  Well, because you pay taxes on net income. So depreciation is going to reduce your net income, which reduces your tax bill.
+Speaker 1:  And at the same time, it's not a real cost. So you might actually have positive cash flow, but negative income because of depreciation.
+Speaker 1:  The other thing, though, to keep in mind, you think 27 and a half years is like forever in the future. You never have to think about it.
+Speaker 1:  Well, one of these days, you will be in year 28, and you don't get that write-off anymore. Or you don't get the depreciation anymore because it's gone.
+Speaker 1:  And if you ever sell that property, the taxes you pay on sale is the sale price minus the depreciated value. So if you've used up all your depreciation, the cost basis is zero.
+Speaker 1:  So you will recapture all those taxes. I'm getting a little bit off topic, but there are tax rules that allow investors to exchange a property that has perhaps run out of depreciation for a new property.
+Speaker 1:  And you can sell one, buy the new one, get a whole new set of 27 and a half years of depreciation, and the taxes are minimized in that way. It's called a 1031.
+Speaker 1:  That's too much detail. But anyways, I want to get into some of the realization rather than just staring at sort of a static income statement.
+Speaker 1:  And so earnings before interest and taxes, and usually the income statement will separate that out because there's a certain scorecard, if you will, or assessment of how well the company can produce earnings as a company. And then, okay, you have to also pay interest and taxes, but that's kind of a separate skill set.
+Speaker 1:  So we want to break it out. So as a business, they have 10 million in earnings.
+Speaker 1:  But okay, yes, they also took out a bunch of loans, so they have interest expense. They have to pay income tax.
+Speaker 1:  And so this is their net income after interest and taxes. So both of them are relevant metrics, if you will.
+Speaker 1:  A public company will then break it out earnings per share. We'll get to this a little bit later.
+Speaker 1:  But the reason you want to know that is because if you are going to invest in this company and the company made $2 million last year, well, as an investor, if you own a share of stock, you are now literally and legally a part owner of the company. So you might ask yourself, "Well, I am a part owner.
+Speaker 1:  How much of those earnings are mine?" That's what earnings per share tells you.
+Speaker 1:  So they made 2 million. In this case, if you owned a share, you would, on paper, at least 55 cents of that is yours.
+Speaker 1:  Obviously, if you have 1,000 shares, it goes on from there. Okay.
+Speaker 1:  So the next several charts kind of break out each of those line items, but I'm not going to do that because I kind of just verbally did all that.
+Speaker 1:  The couple highlights, though, operating income. Now, this is what Anthropic did.
+Speaker 1:  So operating income is important because it's really talking about the business before you get into other things like taxes and insurance and interest and all that. It's like, if you're running a coffee shop, how well are you buying the supplies for coffee, selling the coffee at a certain price, and what is that profit, your operating profit?
+Speaker 1:  Anthropic says we're profitable already. But then you look in the fine print, you're like, "Oh, by the way, we left out the training expense," which that, to me, is kind of insane because that company is nothing except a company that trains models.
+Speaker 1:  I mean, that's it. You can't leave that out.
+Speaker 1:  That's my opinion. And also, that training will never stop because of the competition.
+Speaker 1:  If it was a one-time thing, you got to do it. It's an investment, and then it's over.
+Speaker 1:  Then you might have an argument. That's not really an operating thing.
+Speaker 1:  It's like an initial investment or something like that. Okay.
+Speaker 1:  So continuing. Keep going.
+Speaker 1:  The guy on the podcast called those operating earnings without the training. He calls it earnings before the bad stuff, which is a joke.
+Speaker 1:  If you leave out all the bad stuff, you're really kind of fooling yourself, all the expenses and stuff. All right.
+Speaker 1:  So then we get to net income. I talked about earnings per share.
+Speaker 1:  A couple of definitions. Earnings per share, you have to know that.
+Speaker 1:  That's your income divided by your shares. But oftentimes what you'll hear, if you are sort of a casual investor looking at the stock market, you'll hear about the PE ratio.
+Speaker 1:  That is related, but different than earnings per share. They both have earnings in them, earnings per share or price per earnings.
+Speaker 1:  But PE ratio tells you, "Okay, they made $2 million, and at the current share price, how much are you paying for $1 of those earnings?" That's the PE ratio.
+Speaker 1:  So they're related to the stock price in this way. It's just simple math or algebra.
+Speaker 1:  But both tell you something useful. As an owner, how much of the earnings are mine if I own a share?
+Speaker 1:  And the other one is, if I do invest, what does $1 of earnings cost me? And guess what?
+Speaker 1:  It's much more than $1. It's going to be $10, $20, $100.
+Speaker 1:  In fact, let me give you some examples. Let me see if you can spot the trend here.
+Speaker 1:  Apple's earnings per share—excuse me. I'm going to talk about price per earnings.
+Speaker 1:  Apple's price per earnings, I'm going to just round numbers, is 40. Berkshire's price per earnings is 12.
+Speaker 1:  Tesla's price per earnings is 320.
+Speaker 1:  SpaceX's price per earnings just has a flat line like that. So those are just four examples.
+Speaker 1:  The trend is, if a company can legitimately say the future is going to be bright, right now, it's like, "We're investing. It's not about earnings."
+Speaker 1:  In the future, the earnings are going to be massive. Investors may pay a higher price to earnings ratio because they're not worried about the $1 of earnings today.
+Speaker 1:  They're paying more now for future earnings. So you can see SpaceX doesn't have any PE ratio because it has no earnings.
+Speaker 1:  That's why it has a flat line. Tesla does have earnings, but it still has a huge growth story.
+Speaker 1:  So people are paying 320 price per earnings.
+Speaker 1:  Then I said Apple, fairly established, but still a tech company, kind of a cool story going forward.
+Speaker 1:  People are paying about 40. And then Berkshire Hathaway, the oldest company, you could call it borderline boring.
+Speaker 1:  You might even call it out of touch and all of those things. People are only going to pay $12 for $1 Berkshire earnings.
+Speaker 1:  So that hopefully gives you an idea. And then the other thing is, so you can see that I highlighted stock price is related to these two metrics.
+Speaker 1:  And so sometimes you might hear someone on the news, even professionals, but certainly non-professionals will say, "Well, I don't want to invest in that stock because the stock price is too expensive." It might be there are some companies where the stock price is hundreds and hundreds of dollars or even more than $1,000.
+Speaker 1:  And other companies, the stock price might be $20 or $30. So you can kind of understand what they're saying, but that is not relevant.
+Speaker 1:  The price per share is—excuse me. Yeah, the price per share is not relevant when it comes to expense.
+Speaker 1:  Expensive is relative to how much price you're paying for earnings. Okay.
+Speaker 1:  So the only way that the stock price could be considered expensive is if you just simply don't have enough money. If the stock is $1,200 and the price per earnings is really cheap, so it is a great deal, but you just don't have $1,200.
+Speaker 1:  So okay, yeah, you can't do that. So to give the extreme example, on the list I just gave you, on the price to earnings metric, Berkshire Hathaway is only $12.
+Speaker 1:  That's cheap. But a single share is $751,000.
+Speaker 1:  So if you just go out in the world and you're like, "Hey, you think Berkshire Hathaway is cheap or expensive?" Everyone will be like, "That's insane.
+Speaker 1:  It's the most expensive stock in the world," which it is on a price per share. But price per earnings, it's one of the cheapest stocks in the world, actually.
+Speaker 1:  So anyways, food for thought. It's not that one is better than the other.
+Speaker 1:  It's collectively, each of these things gives us a little bit of insight into what we may be investing in. Dilution is when a company, in order to raise money—so let's say there's a billion shares outstanding, but they're like, "Well, we need to raise some money.
+Speaker 1:  We don't want to do bonds. We're going to just issue more shares."
+Speaker 1:  So they might issue another billion shares. So if it's trading at $20 a share, that's $20 billion.
+Speaker 1:  The problem is dilution. Because now when you say, "Hey, what is my earnings per share?"
+Speaker 1:  that event has just cut that in half. Earnings per share cut in half because there's now twice as much shares with the same earnings.
+Speaker 1:  So you got to keep that in mind. Now, if you're looking at it this way and they just doubled their shares, earnings per share gets cut in half, either the stock price will also drop or the price to earnings will double to compensate or go up so that the share price stays the same.
+Speaker 1:  So these things you probably want to be aware of. Okay.
+Speaker 1:  Now that brings us to the statement of cash flows. And in some sense, this is almost the most interesting one because you're seeing where all the money goes and what the uses are for.
+Speaker 1:  So if you're trying to get insight into the company or you are a financial officer of the company, you want to have—well, it would be good to have a strong idea of the statement of cash flows. Now, as I mentioned, the three statements are all interconnected.
+Speaker 1:  So the statement of cash flows will use information from the income statement and the balance sheet and then do its analysis. It's all movement of cash into and out of the firm.
+Speaker 1:  And it is ultimately, from the beginning to the end of the statement of cash flows, you see how much cash has been generated over the last 12 months. And so that's why I'm saying and highlighting it might be the most important of the financial statements, although they're all very important.
+Speaker 1:  So there's three types of activities that you can use cash for: operating the business, investing, financing. Financing is taking out a loan or paying off a loan.
+Speaker 1:  Investing is some companies actually invest in other companies or other assets just purely for investing. And then, of course, operating is what the business is.
+Speaker 1:  How do they run the business itself? And so now we're kind of like exploding all the vocabulary words.
+Speaker 1:  Let's peek ahead to the midterm. So you can put whatever you want on your formula sheet.
+Speaker 1:  You can put these definitions, but there's so much stuff. As we get closer to the midterm, I will try to narrow it down a little bit.
+Speaker 1:  Hopefully, you can kind of understand all these things, but the amount of information is a lot. So we're not going to—for example, at the end of this lecture, I think there's like 40 or 50 different ratios, like a PE ratio, but there's just a ton of them.
+Speaker 1:  You're not going to have to memorize all those. But we'll talk a little more about that as we get closer to the midterm.
+Speaker 1:  But for now, just try to absorb as much as you can. So operating activities.
+Speaker 1:  So what happens is you start with net income. Let me see if I can zoom ahead to an actual—yeah.
+Speaker 1:  So this is what a cash flow statement looks like. And the very top, the very first row is net income, which is the last row of the income statement.
+Speaker 1:  So last year, we made $2 million. That's the first row of the cash flow.
+Speaker 1:  And then, okay, remember when we calculated net income and we said, in that real estate example, we had a minus $100,000 for depreciation. But depreciation is an accounting concept that has—it's not cash flow.
+Speaker 1:  So it's the perfect example of the difference between net income and cash flow. This is the cash flow statement.
+Speaker 1:  We need to focus on cash flow. So the very first thing we do is we add back in depreciation.
+Speaker 1:  That 100,000 or whatever the number was that we subtracted, we now plus that in the cash flow statement. Is that loss?
+Speaker 1:  We didn't lose any cash flow, so let's put it back. So that's the first thing.
+Speaker 1:  I'll skip some of these. I'll hit the highlights.
+Speaker 1:  This whole sequence here gets to when you run a business, it's not all cash-based. Sometimes a customer will come in and buy your product, but you don't get cash.
+Speaker 1:  You will get an IOU. They're going to pay you, say, in a month or something.
+Speaker 1:  That's called accounts receivable. When you, as a business, buy some raw materials, you're running your coffee shop, you buy, say, six months of coffee cups, you might pay your supplier a month from now.
+Speaker 1:  Maybe you pay them once a year, maybe you pay them weekly. But nevertheless, you're probably not paying them daily.
+Speaker 1:  So you have some accounts payable, right? The difference matters because if—so a strategy for some businesses is, "Can I get my vendors, the ones that are giving me stuff like coffee cups, to accept me paying for them farther out in the future?"
+Speaker 1:  Keep pushing that out in the future. And the people who buy my coffee, I want to pull in those revenues closer to the present.
+Speaker 1:  So I want my accounts receivable to be paid off real quick and my accounts payable to be paid off in the future. So that's a strategy.
+Speaker 1:  And most companies are on top of that. And there's limits to how much you can do that.
+Speaker 1:  But anyways, they are not exactly cash flow, but they're eminent cash flow. It's about to happen.
+Speaker 1:  So we need to keep that in our operating activities. And finally, inventory might be a strange one here.
+Speaker 1:  But the reason we have inventory is because, well, we need to account for how much inventory we have. And if it's low, we know that we're going to have to expend some cash to build up our inventory.
+Speaker 1:  And if it's super high, we know that we have a cushion, if you will. We're not going to have to buy more coffee cups for six months because we just bought a bunch of them.
+Speaker 1:  So that's why you need to be aware of inventory in the operating activities. Investment activities, probably the most important one would be capital expenditures.
+Speaker 1:  A common example would be a company that's building a data center or a manufacturing plant. Those are super expensive, but they're not necessarily recurring.
+Speaker 1:  So you might spend $10 billion this year, but it doesn't necessarily mean you've got to do that every single year. But it's definitely going to absorb some cash.
+Speaker 1:  Or you have a data center and you sell it to someone. That's going to be a positive cash flow.
+Speaker 1:  And then finally, cash from investing. So like I said, well, most businesses aren't on the side also playing in the markets or investing.
+Speaker 1:  That's not what we're talking about. But nevertheless, they have investing activities.
+Speaker 1:  The most common would be probably dividends. So if a company makes money in the last 12 months, as I mentioned on Monday, they need to decide what to do with all that money.
+Speaker 1:  There are many good uses for it and some bad uses. And NPV is really the way to decide.
+Speaker 1:  But they could buy out their competitor, buy a manufacturing plant, build a new office, give themselves raises and bonuses, all of those things. Oh, hold on.
+Speaker 1:  Let me see. I think it was there.
+Speaker 1:  There we go. One other thing they could do is they say, "I don't know what to do with this."
+Speaker 1:  And so almost by definition, they should give it back to the owners or whatever's left. They don't have good uses of it.
+Speaker 1:  They give it back to the owners. Who are the owners?
+Speaker 1:  The owners are the shareholders. And that's what a dividend is.
+Speaker 1:  So if you have a billion shares outstanding and you made $2 billion last year and you have no use for any of that, you might give a $2 dividend, $2 per share dividend.
+Speaker 1:  A lot of times, growth companies don't have dividends because of what I just said. Dividends are the end result if you don't have good uses of your cash.
+Speaker 1:  But growth companies are constantly in growth mode. They're trying to invent artificial intelligence.
+Speaker 1:  That takes a lot of money. So almost certainly, they won't be giving dividends anytime soon.
+Speaker 1:  Companies that are traditionally more—but they could if they wanted to. But traditionally, companies that are really slow-growing, like maybe Coca-Cola or Heinz ketchup or something like this, they still want people to invest in their company, but they're maybe not—they don't have a great growth story.
+Speaker 1:  But one way to entice investors is by saying, "We actually give dividends. You buy our stock, you get dividends."
+Speaker 1:  And not only that, every year we grow our dividends. And if you Google dividend aristocrats, there's like 25 or 30 companies in the United States that for like 30, 40, 50 years, not only have they been paying dividends, but they've been growing them slowly over time.
+Speaker 1:  Every year, it gets larger and larger. And so that's a strategy.
+Speaker 1:  They're trying to give the money back, but also entice people to invest in their stock, keep the stock price up. Okay.
+Speaker 1:  So in summary, if you look at this from last year to this year, the statement of cash flows show that the change in cash equivalents went from minus 1.3 million to plus 1.7 million. So a shift of 3 million, that's fantastic.
+Speaker 1:  We made more cash, much more this year than last year. We went from negative to positive.
+Speaker 1:  But as a savvy investor who might analyze all of this, every line item means something. And if you understand business, you will be a better investor.
+Speaker 1:  And you notice this line item right here, they took out a loan of almost $25 million this most recent year. And so is that really indicative?
+Speaker 1:  They're positive cash flow. Is that indicative of a great business or just coincidentally because they took out this huge loan and it sort of covered up a bunch of mistakes?
+Speaker 1:  Now, probably the answer is it could be either one of those. What are they going to use the loan for?
+Speaker 1:  Do they have great prospects? Or was it just because they're fiscally irresponsible and they took out this huge loan?
+Speaker 1:  I don't know the answer. You'd have to dig into the business to understand.
+Speaker 1:  So this is an I chart, and you definitely can't read everything. I get it.
+Speaker 1:  But what I wanted to do, I'm going to scroll all the way down. This is all three financial statements on one page.
+Speaker 1:  So you can look at it at home. And the color bubbles and stuff are to highlight the fact that they're all three interrelated.
+Speaker 1:  So for example, the one we just showed, I'll blow it up. This blue one here is from the net income statement.
+Speaker 1:  This is over several years, right? These numbers here.
+Speaker 1:  And those numbers are exactly the same numbers at the beginning of your cash flow statement. So they're connected.
+Speaker 1:  Let me just show one or two more. So you have cash on your balance sheet.
+Speaker 1:  That's an appropriate place to show how much cash you have. And that's the red one.
+Speaker 1:  But notice that the very last part of the statement of cash flows is how much cash did you grow by over the past 12 months. And if you do a little bit of math, that growth in cash or production or growth in cash matches exactly the change in cash on your balance sheet.
+Speaker 1:  So okay, not hugely insightful, but the point is it's logically consistent is what I'm trying to say. And if you do get into, say, private equity or you become a value investor or you run your own business, these connections will begin to matter for you.
+Speaker 1:  So at this point, I'm leaving the accounting statements and kind of talking about some conceptual things. And I'll hit on a few points and scroll through other points.
+Speaker 1:  But basically, we use these financial statements to understand the business and to calculate, if you will, a true value for the company.
+Speaker 1:  The mathematical way to do that is through net present value. But a lot of people don't use net present value.
+Speaker 1:  That doesn't mean it's not useful. It's good to learn it, even if you don't ever use it again.
+Speaker 1:  It makes you think through some questions, okay? So basically, the goal is to understand and value a firm.
+Speaker 1:  Okay. Now we have just a ton of ratios.
+Speaker 1:  And it's not important—my goal is not to give you any one of these ratios. The point is, it's difficult to calculate value and to understand if something is a good investment.
+Speaker 1:  The ratios, each one of them by themselves is useful, but not sufficient to understand value and/or if you're running a business. So you want to use these to get a bunch of different perspectives of the business, okay?
+Speaker 1:  And so we put them in these kind of buckets. This one is talking about profitability.
+Speaker 1:  There's a whole bunch of ways. If you think that's a simple idea, well, then look at all these different ratios.
+Speaker 1:  The net profit margin at the bottom is very simple. How much net income did you have for your sales?
+Speaker 1:  That's an interesting question. But we know that net income is dependent upon interest, paid, taxation, and there's a depreciation factor in there somewhere.
+Speaker 1:  So you might say, "Okay, net profit margin is interesting, but I actually want to know more about operationally how they're doing without those taxes and stuff." And so you might want to go with operating margin.
+Speaker 1:  And these numerators, operating income or net income, those are taken right off of the income statement.
+Speaker 1:  The reason you might want a ratio as opposed to just a dollar amount—my operating profit was a billion dollars—you might want to know the margin is because, let's say you're interested in an industry like oil and gas or maybe the car market or something. And so you have a whole bunch of different companies.
+Speaker 1:  You want to invest in the best one in that industry. They may have different magnitudes of profits, but the operating profits, but the operating margin is a way to kind of compare them all together because you're normalizing by their sales.
+Speaker 1:  Like Ferrari has much less sales than, say, Tesla, but you can compare the two on operating margin. You see what I'm saying?
+Speaker 1:  Okay. And then you have liquidity ratios.
+Speaker 1:  Why do you care about liquidity? Liquidity is helpful because it tells you you're able to assess, is this company able to pay its debts?
+Speaker 1:  Or is it in a precarious situation? So if something happens, like a great recession that's super stressful, is it likely to go bankrupt or can it withstand that relative to its competitors?
+Speaker 1:  So you might look at this one. We talked about this on Monday.
+Speaker 1:  Current ratio is, in the next 12 months, my current assets, my current liabilities, am I in good financial position to pay off those things? If each one of these are different aspects of it, I'll jump to the bottom one.
+Speaker 1:  The cash ratio is saying this is the most extreme. So current assets includes cash, but it also has other things like stocks and things that you can sell quickly.
+Speaker 1:  But those things have other consequences. Like if you sell a bunch of stock to pay your bills, you're going to have a huge tax bill too.
+Speaker 1:  So if you're really conservative or really concerned, you might just say, "Forget about current assets. Let me just know how much cash do we have?"
+Speaker 1:  Pure cash relative to liabilities. So that would be the most extreme liquidity ratio.
+Speaker 1:  I'm going to skip these problems. They're very straightforward.
+Speaker 1:  Basically, it's saying, "Here's the ratio. Go pull the numbers off of your balance sheet and calculate the ratio."
+Speaker 1:  Okay. I do suggest you go through and calculate them for yourself.
+Speaker 1:  But again, it's not something complicated. It's just do it once or twice to get the hang of it.
+Speaker 1:  The other thing I haven't mentioned yet is these ratios, obviously, they change over time. So whatever your cash ratio is, in this bottom example, it was 15% in 2011.
+Speaker 1:  Is that good or bad? Well, I'm not sure, but I do know that it dropped in half in one year.
+Speaker 1:  And that might be a red flag.
+Speaker 1:  Why did it drop so much? What happened to our cash?
+Speaker 1:  Maybe there's a good reason for it, or maybe it's a sign of something you need to look into. Okay.
+Speaker 1:  Operating or working capital ratios are getting at you're running this business, and how long does it take for you to change your product into cash? Some things take a long, long time.
+Speaker 1:  You might be a construction company and it might take a year or more to build, say, a skyscraper, and then you could sell it and liquidate. Or it might be something that every single day you create something and sell it in a day or something in between.
+Speaker 1:  So it doesn't mean one is better than the other. It just means you should be aware of that if you're going to invest in such a company.
+Speaker 1:  And that brings us to working capital ratios. And you can see the takeaway here is based on your sales, which is in the denominator, what are your sort of in the first one, your accounts receivable?
+Speaker 1:  Remember, that is when your customer is going to pay you for the product they bought. So if this ratio will basically tell you how long is that taking.
+Speaker 1:  And so you would want to make you would want to bring that in closer to the present, to the extent possible. Way back in the day, Dell Computer, like back in the '90s, they were kind of famous because their accounts receivable was all flipped around, and it was a big operating advantage, which is this was at the beginning of the internet.
+Speaker 1:  And you could go online, pick out your computer, all the parts and specifications, put in your credit card, pay for it. And only at that moment, once they got your money, they would start to build your computer.
+Speaker 1:  So instead of you getting it and then paying for it a couple of months later, they got paid first, and then the product came later. So I mean, that could be a strategy.
+Speaker 1:  Inventory days is kind of pretty pragmatic. You have a bunch of inventory, which you sell every day.
+Speaker 1:  So let's go back to coffee cups. I sell 100 coffee cups a day, and I have 500 in the back office.
+Speaker 1:  Okay, I have five inventory days. Is what that would be.
+Speaker 1:  Is five good? Is it bad?
+Speaker 1:  You want that number to be large so that you don't run out of your product, but you want it to be small because if it's sitting in the back closet, it's not generating revenue for you. In other words, you don't want to buy 20 years of coffee cups, to make a ridiculous example, but you don't want to buy just a day of coffee cups.
+Speaker 1:  So there's a balance there. And every industry will have its own sort of optimal number of inventory days.
+Speaker 1:  And then working capital ratios are getting at sort of how long does it take to kind of collect your payments and to turn over your inventory. So if your inventory, as I just said, is sitting on the shelf for months and years before you sell it, that would be very low inventory turnover.
+Speaker 1:  And it's something like if you were a private equity company, you might look at businesses and you would look at these kinds of ratios. Maybe their inventory turnover is very low, but you, as an expert, inserting your expert management team, can buy that company and increase that turnover.
+Speaker 1:  So simply by doing that, you're increasing the probability that you'll make a profit on that investment. Whereas the current owners, for whatever reason, maybe they're not good, or maybe it's a mom-and-pop shop, and they're kind of wanting to retire and they've kind of lost a step or something.
+Speaker 1:  Who knows what the reason is? But these are different parameters that you can look at trying to improve.
+Speaker 1:  And then leverage ratio is all about debt. So taking on debt is not inherently a bad thing, but it can be bad.
+Speaker 1:  It can be good. It depends how it's being used.
+Speaker 1:  Ways to look at the amount of debt are through these ratios relative to the equity in the company. Is it a small?
+Speaker 1:  So when you buy a house, the bank will look at this, not necessarily equity for you because you're not a business, but they'll look at your income, your job, and they'll look at the debt that you're taking on to buy the house. And so that is kind of an equivalent type of a ratio.
+Speaker 1:  And then valuation, and that kind of gets us back to the beginning, more or less, with the PE ratio, which is probably the most famous of all the ratios, share price for over earnings per share.
+Speaker 1:  That is the most famous, but obviously not the only one. There are different variations of this.
+Speaker 1:  For people who are professionals in finance, these two, enterprise value to EBIT, enterprise value to sales, are getting at valuation, but in a slightly more sophisticated way. Enterprise value is something we'll talk about in the second half of the class, which is basically, what does it cost to buy the whole company outright?
+Speaker 1:  That's enterprise value. And in this particular ratio, they're not looking at earnings.
+Speaker 1:  They're looking at earnings before interest and taxes because the thinking being, yes, interest and taxes are real and we have to pay them, but I want to look at how much to buy the whole thing, which is an entity which generates earnings. So what is the ratio there?
+Speaker 1:  How much am I paying for those earnings? Here, how much am I paying for sales is another way to look at that.
+Speaker 1:  Operating returns, again, this gets at just the running of the business. I won't go through all of the details.
+Speaker 1:  Here, you can see what they are. And over time, over the decades, these come into favor and out of favor, and there's different business strategies.
+Speaker 1:  And okay, I was in a company once and they said, one year, they're like, "Everyone in the whole company, we're going to get trained, even all of the engineers, everyone on ROIC. Everything about our company is ROIC."
+Speaker 1:  I'm like, "What is that? I don't know."
+Speaker 1:  So we all learned that. But then after three or four years, nobody learned that anymore.
+Speaker 1:  And then it became maybe something, "I'm just making this up now, but return on equity is what it's all about," or something like that. So just keep that in mind.
+Speaker 1:  These are not set in stone.
+Speaker 1:  Oh, here's a good example of that. This chart is from 1960 to about 2010, and it shows references in annual earnings statements to earnings per share and to EBITDA, earnings before interest, taxes, depreciation, and amortization.
+Speaker 1:  Around the early '90s, EBITDA became the thing that will start increasing in popularity. Earnings per share is pretty fundamental.
+Speaker 1:  It's kind of always around since the '70s. It's more or less at this level.
+Speaker 1:  So again, not one is better than the other. You should probably understand both.
+Speaker 1:  What are the nuances of each one? What's maybe in one of the metrics that's hiding something or not giving you the right picture that you want?
+Speaker 1:  So just kind of keep that in mind. When you go out into the working world, your company will probably have a particular methodology, a particular preference for certain metrics.
+Speaker 1:  This is how we, as this company, this is how we find value and maximize value. And that might be different than your friend or at another company.
+Speaker 1:  So you'll learn that. This here, let me just check where I'm at in my notes.
+Speaker 1:  Yeah, I'm pretty much yeah, okay. This one is, again, another little advertisement.
+Speaker 1:  You don't need to buy this book, but it is a good book. And the reason I bring this up is it just shows how powerful these simple metrics are.
+Speaker 1:  We're only a day or two into the class. This book here is written by a guy, Joe Greenglass, for 30 years.
+Speaker 1:  I think he made no, for 20 years, he made 30% return on investment. That's what this says down here.
+Speaker 1:  CAGR is compounded annual growth rate. 30% is outrageous. That's a huge, huge number.
+Speaker 1:  He did it for 20 years. How did he do it?
+Speaker 1:  He used just four simple metrics, really three. One is EBIT over assets and networking capital.
+Speaker 1:  We didn't go into what those are, but basically, suffice it to say, those two are what do you have as the CEO to work with to generate earnings? So he said, "I'm going to look at all the thousands of companies, and I'm going to get this ratio, their earnings before interest and taxes divided by this."
+Speaker 1:  To me, Joel Greenblatt, that's going to tell me how good the company is. But as I said at the beginning of today, just being a good or even great company doesn't mean it's a good or great investment.
+Speaker 1:  The other thing you need to look at is, well, what does it cost? And the way he decided to analyze cost is he said, "Let's take those same earnings and let's look at enterprise value," because enterprise value matters what it costs to buy the whole company, everything.
+Speaker 1:  So assuming you buy the whole company, how much earnings do you get? If that's a high number, you are cheap.
+Speaker 1:  So you have to kind of flip the ratio. A high number, that makes you real cheap.
+Speaker 1:  So he looked at these two dimensions, thousands of companies. Every year, he would take the top 20 companies that scored the best along those two dimensions and invest all this money in those 20.
+Speaker 1:  And then at the end of the year, he would do it all over again and set their rankings based on the last year's EBIT and enterprise value and invest in the new set of 20. He did that for 20 years, as I said, huge returns.
+Speaker 1:  Nothing more complicated than that. Then he said, "I'm going to write a book and tell everyone all about it."
+Speaker 1:  And they said, "No, no, don't do that because then everyone's going to copy you and the opportunity will go away." It's like, "No, that's not going to happen."
+Speaker 1:  Well, he published the book, and now he can't generate these returns anymore because now everyone copied him. And so now the opportunities no longer exist.
+Speaker 1:  The reason I'm telling you about it is that these ratios do matter. And this book will give you an example of someone who used them.
+Speaker 1:  You'll have to come up with your own sort of way of looking at things, but this is one person that did that. The rest of these examples, I do want you to go through them, but they basically are like we just said a few minutes ago, you're taking a financial statement, you're picking off whatever the metric is and calculating the ratio.
+Speaker 1:  Mathematically, not complicated, but it's just getting you familiar with navigating around the financial statements. And there's a series of those kinds of calculations and so on and so forth.
+Speaker 1:  I do want to point out one other thing. I don't want to lose sight of the fact that these are not just numbers and metrics and static.
+Speaker 1:  They are fundamentally about running a business. That's why it's so helpful to have business experience.
+Speaker 1:  Even if you're just working as, let's say, a salesperson or something in a summer job, pay attention to things, costs and sales, marketing, all of those things. And you can actually learn quite a bit.
+Speaker 1:  So the DuPont identity was famous back in the day a little bit. It has a fancy name, but really what it is, mathematically, it's here.
+Speaker 1:  It's three of the metrics we talked about down here. But when you multiply those three metrics together, you get return on equity.
+Speaker 1:  So notice sales cancel out, total assets cancel out, and you get net income over the book value of your equity. So this is basically saying again, it's another way of saying you basically bought some stuff and that has a book value.
+Speaker 1:  How much net income are you generating with what you decided to purchase? That's return on equity.
+Speaker 1:  And return ROE was a very popular metric. It still is.
+Speaker 1:  But my point is, really, it's not just some random ROE letters. It's three different aspects of running a business: your profit margins, how quickly you're turning over assets, and then this equity multiplier.
+Speaker 1:  So again, if you're a private equity, you're looking for investment opportunities, you might see a company that has a low ROE and you're like, "Aha, I'm going to buy that company. I'm going to increase the return on equity."
+Speaker 1:  But you would dig in further and look at these three metrics and say, "Well, my expertise is in asset turnover." And so I would want to look at the three metrics of this low ROE company.
+Speaker 1:  Maybe they're doing really good in asset turnover, but really what they're screwing up is this net income over sales. It's really that.
+Speaker 1:  Well, if it's actually sales, if it's the asset turnover where they're really struggling, and I'm an expert in that, then that might be a good target for me. So again, it's breaking down these abstract metrics into real business factors, if you will.
+Speaker 1:  Okay. The last thing I'm going to say, and I'll just spend two or three minutes, never forget that just because it's written on a piece of paper, and even just because it's been audited, you also have to have a level of skepticism.
+Speaker 1:  You always need to keep in mind that at the end of the day, it's all just people, and people are not perfect, right? So there are scandals.
+Speaker 1:  The accounting scandals, those are intentionally obscuring the reality of their financial statements. But there's also just simply unintentional.
+Speaker 1:  There's some gray areas. And so keep that in mind.
+Speaker 1:  It's not just because that's the net income and that's it. You've got to read and understand where did those numbers come from.
+Speaker 1:  And in response to some of these famous scandals and around WorldCom, there are financial regulations in the United States to try to prevent that. And if you're thinking about being an international investor, you also want to be mindful of that marketplace.
+Speaker 1:  How are the regulations? How is the transparency?
+Speaker 1:  And you'll find that some are better and some are worse. And so that's a factor.
+Speaker 1:  You want to keep that in mind. And then finally, this is Professor well, no, not this one.
+Speaker 1:  Let me see. Yeah.
+Speaker 1:  This here, honestly, this Bloomberg terminal, I don't know if it still exists in Bunch. We used to have these Bloomberg terminals, and it's great to get some experience on them on the second floor of Bunch, but I don't know if they still exist.
+Speaker 1:  I'll double-check on that. A wealthy alumni, actually a professional acquaintance of mine, donated a bunch of these.
+Speaker 1:  If you don't know what a Bloomberg terminal is, it's kind of the gold standard of financial information. And most people on Wall Street have one of these sitting on their desk.
+Speaker 1:  They're about $25,000 a year to have one. And it's basically it's not about the equipment, the screen.
+Speaker 1:  That's just a monitor, but the pipe of data. And Bloomberg generates these datas, they do calculations, they do scorings, and it's real-time.
+Speaker 1:  So it's almost essential if you're working on Wall Street. And you can get some practice with them in Bunch.
+Speaker 1:  Let me double-check on that. Okay.
+Speaker 1:  That's it for today. Remember, no class.
+Speaker 1:  Oh, hold on. Let me double-check the okay.
+Speaker 1:  Hold on.

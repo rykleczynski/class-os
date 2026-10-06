@@ -12,7 +12,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "seed:build": "tsx scripts/build-seed.ts",
     "test:eval": "tsx scripts/test-safe-eval.ts",
-    "smoke": "tsx scripts/screenshots.ts"
+    "smoke": "tsx scripts/screenshots.ts",
+    "sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/sync.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

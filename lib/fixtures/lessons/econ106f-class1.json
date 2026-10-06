@@ -1,0 +1,537 @@
+{
+  "schema_version": 1,
+  "title": "Accounting: the language of finance",
+  "hook": "A public company has to publish its books for everyone to read. Why would it, and what do you look for once it does?",
+  "est_minutes": 11,
+  "objectives": [
+    "Explain why public companies publish standardized, audited statements, and where that system still depends on you.",
+    "Tell the balance sheet, income statement and cash flow statement apart, and say why income is not cash.",
+    "Use Assets = Liabilities + Equity and net working capital to read a balance sheet."
+  ],
+  "steps": [
+    {
+      "id": "course-map",
+      "title": "Course map: why accounting comes first",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "The course runs in parts: accounting basics, then time value of money and NPV, then bonds, then valuation and capital budgeting, then portfolio theory after the midterm.\n\n> \"Accounting is the language of finance.\"\n\nYou cannot value Microsoft without forecasting its cash flows, and the forecast starts from its accounting history: revenues, costs, profits, capital spending."
+        },
+        {
+          "type": "timeline",
+          "title": "The semester at a glance",
+          "events": [
+            {
+              "when": "Part 1",
+              "title": "Accounting: statements and ratios",
+              "detail": "Starts Mon Sep 28 and runs into Wed Sep 30"
+            },
+            {
+              "when": "Part 2",
+              "title": "Time value of money and NPV",
+              "detail": "Three lectures on NPV, then interest rates and bonds, which use the same math"
+            },
+            {
+              "when": "Part 3",
+              "title": "Valuation and capital budgeting",
+              "detail": "Apply NPV to stocks and to investment decisions: pick the biggest NPV"
+            },
+            {
+              "when": "Mon Oct 26",
+              "title": "Last day of midterm material"
+            },
+            {
+              "when": "Wed Oct 28",
+              "title": "Midterm: 45% of the grade",
+              "detail": "One page of your own notes allowed"
+            },
+            {
+              "when": "After the midterm",
+              "title": "Portfolio theory, CAPM, beta and alpha"
+            },
+            {
+              "when": "Mon Dec 7, 3 pm",
+              "title": "Final exam: 45% of the grade",
+              "detail": "Two pages of notes allowed"
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "kind": "bar",
+          "title": "Where the grade comes from (% of course grade)",
+          "data": [
+            {
+              "part": "Midterm",
+              "pct": 45
+            },
+            {
+              "part": "Final",
+              "pct": 45
+            },
+            {
+              "part": "Four labs (2.5 each)",
+              "pct": 10
+            }
+          ],
+          "x": "part",
+          "y": "pct",
+          "yLabel": "% of grade",
+          "caption": "The labs are small, but you want close to the full 10. The midterm and final separate the grades."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-why-first",
+          "q": "Why does a valuation course begin with accounting?",
+          "options": [
+            "Forecasts of future cash flow are built from past accounting numbers",
+            "Exams are mostly accounting problems, so the course front-loads them as practice",
+            "The textbook happens to start with accounting, so the lectures follow its order",
+            "Auditors require every investor to learn accounting before they may buy stock"
+          ],
+          "answer": 0,
+          "why": "The professor's point: nobody knows the future, so you project it from the revenues, costs and capital spending in the accounting record."
+        }
+      ]
+    },
+    {
+      "id": "why-statements",
+      "title": "Why companies must publish their books",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "US public companies file annual and quarterly reports in a standard format (GAAP), checked by outside auditors. The goal is *apples to apples*: everyone sees the same data, so whoever makes the most of it earns the reward.\n\nAuditors remove the CEO's conflict of interest. But:\n\n> \"Who audits the auditors?\" ... \"So ultimately it's you.\""
+        },
+        {
+          "type": "stepper",
+          "title": "How trust in the numbers is built",
+          "frames": [
+            {
+              "title": "Publish everything",
+              "text": "If some investors had more information than others, society could not tell who deserves the capital. So everyone gets the same reports."
+            },
+            {
+              "title": "Standardize it",
+              "text": "GAAP means two companies reporting profit are talking about the same thing. Accounting is complicated enough without every firm inventing its own rules."
+            },
+            {
+              "title": "Audit it",
+              "text": "A third party checks the statements, because the CEO and CFO have a conflict of interest. This creates confidence in the data."
+            },
+            {
+              "title": "Stay skeptical",
+              "text": "Nobody audits the auditors beyond regulators and the market. Some statements are too good to be true, and the responsibility lands on the investor.",
+              "math": "Your money, your due diligence"
+            }
+          ]
+        },
+        {
+          "type": "inTheNews",
+          "headline": "SEC Still Pursuing Accounting Fraud",
+          "source": "Foley & Lardner LLP",
+          "url": "https://www.foley.com/insights/publications/2026/01/sec-still-pursuing-accounting-fraud/",
+          "date": "2026-01-28",
+          "tieIn": "The article describes an SEC complaint against three former AMMO, Inc. executives alleging a years-long scheme to mislead investors and falsify corporate records, including changing how Adjusted EBITDA was calculated to show false profitability. These are allegations, not findings. It is the professor's warning in practice: standardized, audited statements still need a skeptical reader."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-gaap",
+          "q": "What does requiring GAAP statements achieve for investors?",
+          "options": [
+            "Reported profits can be compared like for like",
+            "Every public company reports exactly the same profit number",
+            "Investors no longer need to read the statements at all",
+            "Auditors guarantee that fraud can never occur"
+          ],
+          "answer": 0,
+          "why": "Standardizing means profit at one firm and profit at another are defined the same way. It does not make the numbers identical or fraud-proof."
+        }
+      ]
+    },
+    {
+      "id": "three-statements",
+      "title": "Three statements, three different questions",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "All three describe the same company. The **balance sheet** is what you have: assets and liabilities. The **income statement** is the profit over a period. The **statement of cash flows** tracks cash moving in and out.\n\n> \"They are not the same thing.\"\n\nThat is why value is the discounted value of future *cash flow*, not of future income."
+        },
+        {
+          "type": "sortOrMatch",
+          "mode": "match",
+          "prompt": "Which statement would you find each item on?",
+          "items": [
+            {
+              "label": "Cash and marketable securities on hand today",
+              "target": 0
+            },
+            {
+              "label": "Total revenue for the year",
+              "target": 1
+            },
+            {
+              "label": "Cash paid out to buy new equipment",
+              "target": 2
+            },
+            {
+              "label": "Money owed to suppliers and banks",
+              "target": 0
+            },
+            {
+              "label": "Profit after interest and taxes",
+              "target": 1
+            },
+            {
+              "label": "How much cash the firm generated over 12 months",
+              "target": 2
+            }
+          ],
+          "targets": [
+            "Balance sheet (a snapshot)",
+            "Income statement (profit over a period)",
+            "Cash flow statement (cash in and out)"
+          ],
+          "why": "Balance sheet items are measured at one date. Income and cash flow statements cover a stretch of time, but income is an accounting profit while cash flow is actual cash."
+        },
+        {
+          "type": "keyIdea",
+          "text": "\"You can have income without cash flow or even negative cash flow.\" Cash is what you pay at the store. You do not pay in profits."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-credit-sale",
+          "q": "A customer buys $5,000 of product on credit and will pay next month. What does this year's picture show?",
+          "options": [
+            "Revenue and cash both rise by $5,000 right away",
+            "Revenue counts, but no cash yet",
+            "Neither changes until the customer actually pays",
+            "Cash rises, but revenue is not counted yet"
+          ],
+          "answer": 1,
+          "why": "Income is an accounting concept, so the sale counts as revenue. The cash arrives later, which is why the two statements differ."
+        }
+      ]
+    },
+    {
+      "id": "balance-identity",
+      "title": "The balance sheet identity",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Every balance sheet obeys one rule: **Assets = Liabilities + Equity**. Equity is what is left for the owners after the debts.\n\nBorrowing a billion dollars to build a data center changes nothing about equity on day one. The professor's point is what happens if the NPV was positive: over time the assets outgrow the liabilities."
+        },
+        {
+          "type": "stepper",
+          "title": "A $1B data center (illustrative numbers, $ billions)",
+          "frames": [
+            {
+              "title": "Before",
+              "text": "A firm owns $10B of assets and owes $4B. The owners' equity is the gap.",
+              "math": "Assets 10 = Liabilities 4 + Equity 6"
+            },
+            {
+              "title": "Borrow and build",
+              "text": "Take a $1B loan and spend it on the data center. Both sides grow by the same amount. Nothing has been created yet.",
+              "math": "Assets 11 = Liabilities 5 + Equity 6"
+            },
+            {
+              "title": "The NPV pays off",
+              "text": "If the analysis was right, the data center's future cash flows make the firm's assets worth more than the debt used to build them. Say assets reach $11.3B.",
+              "math": "Assets 11.3 = Liabilities 5 + Equity 6.3"
+            },
+            {
+              "title": "Read the result",
+              "text": "Equity grew by the value created. Hopefully you see that growth year after year.",
+              "math": "Equity = 11.3 - 5 = 6.3"
+            }
+          ]
+        },
+        {
+          "type": "slider",
+          "title": "Equity is what is left",
+          "formula": "assets - liabilities",
+          "vars": [
+            {
+              "name": "assets",
+              "label": "Assets",
+              "min": 0,
+              "max": 100,
+              "step": 1,
+              "default": 50,
+              "unit": "$M"
+            },
+            {
+              "name": "liabilities",
+              "label": "Liabilities",
+              "min": 0,
+              "max": 100,
+              "step": 1,
+              "default": 32,
+              "unit": "$M"
+            }
+          ],
+          "output": {
+            "label": "Book value of equity",
+            "format": "number",
+            "decimals": 0,
+            "unit": "$M"
+          },
+          "plot": {
+            "x": "assets",
+            "range": [
+              0,
+              100
+            ],
+            "yLabel": "Equity ($M)",
+            "zeroLine": true
+          },
+          "caption": "Slide liabilities above assets and equity goes negative."
+        }
+      ]
+    },
+    {
+      "id": "current-liquid",
+      "title": "Current vs long-term, and net working capital",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "\"Current\" means within 12 months. It matters because current assets let you survive: if you cannot cover salaries and rent, you go out of business. Cash is the obvious one, but you need *something pretty close to cash*, like marketable securities.\n\n**Net working capital** = current assets minus current liabilities. It shows how ready you are for an emergency."
+        },
+        {
+          "type": "compare",
+          "title": "Current and long-term items",
+          "columns": [
+            "Current (within 12 months)",
+            "Long-term"
+          ],
+          "rows": [
+            {
+              "label": "Assets",
+              "cells": [
+                "Cash, marketable securities, accounts receivable, inventory",
+                "Plants, buildings, equipment, long-horizon securities"
+              ]
+            },
+            {
+              "label": "Liabilities",
+              "cells": [
+                "Short-term debt, bills owed to suppliers, wages, taxes, debt coming due",
+                "Long-term debt, equipment leases, deferred taxes"
+              ]
+            },
+            {
+              "label": "Why you care",
+              "cells": [
+                "Decides whether you survive the next year",
+                "Capacity for the long run, and depreciation"
+              ]
+            }
+          ],
+          "highlight": 0
+        },
+        {
+          "type": "slider",
+          "title": "Lemonade stand: how ready are you?",
+          "formula": "current_assets - current_liabilities",
+          "vars": [
+            {
+              "name": "current_assets",
+              "label": "Current assets",
+              "min": 0,
+              "max": 200,
+              "step": 5,
+              "default": 90,
+              "unit": "$k"
+            },
+            {
+              "name": "current_liabilities",
+              "label": "Current liabilities",
+              "min": 0,
+              "max": 200,
+              "step": 5,
+              "default": 60,
+              "unit": "$k"
+            }
+          ],
+          "output": {
+            "label": "Net working capital",
+            "format": "number",
+            "decimals": 0,
+            "unit": "$k"
+          },
+          "plot": {
+            "x": "current_assets",
+            "range": [
+              0,
+              200
+            ],
+            "yLabel": "NWC ($k)",
+            "zeroLine": true
+          },
+          "caption": "Default: $20k cash + $50k stock + $5k receivables + $15k inventory = $90k, against $60k due soon."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-inventory",
+          "q": "On inventory, what does the professor say about six years' supply versus six days' supply?",
+          "options": [
+            "Six years is bad and six days is fine",
+            "Both extremes are risky, and a balance is needed",
+            "Six years is fine and six days is bad",
+            "Neither tells you anything"
+          ],
+          "answer": 1,
+          "why": "Six years ties up cash in stock that is not selling. Six days risks running out. You want a balance for your industry."
+        }
+      ]
+    },
+    {
+      "id": "depreciation-cash",
+      "title": "Depreciation: income that is not cash",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Long-term assets wear out on paper. Residential real estate is depreciated over 27.5 years, so a $275,000 structure writes off $10,000 a year.\n\nOwn a rental that nets $10,000 in cash. On the accounting statement, the $10,000 depreciation cancels it, so taxable income is zero. Cash flow and income disagree, and neither is wrong."
+        },
+        {
+          "type": "chart",
+          "kind": "bar",
+          "title": "The same rental, two measures ($ per year)",
+          "data": [
+            {
+              "measure": "Cash flow",
+              "dollars": 10000
+            },
+            {
+              "measure": "Income after depreciation",
+              "dollars": 0
+            }
+          ],
+          "x": "measure",
+          "y": "dollars",
+          "yLabel": "$ per year",
+          "caption": "$275,000 / 27.5 years = $10,000 of depreciation, which uses no cash."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-dep",
+          "q": "A $550,000 building is depreciated over 27.5 years. What does each year's depreciation do?",
+          "options": [
+            "Uses $20,000 of cash",
+            "Adds $20,000 of cash",
+            "Lowers income by $20,000 but uses no cash",
+            "Raises income by $20,000"
+          ],
+          "answer": 2,
+          "why": "550,000 / 27.5 = 20,000. It reduces accounting income (and the tax bill) without any cash leaving."
+        }
+      ]
+    }
+  ],
+  "recap": [
+    "Public companies publish standardized, audited statements so investors compare apples to apples. Nobody audits the auditors, so skepticism is yours.",
+    "Balance sheet = what you have (Assets = Liabilities + Equity). Income statement = profit. Cash flow statement = cash. Income is not cash.",
+    "Current items come due within 12 months. Net working capital = current assets - current liabilities, a readiness check.",
+    "Depreciation lowers accounting income and taxes but uses no cash."
+  ],
+  "quiz": [
+    {
+      "type": "mcq",
+      "q": "The main reason public companies must publish standardized statements is to",
+      "options": [
+        "let investors compare companies",
+        "make sure every firm reports the same profit",
+        "keep the CEO from ever seeing the numbers",
+        "give auditors a reason to exist"
+      ],
+      "answer": 0,
+      "why": "Standardized, public data lets whoever analyzes it best earn the reward, which steers capital to good firms."
+    },
+    {
+      "type": "mcq",
+      "q": "Which statement is a snapshot of the firm at a single date?",
+      "options": [
+        "Income statement",
+        "Statement of cash flows",
+        "Balance sheet",
+        "Both income and cash flow statements"
+      ],
+      "answer": 2,
+      "why": "The balance sheet shows assets and liabilities at one point in time. The other two cover a period."
+    },
+    {
+      "type": "mcq",
+      "q": "A firm has $80M of assets and $55M of liabilities. What is its book equity?",
+      "options": [
+        "$135M",
+        "$55M",
+        "$80M",
+        "$25M"
+      ],
+      "answer": 3,
+      "why": "Equity = Assets - Liabilities = 80 - 55 = 25."
+    },
+    {
+      "type": "mcq",
+      "q": "Current assets are $150k and current liabilities are $180k. What does net working capital tell you?",
+      "options": [
+        "It is +$30k, so the firm is comfortable",
+        "It is -$30k, so the firm may struggle with near-term bills",
+        "It is $330k, the firm's total size",
+        "It is zero, so the firm breaks even"
+      ],
+      "answer": 1,
+      "why": "150 - 180 = -30. Negative working capital means short-term obligations exceed short-term assets."
+    },
+    {
+      "type": "mcq",
+      "q": "Why is value defined from future cash flow rather than future income?",
+      "options": [
+        "Cash flow is always larger than income",
+        "Income is never positive for real companies",
+        "Income is an accounting concept, and you can have income without cash",
+        "Taxes are not charged on cash"
+      ],
+      "answer": 2,
+      "why": "Income depends on accounting choices like depreciation and credit sales. Cash flow is the actual money."
+    }
+  ],
+  "flashcards": [
+    {
+      "front": "GAAP",
+      "back": "Generally Accepted Accounting Principles. Standard rules so statements from different companies are comparable (apples to apples)."
+    },
+    {
+      "front": "Why auditors, and who audits them?",
+      "back": "Third-party auditors remove the CEO/CFO conflict of interest and create confidence. Nobody fully audits the auditors, so the investor must stay skeptical."
+    },
+    {
+      "front": "The three statements",
+      "back": "Balance sheet (assets and liabilities, a snapshot), income statement (profit over a period), statement of cash flows (cash in and out)."
+    },
+    {
+      "front": "Balance sheet identity",
+      "back": "Assets = Liabilities + Equity. Equity (book value) = Assets - Liabilities, and it can be negative."
+    },
+    {
+      "front": "Net working capital",
+      "back": "Current assets - current liabilities. A readiness check: how prepared you are for near-term bills or an emergency."
+    },
+    {
+      "front": "Income vs cash flow",
+      "back": "Income is an accounting profit. Cash flow is cash. Depreciation and credit sales are two reasons they differ."
+    }
+  ],
+  "concepts": [
+    "Accounting is the language of finance",
+    "GAAP and auditors",
+    "Balance sheet",
+    "Income statement",
+    "Statement of cash flows",
+    "Assets = Liabilities + Equity",
+    "Current vs long-term",
+    "Net working capital",
+    "Depreciation",
+    "Income vs cash flow"
+  ]
+}

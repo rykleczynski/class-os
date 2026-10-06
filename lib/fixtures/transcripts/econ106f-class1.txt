@@ -1,0 +1,445 @@
+Speaker 1: All right, we're going to get started. So welcome, everybody. I'm Deacon 106F, Corporate Finance.
+Speaker 1:  My name is Patrick Humphrey. I've been teaching this class for about, I don't know, 10 years or so when I started at UCLA.
+Speaker 1:  I really enjoy it. I know it's a— the department doesn't have a lot of finance classes, but we do have a few business one-on-ones.
+Speaker 1:  I also teach Decon 160, which is money and banking. That one is more about sort of like the Federal Reserve and interest rates and things of that nature.
+Speaker 1:  This class will touch on that just a little bit, but this we'll see in just a moment. I'll go through the syllabus about what are the major topics.
+Speaker 1:  There's another class, 106B, for investments. So if you've had that class, there's definitely going to be some overlap, but I think it's still worthwhile to have all of these classes if you're interested in finance.
+Speaker 1:  And even if you're not, if that's not your career path, I think it's useful as an individual just to have this knowledge as you go out into the world. This particular class also has a lab lecture that I will get to.
+Speaker 1:  There's a whole nother separate syllabus just for the lab lecture. Since I mentioned it, let me just touch on that real quick.
+Speaker 1:  The labs will be on Fridays. There's no work that's done in the actual Friday lecture.
+Speaker 1:  I'm going to describe a project that you will do. There's going to be four projects in the labs, and each of them, I think, you get two weeks, maybe one week— one to two weeks to finish them.
+Speaker 1:  So we'll go into much more detail on the lab component separately when we get to when we actually have that lecture. For now, let's focus on this main class, which is Monday and Wednesday.
+Speaker 1:  And we have two TAs, Jared and Robert. They've been TAs for this class multiple times, and also I think Jared has even taught this class in the summer session.
+Speaker 1:  So they're very familiar with the material. The class is early in the morning, so here we are.
+Speaker 1:  I know that's tough, but that's how we are scheduled. And I think, as I said, I think it's going to be worth your time.
+Speaker 1:  I'll try to bring in real-world events, try to make it applicable rather than theoretical, although there are some important theoretical concepts that weave into this content. So right off the bat there, just note that the final exam, the time, you all know this, Monday of finals week, so there's no surprises there.
+Speaker 1:  A little bit lower in the syllabus here, I have the midterm date finalized, so you'll have that ahead of time. By the way, I should say that all the materials are in BruinLearn.
+Speaker 1:  So I've posted the syllabus, the first lecture, and a couple other things in what I'm calling the Week 1 module. So it's all there for you, and I'll do that every week.
+Speaker 1:  Okay, so theory of corporate finance and valuation. So the basic idea is: how many of you have had time value of money in another class?
+Speaker 1:  Okay, maybe half. That's a fundamental concept.
+Speaker 1:  We're going to go through it again. I know it's repeat, but I was just thinking about this the other day that I've taught this class many times, and every time I'm learning even more material.
+Speaker 1:  And it's such an important concept that I don't want to feel guilty that I didn't teach you something that you might have had in another class. I think you can continue to learn aspects of it if I'm still learning about it and you can.
+Speaker 1:  And then it looks like about half of you have not heard that or maybe valuation techniques and that type of value. So we'll cover those concepts in this class for sure, mostly in the first half of the class, first half of the quarter.
+Speaker 1:  As I mentioned, there is a lab component. I kind of gave you the quick summary of what that's all about.
+Speaker 1:  The idea was, several years ago, the department was giving feedback to the students saying, "Hey, this is like a super theoretical major, and we want a little bit more hands-on." So they created all these lab lectures.
+Speaker 1:  And so in this class, we'll be dealing with some data, some analysis of said data, and trying to see some of these concepts, how do they work in the real world. So that's the whole idea there.
+Speaker 1:  I should mention the textbook. I feel it's a real good textbook, but it's not absolutely required that you purchase a book.
+Speaker 1:  If that's just a thing that you're not wanting to do, it says required there, but really, verbally, what I want to tell you is all of the materials that you'll be tested on will be given to you in the BruinLearn website. So all the lecture materials, all that stuff, that's what you'll be tested on.
+Speaker 1:  The corporate finance book is totally aligned with the lectures. My lecture notes came from the publisher, but over the years, I've added to them significantly.
+Speaker 1:  But the basic content is totally coming right out of the textbook. So if you choose to buy or rent the textbook, yeah, you can certainly go into deeper details on any given topic that I may cover in class.
+Speaker 1:  Now, the textbook has a lot more material than we can get to in 10 weeks, so just be aware of that. And if you're interested in finance as a career, I would recommend purchasing this because it will be a reference material for many years to come.
+Speaker 1:  And if you're interested in some of the finance-related certifications and those exams, the book is set up perfectly to prepare you for said exam. Okay, let's continue.
+Speaker 1:  Yeah, so this is how you get the digital copy and so on and so forth. You can probably find these copies online.
+Speaker 1:  You know about it when I do.
+Speaker 1:  I'm not going to read through all this. If you want to go to BruinLearn Access, there's this sort of boilerplate information here that the publisher told me to share with you while UCLA gave this to me.
+Speaker 1:  You probably are familiar with BruinLearn already, but there's just some rules and responsibilities there. So I will skip through that.
+Speaker 1:  Okay, something you're probably interested in: how do we compute the course grade? There's really the final and a midterm, so those are the traditional sit-down exams.
+Speaker 1:  And then the four lab reports are a smaller amount. There's four of them, 2.5% each, so they combine to add up to 10% of your course grade.
+Speaker 1:  So it's not zero, it's not nothing, but it's not going to—basically, you're going to want to do those labs and get as close to 10% out of 10 as you can get. And then really, the differentiation among grades will probably come through the midterm and the final.
+Speaker 1:  And as we get closer to both exams, I will give you a bunch of practice questions. But just know that the lecture notes themselves have a lot of examples, and don't discount those.
+Speaker 1:  A lot of times, the exam questions will look very similar to what you've seen in the examples, plus, of course, the practice questions I'll give you a week or so before. And that's really the best way to score well on those exams is just do a bunch of practice over and over, and then try to change the question, change the numbers, and see if you can get the next solution.
+Speaker 1:  Sort of tweak them a little bit and come up with your own questions and answers and maybe study with each other. That's really the best way to do it.
+Speaker 1:  Okay, so a little bit more on the lab. So as I said, the department created these labs several years ago to give you more hands-on experience, and we'll certainly do that.
+Speaker 1:  For my class, you can do it in a team, up to four people. You can do all the labs by yourself.
+Speaker 1:  You can do them with a partner, up to four people in a team. I'll explain that a little more once we get to the lab lectures on Friday.
+Speaker 1:  Basically, you get two weeks to do the labs, but it's not going to take you that—it's probably going to take more or less a couple hours. There's one lab that's actually quite extensive.
+Speaker 1:  That's lab number two, which is where we use net present value and we actually value a real company like Microsoft or Coca-Cola or Apple or something. And so the spreadsheet, the Excel spreadsheet, or however, whatever tool you want to use, it can get quite detailed.
+Speaker 1:  That one's going to take a couple of hours. And actually, that's probably the one that you actually want to make sure you have a contribution to.
+Speaker 1:  When you form a team, I don't know, and it's up to you how you divide up the work. I don't need to know any of that.
+Speaker 1:  Everyone on the team will get—if the score on the lab is 4 out of 5 points or whatever, however the TAs are going to score it, all team members will get that same score. So we're not trying to figure out who did what and give separate scores.
+Speaker 1:  And it's typically—it's not a ton of work, but it is a little bit of a report, usually in PowerPoint, but you can use any format you want. Usually four or five slides.
+Speaker 1:  And again, I'll give you an example and go through that when the time comes. I just wanted to kind of address the whole lab component right today on the first day.
+Speaker 1:  Some of you may be trying to enroll and you're thinking, "Well, the class is full, but look at all these empty seats." So yeah, that's frustrating.
+Speaker 1:  Every single time I teach this class, it's always full. Every single time, a few students drop and most of the waitlist students get in.
+Speaker 1:  There's no guarantee that'll happen, but that's usually what happens. And I already tell the department to let in everyone they can, but the department themselves are limited, not by the number of seats in this room, but by the number of seats in the TA sections.
+Speaker 1:  Kind of weird, but the TA sections are the limiting factor. So if there's two TAs, each with a couple sections, and the rooms they're teaching in can only hold 35 students, then you get about 140 students, and that's the limiting factor.
+Speaker 1:  And you might say, "Well, I don't need to go to my discussion section." Well, you should go to your discussion section, but the department is not going to think that way, that everyone—there's a seat for everybody.
+Speaker 1:  So that's really what the limiting factor is.
+Speaker 1:  Okay, you should go to your TA sections. As I said, they have a lot of experience with this class.
+Speaker 1:  So what they're telling you is probably the most pragmatic information that they have and then how you can do well in the class. There's no make-up exam, so if you miss—there's only one midterm.
+Speaker 1:  So if you miss that for whatever reason, it's probably better than to drop the class, but you don't need to drop it. What would happen is if you have a valid excuse with some sort of medical thing with a note—this is a department requirement—then I can put the weight of the midterm on the final.
+Speaker 1:  But that's a big kind of pressure because now almost your entire grade is on the final. Hopefully, that doesn't happen.
+Speaker 1:  If something comes up, someone gets sick or something like that, let me know and we'll discuss the options.
+Speaker 1:  For the lab assignments, there's no make-up, so just get them done on time. You'll have plenty of time to do them.
+Speaker 1:  Okay. All right.
+Speaker 1:  The way the exams work, let me just say a little bit of that.
+Speaker 1:  You will have actually a form. You will have one piece of paper that you can put anything you want on it during the midterm.
+Speaker 1:  And on the final, it'll be two pieces of paper. And I do that because I don't want to emphasize memorization, so you don't need to memorize.
+Speaker 1:  Just put it on the piece of paper. I do try to test you for concepts and your knowledge, your understanding, your applications of the formulas that are on your page.
+Speaker 1:  But you don't have to limit yourself to formulas. You could put useful examples, little snippets.
+Speaker 1:  I don't look at what is on your piece of paper. We only just check that you have one piece of paper on your desk when we're taking the exam.
+Speaker 1:  So just keep that in mind. We do, obviously, like any other exam, we have our proctors and we're observing.
+Speaker 1:  Please don't do anything like access to the internet or anything like that or your phone. It's just bad news all around.
+Speaker 1:  We are required to report that if we see it. And then that's just the beginning of the problem for you and for me because you've got to go through endless paperwork and reviews, and it's just not a good situation.
+Speaker 1:  I don't think any of you are going to do that, but I just want to explain to you my experience with this with students that don't follow the rules. It's usually zero or one or two.
+Speaker 1:  It's like a very small number, but we don't want to go there. I've already talked about missed exams.
+Speaker 1:  And then if you have a doctor's note and it's valid per the department, then we will deal with that. Approved exceptions are here.
+Speaker 1:  You can read through those. Pretty standard stuff.
+Speaker 1:  And academic dishonesty, which we all know what that is, but there's more information there. Okay, so let's get to the content of the class.
+Speaker 1:  And I've kind of laid it out in a little bit of detail here. So basically, every single lecture is all listed here.
+Speaker 1:  Let's start with the important date right here, the midterm, October 28th. So that's set.
+Speaker 1:  Okay, so you know that. And whatever material we cover up until October 26th will be on the midterm.
+Speaker 1:  So we may follow this cadence exactly. Maybe we'll be a day off, a little bit faster, a little bit slower.
+Speaker 1:  But more or less, whatever we cover up and through October 26th will be on the midterm. So today, here we are in September 28th, giving the class overview, a little bit of introduction.
+Speaker 1:  We'll probably start the first lecture a little bit today, depending on time, which is the necessary lecture on accounting, financial statements, and ratios. I don't want to—this is not an accounting class, but accounting is the language of finance, and I hope that you've all had some accounting in the past.
+Speaker 1:  And if you haven't, we're not going to be super duper sophisticated, but you got to know some basics of accounting. So that's the purpose of this lecture here.
+Speaker 1:  What it comes down to, though, is the accounting that we need. I'm going to teach it, but also once we actually need it in an example, in a lab report, I will review what we need to remember at that moment.
+Speaker 1:  So you'll get a couple iterations of those concepts. And then sort of what I'm calling part two, we have time and money.
+Speaker 1:  So net present value is the present value of all future cash flows discounted at an appropriate rate. That is the most important, I think, and foundational concept in all of finance.
+Speaker 1:  No matter what topic you're talking about, it's useful to look at that topic in relation to net present value. You might get some strange answers, but it's really hard to argue that something has value if it doesn't or has a value that's different from what net present value tells you it should be.
+Speaker 1:  A couple notable—I won't say exceptions, but a couple topics that are not aligned with net present value are, for example, something like gold.
+Speaker 1:  What is the net present value of gold? What is the future cash flows produced by gold?
+Speaker 1:  I mean, if I had a bowling ball-sized lump of gold right there and it sits there for 10 years, how much cash flow is coming out of that in the next 10 years? Probably zero.
+Speaker 1:  So by net present value, the value is zero, but yet we know gold has value. So there are a few exceptions like that.
+Speaker 1:  You could probably throw Bitcoin in there as well.
+Speaker 1:  And so someone—oh, by the way, I'm going to probably quote Warren Buffett quite a bit, so I'm not going to apologize for that, but you'll hear a lot about him. And this brings up the first time I'm going to mention him, which is he calls gold a storeholder value.
+Speaker 1:  It doesn't produce value. Now, you might get into some details like, well, gold can be used in electronic parts and stuff like that.
+Speaker 1:  And that's true, but putting aside those applications, it's not producing value.
+Speaker 1:  It is holding value. And that's a concept right there.
+Speaker 1:  I think we all know what I'm saying in words, but I didn't fully appreciate that until the last year. So getting back to how even I'm still learning this stuff, I didn't really appreciate storeholder value.
+Speaker 1:  And when you're in a high inflation environment, I think it starts to make sense. You can buy—well, I'll talk about gold throughout the quarter a little bit, but I won't go into—I won't go off into a tangent right now.
+Speaker 1:  So we have three lectures on net present value. We have really two of the four lab reports will be on net present value.
+Speaker 1:  And then that goes right into interest rates and bonds. And here's the thing.
+Speaker 1:  The math for net present value and for interest rates and bonds are exactly—it's exactly the same. It's not sort of the same.
+Speaker 1:  It is the same. So the value—what is a bond?
+Speaker 1:  A bond is a loan. It just depends what side you're on.
+Speaker 1:  Are you giving the loan? Are you accepting the loan?
+Speaker 1:  And treasuries are a special type of bond, which are a loan to the U.S. government. But how do you value a bond?
+Speaker 1:  It's future cash flows discounted to the present. That's the price of a bond.
+Speaker 1:  Okay. Now, the cash flows on any given application might be different.
+Speaker 1:  If it's a real estate property, you're talking about rent. You might be talking about some expenses in terms of future cash flows.
+Speaker 1:  If you're talking about bonds, you're talking about maybe dividends or a face value payment at maturity. If you're talking about treasuries, it's the same kind of thing.
+Speaker 1:  But it's nevertheless discounted cash flows. So those five lectures kind of are the foundation of what I would consider the most important concept in finance.
+Speaker 1:  Then we get into valuation, which we have been doing all along in these five lectures. Maybe I didn't call it valuation, but that's where we now pull from accounting.
+Speaker 1:  So if you want to value Microsoft, you're going to have to understand accounting. Why?
+Speaker 1:  Because what are the future cash flows of Microsoft? Well, nobody knows the future for certain, but you're going to have to project those future cash flows.
+Speaker 1:  And how do you do that? You look at the last few years of Microsoft, probably bring some technical technology expertise to the exercise.
+Speaker 1:  And you're basically making your best guess, but the recent history is all accounting history. Your revenues, your costs, your profits, your capital expenditures, and you're trying to forecast those into the future.
+Speaker 1:  Capital budgeting. Oh, I didn't say this, but net present value is not just how much does something work?
+Speaker 1:  How much does that real estate work or that stock? That's huge, but it's also a decision-making tool.
+Speaker 1:  So if you're the CEO of a company someday and you're trying to decide, should I—I've made a billion dollars last year. What do I do with those billion dollars this year?
+Speaker 1:  Should I give it back to the shareholders in terms of dividends? Should I invest in a new manufacturing plant?
+Speaker 1:  Should I buy out my competitor? Should I give myself a huge raise and all my executives?
+Speaker 1:  Should I hire more people? Whatever you want to do with that money, the real way to decide is through net present value because each of those different options have their own net present value.
+Speaker 1:  And it's very simple. Once you calculate NPV, you just take the biggest one because when you're talking about value, you want to create more value, not less value.
+Speaker 1:  Now, the trouble is it's extremely difficult to calculate NPV because you're talking about the future. So that's where the expertise comes in.
+Speaker 1:  That's where the difference of opinions comes in. It's different forecasts of the future.
+Speaker 1:  So I was reminded of that because capital budgeting is that kind of decision. Capital budgeting every year.
+Speaker 1:  What are our capital expenditures? What are we purchasing?
+Speaker 1:  What are we investing in? Should we do more R&D?
+Speaker 1:  Again, should we build that? Should we buy everyone a new laptop, a more powerful laptop?
+Speaker 1:  Should we create a new corporate office to demonstrate our exceptionalism? So capital budgeting brings together everything to this point in the lecture.
+Speaker 1:  It talks about we need accounting. We need to make net present value calculations.
+Speaker 1:  Part of those calculations, a big part, is the discount rate. Discount rate has to do with bonds.
+Speaker 1:  So they all come together. If you do your capital budgeting correctly and you've chosen the project that creates the largest net present value, then next year at this time, you will have created even more value than you did last year.
+Speaker 1:  And it becomes a virtuous iterative process where every year you keep investing at high NPV and you reap the benefits a year later, therefore giving you more money to invest, etc., etc. So that's the idea.
+Speaker 1:  Okay.
+Speaker 1:  The second part of valuation is, again, these are all separate topics, but really it's all the same topic. It's, again, future cash flows discounted to the present.
+Speaker 1:  Stock valuations. You could argue stocks are nothing more, nothing less than the value of a stock is nothing more, nothing less than its future discounted future cash flows.
+Speaker 1:  That's how Buffett thinks about it. Now, you can have something like the whole AI revolution and their future cash flows are very uncertain.
+Speaker 1:  So when I say cash flows, that's both revenues and costs. So cash flows could be negative on net or positive.
+Speaker 1:  So the way that these AI companies, SpaceX, Anthropic, and OpenAI, among many others, have these valuations on the order of trillions of dollars is because it's all in the future. So right now, they're losing money, but that's not the end of the story.
+Speaker 1:  They're saying, "Well, our revenues will grow greater than cost in the future." Not only that, they're going to grow massively greater than our cost.
+Speaker 1:  And so discount all of that back to the present, we're worth like $4 trillion. That's the argument.
+Speaker 1:  And then you might want to question that. So on this point, net present value is probably more accurate and more useful for companies that have a long track record, say Coca-Cola or something.
+Speaker 1:  Coca-Cola has been around 150 years. In 150 years from now, it's not going to be that different.
+Speaker 1:  SpaceX would be very different if it's even still around. So it's difficult to apply NPV concepts to high-tech, high-growth companies, but you can still do it.
+Speaker 1:  And what I would say is even if that's not your baseline estimate of value for these high-growth tech companies, it's still a good way to think through it, think through the business.
+Speaker 1:  I don't know if you noticed, but right before SpaceX went public, they were—we know what SpaceX is. They're putting up satellites.
+Speaker 1:  They have communications infrastructure. But that's not adding up to $2 trillion or whatever SpaceX is worth today because that's a real business with real revenues, real growth, real cost.
+Speaker 1:  You can kind of scale that up. You can kind of forecast it.
+Speaker 1:  But sort of right at the end there, they said, "No, we're actually an AI company." Okay, that's another $2 trillion because there is no track record for that.
+Speaker 1:  I'm not saying that's wrong. I'm just saying it's not a mistake that they introduced that aspect of the company sort of right at the end before it went public there.
+Speaker 1:  That's where all the value is from the majority of value. Okay.
+Speaker 1:  So we have the midterm. Whether or not we'll have stock valuations before or after, probably it's going to be after, but again, same concepts there.
+Speaker 1:  And then we make a huge pivot in part four here after the midterm.
+Speaker 1:  There's something called portfolio theory. So up until this point of the class, we've only been talking about individual investments, stocks, a bond, how to value them, future cash flows, discounted.
+Speaker 1:  But in part four, we talk about multiple investments as part of a portfolio. So I guess you could say in theory, if you have more than—let's say we're talking about stocks.
+Speaker 1:  I invest in two or more stocks. That's a portfolio.
+Speaker 1:  But oftentimes, we're talking about a dozen, a hundred, S&P 500. It's 500 stocks portfolio, that kind of size.
+Speaker 1:  And when you do that, interesting things happen. And going all the way back probably to the '80s and more in the '90s, a bunch of Nobel Prizes were given out to a bunch of people that kind of studied this and figured this stuff out.
+Speaker 1:  Now, even today, you can find people that don't subscribe to this way of investing. And there's a whole lot of consequences if you believe sort of portfolio theory.
+Speaker 1:  One is which you kind of can't beat the market as an individual investor. That's a whole—I could spend all quarter talking about that.
+Speaker 1:  But the basic idea, at least now, while we're talking about the syllabus, is this risk and return. And you want to maximize your return for a given amount of risk.
+Speaker 1:  So yeah, you might be able to double your return, but how much risk did you take on to do that? So it's always a balance of the two.
+Speaker 1:  And the magic of portfolio theory says, for the same return, you can reduce your risk by forming a portfolio that is diversified. And we'll talk about why that happens.
+Speaker 1:  Why when you invest in one stock versus a million dollars in Microsoft versus a million dollars in 10 different high-tech stocks, the second one has less risk than the first one, but you might be able to match the same return.
+Speaker 1:  So it's really quite interesting. And there's all kinds of—the best part about it, in my opinion, is it comes from the data.
+Speaker 1:  And the United States is this incredible laboratory experiment for 200 years of capitalism, of markets. We have the data.
+Speaker 1:  We have the history. And so the people that kind of professors that created this theory, the different aspects of portfolio theory, I don't know if they started from a theoretical basis or from the data, but the data totally leads you to the conclusions.
+Speaker 1:  And that makes it more tangible and real, in my opinion. Okay.
+Speaker 1:  And then we get to something called CAPM, and we get to beta. And so these are aspects of that portfolio concept.
+Speaker 1:  CAPM is Capital Asset Pricing Model. Beta is the return of the market.
+Speaker 1:  And so we'll get into this, obviously, at the end of the quarter, but there's another concept called alpha. And so you might have heard that alpha, which is beta is anyone can get beta return by simply investing in the market.
+Speaker 1:  If you want to try to beat the market and you do beat it, you are gaining alpha. So that's a mark of a successful investor.
+Speaker 1:  Now, alpha can be negative too. Is that true that most people that try to beat the market have negative alpha?
+Speaker 1:  There's books and studies on all of this. That's partly because the market, you can kind of think of it as this thinking machine with millions of investors, high-performance computers, expertise from years of experience and education, probably a sprinkling of insider information here and there.
+Speaker 1:  And one person is trying to outthink all of that. If they can, they get alpha.
+Speaker 1:  So you can see it's hard. Excuse me.
+Speaker 1:  Buffett has, in my opinion, probably quantifiably the biggest alpha of all time. Does anyone have any idea what his alpha is in terms of numbers?
+Speaker 1:  Because if you're talking about the greatest investor of all time, how much better does he do than, say, my mom who's super smart, but she doesn't study finance? What is Buffett's ability to outperform an average person?
+Speaker 1:  Does anyone have any idea? Just a number.
+Speaker 1:  So over about 60 years, Buffett has beaten the market by about 10% a year. So 10%, that's it, between Buffett and everyone else.
+Speaker 1:  I say that because for two reasons. I think if I never thought about it before, I would think the greatest investor of all time should be doing better than 10% than, say, someone who doesn't think about finance or terrorists that much.
+Speaker 1:  But on the other hand, 10% is massive because of compounding. If you grow by 10% a year better than everyone else, every seven years, you have double what everyone else is doing.
+Speaker 1:  So multiply that over 60 years. That's about two, four, eight, three—that's about 500 times more than someone who invested in the market.
+Speaker 1:  And Buffett's done way better than that, partly because in the early days, his alpha was ridiculous.
+Speaker 1:  I don't know, 20, 30, 40, 50 percent. But in the last 20 years or so, it's been difficult to beat the market because he's managing a trillion dollars.
+Speaker 1:  There are management firms that manage more than a trillion dollars, but he's not managing other people's money. That's Berkshire Hathaway's money.
+Speaker 1:  So that's why he's so rich, because he owns a big chunk of Berkshire. So we're getting a little bit off topic, but still relevant.
+Speaker 1:  So that's beta. Beta for the United States is about the market return, I should say, is about 10% a year for 250 years.
+Speaker 1:  So that's a pretty amazing track record. Okay.
+Speaker 1:  If we get time, we will talk more about alpha. What else do I want to say here?
+Speaker 1:  A little bit about myself. So I was a student here.
+Speaker 1:  Actually, I was just looking. My first class as an undergrad was here 40 years ago, so this year, so 1986.
+Speaker 1:  So I'm kind of old. But I really enjoy UCLA.
+Speaker 1:  I got three degrees here: bachelor's, master's, PhD. Then I went into the corporate world in about 10, 12 years after I started teaching here in these types of classes.
+Speaker 1:  So that's a whirlwind. Oh, and I got a MBA as well at a different school.
+Speaker 1:  So that's really—yeah, I think that's relevant. So I do have an MBA that's relevant to teaching finance, but my UCLA degrees are all in not in economics, not in finance, not in math, not in accounting, not in management, none of those things.
+Speaker 1:  So a lot of the stuff that I bring to the class is through my own experience as just a person kind of growing up over my lifetime, but always studying finance, but not exactly from an academic point of view. That can be good and bad.
+Speaker 1:  Tenure-track professors here have an academic perspective and maybe a pragmatic one as well. But if you wanted to get a PhD in finance or economics, there are some things unique that you need to do in terms of research, fundamental research.
+Speaker 1:  I've done a little bit of that as an adjunct professor, but not as much as a tenure track. But what I do have is the real-world experience.
+Speaker 1:  I've worked in corporate finance for 15-plus 20 years, maybe somewhere in that range. So I bring all that to the classroom.
+Speaker 1:  So keep that in mind as far as this is working out for you. This is valuable for you.
+Speaker 1:  Okay. I think we're done with the syllabus.
+Speaker 1:  I wanted to mention a couple of things. I dropped them in the week zero—excuse me, the week one of Bloomberg Fulgur.
+Speaker 1:  And these were—let me pull them up. These are optional.
+Speaker 1:  They have nothing to do with your grade in this class, but I think many of you are probably interested in careers in finance. So I dropped two events.
+Speaker 1:  This one's happening October 1st, so on Thursday, and you have to RSVP. They're kind of like career fairs.
+Speaker 1:  Well, it is a career fair, but if you're like me, I don't like networking. I was always not really good at it when I was an undergrad and grad.
+Speaker 1:  But it has a place. And so if you're interested in this kind of career, whatever your career is, you should go to these things and practice.
+Speaker 1:  Think of it as it's not as bad as homework, but it's kind of like homework. You want to do it.
+Speaker 1:  It's not really an optional thing. Just go there.
+Speaker 1:  And maybe you're really good at it. That's fantastic.
+Speaker 1:  But if you're not, go anyways. Listen, say hi to a few people.
+Speaker 1:  They might ask you what you do, what you're interested in. And maybe the first time or a few times, it's not super comfortable and kind of awkward, but you'll get better at it just like practicing anything.
+Speaker 1:  And like I said, it is important to do this as part of your career. And then the other one here is—so this is in a couple of weeks.
+Speaker 1:  And I'm not part of these at all. I was just sent these emails.
+Speaker 1:  And there are UCLA clubs that are hosting these things. And here's a bunch of guest speakers.
+Speaker 1:  And then this person here, Matei Jochen, Undergraduate Business Society, I think is the host of this. And there's another RSVP.
+Speaker 1:  So go ahead and check that out. Oh, and by the way, we will also have a couple of guest speakers on our Friday lab lecture.
+Speaker 1:  So there's 10 weeks in the quarter, only four labs. So there's a bunch of weeks.
+Speaker 1:  What's going on with those other six weeks? Two of them will have guest speakers.
+Speaker 1:  And so that's six. I think one will be a holiday.
+Speaker 1:  One or two I'm going to use as an extension of the lecture, the main lecture, just to kind of make sure we're on track. And you'll see that in the lab syllabus.
+Speaker 1:  Okay. So I think any questions?
+Speaker 1:  I mean, I don't usually pause for questions, but I definitely want you to ask questions. You can either raise your hand or just start talking.
+Speaker 1:  That'll usually work. Sometimes I don't see your hand because it's a big class.
+Speaker 1:  Yeah.
+Speaker 2:  Are lectures going to be recorded?
+Speaker 1:  I'm not going to record lectures. That's a good question. I did that initially for a few years coming out of COVID.
+Speaker 1:  I get it. I know it's useful to you.
+Speaker 1:  A lot of students use it to study. But frankly, students, your peers just didn't come to class anymore.
+Speaker 1:  And I'm sorry. I'm just not going to do that.
+Speaker 1:  They know the class is at 8:00 AM, but that's the tiebreaker for me why I don't record because students use it as a replacement. You don't have to come to class.
+Speaker 1:  I don't take attendance, but I don't want to have it so easy for you to just not show up, not you personally. That's the story there.
+Speaker 1:  Yeah. Okay.
+Speaker 1:  So we're done with the syllabus. I think I want to start the first lecture.
+Speaker 1:  Before I do, this is an annual report of Berkshire Hathaway. And these are free.
+Speaker 1:  You can download them. This is 2024.
+Speaker 1:  This is the kind of thing. You don't need it for this class, but if you're interested in this as a career, you can kind of read stuff like this.
+Speaker 1:  And I'm going to show you a few other things that I like to read. It's a massive document, like many annual reports are, but this one is important for the chairman's letter, which is usually 10 to 15 pages.
+Speaker 1:  And it's written in a sort of technical way. So all of you can read this letter now, today.
+Speaker 1:  Of course, as you learn more throughout this class and others, you'll get more nuance out of the letter. But it's written by Buffett himself.
+Speaker 1:  He's now retired, so he won't be writing this letter going forward. But you have 60 years of his letters that you can read for free.
+Speaker 1:  And there's just so much information in there. So I would encourage you to read that in your free time if it makes sense for you.
+Speaker 1:  I just noticed in this particular case, he's talking about mistakes. He's always talking about making mistakes.
+Speaker 1:  And this gets back to the net present value. You can't avoid it.
+Speaker 1:  You're talking about the future. The future, nobody knows for certain.
+Speaker 1:  So you're using the future to value something today. It has nothing to do with the past.
+Speaker 1:  There's no past in net present value. But the past does inform our estimates of the future.
+Speaker 1:  So it's good to be a student. But anyways, he's talking about all the mistakes he made.
+Speaker 1:  He never invested in Amazon. He didn't really invest in Microsoft way back in the day, like 30 years ago, and so on and so forth.
+Speaker 1:  So I won't necessarily dwell on this, but one last thing, this kind of interesting.
+Speaker 1:  He talks about his track record.
+Speaker 1:  I think it's towards the end of this. Let me see.
+Speaker 1:  I'll probably pull this up later in lectures to get more into it. But let me see if the track—yeah, here's the track record.
+Speaker 1:  I'm going to zoom out so you can see the whole thing. I mean, I know you can't read that, but he goes back to 1965, the first year.
+Speaker 1:  He has the return of the share price of Berkshire Hathaway, which was about 50%, and then the S&P, which was about 10%. And he does that every year for 60 years.
+Speaker 1:  You can see the compounded gain of the S&P is about 10% a year, and the compounded gain for Berkshire Hathaway is roughly 20%. So that's where I got the 10% alpha.
+Speaker 1:  The S&P is not the full market, but it's an often-quoted proxy for the market. So if we say the market grows at 10% a year, that's where that statement is coming from.
+Speaker 1:  And in fact, if you go back, as I said, 250 years, it's around 7%. I mean, that's real.
+Speaker 1:  This number here is phenomenal, I think. So that's there.
+Speaker 1:  You can Google that and get that. Okay.
+Speaker 1:  So we do have some time, so let's get into it. I'm going to start, though, with more optional stuff.
+Speaker 1:  These are the things that I've read. I'd like to read over time.
+Speaker 1:  And again, nothing to do necessarily with your grade in this class, but as a career, I find these things quite useful. I have already mentioned the lower left, the Berkshire Hathaway letter to shareholders.
+Speaker 1:  We all know the Wall Street Journal. Europe has their own version called the Financial Times.
+Speaker 1:  It's actually a British paper. I think that's also good too because you can—it's interesting to see how a British person writes about what's happening in the United States.
+Speaker 1:  It's not more accurate or less. It's just a different perspective.
+Speaker 1:  So I feel like I learn something when I read the Financial Times. And yes, it is pink or peach, whatever color that is.
+Speaker 1:  It just is that color. It always has been.
+Speaker 1:  So it's distinct in that way. But it also gives you a European—it talks a little bit more about Europe than, say, the Wall Street Journal.
+Speaker 1:  So it kind of gives you a global view in that sense. The Economist magazine, the upper right, is a weekly.
+Speaker 1:  I'm sure I used to get the hard copy, but now obviously it's all online. But it's really quite intelligent.
+Speaker 1:  In fact, if I was to read the most recent one today, I'm sure there's stuff in there that I wouldn't understand. So on that point, any of these publications, there's going to be stuff you don't understand, which is totally fine.
+Speaker 1:  Just Google it and learn what that is. Or maybe that's not what you're interested in.
+Speaker 1:  We all have limited time, right? So maybe you just zero in on the articles and things that you are already interested in.
+Speaker 1:  But over time, that circle of interest will continue to expand. And so before you know it, it's actually an education in and of itself.
+Speaker 1:  When I was your age, people would say, "Oh, you got to read the Wall Street Journal. You got to read it."
+Speaker 1:  Okay, I got to read it. That's pretty simple.
+Speaker 1:  And then I started reading it, and then I'm like, "I don't know why I'm reading this. What am I looking for?
+Speaker 1:  Is there some kind of answer in here? Am I supposed to extract some insight?"
+Speaker 1:  I couldn't. Nobody told me that part.
+Speaker 1:  And what I finally settled on was just read it for my own personal interest. If I'm interested in, say, what Procter & Gamble is doing in terms of marketing, then I should read that.
+Speaker 1:  Now, if I'm not interested, I don't read that. And there was always enough stuff that I would gravitate to certain articles.
+Speaker 1:  I would read them and enjoy them. And then over time, as I said, that kind of expanded.
+Speaker 1:  So now I'm interested in everything in there. And that's a kind of a way to do it rather than just always thinking about it as, "Oh, I got to do this as a homework assignment."
+Speaker 1:  Have some fun with it. And I would say the same with these letters to shareholders.
+Speaker 1:  I haven't read them all, even now, but it's a great education. And I would say it may not cover everything that you would learn in business school, but it covers probably more of the essential stuff.
+Speaker 1:  If you can extract the lessons from those letters, you'll be in real good shape, in my opinion. And then a couple of books.
+Speaker 1:  These books are relevant to this class because a lot of the concepts—so the way I've kind of done it over the years is, okay, I started with the textbooks. My first time I taught the class, I used the publisher's lecture materials as written.
+Speaker 1:  But then over time, I've evolved them, I've edited them, and I've squared them against some of this stuff in here, in these books. The one on the bottom, okay, I'm going to admit I didn't read it.
+Speaker 1:  It's got to be on there, though, because this is the book that Buffett read and learned, and he learned from Ben Brown. So I just put it on there.
+Speaker 1:  Don't feel bad if you don't read it. But it's the classic of all that we're learning today and are in this corner.
+Speaker 1:  The one on the top, "The Stocks for the Long Run," is a classic. And it's entirely based on data, the historical data.
+Speaker 1:  And the author looks at stocks, bonds, precious metals, probably treasuries, and maybe a few other things, real estate, over the long run. Many decades, in fact, maybe a century or so for some of them.
+Speaker 1:  And analyzes them as far as what is the best investment return, risk-adjusted. So it's fascinating to read.
+Speaker 1:  And it's not this guy's opinion. It's what he's seen in the data.
+Speaker 1:  I won't tell you which investment wins out, but you might guess from the title.
+Speaker 1:  So that's a great book to have. I really recommend having that one.
+Speaker 1:  "Random Walk Down Wall Street," the yellow book, is kind of the same general topic area. But it talks about the random walk, and the title is the concept.
+Speaker 1:  It's a concept from math and physics, but it's applied here. It's highly relevant to finance.
+Speaker 1:  A random walk in finance is if you're looking at a stock price today, pick your favorite stock. What is it going to do in the next moment?
+Speaker 1:  Is it going to go up by a penny or down? And there's an argument to be made that you don't know what it's going to do, and nobody does because it's random.
+Speaker 1:  It's like saying, "I'm going to flip a coin, predict whether it's heads or tails." You can make a guess, but you can't predict it, right?
+Speaker 1:  It's going to be 50/50 in the long run. So the random walk is like, "Okay, this is true.
+Speaker 1:  This is true in finance for stock prices." There's a lot of theory behind it, and that's what the book talks about.
+Speaker 1:  But just to give you a little insight, it's the idea that, as I mentioned, if you have the whole world in a liquid market like the American market, and everyone is trying to beat everyone else, in such an environment, it's very, very difficult to know more than the rest of the world. And if you don't know more than the rest of the world, then that means the current stock price is probably correct, including all available information that we have as the Earth, the population of the Earth.
+Speaker 1:  Everything that is knowable is already reflected in that stock price. And if that's true, then the very next moment, whether the price goes up or down, is truly unknowable because you don't know what will happen in the future.
+Speaker 1:  There may be some good news or bad news, and that will force the price up or down. But sitting here today, we don't know what the future holds.
+Speaker 1:  So that's why it's a random walk. So you can read that.
+Speaker 1:  There are arguments against it, but it's interesting. And then the blue book, it's really pragmatic.
+Speaker 1:  It's very short, like 150 pages. I would say just buy it and read it.
+Speaker 1:  And it's basically looking at the returns of professional money managers. And it's kind of tough to read that.
+Speaker 1:  If you read it, it's like they just can't beat the market in general, especially over long periods of time. And we're going to actually have a couple of guest speakers.
+Speaker 1:  And with all due respect, I want to ask them, or you can ask them, "How do you think about portfolio theory and beating the market and alpha? How do you generate alpha?"
+Speaker 1:  The thing is, among professionals, there are certainly people that can generate alpha, but the number of people that can do that over years and years and decades is very small. The number of people that say they can do it is much, much larger.
+Speaker 1:  And that's where it gets confusing. There's certainly a Warren Buffett out there who's like 30 years old right now.
+Speaker 1:  But who is that person? How do you find that person?
+Speaker 1:  It's probably easier to pick stocks than to find that person and invest with them. So it's a really interesting book, and again, it's all databased.
+Speaker 1:  All right. So we only have 20 minutes now.
+Speaker 1:  So we'll just sort of get into this lecture, and then we'll probably finish it up on Wednesday. As I said, finance is the language—excuse me, accounting is the language of finance.
+Speaker 1:  You really can't get around that. Accounting is difficult for me.
+Speaker 1:  If you struggle with it, I hear you. In this class, there are some fundamental concepts we just need to know, and I will reiterate them a few different times.
+Speaker 1:  So don't worry. I'm not going to test you as an accounting class or test you, but we will need to know some things.
+Speaker 1:  And so here's the outline. I won't go through this.
+Speaker 1:  We're just going to jump right into it. The big idea now, I'm talking in this class this quarter mostly about the United States and frankly, mostly about stocks.
+Speaker 1:  However, most countries will have a flavor of what we're talking about here. There might be slight differences, but the general ideas are the same.
+Speaker 1:  And then while I'm talking mostly about stocks, this applies to any investment. That could be real estate, whatever it is, oil, gas, all of them, bonds.
+Speaker 1:  Okay. So sometimes I just kind of fall back into talking about stocks.
+Speaker 1:  So in the United States, we have these required financial statements for public companies. It sounds like a big pain and like a burden.
+Speaker 1:  And it is probably, but there's a purpose for it. So public companies have to publish an annual report and also quarterly statements on their financial standing and their financial activity over the last quarter or last year.
+Speaker 1:  This is because the—well, it's a couple, a lot of reasons, but the main reason is we need to be talking about apples to apples. So we as a society of whoever invests in American markets, the big picture is we want investors to funnel money towards the best investors because that helps the society get better over time.
+Speaker 1:  But how can the investors do that? Well, they need to have data.
+Speaker 1:  They need information. It can't be that you have more information than someone else.
+Speaker 1:  That's not going to work because as a society, we don't know who should get that information. So let's have everyone get it.
+Speaker 1:  And then whoever can make the most of it will deserve the rewards. So publish everything and also standardize it so that when this company has this much profits and this company has stated profits, we know they're talking about the same thing.
+Speaker 1:  Because if you know anything about accounting, it can get quite complicated, right? Okay.
+Speaker 1:  So that's the basic idea with financial statements. We'll go through each of them here.
+Speaker 1:  Generally accepted accounting principles is that sort of idea that we all want to be talking about the same thing. So GAAP is a way to do that.
+Speaker 1:  Companies have auditors, and they are making sure that the company is following these standards and these reporting requirements and so on and so forth. And they are experts in this whereas the CEO or CFO, certainly, they may be experts as well, but they also have a conflict of interest.
+Speaker 1:  So the auditors come in third-party. Now, something you should know, and this is not to disparage any individual person, but who audits the auditors?
+Speaker 1:  Well, you could say, "Well, the government audits the auditors, or maybe the free market does." Because if an auditor ever screws up, the market will hammer down and they'll be out of business.
+Speaker 1:  Okay. That's kind of the end result.
+Speaker 1:  But as an investor, as a person in society, you always got to keep that in mind. I mean, there are sometimes financial statements that are just too good to be true.
+Speaker 1:  And sometimes it is too good to be true. And there are problems with accounting fraud and so on and so forth.
+Speaker 1:  It's not the majority, thankfully, but it does happen sometimes. So as it says here, these third-party auditors are intended to remove the conflict of interest, and they create confidence in the financial data.
+Speaker 1:  Confidence is so important. In fact, psychology is so important in financial markets.
+Speaker 1:  That's something I didn't fully appreciate years ago and have come to appreciate more and more over time. In the long run, psychology probably doesn't matter that much, but in the short run, absolutely it does.
+Speaker 1:  Okay. I forgot to ask you this question.
+Speaker 1:  I've already answered it. The problems are there is no one to audit the auditors, ultimately.
+Speaker 1:  So ultimately it's you. You got to know, especially if you're investing your own money or your client's money, that the responsibility becomes on you to know.
+Speaker 1:  Okay. So the financial statements, there's a handful.
+Speaker 1:  Really, there's three. I have four things listed here, but each of them are talking about the same thing, the same company, but different aspects of the same company.
+Speaker 1:  So the balance sheet, assets and liabilities. So it's kind of like how much stuff do you have?
+Speaker 1:  How much do you owe? From the balance sheet, again, put yourself in the CEO.
+Speaker 1:  That's sort of like what you have to work with as you're managing through, you're setting strategy, you're executing your plan across the year. Your balance sheet is you can kind of think of it that way.
+Speaker 1:  That's what you have. It's something that you have.
+Speaker 1:  Then the income statement. Well, let me jump to the statement of cash flows.
+Speaker 1:  Then throughout the year, cash is flowing around. You're paying expenses.
+Speaker 1:  You're receiving revenues. You're doing those types of things.
+Speaker 1:  You're investing in those things. Some companies do invest in stock market or real estate or whatever.
+Speaker 1:  So money is flowing. If you've done your if you've done things right, maybe with a little bit of luck, the results will be on your income statement.
+Speaker 1:  So you've made a profit. Now, I've always known that income and cash flow is not the same thing, but I didn't fully appreciate that either.
+Speaker 1:  They are not the same thing. And that's why when you say the valuation of an asset is the discounted value of future cash flows.
+Speaker 1:  We don't say it's the discounted value of future income. There's a reason for that.
+Speaker 1:  Because income is an accounting concept. We want bigger income rather than lower income.
+Speaker 1:  We don't want bigger income. But nevertheless, it's all about accounting.
+Speaker 1:  Whereas cash flow is exactly that. It's just cash.
+Speaker 1:  It's cash. It's like money.
+Speaker 1:  When you go to the store, you pay cash. You don't pay in profits or income.
+Speaker 1:  And you can have income without cash flow or even negative cash flow. And that's not necessarily good or bad.
+Speaker 1:  It's just a fact. So you got to be able to separate the two.
+Speaker 1:  Okay. So we talked about the balance sheet, statement of cash flows, and then the income statement, which was something that we're probably all most familiar with.
+Speaker 1:  If you ask someone on Twitter, a financial statement is probably the income statement or profit or something. The statement of stock or check, you find this on the balance sheet.
+Speaker 1:  Excuse me. So you have your assets and your liabilities.
+Speaker 1:  You take on liabilities, you take a loan, and you make a billion-dollar loan, and you create a billion-dollar data. There.
+Speaker 1:  So how much amount does that buy a billion-dollar job? So you haven't done anything yet.
+Speaker 1:  You haven't created any value. But if you go back and before you invested in that data center, you did a net present value analysis.
+Speaker 1:  And to the best of your ability, you convinced yourself that investing a billion dollars in that data center actually, because of all the future cash flows it's going to create, has a positive NPV. So NPV includes both the minus $1 billion right now and all the future, hopefully, positive.
+Speaker 1:  So the net is positive. If you created positive NPV with that decision, then your balance sheet will reflect that because your liabilities went up by a billion, but your assets went up by more than that, right?
+Speaker 1:  Because you created value through that investment. And so you can see over time, hopefully, the assets outgrow the liabilities.
+Speaker 1:  And that this statement of stockholders' equity or shareholders' equity that. One thing there.
+Speaker 1:  So that's how they add up. Okay.
+Speaker 1:  You want to see that growth over time. Okay.
+Speaker 1:  So what I now do through the rest of this chapter, I'm not going to go relatively quickly through this. We got to highlight.
+Speaker 1:  But even the amount that we need to know, we will revisit as we need it, like through future examples and through our labs and stuff. So I am going to go a little bit quickly.
+Speaker 1:  These are financial statements. There's like five, six, seven pages of them in great detail.
+Speaker 1:  Here's the balance sheet. I've just talked about that.
+Speaker 1:  I will say a couple of things. So when you say balance sheet, assets, there's subcategories.
+Speaker 1:  So assets can be current assets and long-term assets. And the reason for that is because, again, actually, if you really want to know finance, open small businesses.
+Speaker 1:  It doesn't need to be a lot of investment or highly risky. It could be open a lemonade stand, like I'm not kidding.
+Speaker 1:  Or maybe you get a job at someone else's small business where you're handling the cash register. These things will come to life.
+Speaker 1:  So who cares what assets are current or long-term? That's just some academic mumbo-jumbo that's made to make things complicated.
+Speaker 1:  No. It's not because the reason you want to know what your current assets are is because the current assets allow you to survive as a company.
+Speaker 1:  Because if you don't have enough current assets, so you can't pay your salaries or your rent, guess what's going to happen? You're going to go out of business.
+Speaker 1:  So you need to know what's current. And by definition, we choose 12 months as a current asset.
+Speaker 1:  So the most obvious current asset is cash. But if you don't have 12 months of cash to pay all your operating expenses, that's okay.
+Speaker 1:  Not everyone does that. But you better have something that's pretty close to cash, like something that you can sell in a pinch, like marketable securities.
+Speaker 1:  For whatever reason, your lemonade stand owns $50,000 of Microsoft stock. So if you had to, people stopped buying lemonade, you could sell that and still pay your rent, whatever it is.
+Speaker 1:  And so these are liquid things. That's what current means.
+Speaker 1:  Inventories are important for a lot of reasons, but they give you a sense as a business owner that what you do have to sell. So if I have six months of inventories, I know that tells me something rather than six days of inventories.
+Speaker 1:  Six years of inventory is probably not good. Six days is also probably not good.
+Speaker 1:  It's too risky. You might run out.
+Speaker 1:  So these things are important to understand, short-term versus long-term. And then long-term assets are things like I own a manufacturing plant.
+Speaker 1:  I have invested in some sort of security that has a long-term horizon. Maybe it's a lockup thing for like seven years or something.
+Speaker 1:  These are important in terms of your balance sheet, but they have different types of utility and their importance because of their long-term nature. Long-term assets like manufacturing plants are important because of, well, a lot of reasons, but one is depreciation.
+Speaker 1:  So you could own an apartment building, and cash flow-wise, you could be making you could have negative cash flow. In other words, every year requires you to put in more of your own money.
+Speaker 1:  But on your accounting statement, you could have let me say it or let me say it in a positive way. You could have positive cash flow.
+Speaker 1:  The rents are covering your expenses. You're getting money every month.
+Speaker 1:  You've made a good investment. But now you have to pay taxes.
+Speaker 1:  But maybe not because on a rental property, you get depreciation. And just to go a little bit into detail, the reason that matters is because the government says your property is becoming less valuable over time.
+Speaker 1:  That's depreciation. And we're going to give you credit for that.
+Speaker 1:  So don't ask me why. It's 27 and a half years.
+Speaker 1:  A physical structure has that is its life. So if it was $275,000, that's the worth of it.
+Speaker 1:  Every year on your accounting statement, you can say, "I lost $10,000," because that's the depreciation. So if you would have made $10,000 in cash flow, it cancels out with that depreciation.
+Speaker 1:  You don't pay tax. Now I'm giving it over.
+Speaker 1:  You don't owe it. I mean, that's the general idea, right?
+Speaker 1:  So the reason I bring all that up is because long-term assets can benefit from depreciation in many cases. And then, of course, you have the structure.
+Speaker 1:  This is just a simple snapshot here of what a balance sheet would look like on the asset side. And then typically, you have these columns which go year after year.
+Speaker 1:  So two or three years, you can kind of see what's going on there. So in this case, the assets have grown.
+Speaker 1:  Over time, you can see at the bottom by about $29 million. But then you can look at all the little subcategories and see accounts receivable grew by 5 million.
+Speaker 1:  So that was a large contributor. And what else?
+Speaker 1:  Just quickly scanning. Long-term assets, buildings went up by 6 million, equipment 6 million, and so on and so forth.
+Speaker 1:  So you can kind of see, does this make sense? Is that assets growing?
+Speaker 1:  That's good. But is this in a good way?
+Speaker 1:  Or maybe I revalued my real estate and we're in a real estate bubble. My real estate holdings went way up in value.
+Speaker 1:  So okay, good, but also kind of risky. So you can kind of get your attention there.
+Speaker 1:  And then on the liability side, I'll just spend two more minutes and then we'll finish for today. Same thing.
+Speaker 1:  You have current and long-term liabilities. Current are the ones that you've got to be ready.
+Speaker 1:  You've got to have your ability to cover those current liabilities. These are obvious things like, well, short-term debt.
+Speaker 1:  It could be rent. It could be bills.
+Speaker 1:  So when you buy all of your raw materials for your product, you're probably not paying in cash for that. You're saying, "Thanks for all of that.
+Speaker 1:  I'm going to pay you in a month." So that month is now coming due and you got to pay for all that coffee or whatever it is for your business, your coffee shop or whatever your business is.
+Speaker 1:  That's pretty straightforward, right? The mortgage payments.
+Speaker 1:  You might have long-term debt. It might have been a 20-year loan, but now it's year 19 and 11 months, and there's a balloon payment.
+Speaker 1:  So you got to be ready for that. So current liabilities are things that are right there on your radar, including wages and tax bills and so on and so forth.
+Speaker 1:  You also have long-term. So this could be you might be leasing some heavy equipment if you're in manufacturing or farming or something like that.
+Speaker 1:  You might have deferred tax bills and so on and so forth. This here is one of the so in the world of accounting, you have these three main financial statements, but then there's a bunch of ways to sort of combine different aspects of the statements.
+Speaker 1:  This is the first one we'll mention in this class, networking capital. In layman's terms, it's just how much do you have in current sense versus how much do you owe in the current sense?
+Speaker 1:  And you can kind of see the pragmatism of that, right? You just got to have a handle on it.
+Speaker 1:  That's NWC, networking capital. In other words, it tells you how liquid you are as a business owner and how ready you are to address an emergency or perhaps not ready.
+Speaker 1:  Okay. So it can highlight some concerns.
+Speaker 1:  Okay. I think I'll stop here.
+Speaker 1:  We'll pick it up on.

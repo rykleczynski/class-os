@@ -1,0 +1,723 @@
+{
+  "schema_version": 1,
+  "title": "Book value, earnings, cash, and ratios",
+  "hook": "A company can change the world and still be a bad investment. The financial statements are how you tell the difference.",
+  "est_minutes": 12,
+  "objectives": [
+    "Separate book value from market value, and read the market-to-book ratio.",
+    "Walk the income statement to net income, and read EPS and P/E correctly.",
+    "Sort cash flow items into operating, investing and financing, and match each ratio family to the question it answers."
+  ],
+  "steps": [
+    {
+      "id": "great-business",
+      "title": "A great business is not a great investment",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "The professor used Anthropic's leaked IPO prospectus as a cautionary case. The company reported rapid revenue growth, but its costs grew too, and the profit claim left out the biggest cost, model training.\n\n> \"You can have a fantastic business and a fantastic technology... That does not mean it's a fantastic business.\"\n\nThe gap between a great company and a great investment is the price you pay."
+        },
+        {
+          "type": "slider",
+          "title": "If 1,000% growth kept going",
+          "formula": "start*(1+growth_pct/100)^years",
+          "vars": [
+            {
+              "name": "start",
+              "label": "Starting revenue",
+              "min": 1,
+              "max": 20,
+              "step": 0.01,
+              "default": 4.59,
+              "unit": "$B"
+            },
+            {
+              "name": "growth_pct",
+              "label": "Growth per year",
+              "min": 0,
+              "max": 1500,
+              "step": 50,
+              "default": 1000,
+              "unit": "%"
+            },
+            {
+              "name": "years",
+              "label": "Years",
+              "min": 0,
+              "max": 6,
+              "step": 1,
+              "default": 3
+            }
+          ],
+          "output": {
+            "label": "Revenue",
+            "format": "number",
+            "decimals": 0,
+            "unit": "$B"
+          },
+          "plot": {
+            "x": "years",
+            "range": [
+              0,
+              6
+            ],
+            "yLabel": "Revenue ($B)"
+          },
+          "caption": "Start of $4.59B is the 2025 revenue reported in the leaked filing. For scale, world output is on the order of $100 trillion (about 100,000 on this scale; a rough figure, not from the lecture). The professor said 'about six years' to pass Earth's revenue; at these numbers it is closer to five. His point stands: 1,000% a year cannot continue."
+        },
+        {
+          "type": "inTheNews",
+          "headline": "Inside Anthropic's IPO Filing: What's Really Behind Its $42B Loss",
+          "source": "DualEntry",
+          "url": "https://www.dualentry.com/blog/inside-anthropics-ipo-filing",
+          "date": "2026-10-02",
+          "tieIn": "The article reports 2025 revenue of $4.59B, an operating loss of $8.06B and a net loss of about $41.6B. It attributes roughly $34B of that net loss to an accounting charge tied mostly to earlier financing that could turn into shares. Operating loss and net loss are different lines of the income statement, which is why you read each one before judging a valuation."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-growth",
+          "q": "Why must future cash flows be 'massive' to justify a high valuation today?",
+          "options": [
+            "They arrive far in the future and get discounted, and today's losses dig a hole to fill",
+            "They arrive today, so any positive number justifies the valuation",
+            "Discounting makes distant cash flows larger, so little is needed",
+            "Valuation depends only on the share price, not on cash flows"
+          ],
+          "answer": 0,
+          "why": "The professor's point: distant cash is discounted to a smaller number, and large negative cash flows now must be offset by even larger positives later."
+        }
+      ]
+    },
+    {
+      "id": "book-vs-market",
+      "title": "Book value vs market value",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "**Market value** is what the market says the company is worth: share price times shares outstanding. A billion shares at $120 is a $120 billion company.\n\n**Book value** is rooted in the balance sheet: assets minus liabilities. Market value can swing with investor psychology while the balance sheet barely moves. It can also be higher for good reasons, such as a brand or intellectual property that nobody can copy (a moat)."
+        },
+        {
+          "type": "compare",
+          "title": "Two ways to say what a company is worth",
+          "columns": [
+            "Book value",
+            "Market value"
+          ],
+          "highlight": 1,
+          "rows": [
+            {
+              "label": "Formula",
+              "cells": [
+                "Assets - liabilities (shareholders' equity)",
+                "Price per share x shares outstanding"
+              ]
+            },
+            {
+              "label": "Anchored to",
+              "cells": [
+                "The balance sheet",
+                "Investor expectations and mood"
+              ]
+            },
+            {
+              "label": "Can it be negative?",
+              "cells": [
+                "Yes, if liabilities exceed assets",
+                "No"
+              ]
+            },
+            {
+              "label": "Brand, IP, growth story",
+              "cells": [
+                "Mostly missing",
+                "Priced in"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "slider",
+          "title": "Market-to-book ratio",
+          "formula": "price*shares/book",
+          "vars": [
+            {
+              "name": "price",
+              "label": "Share price",
+              "min": 10,
+              "max": 400,
+              "step": 5,
+              "default": 120,
+              "unit": "$"
+            },
+            {
+              "name": "shares",
+              "label": "Shares outstanding",
+              "min": 0.5,
+              "max": 3,
+              "step": 0.5,
+              "default": 1,
+              "unit": "B"
+            },
+            {
+              "name": "book",
+              "label": "Book value of equity",
+              "min": 10,
+              "max": 100,
+              "step": 5,
+              "default": 30,
+              "unit": "$B"
+            }
+          ],
+          "output": {
+            "label": "Market value / book value",
+            "format": "number",
+            "decimals": 2,
+            "unit": "x"
+          },
+          "plot": {
+            "x": "price",
+            "range": [
+              10,
+              400
+            ],
+            "yLabel": "M/B (x)"
+          },
+          "caption": "Value stocks sit near 1.5x to 2x. Buffett looks harder when the ratio reaches 3x or 4x. Growth stocks have no ceiling."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-mb",
+          "q": "A firm has 2 billion shares at $45 and book equity of $60 billion. What is its market-to-book ratio?",
+          "options": [
+            "0.75x",
+            "1.5x",
+            "3.0x",
+            "1.0x"
+          ],
+          "answer": 1,
+          "why": "Market value = 2B x $45 = $90B. 90 / 60 = 1.5x, value-stock territory."
+        }
+      ]
+    },
+    {
+      "id": "income-statement",
+      "title": "The income statement, line by line",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "The income statement shows revenues and expenses over a period. It starts at total sales and subtracts costs until it reaches net income.\n\nOperating income is the business before interest and taxes, and this is where the professor objected to Anthropic's 'profitable' claim: it left out training costs, which he called \"earnings before the bad stuff.\" Depreciation lowers income and taxes but is not a cash cost."
+        },
+        {
+          "type": "stepper",
+          "title": "From $1,000M of sales to net income ($M, illustrative)",
+          "frames": [
+            {
+              "title": "Sales",
+              "text": "Revenue is the top line.",
+              "math": "Sales = 1,000"
+            },
+            {
+              "title": "Gross profit",
+              "text": "Subtract the cost of making the product.",
+              "math": "1,000 - 550 = 450"
+            },
+            {
+              "title": "Operating income",
+              "text": "Subtract selling and admin (SG&A) 120, R&D 80, and depreciation and amortization 50. This is the business itself.",
+              "math": "450 - 120 - 80 - 50 = 200"
+            },
+            {
+              "title": "Pre-tax income",
+              "text": "Interest on loans is a separate skill from running the business. Subtract it now.",
+              "math": "200 - 40 = 160"
+            },
+            {
+              "title": "Net income",
+              "text": "Taxes at 25% leave the bottom line.",
+              "math": "160 - 40 = 120"
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "kind": "bar",
+          "title": "Where each $1,000M of sales goes ($M)",
+          "data": [
+            {
+              "item": "Cost of sales",
+              "amount": 550
+            },
+            {
+              "item": "SG&A",
+              "amount": 120
+            },
+            {
+              "item": "R&D",
+              "amount": 80
+            },
+            {
+              "item": "Depreciation & amort.",
+              "amount": 50
+            },
+            {
+              "item": "Interest",
+              "amount": 40
+            },
+            {
+              "item": "Taxes",
+              "amount": 40
+            },
+            {
+              "item": "Net income",
+              "amount": 120
+            }
+          ],
+          "x": "item",
+          "y": "amount",
+          "yLabel": "$M",
+          "caption": "The seven bars add to $1,000M."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-opinc",
+          "q": "Why is excluding model training from operating costs a red flag for an AI lab?",
+          "options": [
+            "Training is a one-time investment that is already finished",
+            "Taxes are charged only on training costs",
+            "Training never stops under competition, so it is a core running cost",
+            "Training costs are not real expenses"
+          ],
+          "answer": 2,
+          "why": "The professor's argument: if training is permanent, it belongs in operating costs. If it were a one-time investment, leaving it out would be more defensible."
+        }
+      ]
+    },
+    {
+      "id": "eps-pe",
+      "title": "EPS, P/E, and what 'expensive' means",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "**EPS** = net income / shares: how much of the earnings are yours per share. **P/E** = price / EPS: what you pay for $1 of earnings.\n\n> \"Expensive is relative to how much price you're paying for earnings.\"\n\nBerkshire trades near $751,000 a share yet has a P/E around 12, among the cheapest in the world. SpaceX had no earnings, so no P/E at all."
+        },
+        {
+          "type": "chart",
+          "kind": "bar",
+          "title": "Rounded P/E ratios the professor quoted",
+          "data": [
+            {
+              "company": "Berkshire",
+              "pe": 12
+            },
+            {
+              "company": "Apple",
+              "pe": 40
+            },
+            {
+              "company": "Tesla",
+              "pe": 320
+            }
+          ],
+          "x": "company",
+          "y": "pe",
+          "yLabel": "Price per $1 of earnings",
+          "caption": "Investors pay more now for earnings they expect later. SpaceX has no earnings, so it has no bar."
+        },
+        {
+          "type": "slider",
+          "title": "Price and P/E",
+          "formula": "price/eps",
+          "vars": [
+            {
+              "name": "price",
+              "label": "Share price",
+              "min": 10,
+              "max": 800,
+              "step": 10,
+              "default": 150,
+              "unit": "$"
+            },
+            {
+              "name": "eps",
+              "label": "Earnings per share",
+              "min": 0.25,
+              "max": 20,
+              "step": 0.25,
+              "default": 3.75,
+              "unit": "$"
+            }
+          ],
+          "output": {
+            "label": "P/E ratio",
+            "format": "number",
+            "decimals": 1,
+            "unit": "x"
+          },
+          "plot": {
+            "x": "price",
+            "range": [
+              10,
+              800
+            ],
+            "yLabel": "P/E (x)"
+          },
+          "caption": "Default: $150 / $3.75 = 40, Apple-like."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-dilution",
+          "q": "A company doubles its share count with the same earnings, and the share price stays put. What happens to EPS and P/E?",
+          "options": [
+            "EPS doubles and P/E halves",
+            "EPS halves and P/E doubles",
+            "Both halve",
+            "Both are unchanged"
+          ],
+          "answer": 1,
+          "why": "Same earnings spread over twice the shares halves EPS. With the price unchanged, price / EPS doubles. This is dilution."
+        }
+      ]
+    },
+    {
+      "id": "cash-flow",
+      "title": "The statement of cash flows",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "The cash flow statement starts from net income, then adjusts to real cash. Depreciation is added back, since no cash left. Customers who owe you (receivables) mean income without cash, so an increase is deducted.\n\n> \"I want my accounts receivable to be paid off real quick and my accounts payable to be paid off in the future.\"\n\nThe three sections are operating, investing and financing."
+        },
+        {
+          "type": "sortOrMatch",
+          "mode": "match",
+          "prompt": "Which section does each item belong to?",
+          "items": [
+            {
+              "label": "Add back depreciation",
+              "target": 0
+            },
+            {
+              "label": "Increase in accounts receivable",
+              "target": 0
+            },
+            {
+              "label": "Build a data center (CapEx)",
+              "target": 1
+            },
+            {
+              "label": "Sell a data center",
+              "target": 1
+            },
+            {
+              "label": "Take out a loan",
+              "target": 2
+            },
+            {
+              "label": "Pay a dividend to shareholders",
+              "target": 2
+            }
+          ],
+          "targets": [
+            "Operating",
+            "Investing",
+            "Financing"
+          ],
+          "why": "Dividends and loans are financing (the lecture slip put dividends under investing, but the slides list them under financing). CapEx and asset sales are investing. Depreciation and working-capital changes adjust operating cash."
+        },
+        {
+          "type": "stepper",
+          "title": "From net income to change in cash ($ thousands, illustrative)",
+          "frames": [
+            {
+              "title": "Start with net income",
+              "text": "Net income is the first row.",
+              "math": "NI = 2,000"
+            },
+            {
+              "title": "Operating adjustments",
+              "text": "Add back depreciation 100. Receivables rose 150 (cash not yet collected). Payables rose 80 (cash not yet paid). Inventory rose 60 (cash spent on stock).",
+              "math": "2,000 + 100 - 150 + 80 - 60 = 1,970"
+            },
+            {
+              "title": "Investing",
+              "text": "Spend 500 on equipment.",
+              "math": "-500"
+            },
+            {
+              "title": "Financing",
+              "text": "Borrow 300 and pay 200 in dividends.",
+              "math": "+300 - 200 = +100"
+            },
+            {
+              "title": "Net change in cash",
+              "text": "This matches the change in cash on the balance sheet, so the statements tie together.",
+              "math": "1,970 - 500 + 100 = 1,570"
+            }
+          ]
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-ar",
+          "q": "Accounts receivable rose by $150k this year. What does that do to operating cash flow relative to net income?",
+          "options": [
+            "Raises it by $150k",
+            "Lowers it by $150k",
+            "Leaves it unchanged",
+            "Raises it, but only after a year"
+          ],
+          "answer": 1,
+          "why": "Sales were booked in income but the cash has not arrived, so the increase is deducted. Cash was not collected."
+        }
+      ]
+    },
+    {
+      "id": "ratios",
+      "title": "Ratios: one lens each",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "There are dozens of ratios, and you will not memorize them all. Each gives one lens on the business, and none is enough alone. Ratios also let you compare firms of different sizes, such as Ferrari and Tesla on operating margin.\n\nWatch how they change over time. A cash ratio that halves in a year is a red flag worth chasing."
+        },
+        {
+          "type": "compare",
+          "title": "Ratio families",
+          "columns": [
+            "Question it answers",
+            "Example"
+          ],
+          "rows": [
+            {
+              "label": "Profitability",
+              "cells": [
+                "How much profit per $1 of sales?",
+                "Operating margin = operating income / sales"
+              ]
+            },
+            {
+              "label": "Liquidity",
+              "cells": [
+                "Can we pay our near-term debts?",
+                "Current ratio = current assets / current liabilities"
+              ]
+            },
+            {
+              "label": "Working capital",
+              "cells": [
+                "How fast does product turn into cash?",
+                "Inventory days = inventory / daily cost of goods sold. In unit counts: 500 cups at 100 cups sold a day = 5 days."
+              ]
+            },
+            {
+              "label": "Leverage",
+              "cells": [
+                "How much do we lean on debt?",
+                "Debt-to-equity"
+              ]
+            },
+            {
+              "label": "Valuation",
+              "cells": [
+                "What am I paying?",
+                "P/E, enterprise value / EBIT"
+              ]
+            },
+            {
+              "label": "Operating returns",
+              "cells": [
+                "How well do assets earn?",
+                "ROE, ROA, ROIC"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "slider",
+          "title": "Current ratio",
+          "formula": "current_assets/current_liabilities",
+          "vars": [
+            {
+              "name": "current_assets",
+              "label": "Current assets",
+              "min": 20,
+              "max": 300,
+              "step": 10,
+              "default": 120,
+              "unit": "$M"
+            },
+            {
+              "name": "current_liabilities",
+              "label": "Current liabilities",
+              "min": 20,
+              "max": 300,
+              "step": 10,
+              "default": 100,
+              "unit": "$M"
+            }
+          ],
+          "output": {
+            "label": "Current ratio",
+            "format": "number",
+            "decimals": 2,
+            "unit": "x"
+          },
+          "plot": {
+            "x": "current_assets",
+            "range": [
+              20,
+              300
+            ],
+            "yLabel": "Current ratio (x)"
+          },
+          "caption": "Below 1.0x, short-term bills exceed short-term assets."
+        },
+        {
+          "type": "stepper",
+          "title": "DuPont: ROE as three business levers",
+          "frames": [
+            {
+              "title": "Profit margin",
+              "text": "How much of each sales dollar becomes profit.",
+              "math": "NI / Sales = 12 / 120 = 10%"
+            },
+            {
+              "title": "Asset turnover",
+              "text": "How hard the assets work to produce sales.",
+              "math": "Sales / Assets = 120 / 80 = 1.5"
+            },
+            {
+              "title": "Equity multiplier",
+              "text": "How much of the assets are financed by more than equity.",
+              "math": "Assets / Equity = 80 / 40 = 2"
+            },
+            {
+              "title": "Multiply",
+              "text": "Sales and assets cancel, leaving net income over book equity.",
+              "math": "10% x 1.5 x 2 = 30% = 12 / 40"
+            }
+          ]
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-dupont",
+          "q": "A target has low ROE. Its margin is healthy and its leverage is normal, but asset turnover is weak. Where does an operator focus?",
+          "options": [
+            "Cutting taxes",
+            "Raising the share price",
+            "Getting more sales out of the same assets",
+            "Raising the dividend"
+          ],
+          "answer": 2,
+          "why": "DuPont splits ROE so you can see which lever is failing. Here it is asset turnover."
+        }
+      ]
+    }
+  ],
+  "recap": [
+    "A great business is not automatically a great investment. The price you pay relative to what you get is what matters.",
+    "Book value = assets - liabilities (can be negative). Market value = price x shares (cannot be). Market-to-book flags disconnects.",
+    "Income statement runs sales to net income. EPS = NI / shares. P/E = price / EPS. Price per share alone says nothing about expensive.",
+    "Cash flow starts at net income and adjusts to cash across operating, investing and financing. Each ratio family is one lens."
+  ],
+  "quiz": [
+    {
+      "type": "mcq",
+      "q": "A company has 500 million shares at $80. What is its market value?",
+      "options": [
+        "$40 billion",
+        "$4 billion",
+        "$400 million",
+        "$80 billion"
+      ],
+      "answer": 0,
+      "why": "500M x $80 = $40B."
+    },
+    {
+      "type": "mcq",
+      "q": "Which statement about a great technology company is the professor's point?",
+      "options": [
+        "Great technology guarantees great returns",
+        "Share price is irrelevant for any investment",
+        "A high price can make even a great business a poor investment",
+        "Only unprofitable firms can be good investments"
+      ],
+      "answer": 2,
+      "why": "Microsoft in the '90s, internet stocks, and Anthropic all illustrate that business quality and investment quality differ by the price paid."
+    },
+    {
+      "type": "mcq",
+      "q": "Net income is $60M, there are 20M shares, and the price is $90. What is the P/E?",
+      "options": [
+        "15",
+        "3",
+        "45",
+        "30"
+      ],
+      "answer": 3,
+      "why": "EPS = 60 / 20 = 3. P/E = 90 / 3 = 30."
+    },
+    {
+      "type": "mcq",
+      "q": "Why is depreciation added back on the cash flow statement?",
+      "options": [
+        "It is a real cash payment",
+        "It reduced net income but no cash left the firm",
+        "It increases taxes owed",
+        "It is financing"
+      ],
+      "answer": 1,
+      "why": "Depreciation lowers accounting income but uses no cash, so you put it back to find cash generated."
+    },
+    {
+      "type": "mcq",
+      "q": "Margin is 5%, asset turnover is 2, and the equity multiplier is 3. What is ROE?",
+      "options": [
+        "10%",
+        "15%",
+        "30%",
+        "5%"
+      ],
+      "answer": 2,
+      "why": "DuPont: 0.05 x 2 x 3 = 0.30, or 30%."
+    }
+  ],
+  "flashcards": [
+    {
+      "front": "Book value vs market value",
+      "back": "Book = assets - liabilities (equity), can be negative. Market = price x shares outstanding, cannot be negative."
+    },
+    {
+      "front": "Market-to-book (price-to-book)",
+      "back": "Market value / book value. Value stocks are low (about 1.5x to 2x). Growth stocks have no ceiling. Buffett looks harder at 3x to 4x."
+    },
+    {
+      "front": "EPS and P/E",
+      "back": "EPS = net income / shares. P/E = price / EPS, the price paid per $1 of earnings. A high share price is not the same as expensive."
+    },
+    {
+      "front": "Operating, investing, financing",
+      "back": "Operating: business activity and working capital. Investing: capex and asset sales. Financing: loans and dividends."
+    },
+    {
+      "front": "Receivables and payables strategy",
+      "back": "Collect receivables quickly and push payables out. Dell got paid before building the computer."
+    },
+    {
+      "front": "DuPont identity",
+      "back": "ROE = (NI / Sales) x (Sales / Assets) x (Assets / Equity): margin x asset turnover x equity multiplier."
+    }
+  ],
+  "concepts": [
+    "Great business vs great investment",
+    "Book value",
+    "Market value",
+    "Market-to-book",
+    "Income statement",
+    "EPS",
+    "P/E ratio",
+    "Dilution",
+    "Statement of cash flows",
+    "Operating, investing, financing",
+    "Working capital ratios",
+    "Liquidity ratios",
+    "DuPont identity"
+  ]
+}
