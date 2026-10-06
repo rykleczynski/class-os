@@ -9,7 +9,8 @@ export type Course = {
   color: string;
   /** "light" means white text on the card, "dark" means near-black text. */
   tone: "light" | "dark";
-  calendar_event_series_id: string | null;
+  /** Recurring Google Calendar series ids (" Class Schedule" calendar). */
+  calendar_event_series_ids: string[];
   aliases: string[];
   term: string;
   generation_notes: string;
@@ -26,7 +27,7 @@ export const courses: Course[] = [
     schedule: "Mon/Wed 8:00-9:15",
     color: "#3b5bdb",
     tone: "light",
-    calendar_event_series_id: null,
+    calendar_event_series_ids: ["_64p2qb9h74s3cd9n6so34b9h"],
     aliases: ["Econ 106F", "Econ 106F Lecture", "ECON 106F Finance"],
     term: "Fall 2026",
     generation_notes:
@@ -42,7 +43,7 @@ export const courses: Course[] = [
     schedule: "Mon/Wed 9:30-10:45",
     color: "#ee6a3c",
     tone: "light",
-    calendar_event_series_id: null,
+    calendar_event_series_ids: ["qpruvqppuu5vv3l7fou1iqm2jc"],
     aliases: ["Comms 187", "Comm 187", "COMM 187 Media Ethics"],
     term: "Fall 2026",
     generation_notes:
@@ -58,7 +59,8 @@ export const courses: Course[] = [
     schedule: "Mon/Wed 2:00-3:15",
     color: "#16181d",
     tone: "light",
-    calendar_event_series_id: null,
+    // TODO: this is the Wednesday series. The Monday 2:00 slot may be a separate series; find its id and add it here.
+    calendar_event_series_ids: ["_64p2qc9h68o3gc9k6kqiqc8"],
     aliases: ["Econ 134", "Econ 134 Environmental"],
     term: "Fall 2026",
     generation_notes:
@@ -74,7 +76,7 @@ export const courses: Course[] = [
     schedule: "Thu 4:00 lab, Fri 3:00 lecture",
     color: "#9bd84e",
     tone: "dark",
-    calendar_event_series_id: null,
+    calendar_event_series_ids: ["_64p2qb9n64r3cdho74p38b9h", "_64p2qb9o60pjic1g68p36b9h"],
     aliases: ["Econ 106F Discussion", "Econ 106FB", "Econ 106F Lab"],
     term: "Fall 2026",
     generation_notes:

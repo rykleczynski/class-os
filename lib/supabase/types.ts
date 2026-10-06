@@ -9,12 +9,12 @@ export type Database = {
       courses: {
         Row: {
           id: string; code: string; slug: string; title: string; category: string; instructor: string | null;
-          schedule: string; color: string; tone: string; calendar_event_series_id: string | null;
+          schedule: string; color: string; tone: string; calendar_event_series_ids: string[];
           aliases: string[]; term: string; generation_notes: string | null; created_at: string;
         };
         Insert: {
           id?: string; code: string; slug: string; title: string; category: string; instructor?: string | null;
-          schedule: string; color: string; tone?: string; calendar_event_series_id?: string | null;
+          schedule: string; color: string; tone?: string; calendar_event_series_ids?: string[];
           aliases?: string[]; term: string; generation_notes?: string | null; created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["courses"]["Insert"]>;
@@ -37,11 +37,11 @@ export type Database = {
       lessons: {
         Row: {
           id: string; slug: string; lecture_id: string; title: string; summary: string | null;
-          est_minutes: number | null; spec: Json; schema_version: number; created_at: string;
+          est_minutes: number | null; spec: Json; schema_version: number; status: string; created_at: string;
         };
         Insert: {
           id?: string; slug: string; lecture_id: string; title: string; summary?: string | null;
-          est_minutes?: number | null; spec: Json; schema_version?: number; created_at?: string;
+          est_minutes?: number | null; spec: Json; schema_version?: number; status?: string; created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["lessons"]["Insert"]>;
         Relationships: [];

@@ -21,8 +21,6 @@ export type LectureRecord = {
   starts_at: string;
   wispr_share_link: string | null;
   transcript_file: string | null;
-  /** Inline transcript when read from the database. */
-  transcript?: string | null;
   status: "pending" | "generated" | "failed" | "unmatched";
 };
 
@@ -138,7 +136,7 @@ const toCourse = (r: CourseRow): Course => ({
   schedule: r.schedule,
   color: r.color,
   tone: r.tone === "dark" ? "dark" : "light",
-  calendar_event_series_id: r.calendar_event_series_id,
+  calendar_event_series_ids: r.calendar_event_series_ids,
   aliases: r.aliases,
   term: r.term,
   generation_notes: r.generation_notes ?? "",
@@ -172,7 +170,7 @@ async function sb_getCourses(): Promise<Course[]> {
 async function sb_getLessonRows(): Promise<Array<LessonRecord & { course: Course }>> {
   const [courses, lessons, lectures] = await Promise.all([
     sb_getCourses(),
-    db().from("lessons").select("*").order("created_at", { ascending: false }),
+    db().from("lessons").select("*").eq("status", "published").order("created_at", { ascending: false }),
     db().from("lectures").select("id, course_id"),
   ]);
   if (lessons.error) throw new Error(`lessons: ${lessons.error.message}`);
@@ -187,7 +185,8 @@ async function sb_getLessonRows(): Promise<Array<LessonRecord & { course: Course
 async function sb_getLecturesForCourse(courseId: string): Promise<LectureRecord[]> {
   const { data, error } = await db()
     .from("lectures")
-    .select("id, course_id, wispr_meeting_id, starts_at, wispr_share_link, transcript, status")
+    // Never select transcript here: anon has no column grant for it (see 0001_init.sql).
+    .select("id, course_id, wispr_meeting_id, starts_at, wispr_share_link, status")
     .eq("course_id", courseId)
     .order("starts_at");
   if (error) throw new Error(`lectures: ${error.message}`);
@@ -198,7 +197,6 @@ async function sb_getLecturesForCourse(courseId: string): Promise<LectureRecord[
     starts_at: l.starts_at ?? "",
     wispr_share_link: l.wispr_share_link,
     transcript_file: null,
-    transcript: l.transcript,
     status: l.status as LectureRecord["status"],
   }));
 }
@@ -240,8 +238,16 @@ export async function getLecturesForCourse(courseId: string): Promise<LectureRec
   return sb_getLecturesForCourse(courseId);
 }
 
+/** True when transcripts are not served to the browser (Supabase mode). */
+export const transcriptsPrivate = supabaseEnabled;
+
+/**
+ * Local transcript text, fixtures mode only. In Supabase mode transcripts are
+ * private (anon cannot read the column), so this returns null and the page shows
+ * the Wispr share link instead.
+ */
 export async function getTranscript(lecture: LectureRecord): Promise<string | null> {
-  if (lecture.transcript) return lecture.transcript;
+  if (supabaseEnabled) return null;
   return fixture_getTranscript(lecture);
 }
 
