@@ -163,7 +163,7 @@ function Player({ lessonId, lesson, course, initialStage }: Omit<Props, "spec"> 
             <div className="mb-5 flex items-baseline justify-between">
               <p className="font-semibold tracking-tight">Your progress</p>
               <p className="text-sm tabular-nums text-muted-foreground">
-                {Math.min(maxReached, items.length)}/{items.length}
+                {maxReached >= cardsIdx ? items.length : maxReached}/{items.length}
               </p>
             </div>
             <Checklist items={items} current={idx} maxReached={maxReached} onJump={go} />

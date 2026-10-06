@@ -32,7 +32,7 @@ export function AppSidebar() {
   return (
     <>
       {/* Desktop: labeled nav */}
-      <nav aria-label="Main" className="fixed inset-y-0 left-0 z-40 hidden w-56 flex-col border-r border-sidebar-border bg-sidebar px-4 py-6 md:flex">
+      <nav aria-label="Main" className="fixed inset-y-0 left-0 z-40 hidden w-56 flex-col overflow-y-auto border-r border-sidebar-border bg-sidebar px-4 py-6 md:flex">
         <Link href="/" className="mb-8 flex items-center gap-2.5 rounded-xl px-3 py-1 text-lg font-bold tracking-tight">
           <Mark />
           <span>
