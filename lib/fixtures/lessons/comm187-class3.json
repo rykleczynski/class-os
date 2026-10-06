@@ -52,12 +52,12 @@
           "type": "mcq",
           "q": "What is the lecture's main point about the tax and sentencing examples?",
           "options": [
-            "One of the definitions of fair is simply correct",
+            "Exactly one definition of fair is the correct one, and the rest are wrong",
+            "Fairness only matters inside the criminal justice system, not elsewhere",
             "How you define fair can lead to very different conclusions",
-            "Fairness only matters in criminal justice",
-            "Percentages are always fairer than flat amounts"
+            "Percentages are always fairer than flat dollar amounts in every case"
           ],
-          "answer": 1,
+          "answer": 2,
           "why": "Equal percentages, equal sentences, three strikes: each is defended as fair, and each produces a different result.",
           "id": "mcq-define"
         }
@@ -234,10 +234,10 @@
       "type": "mcq",
       "q": "In this course, how are objectivity and balance distinguished?",
       "options": [
-        "They mean the same thing",
-        "Objectivity is about presenting facts, balance is about presenting opinions",
-        "Objectivity is about opinions, balance is about facts",
-        "Objectivity is for editors, balance is for reporters"
+        "They mean the same thing in practice, so the course uses them interchangeably",
+        "Objectivity is presenting facts accurately, balance is presenting different points of view",
+        "Objectivity is about opinions, while balance is about facts, numbers and sources",
+        "Objectivity is a duty for editors, while balance is a duty for reporters"
       ],
       "answer": 1,
       "why": "Objectivity is perceiving and presenting facts accurately. Balance is presenting different points of view."
@@ -246,12 +246,12 @@
       "type": "mcq",
       "q": "Which check helps keep your politics out of how you describe an event?",
       "options": [
-        "Use the most dramatic word available",
-        "Ask whether you would describe it the same if the crowd shared your politics",
-        "Avoid all numbers",
-        "Quote only people you agree with"
+        "Use the most dramatic word available so the story holds attention",
+        "Quote only the people you already agree with on the topic",
+        "Avoid every number and statistic when describing the event",
+        "Ask if you'd describe it the same if the crowd shared your politics"
       ],
-      "answer": 1,
+      "answer": 3,
       "why": "Numbers and plain description survive the test. Characterizing words are where politics leak in."
     },
     {
@@ -270,24 +270,24 @@
       "type": "mcq",
       "q": "What is an apparent conflict of interest?",
       "options": [
-        "A conflict you admit to",
-        "A relationship that looks like a conflict to a reasonable outsider, even if you believe it is not",
-        "A conflict that has been resolved",
-        "A conflict between two journalists"
+        "A conflict that you have openly admitted to and written down publicly",
+        "A conflict that has already been resolved, disclosed, or documented",
+        "A relationship a reasonable outsider sees as a conflict, even if you don't",
+        "A conflict that arises between two journalists covering the same story"
       ],
-      "answer": 1,
+      "answer": 2,
       "why": "You may sincerely say you have no conflict while someone else, looking at the same facts, sees one."
     },
     {
       "type": "mcq",
       "q": "Why does the lecturer use the juror analogy?",
       "options": [
-        "Journalists should have no opinions or experiences",
-        "Jurors and journalists both set aside or contain their experiences to be fair to the people involved",
-        "Journalists must serve on juries",
-        "Jury selection is a model for hiring"
+        "Journalists should have no opinions or past experiences about what they cover",
+        "Journalists must be willing to serve on real juries when they are called",
+        "Jurors and journalists both contain their experiences to be fair to people",
+        "Jury selection is a good model for how newsrooms ought to hire reporters"
       ],
-      "answer": 1,
+      "answer": 2,
       "why": "A juror with experiences can still be fair. Journalists are asked to do the same, with the goal of a fair story rather than a verdict."
     }
   ],

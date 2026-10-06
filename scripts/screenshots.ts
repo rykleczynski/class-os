@@ -1,6 +1,8 @@
 /**
- * Smoke test + screenshots. Needs `npm run dev` running on :3000.
- * Usage: npx tsx scripts/screenshots.ts
+ * Smoke test + screenshots. Needs the app running (fixtures mode expected).
+ * BASE_URL defaults to http://localhost:3000. Override: BASE_URL=http://localhost:3100 npx tsx scripts/screenshots.ts
+ * Expects 4 course cards on the dashboard (ECON 106F, COMM 187, ECON 134, ECON 106FB).
+ * Usage: npm run smoke
  */
 import { chromium } from "playwright";
 import { mkdirSync } from "node:fs";

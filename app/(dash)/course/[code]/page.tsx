@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
-import { getCourse, getLecturesForCourse, getLessonsForCourse, getTranscript } from "@/lib/data";
+import { getCourse, getLecturesForCourse, getLessonsForCourse, getTranscript, transcriptsPrivate } from "@/lib/data";
 
 export default async function CoursePage({ params }: PageProps<"/course/[code]">) {
   const { code } = await params;
@@ -63,6 +63,8 @@ export default async function CoursePage({ params }: PageProps<"/course/[code]">
                   <summary className="cursor-pointer text-sm font-semibold text-muted-foreground">Show transcript</summary>
                   <pre className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap rounded-xl bg-muted p-3 text-xs leading-relaxed">{text}</pre>
                 </details>
+              ) : transcriptsPrivate ? (
+                <p className="mt-2 text-sm text-muted-foreground">Transcript stored privately. {lecture.wispr_share_link ? "Use the Wispr link above." : ""}</p>
               ) : (
                 <p className="mt-2 text-sm text-muted-foreground">No transcript stored for this recording. Use the Wispr link.</p>
               )}

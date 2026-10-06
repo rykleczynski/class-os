@@ -9,8 +9,10 @@
     "lint": "eslint",
     "validate": "tsx scripts/validate-lesson.ts",
     "schema": "tsx scripts/export-schema.ts",
-    "typecheck": "tsc --noEmit",
-    "seed:build": "tsx scripts/build-seed.ts"
+    "typecheck": "next typegen && tsc --noEmit",
+    "seed:build": "tsx scripts/build-seed.ts",
+    "test:eval": "tsx scripts/test-safe-eval.ts",
+    "smoke": "tsx scripts/screenshots.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

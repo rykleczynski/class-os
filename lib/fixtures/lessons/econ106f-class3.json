@@ -57,6 +57,30 @@
           ]
         },
         {
+          "type": "chart",
+          "id": "chart-gap",
+          "kind": "bar",
+          "title": "Price vs value in the margin-of-safety example",
+          "data": [
+            {
+              "label": "Price",
+              "dollars": 98
+            },
+            {
+              "label": "Your value estimate",
+              "dollars": 100
+            },
+            {
+              "label": "A price Buffett might wait for",
+              "dollars": 80
+            }
+          ],
+          "x": "label",
+          "y": "dollars",
+          "yLabel": "Dollars per share",
+          "caption": "A $2 gap is too thin to buy. Buffett may wait for $80 or even $60 on something he thinks is worth $100."
+        },
+        {
           "type": "keyIdea",
           "text": "Buffett's intrinsic value is the discounted cash that can be taken out of a business over its remaining life. That is net present value."
         },
@@ -64,10 +88,10 @@
           "type": "mcq",
           "q": "A stock's value is $100 and you are 99% sure. It trades at $98. Why might a value investor still pass?",
           "options": [
-            "Value and price are the same thing",
-            "$2 of upside is too thin to cover the chance your estimate is wrong",
-            "Prices above value are always better buys",
-            "Value estimates are exact, so there is no risk"
+            "Value and price are always the same number",
+            "The $2 of upside is too thin if your estimate could be off",
+            "Any stock trading below value is automatically a bad buy",
+            "Value estimates are exact, so a $2 gap carries no risk at all"
           ],
           "answer": 1,
           "why": "That is the margin of safety. The lecture's version: Buffett may wait for $80 or $60 on something he thinks is worth $100, because even he might be wrong.",
@@ -117,12 +141,12 @@
           "type": "mcq",
           "q": "Your firm has no use for oil. Does that change the decision to buy the $16,000 basket for $12,000?",
           "options": [
-            "Yes, you would be stuck with useless inventory",
-            "No, you sell what you do not need at market, so the $4,000 NPV stands",
-            "Yes, you must first forecast future oil prices",
-            "No, but only if you keep the oil"
+            "No, you sell the oil you do not need, so the $4,000 NPV stands",
+            "Yes, you would be stuck holding oil that is useless to the firm anyway",
+            "Yes, you must first forecast where future oil prices are heading",
+            "No, but only if the firm decides to keep the oil in storage"
           ],
-          "answer": 1,
+          "answer": 0,
           "why": "The professor's point: you take what you need and sell the rest. The future price is not part of this question.",
           "id": "mcq-oil"
         }
@@ -342,12 +366,12 @@
           "type": "mcq",
           "q": "Same offer, but the discount rate is 4% instead of 7%. What happens to the PV of the $105,000?",
           "options": [
-            "It falls below $98,130",
-            "It rises to about $100,962, so NPV turns positive",
-            "It stays the same",
-            "It becomes negative"
+            "PV falls below $98,130, so the deal looks even worse",
+            "PV stays at $98,130 because the cash flow is unchanged",
+            "PV becomes negative once the discount rate drops under 5%",
+            "PV rises to about $100,962, so NPV turns positive"
           ],
-          "answer": 1,
+          "answer": 3,
           "why": "A lower rate means a smaller discount: 105,000 / 1.04 = 100,961.54, so NPV is about +$962.",
           "id": "mcq-lower-rate"
         }
@@ -397,10 +421,10 @@
           "type": "mcq",
           "q": "A copier costs $9,500 today, or $10,000 in a year. The rate is 7%. Which is the better deal?",
           "options": [
-            "Pay $9,500 now, it is cheaper on the sticker",
-            "Pay $10,000 in a year: that is worth $9,345.79 today, about $154 less",
-            "They are identical",
-            "You cannot tell without forecasting copier prices"
+            "Pay $9,500 now, because the sticker price is lower than $10,000",
+            "Pay $10,000 in a year: worth about $9,346 today, $154 less",
+            "Both cost exactly the same once you adjust for the 7% interest rate",
+            "Neither: you need a forecast of future copier prices to say anything"
           ],
           "answer": 1,
           "why": "10,000 / 1.07 = 9,345.79. Paying later saves about $154 in today's dollars, assuming the 7% rate is right (a big assumption).",
@@ -497,12 +521,12 @@
           "type": "mcq",
           "q": "You have 12 positive-NPV projects but cash for only some of them. Which do you fund first?",
           "options": [
-            "The cheapest ones",
-            "The ones with the biggest NPV, until the cash runs out",
-            "The ones that pay back fastest",
-            "The ones you find most interesting"
+            "Fund the cheapest projects first so more of them fit",
+            "Fund the projects that pay back their cost the fastest",
+            "Fund the biggest NPVs first, until the cash runs out",
+            "Fund the ones the team is most excited to work on"
           ],
-          "answer": 1,
+          "answer": 2,
           "why": "Each NPV is a bucket of money, so you want the biggest buckets. Payback rules can contradict this, which is why NPV is the cleaner guide.",
           "id": "mcq-pick"
         }
@@ -520,12 +544,12 @@
       "type": "mcq",
       "q": "In Buffett's definition, intrinsic value equals what?",
       "options": [
-        "The current market price",
-        "The discounted value of cash that can be taken out of a business over its remaining life",
-        "The book value on the balance sheet",
-        "Last year's profit times ten"
+        "The price the shares are trading at on the market today",
+        "The book value reported on the company's balance sheet",
+        "Last year's profit multiplied by ten, as a rough rule",
+        "Discounted cash that can be taken out over its life"
       ],
-      "answer": 1,
+      "answer": 3,
       "why": "Discounted future cash flows is net present value, which is how the course defines value."
     },
     {
@@ -544,10 +568,10 @@
       "type": "mcq",
       "q": "A deal has an NPV of -$1,869. What should you do?",
       "options": [
-        "Take it, the price looks fair",
-        "Reject it: it destroys about $1,869 of value in today's dollars",
-        "Take it if you can afford it",
-        "Wait one year and recompute"
+        "Take it: the price looks fair to me, so go ahead and buy",
+        "Reject it: it destroys about $1,869 of value today",
+        "Take it as long as you can afford the price today",
+        "Wait one year and then recompute the NPV before deciding"
       ],
       "answer": 1,
       "why": "Negative NPV means you are giving that much money away, today."
@@ -571,7 +595,7 @@
         "It rises",
         "It falls",
         "It stays the same",
-        "It doubles"
+        "It only changes if the cash flow itself changes"
       ],
       "answer": 1,
       "why": "A higher rate means a larger discount, so the same future cash is worth less today."

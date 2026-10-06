@@ -9,6 +9,10 @@ import type { Json } from "./supabase/types";
  * fixture that is not in the database.
  */
 export async function recordAttempt(lessonSlug: string, blockId: string, answer: unknown, correct: boolean) {
+  // The only caller of the attempts insert on the open site. Keep inputs bounded.
+  if (lessonSlug.length > 200 || blockId.length > 200 || typeof correct !== "boolean") {
+    return { ok: false as const, reason: "invalid-input" };
+  }
   const db = getSupabase();
   if (!db) return { ok: false as const, reason: "supabase-disabled" };
   const { data: lesson } = await db.from("lessons").select("id").eq("slug", lessonSlug).maybeSingle();

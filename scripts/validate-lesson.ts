@@ -68,6 +68,16 @@ for (const file of files) {
     lesson.quiz.forEach((q, i) => {
       if (q.answer >= q.options.length) errors.push(`quiz ${i}: answer index out of range`);
     });
+    // Answer-length tell: warn when the correct option is strictly the longest in more than half the MCQs.
+    const mcqs = [...lesson.steps.flatMap((s) => s.blocks.filter((b) => b.type === "mcq")), ...lesson.quiz];
+    const longest = mcqs.filter((q) => {
+      const lens = q.options.map((o) => o.length);
+      const a = lens[q.answer];
+      return lens.filter((l) => l === a).length === 1 && a === Math.max(...lens);
+    }).length;
+    if (mcqs.length && longest > mcqs.length / 2) {
+      warnings.push(`correct option is strictly the longest in ${longest}/${mcqs.length} MCQs; rebalance option lengths`);
+    }
     if (!lesson.steps.some((s) => s.blocks.some((b) => b.type === "inTheNews")) && lesson.steps.length >= 5) {
       warnings.push("no inTheNews block");
     }
