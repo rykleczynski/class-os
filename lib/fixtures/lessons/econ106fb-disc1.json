@@ -1,0 +1,459 @@
+{
+  "schema_version": 1,
+  "title": "Financial statement drills: the exam-speed toolkit",
+  "hook": "The midterm is multiple choice and only the letter counts. Learn to see which formula a question wants, then do the arithmetic in one pass.",
+  "est_minutes": 12,
+  "objectives": [
+    "Trace any event through Assets = Liabilities + Equity and say what happens to equity.",
+    "Compute market cap, market-to-book, firm value, EPS and a share price from a constant P/E.",
+    "Compute liquidity ratios, receivable days and inventory days, and judge whether management improved."
+  ],
+  "steps": [
+    {
+      "id": "accounting-identity",
+      "title": "Every event has to balance",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Assets = Liabilities + Equity always holds, so every event must change both sides equally. Ask two questions: where does the item live, and does it actually happen today?\n\n> \"Patrick likes these kind of tricky questions.\"\n\nThe ECON 106F midterm is Oct 28 and covers this material."
+        },
+        {
+          "type": "stepper",
+          "title": "Delta buys a $20M machine: $8M cash, $12M new debt",
+          "frames": [
+            {
+              "title": "The event",
+              "text": "Delta Co. pays for a $20M machine with $8M of its cash and $12M of new long-term debt.",
+              "math": "Assets = Liabilities + Equity"
+            },
+            {
+              "title": "The machine",
+              "text": "Something you buy is an asset. A machine is long-lived, so it is non-current.",
+              "math": "Non-current assets +20"
+            },
+            {
+              "title": "The financing",
+              "text": "Cash is a current asset, so it falls. New debt is a liability, so it rises.",
+              "math": "Cash -8\nLong-term debt +12"
+            },
+            {
+              "title": "Check both sides",
+              "text": "Assets rose by $12M and liabilities rose by $12M. Equity is untouched.",
+              "math": "Assets: +20 - 8 = +12\nLiabilities: +12\nEquity: 0"
+            }
+          ]
+        },
+        {
+          "type": "sortOrMatch",
+          "id": "match-identity",
+          "mode": "match",
+          "prompt": "What happens to Delta's equity in each event?",
+          "targets": [
+            "Equity falls",
+            "Equity unchanged, balance sheet changes",
+            "No balance sheet change at all"
+          ],
+          "items": [
+            { "label": "Uses $9M of cash to repay $9M of long-term debt", "target": 1 },
+            { "label": "A fire destroys $6M of uninsured inventory", "target": 0 },
+            { "label": "A competitor announces a price cut that will undercut Delta", "target": 2 },
+            { "label": "A customer owing $5M for goods already delivered goes bankrupt", "target": 0 },
+            { "label": "Economists find a pricing policy that will lift revenue 10%", "target": 2 },
+            { "label": "Buys a $20M machine with $8M cash and $12M new debt", "target": 1 }
+          ],
+          "why": "Losses you absorb yourself hit equity. Swapping one asset or liability for another does not. Future-looking news changes nothing on the balance sheet today."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-insured",
+          "q": "A fire destroys $6M of inventory, but the insurer will pay the full $6M. What happens to equity?",
+          "options": [
+            "It falls by $6M, because the inventory is physically gone",
+            "It is unchanged: the claim replaces the lost inventory",
+            "It rises by $6M because the insurance payout arrives",
+            "It is unchanged, but liabilities fall by $6M instead"
+          ],
+          "answer": 1,
+          "why": "The TA's contrast: uninsured, you lose your own money and equity falls. Insured, you recover it, so equity does not fall."
+        }
+      ]
+    },
+    {
+      "id": "market-cap",
+      "title": "Market cap and market-to-book",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Market capitalization is shares outstanding times the market price. Market-to-book divides that by book value of equity. You are given the formulas, so the skill is applying them fast.\n\n> \"You don't need to memorize everything, but you need to know how to apply these equations.\""
+        },
+        {
+          "type": "stepper",
+          "title": "Quark Corp: 8B shares, price $15 then $27",
+          "frames": [
+            {
+              "title": "The formula",
+              "text": "Quark has 8 billion shares in both years. Book equity was $100B in 2020 and $120B in 2023.",
+              "math": "Market cap = shares x price"
+            },
+            {
+              "title": "2020",
+              "text": "Price was $15.",
+              "math": "8B x $15 = $120B"
+            },
+            {
+              "title": "2023",
+              "text": "Price was $27. The change is the later year minus the earlier year.",
+              "math": "8B x $27 = $216B\nChange = +$96B (+80%)"
+            },
+            {
+              "title": "Market-to-book",
+              "text": "Divide market cap by book equity in each year.",
+              "math": "2020: 120 / 100 = 1.20\n2023: 216 / 120 = 1.80"
+            }
+          ]
+        },
+        {
+          "type": "slider",
+          "id": "slider-mktcap",
+          "title": "Market cap = shares x price",
+          "formula": "shares*price",
+          "vars": [
+            { "name": "shares", "label": "Shares outstanding", "min": 2, "max": 12, "step": 0.5, "default": 8, "unit": "B" },
+            { "name": "price", "label": "Share price", "min": 5, "max": 60, "step": 1, "default": 27 }
+          ],
+          "output": { "label": "Market cap", "format": "number", "decimals": 0, "unit": "$B" },
+          "plot": { "x": "price", "range": [5, 60], "yLabel": "Market cap ($B)", "zeroLine": true },
+          "caption": "At 8B shares and $27 the market cap is $216B. Each $1 of price adds $8B."
+        },
+        {
+          "type": "inTheNews",
+          "id": "news-marketcap",
+          "headline": "Largest Companies by Market Cap in 2026",
+          "source": "The Motley Fool",
+          "url": "https://www.fool.com/research/largest-companies-by-market-cap/",
+          "date": "2026-10-05",
+          "tieIn": "The page lists Nvidia at a $5.65 trillion market cap as of October 2, 2026, and says it counts publicly traded shares outstanding only. That is the same shares-times-price formula you just used, scaled up. The page also shows a table figure of $5.8 trillion, so treat the exact number as approximate."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-mtb",
+          "q": "Quark's market cap is $216B and its book equity is $120B. What is market-to-book?",
+          "options": [
+            "0.56",
+            "1.20",
+            "96",
+            "1.80"
+          ],
+          "answer": 3,
+          "why": "216 / 120 = 1.80. Flipping the fraction gives 0.56, which is the usual slip."
+        }
+      ]
+    },
+    {
+      "id": "firm-value",
+      "title": "Firm value: add debt, subtract cash",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Firm (enterprise) value = market cap + debt - cash. Market value of equity is another name for market cap.\n\nWhy net out cash? Buy a firm and you take on its debt, but you also get its cash. The TA's toy case: market cap 10, debt 4, cash 2.\n\n> \"Supposedly it doesn't matter which source of financing you have.\""
+        },
+        {
+          "type": "stepper",
+          "title": "Firm value, step by step",
+          "frames": [
+            {
+              "title": "Toy case from section",
+              "text": "Market cap 10, debt 4, cash 2. A buyer pays for the equity, inherits the debt, and gets the cash.",
+              "math": "10 + 4 - 2 = 12"
+            },
+            {
+              "title": "Quark, 2020",
+              "text": "Market cap $120B, debt $90B, cash $20B.",
+              "math": "120 + 90 - 20 = $190B"
+            },
+            {
+              "title": "Quark, 2023",
+              "text": "Market cap $216B, debt $40B, cash $30B.",
+              "math": "216 + 40 - 30 = $226B"
+            },
+            {
+              "title": "The change",
+              "text": "Equity value rose $96B, but Quark paid down $50B of debt and piled up $10B more cash.",
+              "math": "+36 = +96 - 50 - 10"
+            }
+          ]
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-ev",
+          "q": "Why does firm value subtract cash instead of adding it?",
+          "options": [
+            "Cash is a liability, so it counts against the firm's value",
+            "Cash always earns less than debt costs, so it is penalized",
+            "A buyer gets the cash back, so it lowers the net price paid",
+            "Accountants require every asset to be subtracted from equity"
+          ],
+          "answer": 2,
+          "why": "Debt is added because you inherit it. Cash is netted because you get it back, so the operating business costs you less."
+        }
+      ]
+    },
+    {
+      "id": "pe-price",
+      "title": "From margin to share price",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "A common chain: sales and margin give EBIT, EBIT less interest and tax gives net income, net income over shares gives EPS, and the P/E ratio turns EPS into a price. When the question says P/E is unchanged, compute it from the earlier year first."
+        },
+        {
+          "type": "stepper",
+          "title": "Orbit Inc: 2025 sales +10%, margin falls to 10%",
+          "frames": [
+            {
+              "title": "Last year as baseline",
+              "text": "2024: sales $80,000, EBIT margin 12%, interest $1,600, tax 25%, 2,000 shares, price $48. EBIT is $9,600.",
+              "math": "NI = (9,600 - 1,600) x 0.75 = 6,000\nEPS = 6,000 / 2,000 = 3.00"
+            },
+            {
+              "title": "P/E from last year",
+              "text": "Price over EPS in 2024. This stays fixed in 2025.",
+              "math": "P/E = 48 / 3.00 = 16"
+            },
+            {
+              "title": "New sales and EBIT",
+              "text": "Sales grow 10%. Use the new margin directly, no need to rebuild every cost line.",
+              "math": "Sales = 80,000 x 1.10 = 88,000\nEBIT = 88,000 x 10% = 8,800"
+            },
+            {
+              "title": "Net income and EPS",
+              "text": "Interest is unchanged and the tax rate is the same.",
+              "math": "NI = (8,800 - 1,600) x 0.75 = 5,400\nEPS = 5,400 / 2,000 = 2.70"
+            },
+            {
+              "title": "The price",
+              "text": "Sales rose, yet the price falls, because margin fell faster.",
+              "math": "Price = 16 x 2.70 = $43.20"
+            }
+          ]
+        },
+        {
+          "type": "slider",
+          "id": "slider-margin-price",
+          "title": "2025 share price vs EBIT margin (P/E fixed at 16)",
+          "formula": "16*((88000*m/100-1600)*0.75)/2000",
+          "vars": [
+            { "name": "m", "label": "2025 EBIT margin", "min": 5, "max": 15, "step": 0.5, "default": 10, "unit": "%" }
+          ],
+          "output": { "label": "Share price", "format": "currency", "decimals": 2 },
+          "plot": { "x": "m", "range": [5, 15], "yLabel": "Share price ($)", "zeroLine": false },
+          "caption": "At 10% the price is $43.20. Holding the 12% margin would give $53.76."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-pe",
+          "q": "P/E and share count are unchanged, but net income falls 10%. What happens to the share price?",
+          "options": [
+            "It falls 10%, because EPS falls 10%",
+            "It rises, since fewer earnings mean a lower P/E",
+            "It is unchanged, because P/E is held constant",
+            "It falls by more than 10% since P/E is squared"
+          ],
+          "answer": 0,
+          "why": "Price = P/E x EPS. With P/E and shares fixed, EPS and price move together."
+        }
+      ]
+    },
+    {
+      "id": "liquidity-days",
+      "title": "Liquidity ratios and working-capital days",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Current, quick and cash ratios get stricter in that order, so each is smaller than the last. For AR days and inventory days, **lower is better**: you want to be paid soon and not sit on stock.\n\n> \"You want those numbers to be the lowest possible.\""
+        },
+        {
+          "type": "stepper",
+          "title": "Liquidity ratios for Orbit Inc",
+          "frames": [
+            {
+              "title": "The balance sheet",
+              "text": "Cash and short-term investments $20, receivables $60, inventory $70, current liabilities $100.",
+              "math": "Current assets = 20 + 60 + 70 = 150"
+            },
+            {
+              "title": "Current ratio",
+              "text": "All current assets over current liabilities.",
+              "math": "150 / 100 = 1.5"
+            },
+            {
+              "title": "Quick ratio",
+              "text": "Drop inventory. Keep cash and receivables.",
+              "math": "(20 + 60) / 100 = 0.8"
+            },
+            {
+              "title": "Cash ratio",
+              "text": "Only cash and short-term investments. The denominator never changes.",
+              "math": "20 / 100 = 0.2"
+            }
+          ]
+        },
+        {
+          "type": "stepper",
+          "title": "Did working capital management improve?",
+          "frames": [
+            {
+              "title": "AR days, year A",
+              "text": "Receivables $9,000, revenue $109,500.",
+              "math": "9,000 / 109,500 x 365 = 30.0 days"
+            },
+            {
+              "title": "AR days, year B",
+              "text": "Receivables $14,400, revenue $120,000.",
+              "math": "14,400 / 120,000 x 365 = 43.8 days"
+            },
+            {
+              "title": "Inventory days, both years",
+              "text": "Use cost of goods sold, not revenue.",
+              "math": "A: 12,000 / 87,600 x 365 = 50.0\nB: 20,000 / 96,000 x 365 = 76.0"
+            },
+            {
+              "title": "Verdict",
+              "text": "Both numbers rose, so management got worse. A high number is not always bad, but across two periods it is.",
+              "math": "AR: 30.0 -> 43.8\nInventory: 50.0 -> 76.0"
+            }
+          ]
+        },
+        {
+          "type": "slider",
+          "id": "slider-invdays",
+          "title": "Inventory days = inventory / COGS x 365",
+          "formula": "365*inv/cogs",
+          "vars": [
+            { "name": "inv", "label": "Inventory ($)", "min": 5000, "max": 40000, "step": 500, "default": 20000 },
+            { "name": "cogs", "label": "Cost of goods sold ($)", "min": 60000, "max": 140000, "step": 2000, "default": 96000 }
+          ],
+          "output": { "label": "Inventory days", "format": "number", "decimals": 1, "unit": "days" },
+          "plot": { "x": "cogs", "range": [60000, 140000], "yLabel": "Inventory days", "zeroLine": false },
+          "caption": "More COGS for the same stock means faster turnover and fewer days."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-peer-liquidity",
+          "q": "A peer has current 1.1, quick 0.6 and cash ratio 0.1. How does Orbit (1.5, 0.8, 0.2) compare?",
+          "options": [
+            "Orbit is less liquid on every ratio",
+            "Orbit is more liquid on every ratio",
+            "Orbit is more liquid on only the current ratio",
+            "The ratios cannot be compared across firms"
+          ],
+          "answer": 1,
+          "why": "Orbit has more liquid assets relative to current liabilities on all three measures."
+        }
+      ]
+    }
+  ],
+  "recap": [
+    "Every event keeps Assets = Liabilities + Equity balanced. Future-looking news changes nothing today.",
+    "Market cap = shares x price. Firm value = market cap + debt - cash.",
+    "With P/E fixed, price = P/E x EPS. Work out last year's P/E first.",
+    "Current, quick and cash ratios shrink in that order. For AR days and inventory days, lower is better."
+  ],
+  "quiz": [
+    {
+      "type": "mcq",
+      "q": "A firm has market cap $50B, debt $30B and cash $12B. What is its firm value?",
+      "options": [
+        "$92B",
+        "$32B",
+        "$68B",
+        "$50B"
+      ],
+      "answer": 2,
+      "why": "50 + 30 - 12 = 68."
+    },
+    {
+      "type": "mcq",
+      "q": "A firm buys a $10M machine with $4M of cash and $6M of new debt. What is the effect on equity?",
+      "options": [
+        "No change",
+        "Falls by $4M",
+        "Rises by $10M",
+        "Falls by $6M"
+      ],
+      "answer": 0,
+      "why": "Assets rise by 10 - 4 = 6 and liabilities rise by 6. Equity does not change."
+    },
+    {
+      "type": "mcq",
+      "q": "EPS is $2.50 and the P/E ratio stays at 18. What is the share price?",
+      "options": [
+        "$7.20",
+        "$20.50",
+        "$18.00",
+        "$45.00"
+      ],
+      "answer": 3,
+      "why": "Price = P/E x EPS = 18 x 2.50 = 45."
+    },
+    {
+      "type": "mcq",
+      "q": "Cash and short-term investments $10, receivables $30, inventory $40, current liabilities $50. What is the quick ratio?",
+      "options": [
+        "1.6",
+        "0.8",
+        "0.2",
+        "1.0"
+      ],
+      "answer": 1,
+      "why": "(10 + 30) / 50 = 0.8. Adding inventory would give the current ratio, 1.6."
+    },
+    {
+      "type": "mcq",
+      "q": "Inventory is $15,000 and COGS is $73,000. What are the inventory days?",
+      "options": [
+        "0.21 days",
+        "30 days",
+        "75 days",
+        "365 days"
+      ],
+      "answer": 2,
+      "why": "15,000 / 73,000 x 365 = 75."
+    }
+  ],
+  "flashcards": [
+    {
+      "front": "Accounting identity",
+      "back": "Assets = Liabilities + Equity. Every event changes both sides equally. Future-looking news changes nothing."
+    },
+    {
+      "front": "Market cap and market-to-book",
+      "back": "Market cap = shares outstanding x price. Market-to-book = market cap / book value of equity."
+    },
+    {
+      "front": "Firm (enterprise) value",
+      "back": "Market cap + debt - cash. A buyer inherits the debt and gets the cash back."
+    },
+    {
+      "front": "P/E and the price chain",
+      "back": "EPS = net income / shares. Price = P/E x EPS. Net income = (EBIT - interest) x (1 - tax rate)."
+    },
+    {
+      "front": "Liquidity ratios",
+      "back": "Current = current assets / CL. Quick = (cash + receivables) / CL. Cash = cash / CL. Each is stricter and smaller."
+    },
+    {
+      "front": "AR days and inventory days",
+      "back": "AR days = AR / revenue x 365. Inventory days = inventory / COGS x 365. Lower is better when comparing periods."
+    }
+  ],
+  "concepts": [
+    "Accounting identity",
+    "Market capitalization",
+    "Market-to-book",
+    "Firm value",
+    "EPS and P/E",
+    "Liquidity ratios",
+    "Receivable and inventory days"
+  ]
+}

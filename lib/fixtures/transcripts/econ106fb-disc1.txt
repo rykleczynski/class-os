@@ -1,0 +1,273 @@
+Wispr meeting c32dac2b-4f52-4e5d-9c63-f2d8353fd5b3 - Econ 106F Discussion Class One (2026-10-01). Auto-generated captions, uncorrected.
+
+Speaker 1: Well, let's start. This is—uh, I don't know if you can access the website, I just created it. Also, you can access here.
+Speaker 1:  It's called ECOM 16FB, and my name over here. So here I will be posting on Canvas all the parts I ever write.
+Speaker 1:  Uh, for now I put the part I will work on this week. After tomorrow I will post the solution as well, I think.
+Speaker 1:  Today or the exercise I put there I'm pretty sure it's there. Um, for now, I saw—first of all, what are the main times on the course with Patrick?
+Speaker 1:  Here, that Mondays and Wednesday I assume it's 8:00 PM, right? So I can see that we don't overlap the office hour time I'm suggesting here.
+Speaker 1:  I put Mondays from 5 to 7, but it can be on Zoom as well if you prefer that. Okay?
+Speaker 1:  Just let me know with time so I can create a Zoom session. If not, it will be in the actual room as usual.
+Speaker 1:  Okay? Uh, we will be working every week.
+Speaker 1:  I will be uploading every week as well one kind of file like this, a PDF file. In this PDF file, basically we put a bunch of exercises.
+Speaker 1:  Uh, we will work here in the solution, how to solve it, but probably you know that the real exam is basically just multiple choice, and you will have a lot of questions there, and you will have to put your solution, only the option, and answer because the progress is not evaluated, right? In the exam.
+Speaker 1:  Uh, in that sense, I'll let you know with time. Um, I don't know if you have any other questions.
+Speaker 1:  Uh, as I said, I have two sessions. One is Thursday, the other is Friday, so because I work the same file basically for those two days, after Friday I'll be uploading the solution.
+Speaker 1:  Okay? Not after Thursday.
+Speaker 1:  So tomorrow this will be, like, able to see it, right? For now you can see only the exercises, right?
+Speaker 1:  Let me know if you can see the exercises. Basically, everything I do is based on the board.
+Speaker 1:  I don't do unless it's completely necessary, because in some parts of the course we will need to work in Excel. So in that case I will work with computer, but if not, I will work with the board only.
+Speaker 1:  Uh, brochure will be great if you can access the file, because most of these payments are there. So basically I will support that you can access the, uh, CD file, because I will work with those inputs, right?
+Speaker 1:  I don't know if you have any other questions related to the course, related to something.
+Speaker 1:  If there's any updates about— If there's any other updates, uh, I'll let you know as well with time.
+Speaker 1:  Um, and here an announcement, or probably through message to my LinkedIn link, right? What they send for the week's here, for example.
+Speaker 1:  If not, let's start.
+Speaker 1:  Uh, I will try to go some parts with the intuition on every question, because as I said, given that the exam is basically just multiple choice, it's good to understand how to solve it, like, only to put the answer, right? Not to do it manually.
+Speaker 1:  So let's start here.
+Speaker 1:  Let's start with this one.
+Speaker 1:  All right, let's share.
+Speaker 1:  Let's start with the first question. So what we have in the first question here, we need to use basically the, uh, accountability element.
+Speaker 1:  It's basic for every term. Assets is equal to liability plus debt.
+Speaker 1:  And we have different cases in which we need to evaluate what is happening here. For example, in the first case, let's say we have ABC used 12 million of its available cash to repay 12 million of long-term debt.
+Speaker 1:  So how this affects this identity over here. If you are using 12 million available cash, where is cash located?
+Speaker 1:  Cash located in the part of assets. So let's put over here, assets you have a reduction of 12 million because you are using it, right?
+Speaker 1:  But if you have a reduction over here, you need to have a reduction over here as well, because this is an identity, right? So what is it changing?
+Speaker 1:  This is used to repay 12 million long-term debt. So basically your liabilities over here are also reduced by 12 because you are paying that long-term debt, right?
+Speaker 1:  In that way you have again everything in equality over here, because this always holds this identity, right?
+Speaker 1:  So what happened in letter B for example? In letter B you have an earthquake destroyed 15 million worth of an insurance inventory.
+Speaker 1:  So where is it located?
+Speaker 1:  You have that earthquake destroyed something. That something is part of your assets, right?
+Speaker 1:  Can be whatever, probably the building, but that part that is destroyed is in your assets. So you will have again, in the part of the assets—so in the part of the assets we have again that is destroyed 15 million, minus the 15 million in the part of the assets.
+Speaker 1:  Where is that located here? Is liability or equity in this case?
+Speaker 1:  It will depend on how you define. In this case you can read here that it's uninsured inventory.
+Speaker 1:  That means that this inventory has no insurance. If it has no insurance, basically you are losing your own money.
+Speaker 1:  That's part of the equity. So you are using 15 million of equity.
+Speaker 1:  What happens if this inventory has insurance? Then you are not losing inventory.
+Speaker 1:  You are losing liability. Yes, because you have insurance there, you, uh, have the right to recover everything because you have that insurance, right?
+Speaker 1:  So you are not losing that money. In fact, you will activate insurance and you will recover the 15 million because of that.
+Speaker 1:  So you will have plus 15 because of insurance over here, right? But this is not the case because our inventory is not insured, right?
+Speaker 1:  What happened in letter C?
+Speaker 1:  ABC used 12 million in cash and 12 million in used long-term debt to purchase a 24 million machine.
+Speaker 1:  Okay.
+Speaker 1:  So yeah, in letter C, letter C, ABC used 12 million in cash and 12 million in long-term debt to purchase 24 million machine. So where is that machine located if you buy something?
+Speaker 1:  It's part of the assets, right? That because we have also cash, let's buy assets in this case for current, current assets and non-current, or long-term assets, right?
+Speaker 1:  Non-current.
+Speaker 1:  So in this case it's a machine. So that's non-current. 24 over here, right?
+Speaker 1:  But you are using cash to buy this. So you're using 12 million of cash.
+Speaker 1:  So you are reducing your cash here, and the cash is part of current, right? But at the same time you are using long-term debt.
+Speaker 1:  Where is debt located? Debt is in the part of liability.
+Speaker 1:  So you have 12 million here because of debt. Yes.
+Speaker 1:  So if you add this—if you add this, it's 24 minus 12, it's 12 here in the left and you have 12 in the right.
+Speaker 1:  So again the identity holds over here, right? And this is how it is evaluated.
+Speaker 1:  So let's do the others as well. Same.
+Speaker 1:  Assets is equal to liability plus equity. Okay?
+Speaker 1:  So let me see this.
+Speaker 1:  Let's do this here.
+Speaker 1:  This is large customer owing 8 million for product is already received, declared bankruptcy, giving a no possibility to ABC, whatever payment. Let's see the payment.
+Speaker 1:  So where, where is located that part? This 8 million that you already gave on a product to a firm, and that firm declared bankruptcy now.
+Speaker 1:  So what happened there? Where is located that part?
+Speaker 1:  Because it's product you already gave and now your assets increase, right? By 8 million.
+Speaker 1:  Here. What else?
+Speaker 1:  It's a customer that received your assets, your products, and, uh, he declared bankruptcy. So you will recover it?
+Speaker 1:  No. If you want to recover it, that is basically equity.
+Speaker 1:  You are losing it. You have to increase 8 million in equity as well.
+Speaker 1:  And again, we are getting equity over here, right? What happened in letter E?
+Speaker 1:  Letter E is probably a question you will receive because Patrick likes these kind of tricky questions. Here it says, "ABC economists discover a new pricing policy that will allow ABC growth revenue to increase by 15%."
+Speaker 1:  Where this is located? Assets, liability, or equity?
+Speaker 1:  Again, new pricing policy that will allow ABC growth revenue to increase by 15%.
+Speaker 1:  Revenue, where is located the revenue?
+Speaker 1:  Assets, liability, or equity?
+Speaker 1:  That's income, right? Even if you don't know where is it exactly, you need to read the statement and say, "Okay, it says new pricing policy that will allow ABC."
+Speaker 1:  What does it mean? It changed something here?
+Speaker 1:  No, because it will change in the future, probably. So here basically you have no change, no change, and no change.
+Speaker 1:  Right? And the last one is, "A key competitor announces a radical new pricing policy that will drastically undercut, uh, ABC's prices."
+Speaker 1:  Again, will undercut, right? Is that the correct word?
+Speaker 1:  So letter F again is no change, no change, and no change. Right?
+Speaker 1:  Any questions how to address this kind of question? No?
+Speaker 1:  So let's start with the other question.
+Speaker 1:  Question number two.
+Speaker 1:  This part of the first week are just basically a bunch of equations that you need to have in your sheet here. So you don't need to memorize everything, but you need to know how to apply these equations, right?
+Speaker 1:  And in number two we will start with this because question number two asks about market capitalization, firm value, and market to book value, right? So you have the equations, and probably you will be able to copy the equations as well in your sheet here.
+Speaker 1:  So you just need to know how to apply them. So let's start.
+Speaker 1:  2A.
+Speaker 1:  It's asking for the market capitalization in both years. They're year 2009 and 2012.
+Speaker 1:  So what is the formula of market capitalization? Market capitalization is just shares outstanding times the market price of which year, right?
+Speaker 1:  We have this information for 2009 and 2012.
+Speaker 1:  What is the shares outstanding in 2009? 24 billion.
+Speaker 1:  So it will be 24. Times the market price of the share is 20.
+Speaker 1:  So it will be 480 billion, right?
+Speaker 1:  What is the market capitalization 2012? It's 24 billion of what?
+Speaker 1:  Times 35.
+Speaker 1:  And this will be 140 billion.
+Speaker 1:  So what is the change? Depending here, the change is just 360 here.
+Speaker 1:  If you ask for the percentage change, you will need to compute 360 billion. If it will be the percentage change, it will be 360 divided by 480, right?
+Speaker 1:  Basically, that will be the change. Percentage change.
+Speaker 1:  And this is the change, right?
+Speaker 1:  What else we have? We need to compute the market to book value.
+Speaker 1:  Market to book value is just basically the market capitalization.
+Speaker 1:  Market to book, market capitalization divided by book value of F, right? And again, we have for both years, 2009, 2012.
+Speaker 2:  Market capitalization.
+Speaker 1:  What?
+Speaker 2:  2009.
+Speaker 1:  Okay.
+Speaker 1:  So market to book value. So we already computed the market capitalization that is 480 billion in 2009 and 840 in 2012.
+Speaker 1:  So we just need to divide for the book value that is given, in fact. And the book value is 280 in 2009 and 300 in 2012.
+Speaker 1:  And this—let's just copy it.
+Speaker 1:  1.71.
+Speaker 1:  2.8. And this is a break-even already.
+Speaker 1:  That's letter B.
+Speaker 1:  Right? And now letter C is firm value.
+Speaker 1:  Firm value, enterprise value, it's the same, right? We have the formula for enterprise value or firm value.
+Speaker 1:  And this formula is, it's given as well in the file, market value of equity plus debt minus cash. So firm value will be market value of equity plus debt minus cash.
+Speaker 1:  What is the market value of equity?
+Speaker 1:  That's another name for market capitalization. Okay?
+Speaker 1:  Market capitalization, not market value. Why the firm value includes the debt and discount the cash?
+Speaker 1:  Because if you think about it, of course it should be double, right? You should include the cash and discount the debt.
+Speaker 1:  But why is not that? Why is the opposite?
+Speaker 1:  What does it mean with firm value over here?
+Speaker 1:  That is because when you consider a firm, supposedly it doesn't matter which source of financing you have. Imagine you are rich and you have the opportunity to buy a firm, right?
+Speaker 1:  And you go and buy the firm and they say, "Okay, the market capitalization of this firm is 10," right?
+Speaker 1:  They are using extra money. They have a debt of 4.
+Speaker 1:  And of those 10, they have 2 of cash. Something like this, imagine.
+Speaker 1:  So you go and buy this firm. So supposedly you will pay 10.
+Speaker 1:  But when you buy the 10, you realize that that firm has 2. So you are paying 10 in the end?
+Speaker 1:  No, you are just paying 8, right? Because you have 2.
+Speaker 1:  That's why you are discounting cash here, right? But you realize at the same time that your firm has money that is outside financing the firm.
+Speaker 1:  So in the end, that money is deployed. So what is the total value of the firm will be the 10 you are paying because of the market capitalization minus the 2 you have in cash, plus what you are receiving from outside.
+Speaker 1:  That's why you have this money. In the exercise, you already have it.
+Speaker 1:  Market capitalization is the same. Oh, again, for 2009 and 2012.
+Speaker 1:  For 2009 is 480. 2012 is 840. Plus, plus debt minus the same.
+Speaker 1:  In 2009 is 630 and 220. Minus cash, 80.
+Speaker 1:  Minus cash here, 220.
+Speaker 1:  Uh, yeah.
+Speaker 1:  And this is—and this is 940, right?
+Speaker 1:  And this is what you have. Any question related to this?
+Speaker 1:  What is important here? That you have in your sheet here, right?
+Speaker 1:  If you don't have and you don't have a good memory, you—so yeah, let's go.
+Speaker 1:  For this exercise, we need to use the statements, financial statements I put on the file as well. Okay?
+Speaker 1:  This is the exercise number three. So probably you already know, but I put just three statements: income statement, balance sheet, and the cash flow.
+Speaker 1:  Yes, cash flow. So you just need to know, for example, income statement reflects flows, right?
+Speaker 1:  While the balance sheet reflects something that is different.
+Speaker 1:  Okay.
+Speaker 1:  They are asking for the event in 2012. What is the event?
+Speaker 1:  And we need to use this information. ABC launches an aggressive marketing campaign that boosts sales by 15%.
+Speaker 1:  You can compute the event like usual, like you have the revenue minus cost and you discount everything. But once you have the event, you compute a ratio.
+Speaker 1:  That is the event divided by the sales. And that is the margin profit rate, right?
+Speaker 1:  So if you have the margin profit rate is already given, you don't need to compute and discount it like on the item, right? You just need to compute.
+Speaker 1:  For example, if your sales are 1,000 and your margin profit ratio is 20%, that means that you have an event of 200, right? So in this case, that is important.
+Speaker 1:  Why? Because you don't need to compute.
+Speaker 1:  Even if here it says everything is the same, but the sales and the margin that falls, you don't need to compute. So if the sales increase by 15%, let's compute what is the new sales.
+Speaker 1:  Only that. Will be 1.15 because it's increasing by 15% of the sales you have in 2011.
+Speaker 1:  And in 2011, let's see this. You have 199,600 revenue over here, right?
+Speaker 1:  And that will be 29,543.7.
+Speaker 1:  Right? We have this.
+Speaker 1:  Let's do this one. Now you have the ratio as well.
+Speaker 1:  That is the operating margin.
+Speaker 1:  And the operating margin is now, now is 13%.
+Speaker 1:  So what does it mean? That the event will be just that 13% times this.
+Speaker 1:  Right? This is everything that you need.
+Speaker 1:  That means that the event, let's see, is 29,840.1.
+Speaker 1:  What else we have here? We need to compute the net income as well in letter B.
+Speaker 1:  How you compute net income? You have to discount all the expenses, discount taxes as well.
+Speaker 1:  But you have the depreciation. You have the depreciation, right?
+Speaker 1:  But yeah, net income over here. And according to the information, they say they have no other income.
+Speaker 1:  Interest expenses are unchanged. And taxes are the same percentage as pre-tax income in 2011.
+Speaker 1:  So we need to see the information. And we see the information for 2011.
+Speaker 1:  The tax ratio is here is 1.6%. So we will use the same tax ratio.
+Speaker 1:  And also, what is that other expense? That is the interest expenses that is the same are unchanged.
+Speaker 1:  The amount is 5,559. So with this information, what will be the net income?
+Speaker 1:  Then will be this 29,840 minus this 5,559 that is the same as the previous period times 1 minus tax ratio. Okay?
+Speaker 1:  This is 1.6.
+Speaker 1:  Right? You pay this as taxes.
+Speaker 1:  You have this net. And this will be your net income.
+Speaker 1:  Right? You can always copy exactly all the information that you have for 2011, revenue, cost, and you will compute exactly the same.
+Speaker 1:  You will have exactly the same answer, but you will use a lot more paper, right? If you know how to use this margin and you know this part as well, taxes you need to discount, then it will be easier, right?
+Speaker 1:  So let's see how much is this. This is 16,640.6.
+Speaker 1:  Finally, we have another question that says, "If ABC B rated, the number of chairs outstanding remains unchanged, what is the ABC chairs' share price in 2012?"
+Speaker 1:  So you want the chair price. If you see the formula, you need to know or you need to find where the chair price is.
+Speaker 1:  And you can see in the formula that the chair price is in the P/E ratio. In fact, it is P/E ratio.
+Speaker 1:  This is letter C. P/E ratio is chair price, or let's put price here, price, divided by earning per share.
+Speaker 1:  That's it. So if you want the price in 2012, you need to know how much is the P/E ratio and how much is the earning per share, right?
+Speaker 1:  What happened? Here, we have that the P/E ratio and the number of chairs outstanding is the same.
+Speaker 1:  So this is the same as 2011 for 2012. So we can compute how much is it for 2011, right?
+Speaker 1:  Because the P/E ratio for 2012 will be exactly as the P/E ratio for 2011. And that is something we can compute because we just need the chair price and the earning per share.
+Speaker 1:  We have the chair price, yes. We have the earning per share.
+Speaker 1:  We need to compute first. The earning per share in 2011.
+Speaker 1:  What is earning per share in 2011? It's net income divided by chairs outstanding.
+Speaker 1:  We have net income, yes, for 2012 and also for 2011. You have chairs outstanding, yes, it's 5,000 chairs outstanding.
+Speaker 1:  So the P/E ratio for 2011 will be just this. Earning per share first. 17,114 divided by 5,000.
+Speaker 1:  3.40. Right?
+Speaker 1:  So here we can compute now the price, the P/E ratio. Why?
+Speaker 1:  Because the price is, let's see, 200.
+Speaker 1:  And we have the P/E ratio, the earning per share that is 3.40. That will give us 58.40.
+Speaker 1:  And we compute it, this part, right? So what we need now, we have this for 2012.
+Speaker 1:  We want to compute this, the price. We need the earning per share in 2012, right?
+Speaker 1:  And the earning per share in 2012 will just be net income that we computed before, 16,608 divided by chairs outstanding that are unchanged. So are exactly the same.
+Speaker 1:  So it's 5,000. And that will be 3.00.
+Speaker 1:  With that information, we can finally compute here because the price will be the 58.43 times the 3.30. Right?
+Speaker 1:  That's it. Let's see.
+Speaker 1:  Yeah. And then 94.
+Speaker 1:  Right?
+Speaker 1:  A question here. So basically what we do, we need to compute the price.
+Speaker 1:  We need to find a formula where this price is. The formula that we found is this formula.
+Speaker 1:  So to know this price, we just need the P/E ratio and the earning per share, right? The P/E ratio in 2012 is the same as the P/E ratio in 2011.
+Speaker 1:  So we compute it. Right?
+Speaker 1:  We need to compute the earning per share in 2012. And the earning per share in 2012 is just net income divided by chairs outstanding.
+Speaker 1:  We computed that in 2012. And we just isolate this and multiply the 2.
+Speaker 1:  Right? Just that.
+Speaker 1:  A question here.
+Speaker 1:  So let's go to number four.
+Speaker 1:  In number four, we have different ratios. The current ratio, quick ratio, and cash ratio, right?
+Speaker 1:  Those ratios are to measure liquidity basis. One is more strict than the other, right?
+Speaker 1:  The current ratio takes into account all the current assets, basically, right? The quick ratio takes into account more liquid components.
+Speaker 1:  That is cash and short-term investment plus account receivable. It has not taken into account, for example, here inventory, right?
+Speaker 1:  That is also part of current ratio. And the cash, basically, only takes into account cash and short-term investment, right?
+Speaker 1:  So by construction, by definition, every time you are more constrained, you go to the cash, your ratio will be smaller, right? So if you want to compute the current ratio, what is that, as I said?
+Speaker 1:  Current assets over current liabilities.
+Speaker 1:  Quick.
+Speaker 1:  Will be cash plus account receivable over current liabilities, right?
+Speaker 1:  And cash ratio, cash over current liabilities, right?
+Speaker 1:  Where we found this information, where we find this information, it's the same as I gave before, right?
+Speaker 1:  Because we need to compute it. So if we go to the balance sheet, we will have, in fact, total current assets here to compute the current ratio.
+Speaker 1:  That in this case will be for 2011, 9 to 1.
+Speaker 1:  Here will be 1,124 plus 106,105.
+Speaker 1:  And the cash, 1,124. Divided by current liabilities.
+Speaker 1:  And liabilities is 124,02. The same over here.
+Speaker 1:  The denominator is exactly the same.
+Speaker 1:  Right? And divide it.
+Speaker 1:  You can see that every time we go more constrained, the ratio decreases much, right? Basically, it's an indicator of decrease, how little you are, right?
+Speaker 1:  Any questions here? Again, it's just a formula.
+Speaker 1:  Just go to the information. But you need to know that one is to replace more liquidity than the other, right?
+Speaker 1:  Let's see. Question five.
+Speaker 1:  Okay. We need to compute account receivable days and inventory days.
+Speaker 1:  Here, again, it's a formula. But what is the intuition behind account receivable and inventory days?
+Speaker 2:  How quickly you get paid and how quickly you sell your inventory.
+Speaker 1:  Sorry. It's good to have a higher amount here or lower amount?
+Speaker 2:  Lower.
+Speaker 1:  Lower in both, or in one?
+Speaker 2:  Both.
+Speaker 1:  Both, right? That's correct. Because you want to get paid as soon as possible, right?
+Speaker 1:  And you want to have in your inventory as well the less hands on it, right? So you will have basically that number that will replace some other, how many days you have inventory and how much time passed to receive the payment, right?
+Speaker 1:  So you want those numbers to be the lowest possible. So again, let's see.
+Speaker 1:  If you put number five here, you write the formula for letter A, letter B.
+Speaker 1:  And account receivable days. Account receivable days is account receivable divided by revenue times 365 days.
+Speaker 1:  Can be 360, depending on what number you're using. And here, inventory days equal to inventory divided by cost of goods sold.
+Speaker 1:  Times 365, right? In this case, it's always better that you have this lower, lower number, right?
+Speaker 1:  The numbers decrease one period to the other. So what happens, for example, in this case, the number decreases or increases?
+Speaker 1:  When you improve the management, you improve the management, you still have another decrease. And you do not improve the management, you still have another increase, right?
+Speaker 1:  In this case, let's compute, for example, for this.
+Speaker 1:  2008, 2011. Again, account receivable is 60,575 divided by 1.17.
+Speaker 1:  And here is 1.6, and then 215 divided by 4.2, so 999,165. 66, and it is 90.
+Speaker 1:  What can I say about the management here that is worse? Why?
+Speaker 1:  Because on average now, we are having more days to get paid, right? Before, in 2008, we received the payment basically on average 156 days.
+Speaker 1:  Now we have almost 200 days to receive the payment on average. So you are worse than before, right?
+Speaker 1:  It's not always bad to have a high number, but if you compare two periods, yes, you are worse in terms of management, right?
+Speaker 1:  For example, in inventory days as well. Inventory days, we have 2008 and 2011.
+Speaker 1:  And here is inventory 274 divided by 1 times 6, that is 12,873. And 61,688.
+Speaker 1:  And 142. Let's see.
+Speaker 1:  I forgot here. Times 365, times 365.
+Speaker 1:  And here, 0.79.
+Speaker 1:  And here, 158.20.
+Speaker 1:  In terms of management as well, we are worse. Why?
+Speaker 1:  Because previously, we conserve or we preserve inventories only less than one day. And now we are having inventory for almost 160 days, right?
+Speaker 1:  We don't have rotation in the inventory. So in terms of management, we are worse, right?
+Speaker 1:  Now that I saw, we still have a couple more exercises. I will upload the solutions.

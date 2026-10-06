@@ -1,0 +1,419 @@
+{
+  "schema_version": 1,
+  "title": "Pareto, Kaldor-Hicks, and the cost-benefit test",
+  "hook": "Moving the firm from 60 units to 40 makes the firm 200 worse off and the neighbor 500 better off. Is that an improvement? It depends which rule you ask.",
+  "est_minutes": 12,
+  "objectives": [
+    "State the Pareto criterion, the Kaldor-Hicks criterion and majority rule, and say what each one ignores.",
+    "Show why, with quasi-linear utility, summing payoffs (cost-benefit analysis) is the Kaldor-Hicks test, and why compensation need not actually be paid.",
+    "Apply Kaldor-Hicks to the firm-neighbor model: the neighbor's gain of 500 exceeds the firm's cost of 200, so Q_M = 60 is inefficient."
+  ],
+  "steps": [
+    {
+      "id": "unavoidable",
+      "title": "Choices society cannot dodge",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Air pollution, land conservation and development rules are questions every society is already answering. As the professor put it: \"doing nothing is itself a choice. It is an answer to the question.\"\n\nHe gave three cases, each with many affected parties, and then told us what happened. We need a framework to compare the people involved, which is the point of today."
+        },
+        {
+          "type": "sortOrMatch",
+          "id": "match-outcomes",
+          "mode": "match",
+          "prompt": "Match each case to what actually happened.",
+          "items": [
+            { "label": "Santiago's smog from diesel buses, trapped by the Andes", "target": 0 },
+            { "label": "The California gnatcatcher, a small coastal bird facing land development", "target": 1 },
+            { "label": "Disney's 1960s ski resort at Mineral King in the Sierras", "target": 2 }
+          ],
+          "targets": [
+            "PM2.5 fell about 65%, thanks to electric buses",
+            "Almost all habitat gone since the 1940s; listed as threatened",
+            "Never built, after a 1972 Supreme Court case on standing"
+          ],
+          "why": "None of these outcomes came from a clean cost-benefit calculation. Santiago's gain came from a technology the stories left out, while Mineral King was stopped by a judicial principle that looks at society as a whole."
+        }
+      ]
+    },
+    {
+      "id": "three-rules",
+      "title": "Three ways to say yes",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "**Pareto:** Q beats Q' if nobody is worse off and at least one person is strictly better off. Think of it as unanimous voting: \"does anyone want to veto this policy?\"\n\n**Kaldor-Hicks** (Pareto with transfers): Q wins if *some* zero-sum transfers would make it Pareto-dominate Q'. The key subtlety: \"we don't need the transfers to actually happen.\"\n\n**Majority rule** needs no unanimity but ignores how strongly people care."
+        },
+        {
+          "type": "compare",
+          "id": "cmp-rules",
+          "title": "Three social choice rules",
+          "columns": [
+            "Pareto",
+            "Kaldor-Hicks",
+            "Majority rule"
+          ],
+          "highlight": 1,
+          "rows": [
+            {
+              "label": "Passes when",
+              "cells": [
+                "No one worse off, one better",
+                "Winners could pay losers and still gain",
+                "More than half vote yes"
+              ]
+            },
+            {
+              "label": "Must losers actually be paid?",
+              "cells": [
+                "No losers exist",
+                "No, only possible",
+                "No, they can be outvoted"
+              ]
+            },
+            {
+              "label": "Counts intensity of preference?",
+              "cells": [
+                "Not needed",
+                "Yes, via payoffs",
+                "Largely no"
+              ]
+            },
+            {
+              "label": "Main weakness",
+              "cells": [
+                "Incomplete; one veto blocks",
+                "Ignores who gains or loses",
+                "Can pass a net-loss policy"
+              ]
+            }
+          ],
+          "caption": "Anything that passes Pareto also passes Kaldor-Hicks (with zero transfers), so Kaldor-Hicks is the easier test to satisfy."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-pareto-incomplete",
+          "q": "Allocation Z gives person 1 far more than X does, but gives person 2 slightly less. What does the Pareto criterion say?",
+          "options": [
+            "Z wins, since person 1 gains far more than 2 loses",
+            "X wins because person 2 would object",
+            "It cannot rank them, since person 2 loses",
+            "They are tied because the gains offset"
+          ],
+          "answer": 2,
+          "why": "Pareto requires that no one be worse off. Person 2 is, so neither allocation dominates. This incompleteness is what Kaldor-Hicks repairs by allowing transfers."
+        }
+      ]
+    },
+    {
+      "id": "does-it-pass",
+      "title": "Does policy X pass?",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Try the rules on a stylized version of the gnatcatcher case. The numbers are illustrative, not from the lecture: five residents, policy X sets aside coastal land.\n\n- Two birders each gain $45 (total +90).\n- Three taxpayers each lose $20 (total -60).\n\nCheck Pareto, Kaldor-Hicks and majority rule one by one."
+        },
+        {
+          "type": "scenario",
+          "id": "scn-policy-x",
+          "title": "Which rules does policy X pass?",
+          "prompt": "Policy X: 2 residents gain $45 each, 3 residents lose $20 each. No payments are made. Which verdict is right?",
+          "choices": [
+            {
+              "label": "Passes Kaldor-Hicks only",
+              "outcome": "Correct. Net gain is 90 - 60 = +30, so winners could pay losers and still come out ahead. But three people lose, so Pareto fails, and only 2 of 5 vote yes, so majority rule fails.",
+              "verdict": "best"
+            },
+            {
+              "label": "Passes majority rule and Kaldor-Hicks",
+              "outcome": "Kaldor-Hicks passes, but the vote does not: only 2 of 5 residents gain, so the policy loses 2 to 3.",
+              "verdict": "poor"
+            },
+            {
+              "label": "Passes Pareto, because gains exceed losses",
+              "outcome": "Pareto asks whether anyone is worse off, not whether total gains are larger. Three people lose $20, so it fails.",
+              "verdict": "poor"
+            },
+            {
+              "label": "Fails all three, because people are hurt",
+              "outcome": "Close, but Kaldor-Hicks tolerates losers if the total gain exceeds the total loss and compensation is possible. Here it is (+30).",
+              "verdict": "ok"
+            }
+          ],
+          "debrief": "Same policy, three answers. Reverse the headcounts (three birders, two taxpayers) and majority rule would flip while Kaldor-Hicks would stay a function of the dollar totals."
+        }
+      ]
+    },
+    {
+      "id": "compensation",
+      "title": "Could winners pay enough?",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Kaldor-Hicks asks whether a zero-sum transfer could leave everyone at least as well off. Transfers just move money, so the test is whether the winners' total gain is bigger than the losers' total loss.\n\nIn policy X winners gain 90 in total. Drag the losers' total loss and watch what is left after compensating them in full. Positive means the policy passes."
+        },
+        {
+          "type": "slider",
+          "id": "slider-compensation",
+          "title": "Surplus left after full compensation",
+          "formula": "G - L",
+          "vars": [
+            {
+              "name": "G",
+              "label": "Winners' total gain",
+              "min": 0,
+              "max": 150,
+              "step": 5,
+              "default": 90,
+              "unit": "$"
+            },
+            {
+              "name": "L",
+              "label": "Losers' total loss",
+              "min": 0,
+              "max": 150,
+              "step": 5,
+              "default": 60,
+              "unit": "$"
+            }
+          ],
+          "output": {
+            "label": "Left over after paying losers",
+            "format": "number",
+            "decimals": 0
+          },
+          "plot": {
+            "x": "L",
+            "range": [0, 150],
+            "yLabel": "Left over (G - L)",
+            "zeroLine": true
+          },
+          "caption": "At G = 90 and L = 60 there is 30 left over, so any payment between 60 and 90 leaves every winner and loser at least as well off. The curve crosses zero when L = G. Takeaway: Kaldor-Hicks passes exactly when the line is above zero."
+        }
+      ]
+    },
+    {
+      "id": "cba-is-kh",
+      "title": "Cost-benefit analysis is the Kaldor-Hicks test",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Assume payoffs are quasi-linear: U_i = Y_i + V_i(E), income plus a person-specific value of the environment. Transfers sum to zero, so the sum of everyone's payoff is the same whatever the transfers are.\n\nThen passing the cost-benefit test (summing payoffs) is the same as passing Kaldor-Hicks. The rule also splits **efficiency** (is it Kaldor-Hicks?) from **equity** (who is harmed, and what transfers would compensate them?)."
+        },
+        {
+          "type": "stepper",
+          "id": "stepper-cba",
+          "title": "From transfers to the sum of payoffs",
+          "frames": [
+            {
+              "title": "Quasi-linear payoffs",
+              "text": "Everyone values income one-for-one, but values the environment differently.",
+              "math": "U_i = Y_i + V_i(E)"
+            },
+            {
+              "title": "Zero-sum transfers",
+              "text": "Transfers T_i move income between people without changing the total.",
+              "math": "sum T_i = 0   ->   sum (Y_i + T_i + V_i(E)) = sum (Y_i + V_i(E))"
+            },
+            {
+              "title": "So the sum decides",
+              "text": "Some transfer makes Q Pareto-dominate the alternative exactly when the total payoff is higher under Q.",
+              "math": "Q passes K-H   <=>   sum U_i(Q) > sum U_i(Q~)"
+            }
+          ]
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-no-transfers",
+          "q": "A project passes the cost-benefit test, yet nobody ever compensates the losers. How does the professor justify using the test anyway?",
+          "options": [
+            "He argues that losers are always paid in practice",
+            "He says Pareto and Kaldor-Hicks are the same thing",
+            "Report transfers too; repeated projects can add up",
+            "He says environmental economists should redistribute income"
+          ],
+          "answer": 2,
+          "why": "His three reasons: report the transfers next to the cost-benefit result; environmental economists and agencies are not redistribution experts; and many projects, if gains and losses are spread randomly enough, can add up to a true Pareto improvement. Extreme harm still needs actual compensation."
+        }
+      ]
+    },
+    {
+      "id": "apply-model",
+      "title": "Back to the firm and the neighbor",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Same numbers as last class: MB = 60 - Q, MD = 0.5Q, Q_M = 60, Q_FB = 40. Pareto cannot rank them, because the firm prefers 60 and the neighbor prefers 40.\n\nCost-benefit can. Moving from 60 to 40, the neighbor's benefit is the area under MD between 40 and 60 (**500**). The firm's cost is the profit it forgoes, the area under MB over that range (**200**)."
+        },
+        {
+          "type": "supplyDemand",
+          "id": "sd-cba",
+          "title": "Benefits and costs of moving from Q_M to Q_FB",
+          "curves": [
+            { "label": "MB", "kind": "demand", "intercept": 60, "slope": -1 },
+            { "label": "MD", "kind": "supply", "intercept": 0, "slope": 0.5 },
+            { "label": "0", "kind": "other", "intercept": 0, "slope": 0, "color": "var(--muted-foreground)" }
+          ],
+          "areas": [
+            {
+              "label": "Neighbor's gain = 500",
+              "curves": ["MD", "0"],
+              "from": 40,
+              "to": 60,
+              "color": "var(--chart-2)"
+            },
+            {
+              "label": "Firm's cost = 200",
+              "curves": ["MB", "0"],
+              "from": 40,
+              "to": 60,
+              "color": "var(--chart-4)"
+            }
+          ],
+          "caption": "Neighbor's gain: average of $20 and $30 times 20 units = 500. Firm's cost: 1/2 x 20 x 20 = 200. The firm's triangle sits inside the neighbor's trapezoid; the 300 left over is the deadweight loss. Takeaway: benefits exceed costs, so the market output fails Kaldor-Hicks.",
+          "xLabel": "Output Q",
+          "yLabel": "$ per unit",
+          "xMax": 70,
+          "yMax": 70
+        },
+        {
+          "type": "compare",
+          "id": "cmp-transfer",
+          "title": "The compensation that makes it a Pareto improvement",
+          "columns": [
+            "Firm",
+            "Neighbor",
+            "Total"
+          ],
+          "highlight": 2,
+          "rows": [
+            { "label": "Move 60 to 40, no transfer", "cells": ["-200", "+500", "+300"] },
+            { "label": "Neighbor pays firm 350", "cells": ["+150", "+150", "+300"] },
+            { "label": "Neighbor pays firm 200", "cells": ["0", "+300", "+300"] }
+          ],
+          "caption": "Any payment from 200 to 500 leaves both sides at least as well off. The payment is the equity question; the +300 is the efficiency answer."
+        },
+        {
+          "type": "inTheNews",
+          "id": "news-epa-cba",
+          "headline": "EPA finalizes repeal of power plant carbon standards as environmental groups sue",
+          "source": "Nation of Change",
+          "url": "https://www.nationofchange.org/2026/09/24/epa-finalizes-repeal-of-power-plant-carbon-standards-as-environmental-groups-sue/",
+          "date": "2026-09-24",
+          "tieIn": "The article reports the EPA administrator claiming the repeal would save $310 billion, while the 2024 standards were estimated to produce $370 billion in net benefits and an EDF analysis puts climate harms at more than $1.8 trillion through 2047. Same policy, opposite cost-benefit sums: the Kaldor-Hicks test is only as good as what you count as benefits and costs."
+        }
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "type": "mcq",
+      "id": "quiz-pareto",
+      "q": "Which allocation change is a Pareto improvement?",
+      "options": [
+        "One person gains $100 and another loses $10",
+        "Everyone gains, or stays put with one gaining",
+        "Three of five voters gain and two lose a lot",
+        "Total payoffs rise, whoever gets the extra"
+      ],
+      "answer": 1,
+      "why": "Pareto needs no one worse off and at least one strictly better. A big total gain with any loser does not qualify."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-kh",
+      "q": "Policy Y gives winners $80 in total and costs losers $50 in total, with no payments made. Which statement is correct?",
+      "options": [
+        "It fails Kaldor-Hicks because the losers are not paid",
+        "It passes Pareto since the total gain is positive",
+        "It passes, since a payment could compensate losers",
+        "It passes only if most people vote for it"
+      ],
+      "answer": 2,
+      "why": "Net gain is +30, so a transfer between 50 and 80 would leave everyone at least as well off. Kaldor-Hicks only needs that to be possible."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-majority",
+      "q": "What does majority rule ignore that Kaldor-Hicks captures?",
+      "options": [
+        "Whether anyone is made worse off",
+        "How many people support the policy",
+        "How intensely each person cares",
+        "Whether transfers sum to zero"
+      ],
+      "answer": 2,
+      "why": "One person, one vote hides intensity: five mild opponents can outvote one person who would pay a lot. Dollar payoffs in cost-benefit analysis register it."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-cba",
+      "q": "With quasi-linear utility, why does summing payoffs tell us whether a policy passes Kaldor-Hicks?",
+      "options": [
+        "Transfers sum to zero, so they cancel in the sum",
+        "Everyone has the same value for the environment",
+        "Losers are automatically compensated by the policy",
+        "Income and environment are valued by everyone equally"
+      ],
+      "answer": 0,
+      "why": "Because payoffs are linear in income, transfers shuffle money without changing the sum. Whether a compensating transfer exists then reduces to whether the sum is higher."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-firm",
+      "q": "MB = 60 - Q and MD = 0.5Q. Moving output from 60 to 40, what are the neighbor's benefit and the firm's cost?",
+      "options": [
+        "Benefit 300, cost 200",
+        "Benefit 500, cost 300",
+        "Benefit 200, cost 500",
+        "Benefit 500, cost 200"
+      ],
+      "answer": 3,
+      "why": "Neighbor's damage falls from 900 to 400, a benefit of 500. The firm's profit falls from 1800 to 1600, a cost of 200. Net +300."
+    }
+  ],
+  "flashcards": [
+    {
+      "front": "Pareto dominance",
+      "back": "Q Pareto-dominates Q' if everyone is at least as well off at Q and at least one person is strictly better off."
+    },
+    {
+      "front": "Why Pareto is incomplete",
+      "back": "It cannot rank allocations where some gain and others lose, even two points on the Pareto frontier."
+    },
+    {
+      "front": "Kaldor-Hicks (Pareto with transfers)",
+      "back": "Q passes if some zero-sum transfer vector makes it Pareto-dominate Q'. The transfers need not actually be made."
+    },
+    {
+      "front": "Why does cost-benefit analysis equal Kaldor-Hicks?",
+      "back": "With quasi-linear utility U_i = Y_i + V_i(E), transfers cancel in the sum, so Q passes iff the total payoff is higher under Q."
+    },
+    {
+      "front": "Efficiency vs equity",
+      "back": "Efficiency: does the allocation pass Kaldor-Hicks? Equity: who is harmed, and what transfers would compensate them?"
+    },
+    {
+      "front": "Firm-neighbor cost-benefit",
+      "back": "Moving from Q_M = 60 to Q_FB = 40: neighbor gains 500, firm loses 200, net +300. Any transfer between 200 and 500 gives a Pareto improvement."
+    }
+  ],
+  "recap": [
+    "Pareto asks for no losers and cannot rank trade-offs; Kaldor-Hicks asks only that winners could compensate losers; majority rule ignores intensity.",
+    "With quasi-linear payoffs, summing payoffs is the Kaldor-Hicks test, and transfers need not actually be paid.",
+    "Report efficiency (cost-benefit) and equity (who is harmed, and the transfers) separately.",
+    "In the firm-neighbor model, moving from 60 to 40 gives +500 to the neighbor and -200 to the firm, so the market outcome is Kaldor-Hicks inefficient (net +300)."
+  ],
+  "concepts": [
+    "Social choice",
+    "Pareto criterion",
+    "Pareto frontier",
+    "Kaldor-Hicks criterion",
+    "Potential Pareto improvement",
+    "Majority rule and intensity of preferences",
+    "Quasi-linear utility",
+    "Cost-benefit analysis",
+    "Efficiency vs equity",
+    "Marginal benefit and marginal damage"
+  ]
+}

@@ -1,0 +1,460 @@
+{
+  "schema_version": 1,
+  "title": "Who is a journalist, and who do they hold accountable?",
+  "hook": "A prosecutor demands your source's name. Whether you can say no depends on one word: journalist.",
+  "est_minutes": 11,
+  "objectives": [
+    "Explain why the definition of \"journalist\" matters legally, and apply the class's working definition to cases.",
+    "Place people on the accountability spectrum and say when a private fact becomes fair game.",
+    "Tell relationship conflicts from belief conflicts, and actual conflicts from the appearance of one."
+  ],
+  "steps": [
+    {
+      "id": "course-map",
+      "title": "The course map: what ethics will cover",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Class two previews the big topics, each getting a day or two. The professor says \"if you're feeling confused about any of it, don't worry.\" Match the question to the topic it belongs to."
+        },
+        {
+          "type": "sortOrMatch",
+          "id": "match-topics",
+          "mode": "match",
+          "prompt": "Which course topic raises each question?",
+          "targets": [
+            "Fairness (balance, decency)",
+            "Anonymous sources",
+            "Writing and editing",
+            "News organizations",
+            "Lying"
+          ],
+          "items": [
+            {
+              "label": "24 of 25 people you interviewed oppose the death penalty. How much of the story goes to the one?",
+              "target": 0
+            },
+            {
+              "label": "Should a journalist help a person in danger, or bear witness and write about it?",
+              "target": 0
+            },
+            {
+              "label": "Should they ever be used at all, given they help uncover truth but hide part of it?",
+              "target": 1
+            },
+            {
+              "label": "A quote calls an alleged theft \"worse than the Rosenbergs.\" Do you print it?",
+              "target": 2
+            },
+            {
+              "label": "The truth you uncover is not in your corporate owner's financial interest",
+              "target": 3
+            },
+            {
+              "label": "A blogger says a vaccine causes autism. Is that person lying or misled?",
+              "target": 4
+            }
+          ],
+          "why": "Each topic gets its own day or two. Hyperbole is the professor's example of a writing failure: it is the opposite of clarity or precision."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-hyperbole",
+          "q": "Why does the professor call a quote saying a crime was \"worse than the Rosenbergs\" a failure of writing and editing?",
+          "options": [
+            "The quote was too long to fit in the story",
+            "It is hyperbole, the opposite of clarity and precision",
+            "Quotes from sources should never appear in news stories",
+            "The Rosenbergs were never convicted of any crime"
+          ],
+          "answer": 1,
+          "why": "A journalist who repeats a hyperbolic claim must ask whether it is plausible. The Rosenbergs were executed, so the comparison is extreme."
+        }
+      ]
+    },
+    {
+      "id": "why-define",
+      "title": "Why the definition has legal teeth",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "The professor calls \"journalist\" the most important term in the course. Journalists get protections, above all the right to keep an anonymous source secret. If everyone who blogs or posts counts, nobody is obliged to cooperate with prosecutors.\n\n> \"If every person is a journalist because they blog, they have a Facebook page... then nobody's obliged to cooperate.\""
+        },
+        {
+          "type": "compare",
+          "title": "A prosecutor asks for your source's name",
+          "columns": [
+            "State court in California",
+            "Federal court"
+          ],
+          "highlight": 0,
+          "rows": [
+            {
+              "label": "Shield law?",
+              "cells": [
+                "Yes, California has one",
+                "No federal shield law exists"
+              ]
+            },
+            {
+              "label": "Can you refuse to name the source?",
+              "cells": [
+                "Yes, and you cannot be jailed for refusing a grand jury",
+                "You can assert it, but you could well lose"
+              ]
+            },
+            {
+              "label": "Risk",
+              "cells": [
+                "Low if you count as a journalist",
+                "You might go to jail"
+              ]
+            }
+          ],
+          "caption": "As described in lecture. Congress stalled partly because it could not agree on whether only paid journalists should be covered."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-why-define",
+          "q": "Why does the law need a definition of who counts as a journalist?",
+          "options": [
+            "Only journalists are allowed to publish news under the First Amendment",
+            "Protections like source shield laws would otherwise cover every conversation",
+            "News organizations must register each reporter before they can report",
+            "Journalists are required by law to reveal their sources to judges"
+          ],
+          "answer": 1,
+          "why": "The government wants to protect journalism's use of anonymous sources, but not every conversation between two people. So someone has to say who is protected."
+        }
+      ]
+    },
+    {
+      "id": "working-definition",
+      "title": "The working definition: is this person a journalist?",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "The class built the definition from the work, not the employer: investigate, research, report, analyze, verify, choose, create, publish.\n\n> \"The journalism, at least in my definition, has to conclude with something that is made available to the public.\"\n\nSort these cases. The last two are unsettled."
+        },
+        {
+          "type": "sortOrMatch",
+          "id": "match-journalist",
+          "mode": "match",
+          "prompt": "Is this person doing journalism by the class's working definition?",
+          "targets": [
+            "Journalism",
+            "Not journalism",
+            "Unsettled in law"
+          ],
+          "items": [
+            {
+              "label": "A staff reporter researches a mayoral candidate, attends the forum, interviews people and publishes a story",
+              "target": 0
+            },
+            {
+              "label": "An opposition researcher digs up dirt on a candidate and reports it only to the campaign that hired them",
+              "target": 1
+            },
+            {
+              "label": "An attendee props up a phone, records the whole forum and posts it with no editing or analysis",
+              "target": 1
+            },
+            {
+              "label": "A student writes up a course review for the sorority group chat only",
+              "target": 1
+            },
+            {
+              "label": "An unpaid student-newspaper reporter does all the steps and publishes",
+              "target": 0
+            },
+            {
+              "label": "An unpaid blogger covers LA politics and publishes regularly",
+              "target": 2
+            },
+            {
+              "label": "An author researching a book on death row who has not yet sold it",
+              "target": 2
+            }
+          ],
+          "why": "Publishing to the public and analyzing, not just recording, separate journalism from opposition research or private reports. Payment is the open question: being paid strongly helps, but unpaid people may still qualify."
+        },
+        {
+          "type": "inTheNews",
+          "id": "news-credentials",
+          "headline": "The intricacies of press credentials, at the White House and beyond",
+          "source": "CNN Newsource (KESQ)",
+          "url": "https://kesq.com/news/national-world/cnn-national/2026/09/24/the-intricacies-of-press-credentials-at-the-white-house-and-beyond/",
+          "date": "2026-09-24",
+          "tieIn": "The article says the U.S. has no formal qualifications or licensing for journalists, that layoffs have swelled the ranks of freelancers and independents, and that the 2024 Democratic National Convention issued over 200 credentials to digital content creators. It also reports a Harvard 2015 survey in which 32% of freelancers and 27% of independent journalists had been denied credentials. That is the lecture's elastic definition at work."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-instagram",
+          "q": "A prosecutor demands a source's name from someone whose reporting ran only on Instagram. What does the lecture say about the outcome?",
+          "options": [
+            "The person is protected, because publishing anywhere counts as journalism",
+            "The person loses automatically, because only print counts as journalism",
+            "A judge decides, and an older judge may not see Instagram as journalism",
+            "The prosecutor decides, since credentials are issued by prosecutors"
+          ],
+          "answer": 2,
+          "why": "The professor's point: the language is elastic, a judge decides, and the risk is real even if you sincerely meant to act as a journalist."
+        }
+      ]
+    },
+    {
+      "id": "choosing-the-lead",
+      "title": "Choosing the lead without an agenda",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "\"Choose\" is part of the definition. Out of all your reporting, something becomes the lead. That choice should rest on neutral principles, not on a view you brought with you.\n\nThe professor's hypothetical: you are the student reporter assigned to write about COMM 187."
+        },
+        {
+          "type": "scenario",
+          "id": "scn-lead",
+          "title": "You are covering the class for the campus paper",
+          "prompt": "You researched the professor, sat in several sessions and interviewed students. Mid-lecture, the professor does something outrageous to a student. You came in planning a different story. What is your lead?",
+          "choices": [
+            {
+              "label": "Lead with your original angle: you came to make a point about the university, so the incident goes in a footnote.",
+              "outcome": "The agenda drives the choice. You are making a point, not reporting what you saw.",
+              "verdict": "poor"
+            },
+            {
+              "label": "Lead with the incident, because it is the most significant thing you witnessed, even though it is devastating for the professor.",
+              "outcome": "The choice comes from what you bore witness to, not from a preconception. If you report truthfully, you are protected.",
+              "verdict": "best"
+            },
+            {
+              "label": "Leave the incident out, because the professor seemed fine before it and you would rather stay on the story you planned.",
+              "outcome": "The same agenda from the other side: ignoring what is critical to protect a subject is just as much a thumb on the scale.",
+              "verdict": "poor"
+            }
+          ],
+          "debrief": "The test is where the choice comes from. In the professor's words, \"that choice is not driven by your preconception. It's driven by what you bore witness to.\" A story's impact is not evidence of bias."
+        }
+      ]
+    },
+    {
+      "id": "accountability",
+      "title": "The accountability spectrum",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Legally, journalists can look at anyone. Ethically, the class asks who deserves scrutiny. Think of a spectrum with the president at one end and a fully private person at the other. Elected officials answer for public money and responsibility. Celebrities have influence without formal responsibility."
+        },
+        {
+          "type": "sortOrMatch",
+          "id": "order-accountability",
+          "mode": "order",
+          "prompt": "Order these from most accountable to journalists to least accountable, following the lecture's spectrum.",
+          "items": [
+            {
+              "label": "The president of the United States"
+            },
+            {
+              "label": "Elected officials, such as a mayor"
+            },
+            {
+              "label": "Actors, athletes and celebrities"
+            },
+            {
+              "label": "A corporate CEO or professor, accountable only situationally"
+            },
+            {
+              "label": "A private person minding their own business"
+            }
+          ],
+          "why": "This follows the lecture's rough ordering. The CEO sits in the middle: a private fact becomes fair game only when it is relevant to the public role."
+        },
+        {
+          "type": "scenario",
+          "id": "scn-hypocrite",
+          "title": "The backyard grower",
+          "prompt": "A private person quietly grows marijuana in his backyard. Then he starts using the money to finance an anti-drug crusade, to eliminate his competition. You are a reporter. What do you do?",
+          "choices": [
+            {
+              "label": "Leave him alone: what he grows in his backyard is private.",
+              "outcome": "The growing is unchanged, but his public crusade now makes it relevant. Ignoring it hides the hypocrisy.",
+              "verdict": "poor"
+            },
+            {
+              "label": "Verify the money trail first, then decide whether it is worth publishing.",
+              "outcome": "Sound practice, and verification is part of the definition. The lecture does not say whether to publish.",
+              "verdict": "ok"
+            },
+            {
+              "label": "Report it: his public campaign turns a private fact into a matter of public life.",
+              "outcome": "This is the lecture's point. Hypocrisy can change a private person into someone who should be held accountable.",
+              "verdict": "best"
+            }
+          ],
+          "debrief": "Hypocrisy can convert a private person into an accountable one. The same logic runs the other way: Steve Jobs's pancreatic cancer was private, but the professor asked whether his health was a public matter when it affected shareholders and employees."
+        }
+      ]
+    },
+    {
+      "id": "conflicts-preview",
+      "title": "Preview: conflicts of interest",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Conflicts come in two families: **relationships** (personal and business) and **strongly held beliefs**. Within both, ask whether the conflict is *actual* or only an *appearance*, and how that changes as stakes shrink. Next class returns to this."
+        },
+        {
+          "type": "sortOrMatch",
+          "id": "match-conflicts",
+          "mode": "match",
+          "prompt": "Classify each case using the professor's examples.",
+          "targets": [
+            "Actual conflict",
+            "Appearance of a conflict",
+            "No real conflict"
+          ],
+          "items": [
+            {
+              "label": "Profiling your brother, a candidate for office",
+              "target": 0
+            },
+            {
+              "label": "Owning 10,000 Apple shares and writing about the new watch",
+              "target": 0
+            },
+            {
+              "label": "Owning 10 shares, just to receive annual reports",
+              "target": 2
+            },
+            {
+              "label": "Owning 50 shares: you feel fine, but a reader may not",
+              "target": 1
+            },
+            {
+              "label": "Writing about your college roommate who is running for office",
+              "target": 1
+            }
+          ],
+          "why": "The professor says the clear cases are obvious and the smaller ones are harder. A trivial stake can just be good reporting. A modest stake or a distant friend may be only an appearance, which depends on how a reader sees it."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-belief",
+          "q": "Why are belief-based conflicts treated as more specific to journalism than to medicine or law?",
+          "options": [
+            "Doctors and lawyers are not allowed to hold political beliefs",
+            "Journalists are paid less, so beliefs matter more in the newsroom",
+            "Readers need to trust the work is not just the reporter's conviction",
+            "Beliefs only matter when a journalist belongs to a political party"
+          ],
+          "answer": 2,
+          "why": "You do not much care what your doctor thinks about the death penalty. People rely on journalism to make decisions, so it must not be the expression of personal conviction. Linda Greenhouse's pro-choice rally is next class's case."
+        }
+      ]
+    }
+  ],
+  "recap": [
+    "\"Journalist\" has legal teeth: shield-law protection for sources depends on who qualifies, and there is no federal shield law.",
+    "Working definition: investigates, researches, reports, analyzes, verifies, chooses, creates and publishes to the public.",
+    "Choices like the lead must come from neutral principles, not a preexisting agenda. Whether payment is required is unresolved.",
+    "Accountability is a spectrum, and hypocrisy can make a private person accountable.",
+    "Conflicts are relationships or beliefs, and either actual or apparent. Fairness and conflicts get full treatment next."
+  ],
+  "quiz": [
+    {
+      "type": "mcq",
+      "q": "Which is NOT required by the class's working definition of a journalist?",
+      "options": [
+        "Publishing, meaning making the work public",
+        "Being paid by a news organization",
+        "Analyzing, not only recording",
+        "Choosing what to emphasize"
+      ],
+      "answer": 1,
+      "why": "Payment is the unresolved question. Being paid strongly helps, but it is not part of the working definition."
+    },
+    {
+      "type": "mcq",
+      "q": "Why is an opposition researcher who reports only to a campaign not doing journalism?",
+      "options": [
+        "Opposition researchers do not interview anyone",
+        "Opposition research is always inaccurate",
+        "Campaigns are not allowed to hire researchers",
+        "The work is made available to a client, not the public"
+      ],
+      "answer": 3,
+      "why": "Journalism has to conclude with something made available to the public, not a private client."
+    },
+    {
+      "type": "mcq",
+      "q": "How do courts generally treat student journalism, according to the lecture?",
+      "options": [
+        "As legitimate journalism with the same constitutional protections",
+        "As hobby writing with no legal protection",
+        "As journalism only if the students are paid",
+        "As journalism only at public universities"
+      ],
+      "answer": 0,
+      "why": "The professor says courts generally recognize student journalism as legitimate, though conflicts such as honor codes can arise."
+    },
+    {
+      "type": "mcq",
+      "q": "What can turn a private person into someone journalists should hold accountable?",
+      "options": [
+        "Becoming wealthy",
+        "Living in a famous city",
+        "Hypocrisy in public life",
+        "Being a neighbor of an official"
+      ],
+      "answer": 2,
+      "why": "The backyard grower financing an anti-drug crusade shows how hypocrisy changes the status of a private person."
+    },
+    {
+      "type": "mcq",
+      "q": "A reporter owns 50 shares of a company and feels no conflict, but readers might suspect bias. What is this?",
+      "options": [
+        "An actual conflict only",
+        "No conflict, since the reporter feels fine",
+        "A conflict only if the stock rises",
+        "An appearance of a conflict"
+      ],
+      "answer": 3,
+      "why": "Appearance depends on how a reader sees it. The reporter may feel unconflicted while the reader does not."
+    }
+  ],
+  "flashcards": [
+    {
+      "front": "Working definition of a journalist",
+      "back": "Investigates, researches, reports, analyzes, verifies, chooses, creates and publishes, ending with something made available to the public."
+    },
+    {
+      "front": "Shield law",
+      "back": "Protects a journalist's right to keep an anonymous source secret. California has one. There is no federal shield law."
+    },
+    {
+      "front": "Is payment required to be a journalist?",
+      "back": "Unresolved. Being paid strongly helps. Unpaid people may still qualify but have a harder time convincing a judge."
+    },
+    {
+      "front": "Accountability spectrum",
+      "back": "President most accountable, then elected officials, celebrities, quasi-public people like CEOs, and finally private citizens."
+    },
+    {
+      "front": "Situationally accountable",
+      "back": "Quasi-public people are fair game when a private fact is relevant to their public role."
+    },
+    {
+      "front": "Actual vs apparent conflict",
+      "back": "Actual: the relationship or belief really clouds judgment. Apparent: a reader could reasonably see a conflict, even if you do not."
+    }
+  ],
+  "concepts": [
+    "Defining \"journalist\"",
+    "Shield laws",
+    "Working definition of journalism",
+    "Choosing without an agenda",
+    "Accountability spectrum",
+    "Hypocrisy",
+    "Actual vs apparent conflict",
+    "Relationship vs belief conflicts"
+  ]
+}

@@ -1,0 +1,405 @@
+{
+  "schema_version": 1,
+  "title": "Why markets fail when a firm ignores its neighbor",
+  "hook": "A firm that maximizes its own profit produces 60 units. Society would stop at 40. The 20 extra units cost 300 of surplus, and nobody in the market sees the bill.",
+  "est_minutes": 12,
+  "objectives": [
+    "Use the professor's climate facts as examples of describing the world, and explain why a correlation across countries is not a causal claim.",
+    "Define an externality as an effect the actor does not internalize, and classify examples as positive, negative or not an externality.",
+    "Derive the market output Q_M and the first-best output Q_FB in the firm-neighbor model, and show that the market overproduces and the firm resists moving."
+  ],
+  "steps": [
+    {
+      "id": "three-facts",
+      "title": "Three facts to start from",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "The professor opened with three sets of facts, each a puzzle for an economist. Warming has already happened, more is likely, and richer countries emit more CO2. The point was not the physics (\"we're not a physics class\") but how to *think* about each fact.\n\nMidterm I (Mon Oct 19) covers this intro and externalities, and you get one page of notes."
+        },
+        {
+          "type": "compare",
+          "id": "cmp-facts",
+          "title": "The three facts and the professor's caution on each",
+          "columns": [
+            "What the data show",
+            "Why an economist cares",
+            "Caution"
+          ],
+          "highlight": 2,
+          "rows": [
+            {
+              "label": "1. Climate change is happening",
+              "cells": [
+                "A spike of more than 1°C in the last ~170 years, against ~2,000 years of data",
+                "Where people live, farm and build is predicated on the old climate",
+                "Heat, rain and crop changes are uneven by region"
+              ]
+            },
+            {
+              "label": "2. There could be more to come",
+              "cells": [
+                "CO2 stock, not flow, tracks temperature; five scenarios run out to 2100",
+                "Our choices today pick which scenario happens",
+                "A physics model is needed to link CO2 to outcomes"
+              ]
+            },
+            {
+              "label": "3. Richer countries emit more",
+              "cells": [
+                "Across countries, CO2 per capita rises with GDP per capita",
+                "Cutting emissions might seem to cost output",
+                "A correlation across countries is not a causal claim"
+              ]
+            }
+          ],
+          "caption": "Numbers are only the ones the professor gave: more than 1°C, about 170 years, about 2,000 years of record."
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-correlation",
+          "q": "Across countries, richer ones emit more CO2 per person. What does the professor say this tells us?",
+          "options": [
+            "Cutting emissions must cut output by the same amount",
+            "Emissions cause richer economies to grow faster",
+            "It is a correlation and does not settle causation",
+            "Richer countries can ignore climate policy entirely"
+          ],
+          "answer": 2,
+          "why": "He stresses that this is data, not a causal result. It is consistent with the worry that cuts cost output, but it does not show that cuts must."
+        }
+      ]
+    },
+    {
+      "id": "ratio-parts",
+      "title": "Read the ratio, then its parts",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Worldwide, CO2 per unit of GDP rose until about World War II, then fell after 1950. That is the \"decoupling\" story, and the professor adds it \"doesn't prove the opposite.\"\n\nHis lesson: \"ratios are very useful,\" but \"it's good to look at the numerator and the denominator separately.\" China's ratio barely moved, yet GDP is more than 10 times its 1990 level while emissions are about three times higher."
+        },
+        {
+          "type": "chart",
+          "id": "chart-china",
+          "kind": "bar",
+          "title": "China, 1990 = 1",
+          "data": [
+            { "measure": "1990 level (both)", "multiple_of_1990": 1 },
+            { "measure": "GDP (more than 10x)", "multiple_of_1990": 10 },
+            { "measure": "CO2 emissions (about 3x)", "multiple_of_1990": 3 }
+          ],
+          "x": "measure",
+          "y": "multiple_of_1990",
+          "xLabel": "Measure",
+          "yLabel": "Multiple of 1990 level",
+          "caption": "The professor said GDP is \"more than 10 times\" and emissions \"about three times\" the 1990 level. The GDP bar is a lower bound, so emissions per unit of GDP fell to roughly a third or less. Takeaway: emissions grew a lot and the ratio still fell."
+        },
+        {
+          "type": "keyIdea",
+          "text": "A falling ratio can hide a huge rise in the numerator. Good news on emissions per dollar is not the same as good news on emissions."
+        },
+        {
+          "type": "inTheNews",
+          "id": "news-august",
+          "headline": "August was the world's joint hottest month on record, pushing global temperatures back above 1.5°C above pre-industrial levels",
+          "source": "Copernicus Climate Change Service",
+          "url": "https://climate.copernicus.eu/copernicus-august-was-worlds-joint-hottest-month-record-pushing-global-temperatures-back-above",
+          "date": "2026-09-10",
+          "tieIn": "Copernicus reports August 2026 at 1.65°C above the 1850-1900 baseline, tied with July 2023 and the first month above 1.5°C since November 2025. It is fact one in the news: the warming the professor drew over ~170 years is still being measured month by month."
+        }
+      ]
+    },
+    {
+      "id": "three-questions",
+      "title": "Describe, evaluate, design",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Every problem in the course gets the same three questions. **Describe** the world with theory and data (\"this is just science\"). **Evaluate** outcomes, which means asking who was hurt, where theory shades into philosophy and leads to cost-benefit analysis. **Design** policies to reach the outcomes we prefer.\n\nThe course runs in thirds: key concepts, then climate change, then applications such as environmental markets, natural resources and innovation."
+        },
+        {
+          "type": "sortOrMatch",
+          "id": "match-three-q",
+          "mode": "match",
+          "prompt": "Which of the three questions is each one?",
+          "items": [
+            { "label": "How much warming follows if atmospheric CO2 doubles?", "target": 0 },
+            { "label": "Who is made worse off, and does that count against the policy?", "target": 1 },
+            { "label": "How should we price diesel so buses pollute less?", "target": 2 },
+            { "label": "Did emissions per dollar of GDP fall after 1950?", "target": 0 }
+          ],
+          "targets": [
+            "Describe the world",
+            "Evaluate outcomes",
+            "Design policy"
+          ],
+          "why": "Questions that can be tested with data or a physics model are descriptive. Questions about who is hurt and how to weigh it are evaluative. Choosing a tool to reach an outcome is policy design."
+        }
+      ]
+    },
+    {
+      "id": "define-externality",
+      "title": "What counts as an externality",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "The professor's definition: an externality is \"any external effect of an action not internalized by the actor.\" He admits it is fuzzy, and says so on purpose. You cannot call something an externality without a model of *who* decides and *why*.\n\nNoise is not an externality by itself. It becomes one when the person making it ignores the neighbor. Sign depends on the story: the same party can annoy one neighbor and delight another."
+        },
+        {
+          "type": "sortOrMatch",
+          "id": "match-externality",
+          "mode": "match",
+          "prompt": "Classify each case as the lecture would, given the stated assumptions.",
+          "items": [
+            { "label": "A host's loud party keeps a sleeping neighbor awake", "target": 0 },
+            { "label": "A beekeeper's bees pollinate the next-door apple orchard", "target": 1 },
+            { "label": "A driver's headlights lead others through Tule fog", "target": 1 },
+            { "label": "Bees pollinate an orchard owned by the beekeeper himself", "target": 2 },
+            { "label": "Burning coal sends CO2 to the global atmosphere", "target": 0 }
+          ],
+          "targets": [
+            "Negative externality",
+            "Positive externality",
+            "Not an externality"
+          ],
+          "why": "When one person owns both the bees and the orchard, the benefit is inside the decision, so it is internalized. Otherwise the effect lands on someone who is not part of the choice."
+        }
+      ]
+    },
+    {
+      "id": "firm-neighbor",
+      "title": "The firm and the neighbor",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "A competitive firm takes price P as given and maximizes profit PQ - C(Q), with cost rising and convex. It stops where P = C′(Q). A neighbor suffers damage D(Q), also increasing and convex, which the firm ignores. Welfare is W = profit - damage.\n\nWe use illustrative numbers: marginal profit **MB = 60 - Q**, marginal damage **MD = 0.5Q**. (The professor writes Q* for the market output; we call it Q_M.)"
+        },
+        {
+          "type": "stepper",
+          "id": "stepper-foc",
+          "title": "Two first-order conditions",
+          "frames": [
+            {
+              "title": "The firm's problem",
+              "text": "Marginal profit is zero at the top of the profit hill. This ignores the neighbor entirely.",
+              "math": "60 - Q = 0   ->   Q_M = 60"
+            },
+            {
+              "title": "Society's problem",
+              "text": "Maximize W(Q) = profit - damage. The derivative adds one new term, the neighbor's marginal harm.",
+              "math": "W'(Q) = (60 - Q) - 0.5Q = 0"
+            },
+            {
+              "title": "Solve it",
+              "text": "The firm's marginal-cost curve shifts left to marginal social cost, so first best is below the market output.",
+              "math": "60 = 1.5Q   ->   Q_FB = 40"
+            }
+          ]
+        },
+        {
+          "type": "supplyDemand",
+          "id": "sd-firm-neighbor",
+          "title": "Private vs social optimum",
+          "curves": [
+            { "label": "MB", "kind": "demand", "intercept": 60, "slope": -1 },
+            { "label": "MD", "kind": "supply", "intercept": 0, "slope": 0.5 }
+          ],
+          "areas": [
+            {
+              "label": "DWL = 300",
+              "curves": ["MB", "MD"],
+              "from": 40,
+              "to": 60,
+              "color": "var(--chart-5)"
+            }
+          ],
+          "caption": "Illustrative numbers: MB = 60 - Q, MD = 0.5Q. The firm stops where MB hits zero, at Q_M = 60. The dot is the social optimum (40, $20), where MB = MD. Shaded: 1/2 x 20 x 30 = 300 of surplus lost between 40 and 60.",
+          "xLabel": "Output Q",
+          "yLabel": "$ per unit",
+          "xMax": 70,
+          "yMax": 70
+        },
+        {
+          "type": "mcq",
+          "id": "mcq-direction",
+          "q": "Why must the first-best output be below the market output?",
+          "options": [
+            "The neighbor's marginal damage is always positive",
+            "Marginal profit rises with output at the margin",
+            "The firm's costs fall once damage is counted",
+            "Welfare rises whenever the firm produces more"
+          ],
+          "answer": 0,
+          "why": "Marginal social cost is the firm's marginal cost plus D′(Q) > 0. That shifts the curve left, so the intersection with P, Q_FB, is smaller than Q_M."
+        }
+      ]
+    },
+    {
+      "id": "market-fails",
+      "title": "Market failure, and who resists the fix",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Two results follow. First, welfare at Q_M is strictly below welfare at Q_FB: \"as soon as you introduce an externality, the market fails in the sense that welfare is less than it could be.\"\n\nSecond, the firm is strictly *better* off at Q_M, because it chose Q_M to maximize profit. Moving to first best costs it 200 and saves the neighbor 500. That gives the firm a reason to resist, unless we add something else."
+        },
+        {
+          "type": "slider",
+          "id": "slider-welfare",
+          "title": "Welfare as output moves",
+          "formula": "60 * Q - 0.75 * Q^2",
+          "vars": [
+            {
+              "name": "Q",
+              "label": "Output (Q)",
+              "min": 0,
+              "max": 80,
+              "step": 1,
+              "default": 60,
+              "unit": "units"
+            }
+          ],
+          "output": {
+            "label": "Welfare W(Q)",
+            "format": "number",
+            "decimals": 0
+          },
+          "plot": {
+            "x": "Q",
+            "range": [0, 80],
+            "yLabel": "Welfare W(Q)",
+            "zeroLine": true
+          },
+          "caption": "W(Q) = profit - damage = (60Q - 0.5Q^2) - 0.25Q^2 = 60Q - 0.75Q^2. It peaks at Q = 40 (W = 1200); at Q = 60 it is 900, so the gap is 300."
+        },
+        {
+          "type": "compare",
+          "id": "cmp-payoffs",
+          "title": "Payoffs at the two outputs (illustrative)",
+          "columns": [
+            "Firm profit",
+            "Neighbor damage",
+            "Welfare"
+          ],
+          "highlight": 2,
+          "rows": [
+            { "label": "Market, Q = 60", "cells": ["1800", "-900", "900"] },
+            { "label": "First best, Q = 40", "cells": ["1600", "-400", "1200"] },
+            { "label": "Change", "cells": ["-200", "+500", "+300"] }
+          ],
+          "caption": "Profit = 60Q - 0.5Q^2 and damage = 0.25Q^2. The firm loses 200 and the neighbor gains 500, so welfare rises by 300 even though the firm objects."
+        }
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "type": "mcq",
+      "id": "quiz-q-m",
+      "q": "Marginal profit is 60 - Q and marginal damage is 0.5Q. What output does a profit-maximizing firm choose?",
+      "options": [
+        "40, where marginal profit equals marginal damage",
+        "30, where marginal damage is $15",
+        "20, where the neighbor's damage is zero",
+        "60, where its own marginal profit reaches zero"
+      ],
+      "answer": 3,
+      "why": "The firm ignores damage and stops when 60 - Q = 0. Q = 40 is what society would pick."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-welfare",
+      "q": "With the same curves, how much surplus is lost when output is 60 instead of 40?",
+      "options": [
+        "300, the triangle between MB and MD from 40 to 60",
+        "500, the damage avoided by the neighbor alone",
+        "200, the profit that the firm gives up",
+        "900, the welfare earned at the market output"
+      ],
+      "answer": 0,
+      "why": "Welfare is 900 at Q = 60 and 1200 at Q = 40, a gap of 300. It is also 1/2 x 20 x 30."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-resist",
+      "q": "Why might the firm resist moving from Q_M to Q_FB?",
+      "options": [
+        "Welfare falls when output falls",
+        "The neighbor is made worse off by the move",
+        "It is strictly worse off, since Q_M maximizes its profit",
+        "Marginal damage is negative at the optimum"
+      ],
+      "answer": 2,
+      "why": "Any output other than Q_M gives lower profit. Here the firm loses 200, even though society gains 300 overall."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-extern",
+      "q": "A beekeeper's bees pollinate an orchard. When is this NOT an externality?",
+      "options": [
+        "When the orchard is next door to the bees",
+        "When the beekeeper also owns the orchard",
+        "When the apples sell at a high price",
+        "When the bees fly in only spring"
+      ],
+      "answer": 1,
+      "why": "Ownership puts the benefit inside the beekeeper's own decision, so it is internalized. Otherwise it lands on an outsider."
+    },
+    {
+      "type": "mcq",
+      "id": "quiz-ratio",
+      "q": "China's emissions per unit of GDP fell while its emissions rose about threefold. How is that possible?",
+      "options": [
+        "Emissions per dollar cannot fall when emissions rise",
+        "GDP grew more than 10 times, faster than emissions",
+        "GDP and emissions were measured in different years",
+        "The ratio mixes consumption and production data"
+      ],
+      "answer": 1,
+      "why": "Numerator up about 3x, denominator up more than 10x, so the ratio falls. This is why the professor says to examine both parts."
+    }
+  ],
+  "flashcards": [
+    {
+      "front": "Externality (professor's definition)",
+      "back": "Any external effect of an action not internalized by the actor. It requires a model of who decides and why."
+    },
+    {
+      "front": "Nordhaus's version",
+      "back": "Costs or benefits of an activity that spill outside the market and are not captured in market prices."
+    },
+    {
+      "front": "Firm's first-order condition",
+      "back": "P = C′(Q_M): marginal revenue equals marginal cost, with no role for the neighbor. Here Q_M = 60."
+    },
+    {
+      "front": "First best (Q_FB)",
+      "back": "The Q that maximizes W = profit - damage: P = C′ + D′. In our numbers, Q_FB = 40."
+    },
+    {
+      "front": "Two results of the model",
+      "back": "W(Q_M) < W(Q_FB), so the market fails; and Q_FB < Q_M, so we want less than the firm does."
+    },
+    {
+      "front": "Why the firm resists first best",
+      "back": "Q_M uniquely maximizes its profit, so any other output leaves it strictly worse off (here -200)."
+    }
+  ],
+  "recap": [
+    "Three climate facts (warming over ~170 years, more to come, richer countries emit more) are puzzles to describe, evaluate and design around, and a cross-country correlation is not causation.",
+    "An externality is an effect the actor does not internalize; you need a model of who decides to call something one.",
+    "The firm picks Q_M = 60 and society wants Q_FB = 40: the market fails, with a deadweight loss of 300.",
+    "The firm is strictly better off at Q_M (loses 200 by moving), so first best needs a policy that handles its resistance."
+  ],
+  "concepts": [
+    "Externality",
+    "Internalizing an effect",
+    "Positive and negative externalities",
+    "Competitive firm and convex cost",
+    "Marginal damage",
+    "Free-market output Q_M",
+    "First-best output Q_FB",
+    "Deadweight loss",
+    "Market failure",
+    "Numerator and denominator of a ratio"
+  ]
+}
