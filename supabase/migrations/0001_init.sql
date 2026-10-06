@@ -132,7 +132,7 @@ create policy "courses public read" on public.courses
 create policy "lectures public read" on public.lectures
   for select to anon, authenticated using (true);
 create policy "lessons public read" on public.lessons
-  for select to anon, authenticated using (true);
+  for select to anon, authenticated using (status = 'published');
 create policy "concepts public read" on public.concepts
   for select to anon, authenticated using (true);
 create policy "assessments public read" on public.assessments

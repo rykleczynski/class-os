@@ -54,7 +54,7 @@ for (const c of courses) {
     ].join(", ")})
 on conflict (code, term) do update set slug = excluded.slug, title = excluded.title, category = excluded.category,
   instructor = excluded.instructor, schedule = excluded.schedule, color = excluded.color, tone = excluded.tone,
-  calendar_event_series_ids = excluded.calendar_event_series_idss, aliases = excluded.aliases,
+  calendar_event_series_ids = excluded.calendar_event_series_ids, aliases = excluded.aliases,
   generation_notes = excluded.generation_notes;`,
   );
 }

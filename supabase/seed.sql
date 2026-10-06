@@ -3,22 +3,22 @@ begin;
 insert into public.courses (code, slug, title, category, instructor, schedule, color, tone, calendar_event_series_ids, aliases, term, generation_notes) values ('ECON 106F', 'econ-106f', 'Finance', 'Finance', 'Convery', 'Mon/Wed 8:00-9:15', '#3b5bdb', 'light', array['_64p2qb9h74s3cd9n6so34b9h']::text[], array['Econ 106F', 'Econ 106F Lecture', 'ECON 106F Finance']::text[], 'Fall 2026', 'Quantitative. Lean on formulas as steppers (walk one calculation a frame at a time), sliders with a plot for anything that depends on a rate or a quantity (NPV vs discount rate, PV vs years), and cash-flow timelines with signed amounts. Use the professor''s phrases as quotes ("a bucket of cash today"). Keep the arithmetic exact and show it.')
 on conflict (code, term) do update set slug = excluded.slug, title = excluded.title, category = excluded.category,
   instructor = excluded.instructor, schedule = excluded.schedule, color = excluded.color, tone = excluded.tone,
-  calendar_event_series_ids = excluded.calendar_event_series_idss, aliases = excluded.aliases,
+  calendar_event_series_ids = excluded.calendar_event_series_ids, aliases = excluded.aliases,
   generation_notes = excluded.generation_notes;
 insert into public.courses (code, slug, title, category, instructor, schedule, color, tone, calendar_event_series_ids, aliases, term, generation_notes) values ('COMM 187', 'comm-187', 'Ethical & Policy Issues in Mass Communication', 'Media Ethics', 'Newton', 'Mon/Wed 9:30-10:45', '#ee6a3c', 'light', array['qpruvqppuu5vv3l7fou1iqm2jc']::text[], array['Comms 187', 'Comm 187', 'COMM 187 Media Ethics']::text[], 'Fall 2026', 'No slides and no recording besides the transcript, so the transcript is the only record. Prefer scenario/dilemma cards (give the professor''s cases as choices with outcomes and a debrief), case timelines, and sortOrMatch for definitions (disclosure vs recusal, personal vs professional ethics). Quote the professor''s tests and rules of thumb. Avoid inventing facts about real people beyond what was said.')
 on conflict (code, term) do update set slug = excluded.slug, title = excluded.title, category = excluded.category,
   instructor = excluded.instructor, schedule = excluded.schedule, color = excluded.color, tone = excluded.tone,
-  calendar_event_series_ids = excluded.calendar_event_series_idss, aliases = excluded.aliases,
+  calendar_event_series_ids = excluded.calendar_event_series_ids, aliases = excluded.aliases,
   generation_notes = excluded.generation_notes;
 insert into public.courses (code, slug, title, category, instructor, schedule, color, tone, calendar_event_series_ids, aliases, term, generation_notes) values ('ECON 134', 'econ-134', 'Environmental Economics', 'Economics', 'Rafey', 'Mon/Wed 2:00-3:15', '#16181d', 'light', array['_64p2qc9h68o3gc9k6kqiqc8']::text[], array['Econ 134', 'Econ 134 Environmental']::text[], 'Fall 2026', 'Graphical. Use supplyDemand blocks with shifts and shaded areas (deadweight loss, externalities, taxes), marginal-damage versus marginal-benefit curves, and charts of costs. Pair every curve with a one-line takeaway.')
 on conflict (code, term) do update set slug = excluded.slug, title = excluded.title, category = excluded.category,
   instructor = excluded.instructor, schedule = excluded.schedule, color = excluded.color, tone = excluded.tone,
-  calendar_event_series_ids = excluded.calendar_event_series_idss, aliases = excluded.aliases,
+  calendar_event_series_ids = excluded.calendar_event_series_ids, aliases = excluded.aliases,
   generation_notes = excluded.generation_notes;
 insert into public.courses (code, slug, title, category, instructor, schedule, color, tone, calendar_event_series_ids, aliases, term, generation_notes) values ('ECON 106FB', 'econ-106fb', 'Finance Laboratory', 'Finance Lab', null, 'Thu 4:00 lab, Fri 3:00 lecture', '#9bd84e', 'dark', array['_64p2qb9n64r3cdho74p38b9h', '_64p2qb9o60pjic1g68p36b9h']::text[], array['Econ 106F Discussion', 'Econ 106FB', 'Econ 106F Lab']::text[], 'Fall 2026', 'Applied case work. Reuse the ECON 106F toolkit (steppers, sliders with plots, timelines) but organize around the lab case: state the decision, the cash flows, then the answer. Link back to the concept from the lecture.')
 on conflict (code, term) do update set slug = excluded.slug, title = excluded.title, category = excluded.category,
   instructor = excluded.instructor, schedule = excluded.schedule, color = excluded.color, tone = excluded.tone,
-  calendar_event_series_ids = excluded.calendar_event_series_idss, aliases = excluded.aliases,
+  calendar_event_series_ids = excluded.calendar_event_series_ids, aliases = excluded.aliases,
   generation_notes = excluded.generation_notes;
 insert into public.lectures (course_id, wispr_meeting_id, starts_at, wispr_share_link, transcript, status)
 values ((select id from public.courses where code = 'ECON 106F' and term = 'Fall 2026'), '2b8f0773-fb67-4389-9551-ff835a6b9f8a', '2026-10-05T15:00:20Z', 'https://notes.wisprflow.ai/shared/SGM_CQ-BnLpOzHMgAz0Apu9oKuvzE0FBAf7ObPjFKIU', $q0$Speaker 1: All right, good morning. So, I got this email a few minutes ago, I think, from Anderson. It's another public service announcement.
