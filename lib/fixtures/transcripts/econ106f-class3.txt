@@ -1,0 +1,402 @@
+Speaker 1: All right, good morning. So, I got this email a few minutes ago, I think, from Anderson. It's another public service announcement.
+Speaker 1:  You may be thinking about grad school. I know a lot of you are seniors, maybe even juniors, thinking about it.
+Speaker 1:  Excuse me. It could be a good year move.
+Speaker 1:  It depends on everyone's individual situation. It's expensive, but it has to do with an investment and then a return in the future.
+Speaker 1:  And actually, that's quite relevant to our classes, to our class today, and actually this whole quarter. But let me just go ahead and share this.
+Speaker 1:  The reason they emailed me is because there's a couple information sessions coming up, and I think the 17th is the first one for this all-inclusive MBA/MPV thing. But here's a couple.
+Speaker 1:  You can kind of take a picture of that if that's interesting to you. So this one is to do with MFE, Master's of Financial Engineering.
+Speaker 1:  There's a couple others that I'll show you in just a minute, related to the MBA program. Also, they have some sort of variations of data science master's programs and so on and so forth.
+Speaker 1:  And not that I—it's not on the screen, but the econ department itself also has an MQE, which I mentioned earlier last week, Master's of Quantitative Economics, which I was a part of back in the day. So I just wanted to relay this information.
+Speaker 1:  I think this one looks intriguing, October 17th, because you get to see the different programs they have. And then there's one down here, November 5th.
+Speaker 1:  All of these schools apparently are going to be there, which I think is pretty cool. And see what's out there.
+Speaker 1:  Even if you're not interested, I think it might be good to go and just have it in the back of your mind, just for your awareness. Because at some point, either now, it could be five years from now, when you're in your career, a good way.
+Speaker 1:  So if your career is kind of moving along, you're getting your promotions and stuff, but you're kind of interested in a different part of the industry or your company, or maybe you want to kind of accelerate this growth and make it go up, pivot like that, a graduate program could help you do that. No guarantees, of course, but it could be quite effective.
+Speaker 1:  And I just googled around. You can do the same.
+Speaker 1:  This is the Anderson website, and most of that information is on here. We're going to actually, in lab number one, we'll actually have a case study where this person is going to decide on three career paths, and one of them is to get a graduate degree.
+Speaker 1:  And we kind of see if that pays out in the long run over their career. Okay, so that's what I wanted to show you there.
+Speaker 1:  And now, today, we're going to start chapter three, which I just posted. And interesting topic: financial decision-making in the law of one price.
+Speaker 1:  So we're going to look at the basics of that. So last week we did kind of fundamentals of accounting.
+Speaker 1:  Now we're doing sort of—this chapter is about a thought process. How do you think through financial decisions?
+Speaker 1:  And then in chapter four and five, we'll introduce the math, which is time value of money. And then ultimately, we apply all of that to a valuation approach of assets, of productive assets, most commonly of companies.
+Speaker 1:  But it could also be used in other decision-making situations, like should you invest in research and development, or should you buy out your competitor, or what have you. So if you're interested in private equity, or corporate finance, or any of these things, it can be—that's where we're headed.
+Speaker 1:  If you're interested in none of those things, then you can still use this information. As I just mentioned a minute ago, your own personal career.
+Speaker 1:  Should you get that master's degree or not? Should you buy a house or rent, or buy an apartment or rent, or what have you?
+Speaker 1:  And so on and so forth. So all of that decision-making, which is quite relevant, will start here in this chapter.
+Speaker 1:  So understanding value. First, I want to say, because if you notice the subtitle sort of here, "and the law of one price," we know what that is in economics terms.
+Speaker 1:  It turns out there isn't just one price. Because in fact, there's a difference between price and value.
+Speaker 1:  Value is what we're going to calculate. It's a quantitative calculation.
+Speaker 1:  Price is just price. So if I said, "What's the price of this coffee?"
+Speaker 1:  you'd just simply go to the coffee house and look at the menu. There's really no discussion.
+Speaker 1:  But if I say, "What is the value of this coffee?" yeah, it could be about the same.
+Speaker 1:  If this is $4, maybe the value is $4, but it could be much more valuable to me, much less valuable to you or someone else. So value is sometimes the same as price, but it's only coincidental in some sense.
+Speaker 1:  That's probably too strong of a statement. I mean, in the long run, they will equilibrate.
+Speaker 1:  But in the short run, price can be quite volatile. If you just look at the stock market, some of the big companies, trillion-dollar companies, they fluctuate in market value on the order of tens and sometimes hundreds of billions of dollars a day.
+Speaker 1:  But their true value as a company is probably really not fluctuating as much. But the real reason I want to show this quote is because just know what we're talking about here in this class is calculating value, okay?
+Speaker 1:  And when you go out into the world and you say, "I think this asset has this value," that doesn't mean the price will be anywhere near that. It could be much more, it could be a lot less.
+Speaker 1:  And if the price is way less than value, and because of that, you decide to invest, that's a value investing approach. That's what Buffett does, Bill Ackman.
+Speaker 1:  There's a few famous people who do that. But to do so—Howard Marks is another one—to do so, if you really think about it, you have to be pretty confident in your calculations of value, and you also have to be pretty confident that the market is wrong.
+Speaker 1:  Those are two big things. We will learn how to calculate value so I can help boost your confidence in that, but then to be so confident that you think, "Amazon is worth this price, and the market says it's down here."
+Speaker 1:  Are you right, or is the market right, or somewhere in between? So that's the question a value investor would have to decide.
+Speaker 1:  Okay, so, okay, let's talk a few—there's a few kind of nuances in value. Intrinsic value is really—when I say value, when I say net present value, present value, those kinds of things, I'm talking about intrinsic value, or what Buffett would call intrinsic value.
+Speaker 1:  It offers—and this is a pretty strong statement, but it's coming from Buffett. I happen to agree.
+Speaker 1:  But the only logical approach to evaluating the relative attractiveness of investments in businesses, okay? The only, only logical approach.
+Speaker 1:  Implying all other investments that people make that don't follow value investing are illogical. So that's kind of a strong statement.
+Speaker 1:  Because most people don't follow this. I mean, at best, they might say, "I understand, I respect, I get it.
+Speaker 1:  Intrinsic value is what it's about." But most people don't go through the calculations.
+Speaker 1:  They're difficult. Then the second statement says, "Intrinsic—so what is intrinsic value?"
+Speaker 1:  The discounted value of the cash that can be taken out of a business during its remaining life. In other words, the discounted future cash flow.
+Speaker 1:  That's net present value. Okay, so we're totally aligned with Buffett on that.
+Speaker 1:  And again, if it's not used in practice, it's really super helpful, at least to think through an investment, even if you don't apply the numbers and do all that great detail. Another Buffett quote.
+Speaker 1:  The calculation, though, is not so simple. As our definition suggests, intrinsic value is an estimate.
+Speaker 1:  And we should not forget that. It's not a precise figure.
+Speaker 1:  It's an estimate that must be changed. If interest rates move, that's the discount rate, 1 plus R, or forecasts of future cash flows are revised.
+Speaker 1:  So we're going to explore all of that. Interest rates can change value, and future cash flows going up or down can change value.
+Speaker 1:  In some sense, it's logical and very simple. But as this quote says, "The calculation is not so simple."
+Speaker 1:  And I want to highlight this part here. It's an estimate rather than a precise figure.
+Speaker 1:  That's why. Now, from an accounting point of view, every single penny matters.
+Speaker 1:  I totally agree. But when you're doing these valuations, to have a calculation of some company like Apple, which is trillions of dollars, and to think, "How many significant decimal points do I use?"
+Speaker 1:  the answer is you don't use any. Because if you're worried about significant digits, then you probably missed the entire process of value calculation.
+Speaker 1:  It's an estimate. That's because we're talking about the future, and nobody knows for sure.
+Speaker 1:  So precision, just because it can be spit out of an Excel calculation or Python or whatever you're using in your calculator, is an illusion at best. At worst, it implies a certain amount of precision that doesn't exist.
+Speaker 1:  All right, so I think we got sort of the concepts out of the way there. Let's get into the actual lecture notes.
+Speaker 1:  So the very first thing, when we're talking about these calculations, future cash flows, we need to understand there's positive and negative cash flows. Positive, for example, when you're selling your product and you're getting revenues coming in.
+Speaker 1:  And then negative, when you're paying your rent, your employees, your inventory. Those are negative cash flows.
+Speaker 1:  And both of them exist. But we're going to take a step back from just pure business operations.
+Speaker 1:  We'll get to that, of course. But for now, we're just talking about costs and benefits, okay, which are kind of the same, but it's a more broader topic.
+Speaker 1:  So costs and benefits. You might not have thought of something like marketing is a cost.
+Speaker 1:  It costs money to make an advertisement on the Super Bowl. What is it now?
+Speaker 1:  A couple million, two, three more, four million dollars for half a minute. That's a cost.
+Speaker 1:  But there's a benefit there. The benefit is probably harder to quantify.
+Speaker 1:  But if you're doing a net present value calculation for Coca-Cola, you better know the cost and benefit of marketing. Because will an additional commercial for Coca-Cola drive revenue or not?
+Speaker 1:  I mean, they have probably an army of people trying to figure that out for Coca-Cola, for example. Another one that's maybe a little more subtle is organizational behavior.
+Speaker 1:  Is the company structured properly, most efficiently, or whatever the objectives are of the CEO and their team? Strategy is, again, slightly nuanced.
+Speaker 1:  What does that mean? How do you know if it's good or bad, etc.?
+Speaker 1:  Operations are a little more concrete, a little more tied to accounting. And then just finance in general can be both a cost and a benefit, in terms of cost being the employees themselves, or making a wrong decision, benefit to be on the positive side.
+Speaker 1:  You're making more efficient decisions, more optimal deployment of capital, and so on and so forth. Okay, so while I said that price and value are not the same necessarily, they can equilibrate, but they're not always so.
+Speaker 1:  One thing that we need to do, though, related to market price, is when we are talking about the cost and benefit of something, we use the market price. So for example, if I'm evaluating Starbucks that sells coffee, and this coffee is selling for $4, but for me, it's worth $15, I don't use $15, obviously.
+Speaker 1:  That's a ridiculous thing to do. I use the market price.
+Speaker 1:  I don't use what Starbucks says necessarily instead of unless that's their strategy to raise prices, I might put that into my forecast. And you'll see other examples where we use the market price when we're trying to figure out what to put in our spreadsheet in terms of our calculations.
+Speaker 1:  This is the main takeaway, which I'm trying to say. We do not concern ourselves with whether we think the prices are fair or whether we personally need those products.
+Speaker 1:  Not even personally, but again, if you're the CEO, it doesn't matter. You'll see an example in a minute about if you're an investor, let's say, and you see an opportunity where oil is trading well below intrinsic value.
+Speaker 1:  This happened during COVID when everything shut down. Oil was super cheap.
+Speaker 1:  You may not be an oil trader, or your business, whatever, your private equity firm is not an oil company. But on a purely value investing approach, you may see a profitable investment, and you may want to invest.
+Speaker 1:  But in such a case, it's not about whether you need the products. The fact is you see a value much higher than price, and so that would be a reason to invest.
+Speaker 1:  So let's try to get some concrete examples. Now, I admit these are kind of silly examples.
+Speaker 1:  They're small dollar amounts, but it does have a purpose. So in this particular case, you're the operations manager at a firm, and for whatever reason, an opportunity comes to you, and the opportunity is to buy 200 barrels of oil and 3,000 pounds of coffee for this much money, $12,000.
+Speaker 1:  Okay. You also know, just because you're informed, that the market price of oil is $50.
+Speaker 1:  I wish that was the case today. And for copper, it's around $2 per pound.
+Speaker 1:  You just know that. But your company, whatever your company is, probably doesn't need this much oil and copper, okay?
+Speaker 1:  And you're also worried about the future prices of these assets, or I should say, just of these quantities. So should you take this opportunity?
+Speaker 1:  So there's two things going on here. The future price, you're not concerned with that.
+Speaker 1:  Because in this particular example, the idea is should you buy them at these prices and then sell for a profit.
+Speaker 1:  So the future is not involved here. The other thing that's not relevant is you don't know if you personally, your company needs all this stuff.
+Speaker 1:  Again, the reason that's not relevant is because you take what you need and you sell the rest, assuming you can get a price higher than what you paid for it, okay? So here's what you need to do.
+Speaker 1:  Here's where we use the market prices, which were told to us. We know that the oil is worth $10,000 right now, at this moment.
+Speaker 1:  And per the market price, the copper is worth $6,000. So the way that we should go back to this question, all of those words, all of it should be translated this way.
+Speaker 1:  I will hand you $16,000. Would you like that opportunity in exchange for giving me $12,000?
+Speaker 1:  So when you say it that way, it's obviously trivial, right? Yes, I will give you $12,000 if you give me $16,000.
+Speaker 1:  That's an obvious answer. And that's the point where we want to get to, is that once you calculate net present value, assuming you've done it as best as possible, net present value is like a bucket of cash.
+Speaker 1:  If the net present value is a negative number, that means if you proceed with this investment, you're giving away that much money. And if it's a positive number, that means you're receiving that much money.
+Speaker 1:  Not only in the future, but right now. It's present value.
+Speaker 1:  So this is a simple example to kind of illustrate those points. Now, before I go on, I should say I agree that in the real world, there are nuances.
+Speaker 1:  Like, well, how do I sell this stuff? The approval of my boss.
+Speaker 1:  Do I really believe the market price? I mean, I understand these are all real reasonable questions, but we're assuming we've kind of addressed all of those.
+Speaker 1:  But with that said, there is a concept where I said, if value is here and price is here, you should make that investment. You should buy that asset for this low price.
+Speaker 1:  Yes, that's true, but there's always this margin of uncertainty. And so as Buffett would say, he likes a margin of safety.
+Speaker 1:  So if something's valued at 100 and he's 99% certain it's worth $100, and it's selling for $98, he's not going to necessarily make that investment to earn $2. The reason is because even he understands that he's not perfect, so he might make a mistake.
+Speaker 1:  There might be something he's not seeing. So he's in what's called he would be an extreme value investor.
+Speaker 1:  So he might not invest unless the price was 80 or 70 or 60, maybe even $20 on something he thinks is worth 100. And then he will invest.
+Speaker 1:  And that's why that opportunity doesn't come around very often, as you might imagine. That's why he can go years without making a major investment, just because he's waiting.
+Speaker 1:  So there is this margin of safety just to kind of double-check you might be making a mistake. Because again, net present value calculations are inherently flawed in some sense or uncertain.
+Speaker 1:  But back to the words here on the page, I basically said all of this. So the net value of this opportunity is basically $4,000, okay?
+Speaker 1:  Because the net present value is positive, you should take it, period. What else do I want to say?
+Speaker 1:  So if you are this operations manager and you conduct this deal, you have made $4,000 for the company. Now, probably in the real world, you're going to want to have an outlet to sell it.
+Speaker 1:  And if they're liquid products like literally oil, liquid meaning in a financial sense, and copper, you might not even ever even take possession. You simply buy them, you have ownership stake, and you sell the ownership stake.
+Speaker 1:  You can do that the same day. And in your account, you are $4,000 richer.
+Speaker 1:  Okay, so again, very simple, but had a purpose for that one. Okay, so now this one, we're getting at some of our let me just scroll ahead.
+Speaker 1:  Yeah, so we're just kind of dipping our toe in the water of time value of money. And time value of money is actually very super intuitive.
+Speaker 1:  So I go through a series of questions here. I won't go through every single one, but how much would you pay now to receive a dollar today?
+Speaker 1:  Or to make it interesting, let's call it $1,000. So I have $1,000 here, and I'm going to give it to you after class.
+Speaker 1:  And I ask you, what would you pay for that? And of course, one of you would be like, "I'm going to give you 10 bucks, haha, I fooled you."
+Speaker 1:  No, but it's a competition. So I'm going to take the highest bidder, right?
+Speaker 1:  So eventually, someone will pay me probably close to 1,000. Not 1,000, because that would be pointless, but maybe $995 or something.
+Speaker 1:  And then someone might actually outbid you. So it's going to be close to $1,000, right?
+Speaker 1:  But now if I make you the same offer, but I say, "The money's not here, I got to go get it, but I'll bring it to class, maybe not tomorrow, but Wednesday." So you got to give me the money now, but I'll be here on Wednesday, and I'll make sure I give it to you.
+Speaker 1:  Tiny little bit of uncertainty enters the thought process, right? I mean, I've been teaching here 10 years, but who knows, maybe I just decide $1,000 is enough for me.
+Speaker 1:  I'm just going to skip out of town. I don't want to pay you $1,000.
+Speaker 1:  I'll take your money, and I'm going to leave. That would be counterparty risk.
+Speaker 1:  That's probably pretty small. But there's other things that could go on.
+Speaker 1:  I mean, macroeconomic events. There was COVID, and we all stopped coming to school for months and months.
+Speaker 1:  I mean, there's all kinds of things. Pretty small, okay?
+Speaker 1:  So you'd probably pay close to 1,000, maybe not as much as if you were going to get the money in an hour. And then, okay, 2021, that's a typo.
+Speaker 1:  It should be 2027. How much would you pay today to receive $1,000 net January 1st?
+Speaker 1:  And then you can see where we're going. It's incrementally.
+Speaker 1:  The farther out in time, there's slightly more risk that gets involved. When I say 2050, though, there's a whole new risk coming in, which, well, there's not many, but one could be inflation.
+Speaker 1:  Because even if you don't have counterparty risk, you know I'm going to be here. You know you're going to be here.
+Speaker 1:  You have total confidence in that. But in 2050, you're going to give me, say, whatever the number is, $980 today, and you're going to get 1,000, excuse me, in 25 or so years, but maybe that $1,000 is only worth maybe $400 in purchasing power by that time because of inflation.
+Speaker 1:  And so these are the very logical and intuitive thoughts that have to do with time value of money. And in fact, that inflation concept is a huge factor in all the world of bonds and treasuries and all of this, which filters right back to us as personal consumers and so on and so forth.
+Speaker 1:  That's getting a little bit out of scope, but we'll talk about that in, I think, chapter five. We'll talk about bonds and treasuries.
+Speaker 1:  Okay, so why would you pay these different amounts? Well, this is all called time value of money, but most people have never heard of that phrase out in the world.
+Speaker 1:  But they're doing it all the time, right? So it is kind of well, it is the most intuitive thing that you can kind of think of, and we're just going to apply some math to it.
+Speaker 1:  But the math is also super trivial. So now let's apply it in a simple way.
+Speaker 1:  And here's the opportunity. You're going to get $105,000 a year from now, but it costs you $100,000 right now.
+Speaker 1:  You pay it right now, and then you will get that benefit. So on that sense, if it was $100,000 today and $105,000 this afternoon, you'd probably make that deal.
+Speaker 1:  But this is a one year from now, and so we got to figure out, does that make sense or not? And the way we do that is we need a relevant interest rate, okay?
+Speaker 1:  So let's say the current interest rate is 7%. Well, what does that mean?
+Speaker 1:  Well, there's a couple of things. The interest rate is comprised of all of those potential risks that I talked about, like counterparty risk or other events.
+Speaker 1:  But it also includes things like inflation. Whatever you can think of all goes into that interest rate.
+Speaker 1:  But at the base of all of that, all of those risks and inflation stuff are on top of what's called the risk-free rate, which we will talk about. The risk-free rate is effectively when you hear the Federal Reserve is lowering or raising interest rates, that's the rate they're talking about, is the risk-free rate.
+Speaker 1:  The Fed more or less controls that. It's actually a very small range of interest rate that they control.
+Speaker 1:  And then the world piles on top of that, oh, I want to buy a house. Okay, there's risk in the real estate market.
+Speaker 1:  It's a 30-year loan, and all these other calculations will then feed into the calculation for a 30-year mortgage or a home loan or school tuition or groceries or any stock market. All of these risks are piled on top of that risk-free rate.
+Speaker 1:  So to simplify things, we're going to talk about money being risk-free. Now, that doesn't exist in the world, except in one place, which is US government debt.
+Speaker 1:  Treasuries, in some sense, are risk-free. So if you want this kind of simple discussion where I'm like, how much would you pay today for $105,000?
+Speaker 1:  Assuming risk-free 105 will be guaranteed to you. The only place that would exist would be with treasuries.
+Speaker 1:  We're not going to talk only about treasuries, but just to simplify things, to get the ball rolling.
+Speaker 1:  Now, those do have inflation, though. So let's just assume no inflation, no risk.
+Speaker 1:  And so the interest rate of our money is going to grow this much, one plus the risk-free rate. And a discount factor would be so if our money grows that much in a year, that future dollar amount, multiplied by 1 plus R, will get us back to today's value, right?
+Speaker 1:  So it just goes forward and backwards. That's why the math is so simple.
+Speaker 1:  That's all it is. And so going back to our question, if the interest rate is 7%, then if we were going to invest our $100,000, you can assume we just throw it in the bank and we get our 7%.
+Speaker 1:  In a year, we'd have $107,000, okay? So going back to our original question, no, of course we would not do that, because that's only growing at 5%.
+Speaker 1:  Whereas risk-free, we can grow at 7%. Again, super simple, but this is the foundation of this kind of thought process.
+Speaker 1:  So now when we look at this question, relative to what we know are other options, which are the 7% growth rates, if we were to make this investment, we have just destroyed $2,000.
+Speaker 1:  So again, if I said, would you like this investment? I'll give you $105,000.
+Speaker 1:  You're not sure. You got to think about it, do some calculations.
+Speaker 1:  But if I came to you and said, would you like to destroy $2,000? I think it's clear.
+Speaker 1:  All of you would say, no, I would not like to do that. So net present value is a logical framework to help you distill a lot of complex ideas into a very simple decision-making tool.
+Speaker 1:  So we should reject this investment, to say the least. Okay.
+Speaker 1:  Another way you could think of that same simple calculation would be if I promised you $105,000 today, and you and I are negotiating, what would you pay me for that opportunity, for that investment? It's going to give you 105.
+Speaker 1:  What do you think it's worth? You take that 105 a year from now, and you simply divide by 1 plus R.
+Speaker 1:  So that gives you the present value of that future money. And if the interest rate, the risk-free rate is 7%, you can see, simple math, it gives us about $98,000.
+Speaker 1:  So you can use this in a negotiation and say, I wouldn't pay you more than 98,130, but maybe if you give it to me for 97, 96, 95, now I'm starting to be interested. And you have a logical basis for saying that.
+Speaker 1:  Now, let's not forget, though, I keep calling this the risk-free rate. Now, in the real world, whatever that benefit is, it's not risk-free.
+Speaker 1:  So on top of that, you might want to add so now this is where you need experience, or your company or your boss or whatever would have experience analyzing this investment. What is it?
+Speaker 1:  Is it real estate? Is it bonds?
+Speaker 1:  Is it international something, something? Those all have different levels of risk, and that just piles on top of the risk-free rate.
+Speaker 1:  So let's say the real risky rate is 11% right here. You can see, it's trivial math.
+Speaker 1:  That means the value is going to drop, right? And so that means another way of thinking about it is, okay, you want me to take on more risk?
+Speaker 1:  I need a better value, better price, in other words. You lower price.
+Speaker 1:  And again, that conclusion is totally intuitive. You don't need time value of money to tell you if something's really risky.
+Speaker 1:  Well, if you give me a really low price for it, maybe I'll take that chance. But I'm certainly not going to pay a premium amount for something very risky.
+Speaker 1:  Okay. Let's continue.
+Speaker 1:  So thinking about it this way is if we were to say the true value of that 105 in the future today is worth 98,130, and they're asking me to pay 100,000, I could say, in the present value, they're asking me to throw away $1,869.
+Speaker 1:  The 2,000 where I said, would you like to throw away 2,000? That was actually in the future money, in one year.
+Speaker 1:  But in the present, it's the same kind of negative conclusion. You're throwing away money.
+Speaker 1:  It's just a little bit less in the present.
+Speaker 1:  Okay. So here's a key conclusion.
+Speaker 1:  The investment decision does not change in different time periods. We could have calculated all of this a year from now, or if I said the investment pays off in 50 years or tomorrow or what have you or today, you calculate net present value in all of these different periods, you're still going to get a negative number.
+Speaker 1:  The number will change because it's farther out in the future or closer to the present. But the negative number is the key for the investment decision.
+Speaker 1:  Negative MPV, you reject. Positive MPV, you invest.
+Speaker 1:  Now, adding in that sort of margin of safety, that's sort of a real-world type of aspect.
+Speaker 1:  But simple minus, reject, positive, you're creating value. Okay.
+Speaker 1:  Oh, so that's what we're saying right here. Our decision is the same, whether we express the value of the investment in terms of dollars one year from now or today, we'll reach the same conclusion.
+Speaker 1:  It's just that the dollar amount today, 1,869, or in the future, 2,000 will change, obviously, because they're different periods of time. Okay.
+Speaker 1:  You'll be surprised. Like I said, I think I mentioned I've spent a lot of years in the corporate environment, and you might be surprised how often this is not followed.
+Speaker 1:  The language of net present value for decision-making, for communicating strategy. Now, to be fair, I think without saying net present value, because most regular people not in finance may not know that, they do talk in terms of return on investment.
+Speaker 1:  But even that is not exactly the same as a net present value calculation. Okay.
+Speaker 1:  So to introduce a couple symbols, we use PV for present value and FV for future value. So you'll see that in future calculations and lectures.
+Speaker 1:  So to put it in this general concept, if you're trying to decide whether to invest or not, you could calculate PV or net present value, and that will tell you a plus or minus sign. But you could equally have calculated the future value, and if that was negative or positive, you get the same decision based on that future value.
+Speaker 1:  I think I'm going to skip this one. You can do this question.
+Speaker 1:  It's basically a repeat of what we just did. So I suggest you do this example, and there's the answer.
+Speaker 1:  You can do it at home, but I don't want to spend time here necessarily because it's the same points. Okay.
+Speaker 1:  So as I mentioned at the start of today's class, future cash flows are both positive and negative in most cases. And so we can generalize those as the positive ones are benefits and the negative ones are costs.
+Speaker 1:  And so we can think of net present value as the discounted future cash flows, or we can think of them as the discounted, all those future benefits discounted minus all the future costs discounted to the present. So the difference of those two.
+Speaker 1:  That might be conceptually an easier way to think about it, but they're the same. These two formulas here are the same.
+Speaker 1:  They give you the same calculation. And typically, in calculating the NPV for a company, you're looking at the net cash flows.
+Speaker 1:  So just like we saw in chapter two, you have your income statement and your cash flows. At the end of each year, it's, well, did you have positive or negative cash flows?
+Speaker 1:  So in a calculation, you would do all of those things, and you'd have a single number for that year. Like 2030, we made 7 plus $7 million.
+Speaker 1:  So whatever you showed just to that single number once you've gone through all the accounting. It's usually how it's done.
+Speaker 1:  Okay. I've already made this comment, so this just kind of solidifies it.
+Speaker 1:  And it's so elegant and simple. Invest in positive NPV, reject negative NPV.
+Speaker 1:  There are other ways to make decisions. And you might see that in your internships and in your careers.
+Speaker 1:  And it's really hard to logically understand why those decisions would be made in contradiction of an NPV calculation. For example, one might be, I'm going to invest a million dollars, and as long as I can get a payback in four years, I think it's a good investment.
+Speaker 1:  Payback could be positive cash flow in four years. So in other words, I invest a million.
+Speaker 1:  If in total I can get a million dollars in positive cash flows, then that's a good investment. But you can already see, hopefully, that if you're getting exactly a million dollars in cash flows, I promise you that you're going to have negative NPV because those cash flows are in the future.
+Speaker 1:  So they just don't add up. You invest a million today.
+Speaker 1:  Let's say you get 250, 250, 250, 250. That doesn't add up to a million dollars positive cash flow, right?
+Speaker 1:  It's less. But that's a decision rule.
+Speaker 1:  Some people use that. And there's other rules like that, too, that are in contradiction to NPV.
+Speaker 1:  So the question will be why. There might be nuances.
+Speaker 1:  So I'm not going to say just reject that outright, especially if it's your boss or your company. There might be reasons, but I'm not sure if the reasons are totally aligned with growing value.
+Speaker 1:  Okay. Here's another one, a realistic one, kind of related to that.
+Speaker 1:  If I can get a payback in four years. In the corporate world, people don't stay in their jobs much longer than a couple of years.
+Speaker 1:  When you're starting out, it might be because you're getting promoted or you're trying different things, and so you keep moving. But as you get more senior, it could be because not you personally, but as a person gets responsible for profit and loss, how long do you think your bosses are going to allow losses or suboptimal performance?
+Speaker 1:  Not super long. And so even a CEO could get fired.
+Speaker 1:  Let's say they invest $5 billion in a data center, and we all agree that it's going to pay off in eight years because AI is growing and all this good stuff. But in the next year, two, three, four, five, how long with that $5 billion investment, how long is the CEO going to be able to convince shareholders and the board that, just trust me, it's coming?
+Speaker 1:  It's not here yet, so we're losing money, but have faith.
+Speaker 1:  Yeah, they might be able to do that. Famously, Amazon was negative for like 15 years, I think, in the beginning.
+Speaker 1:  SpaceX, negative right now. What else?
+Speaker 1:  These AI companies. So they have a story, and it might be true, and it could lead to huge riches, but there's no guarantee, right?
+Speaker 1:  At some point, that CEO could be fired. So they have an incentive, actually, a personal survivability incentive to want to see a quick turnaround.
+Speaker 1:  And that might not always be matching up with the calculation of net present value. Okay.
+Speaker 1:  I've already mentioned this. Just to simplify your thought process, just think of it as a bucket of money or a negative, a bucket of negative money, meaning you have to give up that much money, equivalent to the NPV dollar amount.
+Speaker 1:  Oh, the other reason we think about this is because even though let's say you have some investment that's a big negative in the beginning because you're investing, investing, building out data centers, whatever, but then in five years, it's going to just take off because you rule the AI world. It's not just theoretical.
+Speaker 1:  If that's the true story and your NPV is therefore positive, it's not just theoretical that it's worth that much money today. It's real that it's worth that much money today.
+Speaker 1:  That's why Anthropic could be $2 trillion valuation while they've been losing money all along, and there's really no end in sight. It's true, but they are also worth $2 trillion.
+Speaker 1:  So those things can be true if the NPV story holds up. And so let's say you just own Anthropic outright, which some group of people do, they're going to take it to the public markets, and they're going to cash in to the tune of $2 trillion.
+Speaker 1:  So that proves that NPV is real money today, even though all the cash flows are yet to come in. All right.
+Speaker 1:  Okay. So with that said, raise your hand if you're a millionaire.
+Speaker 1:  Okay. It's kind of silly, but I do have a point here.
+Speaker 1:  If you were to look at your personal NPV, and by the end of this quarter, you can do that if you can't already do it. That includes things like let's see.
+Speaker 1:  I think I just listed a bunch here. I'll just scroll to that.
+Speaker 1:  What job are you going to get? What industry?
+Speaker 1:  What do you think your starting salary is? How fast will that salary grow?
+Speaker 1:  So you don't know, but you can estimate these things with some reasonable amount of judgment, right? So you can see right there, that's your personal future cash flow.
+Speaker 1:  How long are you going to work? Are you going to take some time off?
+Speaker 1:  Are you going to have debt when you start because of school or whatever the reason? When you are in your career, how much money are you going to put aside to invest in the stock market or real estate or not?
+Speaker 1:  Because whatever personal choices, I don't want to save and invest. I want to whatever, enjoy it now or something like that.
+Speaker 1:  No judgment. I'm just saying these are factors, right?
+Speaker 1:  So imagine your own cash flows, your own expenses out for, let's just say, 40 years until retirement. So that's this one here.
+Speaker 1:  Number of years do you plan to work? What do you think the inflation rate is?
+Speaker 1:  So the risk-free rate will okay. They're intertwined.
+Speaker 1:  I won't get into that, but the interest rate obviously matters here. And also the growth rate of your investments, the growth or the interest rate on any debt you have, credit cards and mortgages and so on and so forth.
+Speaker 1:  Other costs, real-world things. Do you buy a house or rent or an apartment?
+Speaker 1:  Do you go on vacation many times a year or not? Do you have kids or not?
+Speaker 1:  And so on and so forth. So of course, nobody knows for sure, but you can sit down right now and start sort of answering some of these questions in a spreadsheet and discount them all to the present.
+Speaker 1:  And that is literally your NPV to the best of your ability. And trust me, a lot of you would be more than a million dollars.
+Speaker 1:  And what did I just say is the NPV is equivalent to cash today. So in that sense, there are several of you, it could be all of you, depending on the decisions you want to make, that say you are an NPV millionaire today.
+Speaker 1:  So that's both illustrating the power of this calculation, but also you're like, "I don't feel like a millionaire." I mean, if you were like me when I was a student, I didn't feel like a millionaire, but I probably also had that same NPV.
+Speaker 1:  So it's both real, but also it's not super you don't feel it because it's out in the future, but that's just like making an investment. This is an investment in yourself, but it might be an investment in the stock market or whatever your career is.
+Speaker 1:  Now, again, I said there's no judgment here. It's not you just may say, "I don't want to be I don't want to maximize my NPV.
+Speaker 1:  That's not the purpose of my life." I'm not saying that it should be.
+Speaker 1:  I'm just saying that there's a number I can count on. Right?
+Speaker 1:  And then as you go through life, you can adjust things. Oh, my salary is slightly higher or lower.
+Speaker 1:  Growth rate. So my growth rate of salary has been somewhere I think it's somewhere between 3 to 6 percent, somewhere in there.
+Speaker 1:  Inflation is about half of that. And I had some good years and some average years, 30 years on.
+Speaker 1:  So I would suggest, I guess what I'm getting at is start out conservatively, and then you could put in some optimistic calculations like the stock market grows.
+Speaker 1:  It doesn't grow 7%. It grows 15%.
+Speaker 1:  What does that look like? And so on and so forth.
+Speaker 1:  Or other things you can think about, as we'll see in lab number one. After five years, I'm going to go to grad school.
+Speaker 1:  So that's two years of no income from salary and two years of huge costs, so negative cash flow. What does that do to my future growth rate?
+Speaker 1:  Because in exchange for that sort of pain or disruption, you might graduate and get a much higher salary or a different career that makes you happier or whatever. So it's a fun, but also somewhat pragmatic way to think about some things.
+Speaker 1:  Okay. Let's get back to maybe the most boring example of all time.
+Speaker 1:  You need to buy a copier. This is still in there.
+Speaker 1:  Does anyone use copiers anymore? But okay.
+Speaker 1:  So this has a point. So let me just go through the math.
+Speaker 1:  So think about whatever you want. Instead of a copier, we can replace it with a high-performance computer or some kind of AI chips or whatever you want to put in there.
+Speaker 1:  But you need to buy a new one, and it's $9,500. But as part of a promotion, the vendor, the manufacturer said, "Well, you can pay $10,000 a year from now."
+Speaker 1:  So you can think of this as graduate school. Maybe it's $95,000 today to go, but you can pay 100 grand when you graduate.
+Speaker 1:  Maybe that's a more interesting example. Suppose the interest rate is 7%.
+Speaker 1:  Is this a good deal? So with this, as all we know, we can simply march ahead and just plug and chug into our simple formulas, which are given right here. $10,000 a year from now is actually worth $9,345.79 today based on this interest rate.
+Speaker 1:  Now, the assumption is the interest rate is accurate. That's a huge assumption.
+Speaker 1:  When you get into this career or, yeah, this industry of finance, you could be a person that spends your whole career just about that interest rate. There are people that do that.
+Speaker 1:  That sounds kind of lame, but it's actually really fascinating because, first of all, if you can predict or if you can understand that interest rate and the inherent risk in different investments better than other people, that's super duper valuable. If you're talking about bonds and treasuries and you can forecast the rise and fall of those interest rates based on all kinds of different factors, you can do that better than other people, then you're going to make a lot of money.
+Speaker 1:  But also, if you're just average and you're in that career, it's really interesting because there's so many factors, including international factors, basic economics like supply and demand, risk, return, optimism, pessimism in the marketplace, other psychology. It's really kind of an interesting thing.
+Speaker 1:  So we're not going to do that in ECOM 106F this quarter. I'm just going to tell you what the interest rates are.
+Speaker 1:  But I just want you to know, it's like out in the world, no one just tells you what to use. You got to figure it out when your business does.
+Speaker 1:  Okay. So 7% was told to us.
+Speaker 1:  So if we were to pay $10,000 in a year, that's really $9,345 today. So if the offer today was 9,500, then this deal is equivalent to saying we're going to give you $154.
+Speaker 1:  That's better than paying today. If you pay in the future, it saves you that much money.
+Speaker 1:  So simple analysis, the NPV is positive. So this investment is a good deal.
+Speaker 1:  Assuming you want that copier or that tuition or whatever you're buying, of course, that's the assumption. You want that money.
+Speaker 1:  And so these are very simple examples, but when you get into a corporate situation, it just builds on this. For example, you're in the automobile industry and you're in corporate finance and you're trying to figure out the next version, next year's car.
+Speaker 1:  Should you import parts from Asia and Canada and manufacture here? Should you manufacture them abroad and import?
+Speaker 1:  There's all kinds of calculations, transport costs, cost of labor in other countries, tariffs, maybe political instability. All of these things, each one of them will have an impact on this very simple kind of example.
+Speaker 1:  We actually do have an example. And even I think it's a little too much for this class, not in this chapter, but in a couple of chapters.
+Speaker 1:  And I'll show you the example just to get a flavor for it. We won't really go into the full detail of it.
+Speaker 1:  Okay. So oftentimes when you're in a situation, it's not just you're presented with, "Do you want this?
+Speaker 1:  Take it or leave it?" And you do NPV and you decide.
+Speaker 1:  You might be given 30 opportunities. Maybe let's just make up a number. 12 of them calculate out to a positive NPV and the others are not.
+Speaker 1:  So you throw away 18 of them, but you're still left with 12 opportunities for a positive NPV. Which one do you choose?
+Speaker 1:  Let's say that all 12 of them require an upfront investment, and the cash that you have on hand, you just simply don't have enough to invest in all 12 of them. So which 12 do you or which of the 12 do you invest in?
+Speaker 1:  And so this is where we fall back on the simplicity. The NPV is a bucket of money.
+Speaker 1:  So I'm really asking you which of the 12 buckets of money do you want? And when I say it that way, it's trivial.
+Speaker 1:  You want the biggest bucket of money, right? So you invest in the ones that produce the biggest NPV until you run out of cash and you have no more money to invest.
+Speaker 1:  That might be only one investment, might be seven or whatever the number is. And so in a very real way, as a CEO, this is how you would think because there's always too many opportunities out there.
+Speaker 1:  Well, not always, but people are going to come to you with positive NPV opportunities. You might want to scrutinize if they are truly positive NPV, but they're going to present them to you, and you won't be able to invest in all of them.
+Speaker 1:  And this is when you can fall back on them. Now, there's other ways to scrutinize, but this is one way you should have on the side.
+Speaker 1:  And if you decide, "I'm going to invest in this," just bounce it off against NPV and see if they're in alignment. If they're not, there probably is a little more digging that you might want to do.
+Speaker 1:  So this is a slightly more detailed, but still pretty simple example of what I just said. So you are a student.
+Speaker 1:  You're starting a website hosting business. When I was your age, actually, my friends were doing this.
+Speaker 1:  This was when the internet was just being born, like in the '90s. The cutting-edge peers were starting website hosting businesses.
+Speaker 1:  Anyways, a little bit of history there. And then, okay, so you're not in school.
+Speaker 1:  You started this business. You're like, "I need to go back to school.
+Speaker 1:  What do I do with my business?" That's the basic setup.
+Speaker 1:  So you have a couple of different options. Luckily, an investor says, "Hey, I'm going to give you $200,000 for your business."
+Speaker 1:  Whatever you wanted, today, tomorrow, next year, I'm ready to give you 200,000, and I'll just own your business. You know the interest rate is 10%.
+Speaker 1:  So what do you do? You have three options.
+Speaker 1:  You could sell the business and you get back 200 grand. That's option one.
+Speaker 1:  Number two, you think you can still run the business at a scaled-back volume while you're a student. So you're going to be busy, but if you do that, you're going to your option two is, "For the next year, I'm going to run the business sort of part-time, be a full-time student.
+Speaker 1:  Running the business causes me to spend 30,000 on expenses, but by the end of the year, it will be 50,000." And it says profit, but we can just say positive cash flow.
+Speaker 1:  And I'll just finish the third one, then I have a comment. Hire someone to manage the business so it's still running at full capacity, but now you got to pay this person $50,000.
+Speaker 1:  That's including expenses and the salary for this person. But because it's running at full capacity, it's going to generate 100 grand in positive cash flow at the end of the year.
+Speaker 1:  So those are three options. The comment I wanted to make is oftentimes we're generating positive negative cash flows every day, if not every hour.
+Speaker 1:  But in a time-value money calculation, we typically consider those cash flows maybe monthly, but often it could be even annually, quarterly. I think I made this statement before.
+Speaker 1:  The math is fine no matter what time period you want, but what is required is the periods are the same. So if it's every quarter, then you have four quarters per year, and that's your full calculation for an hour.
+Speaker 1:  The other requirement is that the discount rate must match the period. So when I say 7% discount rate, it's implied I'm talking about an annual 7%.
+Speaker 1:  But if we wanted to have a cash flow positive and negative that come in every month, I need a monthly rate. And there is a simple conversion for that, but you just got to remember, you don't use 7% to know what is the present value of a cash flow one month from now.
+Speaker 1:  That's a monthly rate. So we'll get to that later, but I just wanted to point that out because I'm saying 30,000 expenses now, like right now, today, and then no more expenses for the rest of the year.
+Speaker 1:  That doesn't sound very realistic. And you're correct, but we have to make these simplifying cash flow assumptions.
+Speaker 1:  Okay. So you have three options.
+Speaker 1:  And at this point, if I just said, "Which one would you do?" there would be a lot of things.
+Speaker 1:  One might be, "I want to just sell now because I just want to simplify my life and focus on my school." Okay.
+Speaker 1:  One might be, "I'll do number well, I don't want to do number three because I don't have $50,000 today. That's why I'm going back to school.
+Speaker 1:  I need a job. So I can't afford number three.
+Speaker 1:  Even though I do appreciate 100 grand a year from now, I just don't have the 50,000." And number two is, "Okay, maybe that's sort of a little bit in between.
+Speaker 1:  I might be able to scrape together 30,000, but it also makes me still kind of worry about work because it's half-time and I want to focus." So there's all three you can see positives and negatives.
+Speaker 1:  And it might just come down to a subjective decision, which may be fine, but you've got to know what it's costing you for those decisions. So I'll just cut to the chase.
+Speaker 1:  Number three has the highest net present value. And so the immediate reaction of normal people would be, "That's fine.
+Speaker 1:  That's a theoretical thing, but obviously, I can't do that because I don't have $50,000." We'll get to that in a minute.
+Speaker 1:  So let's just first do the math. So the blue box there is the math that was stated on the prior page.
+Speaker 1:  So you have your three options. The first one's very simple.
+Speaker 1:  It's just 200 grand today and you're done. These have both upfront costs today and then benefits in a year.
+Speaker 1:  The 50,000 is what was profit, and then they sell at the end of that year. So in all three cases, we sell eventually.
+Speaker 1:  And then the third one, big positive cash flow, and then you sell. Okay.
+Speaker 1:  So why is the third one the biggest NPV? Well, it's just simple math.
+Speaker 1:  I think here we use a 10% discount rate. Let's assume that was what our was.
+Speaker 1:  I don't remember what we said, but we're going to use 10%. And so you can see, actually, number two is the lowest NPV.
+Speaker 1:  Number one is 200 grand. That was the price.
+Speaker 1:  And then number three is the highest. And it just so happens at 10%, that extra 100 grand we're getting more than offsets the cost of the 50,000.
+Speaker 1:  Okay. So in this case, just simply quantitative analysis, logical bucket of money.
+Speaker 1:  We want the largest bucket of money, so it's option three. In the real world, the obvious pushback would be, "Oh, well, I don't have that money today."
+Speaker 1:  But also in the real world, if in fact this was you and you were an entrepreneur and you had a startup, and let's say instead of 50,000, these are like $50 million. You need $50 million today.
+Speaker 1:  And eventually, in the whole deal, you get 300 million in a year, NPV is 220 million, etc., etc. If that's really true, you will find an investor because there's an investor who wants that money, right?
+Speaker 1:  So you don't worry. You don't need to worry in that sense about the 50,000 because if it's a true value creation opportunity, investors are constantly thinking about that and looking for that.
+Speaker 1:  So a private equity person might come in. Now, I made it millions of dollars because if it's really 50,000 at this level, it might be hard to find someone really because that's not worth a lot of people's time, even though it might be a lot of money for us, but that's just too small.
+Speaker 1:  But this here is exactly what Anthropic is doing. They're spending instead of 50,000, call it 50 billion, actually call it 500 billion.
+Speaker 1:  That's what they're saying, right? It's not today.
+Speaker 1:  It's over the next few years. And eventually, they're going to be worth trillions. 2 trillion is what they're saying today.
+Speaker 1:  So option three is actually real. And no one is saying, "Anthropic, don't do that because you don't have $50 billion today."
+Speaker 1:  They're not saying that. They're saying to the world, "Hey, we're going to create this value.
+Speaker 1:  Who wants a piece of it?" And there's no shortage of investors that are coming in because of their strategy for all the different factors.
+Speaker 1:  People are assessing, is the technology real? Do they have competitive advantage?
+Speaker 1:  What are the risks and opportunities? So they're doing all that.
+Speaker 1:  And at the end of the day, we're right around 2 trillion. So just multiply that by a million.
+Speaker 1:  And that's a real story. Okay.
+Speaker 1:  So that maybe shows it's not always the most obvious case. And it's also not about, "Do you have the money today?"
+Speaker 1:  I get it. Down at our level, it does matter.
+Speaker 1:  We have the cash laying around. But even so, even at our level, when you're ready to buy a house or an apartment, you're not going to have that cash.
+Speaker 1:  But you go to the bank, they look at your salary, they look at your expenses, they look at a lot of things, and they make the decision, "Okay, we're going to give you that 50,000 or 500,000, whatever it is, because what you're investing in and plus your ability to pay down, it's a net present value." It's not different.
+Speaker 1:  That's what they're doing. Okay.
+Speaker 1:  I think we've already said this. Oh, well, let me no, maybe I didn't.
+Speaker 1:  Just to be clear, regardless of your preferences for cash today, you maximize NPV. So the cash today option was option one.
+Speaker 1:  And so now, personally, you might say, "I want option one because I don't want the stress." And I'm not going to no judgment here, but you should also know that low-stress option costs you $22,000.
+Speaker 1:  And for some people, that's a good trade-off. I wanted to mention earlier, I mentioned my parents are educators.
+Speaker 1:  They probably could have made more money in a different field, education, not the most lucrative field, but they wanted summers off. And with those summers, they traveled and whatever they did with their time.
+Speaker 1:  Did you have a question? Yeah.
+Speaker 2:  Yeah. Wouldn't it only cost you $2,727 to choose the first option? Since you are making a 10% return, is there a difference?
+Speaker 1:  So I didn't quite catch everything, but what I'm just simply comparing is the two net present values. So remember, in that statement, it's present. So all three of these are buckets of money.
+Speaker 1:  In that case, you can see it's clearly one bucket is 22,727 bigger than the other. But I didn't quite get the whole question.
+Speaker 1:  I don't know if I answered you.
+Speaker 2:  No, you did. Thank you.
+Speaker 1:  Okay. Okay. Yeah.
+Speaker 1:  Yeah. See, so simplifying in that way, it's not like cheating.
+Speaker 1:  That's real. These are just buckets of money.
+Speaker 1:  But it can be quite complicated when you do think of other things. But if you've done your NPV calculation correctly, you've already incorporated all of those things.
+Speaker 1:  And so just to finish my thought, yeah, so no judgment. Everyone's different, but it's good to know.
+Speaker 1:  What does it cost you, right? And so in a corporate setting, though, it might be if you decide you're the CEO and you decide number one because you're like, "I think our corporation should have less stress.
+Speaker 1:  I just think that's cool." Maybe that's okay.
+Speaker 1:  But if you're a public company and people are like, "Well, the stock price is going to go down, and the board of directors is not happy," you can see how the optimizing of present value might be the preference, right? There is a famous company, actually, you've probably heard about it, Patagonia, where the owner, famously, it was on a growth trajectory, kind of taking over the world there for a while.
+Speaker 1:  And he said, "I don't like it. I don't want this.
+Speaker 1:  I don't want to maximize this." I mean, at the core of Patagonia, actually, it was founded in my hometown, so I kind of know a little bit about it, is the value of nature and of taking care of the world and these kinds of things, which don't often align with maximizing NPV.
+Speaker 1:  So he famously said, "Now we're going to pull back." Now, it's still kind of taking over the world, but they're not doing as much as they really could to maximize NPV.
+Speaker 1:  Now, if you want to put yourself in the shoes of that CEO, you could say, "Well, we are still maximizing NPV, but you're not calculating what we value in your calculation. We value a healthy plan.
+Speaker 1:  We value low stress of our employees." You can add those values, but you have to quantify them.
+Speaker 1:  And if you're a public company, you have to tell the investors, "Why is that good for the investors? Why should an investor care about the happiness of your employees, of the clean oceans, and so on and so forth?"
+Speaker 1:  So this is getting off topic, but I just want to give you a real-world example. In fact, that CEO wrote a book and it's titled Let Them Go Surf because he's basically saying, "You don't have to work that much.
+Speaker 1:  Go surf and go play, and that will help us be better in our products and the design of our products." Very interesting.
+Speaker 1:  And in fact, they do study Patagonian business school, so it's not completely out of line for this class. Okay.
+Speaker 1:  We just have a couple of minutes. Let me just see.
+Speaker 1:  Okay. I think this is it.
+Speaker 1:  We'll stop here. It's a good place to stop.
+Speaker 1:  I'll see you on Wednesday.
