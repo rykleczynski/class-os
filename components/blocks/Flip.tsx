@@ -16,7 +16,7 @@ export function Flip({ block }: BlockProps<FlipBlock>) {
         flipped ? "border-transparent bg-ink text-ink-foreground" : "border-paper-border bg-paper-card shadow-soft hover:border-control"
       }`}
     >
-      <span className={`text-xs font-semibold uppercase tracking-wide ${flipped ? "text-coral" : "text-muted-foreground"}`}>{flipped ? "Answer" : "Tap to flip"}</span>
+      <span className={`text-xs font-semibold uppercase tracking-wide ${flipped ? "text-ink-muted" : "text-muted-foreground"}`}>{flipped ? "Answer" : "Tap to flip"}</span>
       <span className="my-2 text-lg font-semibold leading-snug">{flipped ? block.back : block.front}</span>
       <RotateCw className={`h-4 w-4 self-end ${flipped ? "text-ink-muted" : "text-muted-foreground"}`} aria-hidden />
     </button>
