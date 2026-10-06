@@ -274,11 +274,20 @@ export async function getUpcomingAssessments(): Promise<Assessment[]> {
   return data;
 }
 
-/**
- * Slug of the most recent lesson, by its lecture's starts_at, falling back to the
- * lesson's created_at. Null when there are no lessons.
- */
-export async function getLatestLessonSlug(): Promise<string | null> {
+export type LessonSummary = {
+  id: string;
+  course_id: string;
+  title: string;
+  summary: string;
+  est_minutes: number;
+  /** Lecture start (ISO), falling back to the lesson's created_at. */
+  date: string;
+  /** Number of teaching steps, before the quiz and flashcards. */
+  steps: number;
+};
+
+/** Every published lesson in lecture order, oldest first. */
+export async function getLessonTimeline(): Promise<LessonSummary[]> {
   let starts: Map<string, string | null>;
   let all: LessonRecord[];
   if (!supabaseEnabled) {
@@ -291,6 +300,21 @@ export async function getLatestLessonSlug(): Promise<string | null> {
     all = rows;
     starts = new Map(lec.data.map((l) => [l.id, l.starts_at]));
   }
-  const when = (l: LessonRecord) => Date.parse(starts.get(l.lecture_id) || l.created_at) || 0;
-  return all.reduce<LessonRecord | null>((best, l) => (best && when(best) >= when(l) ? best : l), null)?.id ?? null;
+  return all
+    .map((l) => ({
+      id: l.id,
+      course_id: l.course_id,
+      title: l.title,
+      summary: l.summary,
+      est_minutes: l.est_minutes,
+      date: starts.get(l.lecture_id) || l.created_at,
+      steps: (l.spec as { steps?: unknown[] } | null)?.steps?.length ?? 0,
+    }))
+    .sort((a, b) => (Date.parse(a.date) || 0) - (Date.parse(b.date) || 0));
+}
+
+/** Slug of the most recent lesson (lecture starts_at, then created_at). Null when there are none. */
+export async function getLatestLessonSlug(): Promise<string | null> {
+  const t = await getLessonTimeline();
+  return t.at(-1)?.id ?? null;
 }

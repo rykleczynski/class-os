@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { lessonShellSchema, type OnAttempt } from "@/lib/lesson/schema";
 import { recordAttempt } from "@/lib/attempts";
 import { courseStyle } from "@/lib/course-theme";
-import { markCompleted } from "@/lib/progress";
+import { markCompleted, recordStep, recordQuizScore } from "@/lib/progress";
 import { Checklist } from "./Checklist";
 import { Flashcards } from "./Flashcards";
 import { Quiz } from "./Quiz";
@@ -64,6 +64,10 @@ function Player({ lessonId, lesson, course, initialStage }: Omit<Props, "spec"> 
     setMaxReached((m) => Math.max(m, next));
     if (typeof window !== "undefined") window.scrollTo({ top: 0 });
   };
+  // Persist the furthest step reached so the lesson picker can offer Resume.
+  useEffect(() => {
+    recordStep(lessonId, maxReached);
+  }, [lessonId, maxReached]);
   const finishQuiz = () => {
     setQuizDone(true);
     markCompleted(lessonId);
@@ -138,7 +142,7 @@ function Player({ lessonId, lesson, course, initialStage }: Omit<Props, "spec"> 
                 <section>
                   <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Check yourself</h1>
                   <div className="mt-5">
-                    <Quiz lesson={lesson as never} onAttempt={onAttempt} onDone={finishQuiz} />
+                    <Quiz lesson={lesson as never} onAttempt={onAttempt} onDone={finishQuiz} onScore={(score, total) => recordQuizScore(lessonId, score, total)} />
                   </div>
                 </section>
               )}

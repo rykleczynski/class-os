@@ -9,10 +9,13 @@ export function Quiz({
   lesson,
   onAttempt,
   onDone,
+  onScore,
 }: {
   lesson: Pick<Lesson, "quiz" | "recap">;
   onAttempt: OnAttempt;
   onDone: () => void;
+  /** Called once when the last question is answered, with the final score. */
+  onScore?: (score: number, total: number) => void;
 }) {
   const [i, setI] = useState(0);
   const [answers, setAnswers] = useState<Record<number, { picked: number; correct: boolean }>>({});
@@ -80,7 +83,7 @@ export function Quiz({
       {answered && (
         <button
           type="button"
-          onClick={() => (i + 1 < lesson.quiz.length ? setI(i + 1) : setFinished(true))}
+          onClick={() => (i + 1 < lesson.quiz.length ? setI(i + 1) : (onScore?.(score, lesson.quiz.length), setFinished(true)))}
           className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
         >
           {i + 1 < lesson.quiz.length ? "Next question" : "See my score"}

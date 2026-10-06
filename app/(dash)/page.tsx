@@ -2,11 +2,12 @@ import Link from "next/link";
 import { ArrowRight, Layers } from "lucide-react";
 import { CourseCard } from "@/components/CourseCard";
 import { courseStyle } from "@/lib/course-theme";
-import { getAllLessons, getCourses, getFlashcardCount, getLatestLessonSlug, getLessonsForCourse } from "@/lib/data";
+import { getAllLessons, getCourses, getFlashcardCount, getLessonTimeline } from "@/lib/data";
 
 export default async function Dashboard() {
-  const [courses, all, cards, latest] = await Promise.all([getCourses(), getAllLessons(), getFlashcardCount(), getLatestLessonSlug()]);
-  const perCourse = await Promise.all(courses.map(async (c) => ({ c, lessons: await getLessonsForCourse(c.id) })));
+  const [courses, all, cards, timeline] = await Promise.all([getCourses(), getAllLessons(), getFlashcardCount(), getLessonTimeline()]);
+  const latest = timeline.at(-1)?.id;
+  const perCourse = courses.map((c) => ({ c, lessons: timeline.filter((l) => l.course_id === c.id) }));
 
   return (
     <div className="space-y-8">
@@ -17,7 +18,7 @@ export default async function Dashboard() {
 
       <section aria-label="Courses" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {perCourse.map(({ c, lessons }) => (
-          <CourseCard key={c.id} course={c} lessonIds={lessons.map((l) => l.id)} firstLessonId={lessons[0]?.id} />
+          <CourseCard key={c.id} course={c} lessons={lessons} />
         ))}
       </section>
 
