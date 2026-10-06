@@ -157,7 +157,11 @@ Limits:
 - **Retries:** `content/_state/attempts.json` counts attempts per session. The gate gives
   up after 3 attempts or once the session is more than 48h old, and writes
   `content/_inbox/<slug>.md` ("needs a manual source", for example the Panopto
-  captions). Delete the note to make the gate consider the session again.
+  captions). Run `npm run pending -- --retry <slug>` to reset the attempt count and the 48h clock and
+  delete the note (deleting the note by hand is not enough). At most 2 sessions are handed
+  to each `claude` run (`CLASSOS_MAX_SESSIONS`), and attempts are only spent on those.
+  A lecture row without a published lesson still counts as pending. The gate also stays
+  idle outside the term window (`TERM_START`/`TERM_END`).
 - **Daily cap:** `run.sh` starts `claude` at most 6 times a day (`CLASSOS_MAX_RUNS`).
 - **Timeout:** 30 minutes per run.
 
@@ -168,7 +172,8 @@ the 30 per day.
 `claude` runs with `--permission-mode dontAsk` and an allowlist: the Calendar
 `list_events`/`get_event` tools, the Wispr `search_meetings`/`get_meeting` tools,
 WebSearch, WebFetch, Read, Write and Edit under `content/**`, and Bash for
-`npm run validate|sync|status|logline` and `node -e` only. `.env*` reads are denied.
+`npm run validate|sync|status|logline|calc` only (`calc` is a sandboxed arithmetic
+evaluator; there is no `node -e`, so the run cannot read or send the sync key). `.env*` reads are denied.
 The Supabase MCP is deliberately not allowed: `npm run status` does the read-only checks.
 The sync key stays in `../class_OS/.env.local` and is only read by `npm run sync`.
 

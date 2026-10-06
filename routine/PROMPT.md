@@ -26,8 +26,8 @@ Do not run commands outside the allowlist. If a command is denied, stop and log
 ## For each pending session
 
 Each entry has `slug`, `courseCode`, `courseTitle`, `seriesIds`, `startsAt`, `endsAt`
-(UTC) and `date` (Los Angeles). Record your start time (`node -e "console.log(Date.now())"`)
-so you can report seconds.
+(UTC) and `date` (Los Angeles). For the `logline` seconds
+argument pass 0; `run.sh` logs the real run time.
 
 ### 1. Confirm on the calendar
 
@@ -96,9 +96,9 @@ Content rules, from earlier generator runs:
    was symbolic, declare an illustrative model up front (for example MB = 60 - Q and
    MD = 0.5Q), say in each caption that the numbers are illustrative, and derive every
    figure from it.
-2. **Recompute every number with node.** One `node -e` script that recomputes each
-   figure shown in a caption, curve, slider, stepper, timeline or MCQ, and prints a
-   one-line check per number. Fix every mismatch before writing the JSON. If a number
+2. **Recompute every number.** One `npm run calc -- "<expr>" "<expr>" ...` call that
+   recomputes each figure shown in a caption, curve, slider, stepper, timeline or MCQ,
+   and prints one line per number (numeric expressions only; no node, no scripts). Fix every mismatch before writing the JSON. If a number
    from the transcript cannot be reconciled (captions garble numbers), drop it.
 3. Use the professor's examples and exact figures when they are clean. Keep the
    professor's notation. If it clashes with the usual one, say so in one sentence.
@@ -110,8 +110,8 @@ Content rules, from earlier generator runs:
    term. Never invent a quote or attribute something to the professor that was not said
    (for example a concept the brief expected but the lecture skipped).
 6. **MCQs: no length tell.** The correct option must not be strictly the longest. Pad
-   distractors to similar lengths, and vary answer indices across questions. Check with
-   a short `node -e` script over the options.
+   distractors to similar lengths, and vary answer indices across questions. `npm run validate`
+   warns when the correct option is the longest in most MCQs.
 7. `supplyDemand` tips: map marginal benefit to `demand` and marginal damage to
    `supply`, so the equilibrium dot is the social optimum. Draw a tax as a flat `other`
    curve, never a shifted curve (it creates a wrong second equilibrium). A second flat

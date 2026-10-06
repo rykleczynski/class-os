@@ -12,7 +12,12 @@ done
 command -v claude >/dev/null || { echo "claude CLI not on PATH" >&2; exit 1; }
 
 mkdir -p "$HOME/Library/LaunchAgents" "$HOME/Library/Logs"
-sed -e "s#__REPO__#$REPO#g" -e "s#__HOME__#$HOME#g" "$REPO/routine/$LABEL.plist" >"$DEST"
+# Substitute with perl reading the values from the environment, escaping XML characters,
+# so paths containing & < > # or / cannot corrupt the plist.
+REPO_VAL="$REPO" HOME_VAL="$HOME" perl -pe '
+  sub x { my $v = shift; $v =~ s/&/&amp;/g; $v =~ s/</&lt;/g; $v =~ s/>/&gt;/g; $v }
+  s/__REPO__/x($ENV{REPO_VAL})/ge; s/__HOME__/x($ENV{HOME_VAL})/ge;
+' "$REPO/routine/$LABEL.plist" >"$DEST"
 plutil -lint "$DEST" >/dev/null
 
 launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null || true

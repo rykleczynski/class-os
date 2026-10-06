@@ -7,6 +7,7 @@
  * rest as JSON.
  *
  *   npm run pending [-- --record] [-- --no-inbox]
+ *   npm run pending -- --retry <slug>   # clear the inbox note and reset attempts and the 48h clock
  *
  * Exit codes: 0 = pending sessions printed, 3 = nothing to do, 4 = could not check
  * (offline or Supabase error; run.sh treats this as "try again next tick").
@@ -16,7 +17,7 @@
  * ("needs a manual source") and the session stops being pending. --record bumps the
  * attempt counter for every pending session (run.sh passes it right before claude runs).
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { courses } from "../lib/fixtures/courses";
@@ -29,6 +30,11 @@ const MAX_ATTEMPTS = 3;
 const MAX_AGE_HOURS = 48;
 /** MM-DD, local date. Add to this list as the term goes on. */
 const HOLIDAYS = new Set(["11-11", "11-26", "11-27"]);
+/** Local YYYY-MM-DD, inclusive. Outside this window the gate stays idle (breaks). Tighten TERM_END once the term's last day is known. */
+const TERM_START = "2026-09-28";
+const TERM_END = "2026-12-31";
+/** At most this many sessions per claude run; --record only spends attempts on the ones emitted. */
+const MAX_PER_RUN = Number(process.env.CLASSOS_MAX_SESSIONS ?? 2);
 
 const contentRoot = join(__dirname, "..", "content");
 const stateFile = join(contentRoot, "_state", "attempts.json");
@@ -37,6 +43,8 @@ const inboxDir = join(contentRoot, "_inbox");
 const args = process.argv.slice(2);
 const record = args.includes("--record");
 const writeInbox = !args.includes("--no-inbox");
+const retryIdx = args.indexOf("--retry");
+const retrySlug = retryIdx >= 0 ? args[retryIdx + 1] : undefined;
 
 type Session = {
   slug: string;
@@ -84,6 +92,7 @@ function computeSessions(now: number): Session[] {
     const { y, m, d, wd } = localDate(now - back * 86400_000);
     const date = `${y}-${pad(m)}-${pad(d)}`;
     if (HOLIDAYS.has(`${pad(m)}-${pad(d)}`)) continue;
+    if (date < TERM_START || date > TERM_END) continue;
     for (const c of courses) {
       if (c.no_class_dates?.includes(date)) continue;
       for (const mt of c.meetings) {
@@ -105,7 +114,9 @@ function computeSessions(now: number): Session[] {
   return out.sort((a, b) => a.startsAt.localeCompare(b.startsAt));
 }
 
-function readAttempts(): Record<string, { count: number; last: string }> {
+type Attempts = Record<string, { count: number; last: string; retryAt?: string }>;
+
+function readAttempts(): Attempts {
   try {
     return JSON.parse(readFileSync(stateFile, "utf8"));
   } catch {
@@ -113,7 +124,25 @@ function readAttempts(): Record<string, { count: number; last: string }> {
   }
 }
 
+function retry(slug: string) {
+  if (!/^[a-z0-9-]+$/.test(slug)) {
+    console.error("pending: --retry needs a session slug such as econ106f-2026-10-07");
+    process.exit(2);
+  }
+  const attempts = readAttempts();
+  const now = new Date().toISOString();
+  attempts[slug] = { count: 0, last: now, retryAt: now };
+  mkdirSync(join(contentRoot, "_state"), { recursive: true });
+  writeFileSync(stateFile, JSON.stringify(attempts, null, 2));
+  rmSync(join(inboxDir, `${slug}.md`), { force: true });
+  console.error(`pending: ${slug} reset (attempts 0, 48h clock restarted); it must still be inside the lookback window`);
+}
+
 async function main() {
+  if (retryIdx >= 0) {
+    retry(retrySlug ?? "");
+    return;
+  }
   const now = Date.now();
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
@@ -127,7 +156,7 @@ async function main() {
   const signal = AbortSignal.timeout(15_000);
   const { data, error } = await db
     .from("lectures")
-    .select("starts_at, ends_at, courses(code)")
+    .select("starts_at, ends_at, courses(code), lessons(id)")
     .gte("starts_at", new Date(now - (LOOKBACK_DAYS + 2) * 86400_000).toISOString())
     .abortSignal(signal);
   if (error) {
@@ -136,7 +165,9 @@ async function main() {
   }
   const lectures = (data ?? []).map((l) => {
     const c = l.courses as unknown as { code: string } | { code: string }[] | null;
-    return { code: Array.isArray(c) ? c[0]?.code : c?.code, start: Date.parse(l.starts_at as string) };
+    // The publishable key only sees published lessons, so a lecture row alone does not count as done.
+    const hasLesson = Array.isArray(l.lessons) ? l.lessons.length > 0 : Boolean(l.lessons);
+    return { code: Array.isArray(c) ? c[0]?.code : c?.code, start: Date.parse(l.starts_at as string), hasLesson };
   });
 
   const attempts = readAttempts();
@@ -145,12 +176,13 @@ async function main() {
   for (const s of sessions) {
     const sStart = Date.parse(s.startsAt);
     const sEnd = Date.parse(s.endsAt);
-    const has = lectures.some((l) => l.code === s.courseCode && l.start >= sStart - 30 * 60_000 && l.start <= sEnd);
+    const has = lectures.some((l) => l.code === s.courseCode && l.hasLesson && l.start >= sStart - 30 * 60_000 && l.start <= sEnd);
     if (has) continue;
     const inbox = join(inboxDir, `${s.slug}.md`);
     if (existsSync(inbox)) continue;
     s.attempts = attempts[s.slug]?.count ?? 0;
-    const ageH = (now - sEnd) / 3600_000;
+    const retryAt = attempts[s.slug]?.retryAt ? Date.parse(attempts[s.slug].retryAt as string) : 0;
+    const ageH = (now - Math.max(sEnd, retryAt)) / 3600_000;
     if (s.attempts >= MAX_ATTEMPTS || ageH > MAX_AGE_HOURS) {
       const why = s.attempts >= MAX_ATTEMPTS ? `${s.attempts} generator attempts` : `more than ${MAX_AGE_HOURS}h old`;
       if (writeInbox) {
@@ -161,7 +193,8 @@ async function main() {
             `Session ${s.startsAt} to ${s.endsAt}. No lesson exists and the generator gave up (${why}).\n` +
             `Likely no Wispr recording. Add a source by hand, for example the Panopto captions, ` +
             `then write content/${codeKey(s.courseCode)}-${s.date}/ following routine/PROMPT.md.\n` +
-            `Delete this file to make the gate consider the session again.\n`,
+            `To try again, run: npm run pending -- --retry ${s.slug}\n` +
+            `(deleting this file alone does not help: the attempt count and the 48h limit still apply).\n`,
         );
       }
       gaveUp.push(s.slug);
@@ -172,11 +205,12 @@ async function main() {
 
   if (gaveUp.length) console.error(`pending: gave up on ${gaveUp.join(", ")} (inbox note ${writeInbox ? "written" : "skipped"})`);
   if (!pending.length) process.exit(3);
+  pending.splice(MAX_PER_RUN); // oldest first; the rest wait for the next tick
 
   if (record) {
     mkdirSync(join(contentRoot, "_state"), { recursive: true });
     for (const s of pending) {
-      attempts[s.slug] = { count: s.attempts + 1, last: new Date(now).toISOString() };
+      attempts[s.slug] = { ...attempts[s.slug], count: s.attempts + 1, last: new Date(now).toISOString() };
     }
     writeFileSync(stateFile, JSON.stringify(attempts, null, 2));
   }

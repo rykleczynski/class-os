@@ -96,7 +96,7 @@ fi
 TOOLS="mcp__claude_ai_Google_Calendar__list_events,mcp__claude_ai_Google_Calendar__get_event"
 TOOLS="$TOOLS,mcp__claude_ai_Wispr_Flow__search_meetings,mcp__claude_ai_Wispr_Flow__get_meeting"
 TOOLS="$TOOLS,WebSearch,WebFetch,Read,Write(content/**),Edit(content/**)"
-TOOLS="$TOOLS,Bash(npm run validate*),Bash(npm run sync*),Bash(npm run status*),Bash(npm run logline*),Bash(node -e *)"
+TOOLS="$TOOLS,Bash(npm run validate*),Bash(npm run sync*),Bash(npm run status*),Bash(npm run logline*),Bash(npm run calc*)"
 
 [ "$DRY" = "1" ] || echo $((COUNT + 1)) >"$COUNT_FILE"
 log "claude: start (dry=$DRY, run $((COUNT + 1))/$MAX_RUNS today)"
