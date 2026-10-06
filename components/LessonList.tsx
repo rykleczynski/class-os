@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
-import { useProgress, type LessonProgress } from "@/lib/progress";
+import { isDone, useProgress, type LessonProgress } from "@/lib/progress";
 
 export type LessonItem = {
   id: string;
@@ -15,7 +15,7 @@ export type LessonItem = {
 
 type State = "new" | "progress" | "done";
 
-const stateOf = (p?: LessonProgress): State => (p?.done ? "done" : p && p.step > 0 ? "progress" : "new");
+const stateOf = (p?: LessonProgress): State => (isDone(p) ? "done" : p ? "progress" : "new");
 
 const dateFmt = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
 const formatDate = (iso: string) => (Number.isNaN(Date.parse(iso)) ? "" : dateFmt.format(new Date(iso)));
@@ -27,18 +27,19 @@ export function LessonProgressLabel({ lesson, progress }: { lesson: LessonItem; 
     return (
       <span className="inline-flex items-center gap-1.5 text-xs font-medium text-good" data-testid="lesson-progress" data-state="done">
         <Check className="h-3.5 w-3.5" aria-hidden />
-        Completed{progress?.total ? ` · Quiz ${progress.score ?? 0}/${progress.total}` : ""}
+        Completed{progress?.quizTotal ? ` · Quiz ${progress.quizScore ?? 0}/${progress.quizTotal}` : ""}
       </span>
     );
   }
   if (state === "progress" && progress) {
     const n = Math.max(lesson.steps, 1);
-    const at = Math.min(progress.step, n - 1) + 1;
+    const at = Math.min(progress.lastStep, n - 1) + 1;
+    const past = progress.lastStep >= n ? (progress.lastStep === n ? "Quiz" : "Flashcards") : null;
     return (
       <span className="block w-full max-w-48 text-xs font-medium text-muted-foreground" data-testid="lesson-progress" data-state="progress">
-        <span className="tabular-nums">Step {at} of {n}</span>
-        <span className="mt-1 block h-1 overflow-hidden rounded-full bg-muted" role="progressbar" aria-label={`${lesson.title} progress`} aria-valuemin={0} aria-valuemax={n} aria-valuenow={at}>
-          <span className="block h-full rounded-full bg-(--course,var(--coral))" style={{ width: `${(at / n) * 100}%` }} />
+        <span className="tabular-nums">{past ?? `Step ${at} of ${n}`}</span>
+        <span className="mt-1 block h-1 overflow-hidden rounded-full bg-muted" role="progressbar" aria-label={`${lesson.title} progress`} aria-valuemin={0} aria-valuemax={n} aria-valuenow={past ? n : at}>
+          <span className="block h-full rounded-full bg-(--course,var(--coral))" style={{ width: `${((past ? n : at) / n) * 100}%` }} />
         </span>
       </span>
     );
@@ -56,7 +57,7 @@ export function LessonProgressLabel({ lesson, progress }: { lesson: LessonItem; 
  */
 export function LessonList({ lessons, onNavigate }: { lessons: LessonItem[]; onNavigate?: () => void }) {
   const { ready, map } = useProgress();
-  const upNext = ready ? lessons.find((l) => !map[l.id]?.done)?.id : undefined;
+  const upNext = ready ? lessons.find((l) => !isDone(map[l.id]))?.id : undefined;
 
   return (
     <ul className="divide-y divide-border" data-testid="lesson-list">

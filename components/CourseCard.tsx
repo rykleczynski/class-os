@@ -6,14 +6,14 @@ import { Dialog } from "@base-ui/react/dialog";
 import { ArrowRight, X } from "lucide-react";
 import type { Course } from "@/lib/fixtures/courses";
 import { courseStyle } from "@/lib/course-theme";
-import { useProgress } from "@/lib/progress";
+import { isDone, useProgress } from "@/lib/progress";
 import { LessonList, type LessonItem } from "./LessonList";
 
 export function CourseCard({ course, lessons }: { course: Course; lessons: LessonItem[] }) {
   const { ready, map } = useProgress();
   const [open, setOpen] = useState(false);
-  const done = lessons.filter((l) => map[l.id]?.done).length;
-  const started = lessons.some((l) => (map[l.id]?.step ?? 0) > 0 || map[l.id]?.done);
+  const done = lessons.filter((l) => isDone(map[l.id])).length;
+  const started = lessons.some((l) => map[l.id]);
   const total = lessons.length;
   return (
     <article

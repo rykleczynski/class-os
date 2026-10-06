@@ -3,17 +3,28 @@
 import { useSyncExternalStore } from "react";
 
 /**
- * Local-only progress until attempts are persisted (localStorage, per browser).
- * Per lesson we keep the furthest step index reached (steps, then quiz, then
- * flashcards), a completed flag, and the quiz score. Every storage access is
- * guarded: when storage is unavailable progress simply is not saved.
+ * Local-only progress (localStorage, per browser), keyed by lesson slug everywhere.
+ * Stored under one versioned key. Older completed-only ids (`classos:completed`)
+ * are migrated in when read. Every storage access is guarded: when storage is
+ * unavailable progress simply is not saved.
  */
-const KEY = "classos:lessons";
-const LEGACY_KEY = "classos:completed"; // plain array of completed lesson ids
+const KEY = "classos:progress:v1";
+const LEGACY_KEY = "classos:completed"; // plain array of completed lesson slugs
 const EVENT = "classos:progress";
 
-export type LessonProgress = { step: number; done: boolean; score?: number; total?: number };
+export type LessonProgress = {
+  /** Furthest step index reached: steps, then quiz, then flashcards. */
+  maxStep: number;
+  /** Where the learner was last. The player resumes here. */
+  lastStep: number;
+  quizScore?: number;
+  quizTotal?: number;
+  completedAt?: number;
+  updatedAt: number;
+};
 export type ProgressMap = Record<string, LessonProgress>;
+
+export const isDone = (p?: LessonProgress) => p?.completedAt !== undefined;
 
 function readRaw(key: string): string | null {
   try {
@@ -26,7 +37,7 @@ function readRaw(key: string): string | null {
 function load(): ProgressMap {
   const map: ProgressMap = {};
   try {
-    for (const id of JSON.parse(readRaw(LEGACY_KEY) ?? "[]") as string[]) map[id] = { step: 0, done: true };
+    for (const id of JSON.parse(readRaw(LEGACY_KEY) ?? "[]") as string[]) map[id] = { maxStep: 0, lastStep: 0, completedAt: 0, updatedAt: 0 };
   } catch {
     /* ignore corrupt legacy value */
   }
@@ -38,11 +49,12 @@ function load(): ProgressMap {
   return map;
 }
 
-function update(lessonId: string, fn: (p: LessonProgress) => LessonProgress) {
+function update(slug: string, fn: (p: LessonProgress | undefined) => LessonProgress | undefined) {
   try {
     const map = load();
-    const next = fn(map[lessonId] ?? { step: 0, done: false });
-    map[lessonId] = next;
+    const next = fn(map[slug]);
+    if (next) map[slug] = next;
+    else delete map[slug];
     localStorage.setItem(KEY, JSON.stringify(map));
     window.dispatchEvent(new Event(EVENT));
   } catch {
@@ -50,17 +62,24 @@ function update(lessonId: string, fn: (p: LessonProgress) => LessonProgress) {
   }
 }
 
-/** Remember the furthest step index the learner has reached. Never moves backwards. */
-export function recordStep(lessonId: string, step: number) {
-  update(lessonId, (p) => (step > p.step ? { ...p, step } : p));
+const blank = (): LessonProgress => ({ maxStep: 0, lastStep: 0, updatedAt: Date.now() });
+
+/** Record the step the learner is on now. maxStep never moves backwards. */
+export function recordStep(slug: string, step: number) {
+  update(slug, (p) => ({ ...(p ?? blank()), lastStep: step, maxStep: Math.max(p?.maxStep ?? 0, step), updatedAt: Date.now() }));
 }
 
-export function recordQuizScore(lessonId: string, score: number, total: number) {
-  update(lessonId, (p) => ({ ...p, score, total }));
+export function recordQuizScore(slug: string, score: number, total: number) {
+  update(slug, (p) => ({ ...(p ?? blank()), quizScore: score, quizTotal: total, updatedAt: Date.now() }));
 }
 
-export function markCompleted(lessonId: string) {
-  update(lessonId, (p) => ({ ...p, done: true }));
+export function markCompleted(slug: string) {
+  update(slug, (p) => ({ ...(p ?? blank()), completedAt: Date.now(), updatedAt: Date.now() }));
+}
+
+/** Forget everything about a lesson ("Start over"). */
+export function resetProgress(slug: string) {
+  update(slug, () => undefined);
 }
 
 function subscribe(cb: () => void) {
@@ -72,17 +91,16 @@ function subscribe(cb: () => void) {
   };
 }
 
-/** Snapshot string. The server snapshot is "" so callers can render a skeleton until mounted. */
+/** The server snapshot is "" so callers can render a skeleton until mounted. */
 const snapshot = () => `${readRaw(KEY) ?? ""}|${readRaw(LEGACY_KEY) ?? ""}|`;
 
 /** Progress for all lessons. `ready` is false on the server and during hydration. */
 export function useProgress(): { ready: boolean; map: ProgressMap } {
   const raw = useSyncExternalStore(subscribe, snapshot, () => "");
-  const map = raw === "" ? {} : load();
-  return { ready: raw !== "", map };
+  return { ready: raw !== "", map: raw === "" ? {} : load() };
 }
 
 export function useCompletedIds(): string[] {
   const { map } = useProgress();
-  return Object.entries(map).filter(([, p]) => p.done).map(([id]) => id);
+  return Object.entries(map).filter(([, p]) => isDone(p)).map(([id]) => id);
 }

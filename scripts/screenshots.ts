@@ -75,6 +75,10 @@ async function run(label: string, viewport: { width: number; height: number }) {
   await page.waitForURL(/\/lesson\/econ106f-class3$/);
   await next();
   await next();
+  // Reload mid-lesson: the player must resume at step 3, with a Start over option.
+  await page.reload({ waitUntil: "networkidle" });
+  check(`${label} reload resumes at step 3`, (await page.locator('section[aria-labelledby="step-title"]').getByText(/Step 3 of \d+/).count()) === 1);
+  check(`${label} resume banner offers Start over`, await page.getByTestId("resume-banner").getByRole("button", { name: "Start over" }).isVisible());
   await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
   await econCard().getByRole("button", { name: "Continue" }).click();
   await picker.waitFor();
@@ -87,6 +91,10 @@ async function run(label: string, viewport: { width: number; height: number }) {
 
   // Lesson player
   await page.goto(`${BASE}/lesson/econ106f-class3`, { waitUntil: "networkidle" });
+  // Opening the lesson resumes at step 3; Start over returns to step 1.
+  await page.getByTestId("resume-banner").getByRole("button", { name: "Start over" }).click();
+  await page.waitForTimeout(600);
+  check(`${label} Start over returns to step 1`, (await page.locator('section[aria-labelledby="step-title"]').getByText(/Step 1 of \d+/).count()) === 1);
   await shot("lesson-step1");
   // step 1 mcq feedback
   await page.getByRole("radio").nth(0).click();
