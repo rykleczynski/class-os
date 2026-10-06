@@ -2,7 +2,7 @@
  * Zero-token gate for the Mac generator. No LLM, no MCP, no secrets.
  *
  * Computes class sessions from lib/fixtures/courses.ts (meetings, America/Los_Angeles)
- * for the last 7 days that ended at least 10 minutes ago, drops holidays and sessions
+ * for the last 7 days that ended at least 10 minutes ago, drops holidays, per-course no_class_dates and sessions
  * that already have a lecture in Supabase (publishable key, read-only), and prints the
  * rest as JSON.
  *
@@ -85,6 +85,7 @@ function computeSessions(now: number): Session[] {
     const date = `${y}-${pad(m)}-${pad(d)}`;
     if (HOLIDAYS.has(`${pad(m)}-${pad(d)}`)) continue;
     for (const c of courses) {
+      if (c.no_class_dates?.includes(date)) continue;
       for (const mt of c.meetings) {
         if (!mt.days.includes(wd)) continue;
         const start = laToUtc(y, m, d, mt.start);
