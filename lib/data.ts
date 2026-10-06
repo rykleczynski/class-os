@@ -1,9 +1,9 @@
 import "server-only";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { courses, courseBySlug, type Course } from "./fixtures/courses";
-import econLesson from "./fixtures/lessons/econ106f-class3.json";
-import commLesson from "./fixtures/lessons/comm187-class3.json";
+import { courses, courseBySlug, courseByCode, type Course } from "./fixtures/courses";
+import { manifest } from "./fixtures/manifest";
+import { lessonsBySlug } from "./fixtures/lessons-index";
 import { connection } from "next/server";
 import type { Lesson } from "./lesson/schema";
 import { getSupabase, supabaseEnabled } from "./supabase/client";
@@ -37,45 +37,36 @@ export type LessonRecord = {
   schema_version: number;
 };
 
-const lectures: LectureRecord[] = [
-  {
-    id: "lec-econ106f-3",
-    course_id: "c-econ106f",
-    wispr_meeting_id: "2b8f0773-fb67-4389-9551-ff835a6b9f8a",
-    starts_at: "2026-10-05T15:00:20Z",
-    wispr_share_link: "https://notes.wisprflow.ai/shared/SGM_CQ-BnLpOzHMgAz0Apu9oKuvzE0FBAf7ObPjFKIU",
-    transcript_file: "econ106f-class3.txt",
-    status: "generated",
-  },
-  {
-    id: "lec-comm187-3",
-    course_id: "c-comm187",
-    wispr_meeting_id: "9d6e4625-fd96-4a72-88a4-ddfb72888a8c",
-    starts_at: "2026-10-05T16:30:47Z",
-    wispr_share_link: "https://notes.wisprflow.ai/shared/hB4i6GY_ZHhvg8Uin8e82Uv2ak0P4VSUA6LPGPn0lKA",
-    transcript_file: null,
-    status: "generated",
-  },
-];
+/** Fixture mode serves the same lecture list that `npm run sync` pushes to Supabase. */
+const fixtureEntries = manifest.flatMap((e) => {
+  const course = courseByCode(e.courseCode);
+  const spec = lessonsBySlug[e.slug];
+  return course && spec ? [{ e, course, spec }] : [];
+});
 
-function record(id: string, lectureId: string, courseId: string, spec: Lesson, summary: string, created: string): LessonRecord {
-  return {
-    id,
-    lecture_id: lectureId,
-    course_id: courseId,
+const lectures: LectureRecord[] = fixtureEntries.map(({ e, course }) => ({
+  id: `lec-${e.slug}`,
+  course_id: course.id,
+  wispr_meeting_id: e.sourceId,
+  starts_at: e.startsAt,
+  wispr_share_link: e.wisprShareLink,
+  transcript_file: e.transcriptFile,
+  status: "generated",
+}));
+
+const lessons: LessonRecord[] = fixtureEntries
+  .map(({ e, course, spec }) => ({
+    id: e.slug,
+    lecture_id: `lec-${e.slug}`,
+    course_id: course.id,
     title: spec.title,
-    summary,
+    summary: e.summary ?? spec.hook,
     est_minutes: spec.est_minutes,
-    created_at: created,
+    created_at: new Date(e.endsAt).toISOString(),
     spec,
     schema_version: spec.schema_version,
-  };
-}
-
-const lessons: LessonRecord[] = [
-  record("econ106f-class3", "lec-econ106f-3", "c-econ106f", econLesson as Lesson, "Value vs price, the NPV decision rule, and the first look at time value of money.", "2026-10-05T16:20:00Z"),
-  record("comm187-class3", "lec-comm187-3", "c-comm187", commLesson as Lesson, "Fairness, personal vs professional ethics, objectivity, and conflicts of interest.", "2026-10-05T18:00:00Z"),
-];
+  }))
+  .sort((a, b) => b.created_at.localeCompare(a.created_at));
 
 async function fixture_getCourses(): Promise<Course[]> {
   return courses;

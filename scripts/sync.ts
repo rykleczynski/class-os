@@ -57,6 +57,7 @@ async function main() {
     const lessonPath = join(root, "lessons", `${e.slug}.json`);
     if (!existsSync(lessonPath)) {
       console.warn(`${e.slug}: skipped: lesson file missing`);
+      failed++;
       continue;
     }
     let raw: unknown;

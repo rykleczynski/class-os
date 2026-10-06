@@ -503,7 +503,7 @@
               "label": "Working capital",
               "cells": [
                 "How fast does product turn into cash?",
-                "Inventory days = inventory / daily sales (500 cups at 100 a day = 5 days)"
+                "Inventory days = inventory / daily cost of goods sold. In unit counts: 500 cups at 100 cups sold a day = 5 days."
               ]
             },
             {

@@ -8,7 +8,7 @@ Fall 2026 courses: ECON 106F, COMM 187, ECON 134 (Mon/Wed 2:00-3:15) and ECON 10
 (finance lab). That is 4 course cards on the dashboard.
 
 This repo currently holds Phases 1-2 plus the Supabase schema: the app shell, the
-lesson contract, the full block renderer kit, two hand-written fixture lessons, and
+lesson contract, the full block renderer kit, the fixture lessons (see lib/fixtures/manifest.ts), and
 the database migration and seed. The generator routine and deployment come later.
 
 ## Run it
