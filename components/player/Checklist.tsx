@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 
 export type ChecklistItem = { id: string; title: string };
 
-/** Vertical checklist: red check circles when done, joined by a line. */
+/** Vertical checklist: coral check circles when done, empty circles ahead, joined by a hairline. */
 export function Checklist({
   items,
   current,
@@ -21,25 +21,26 @@ export function Checklist({
         const isCurrent = i === current;
         const reachable = i <= maxReached;
         return (
-          <li key={it.id} className="relative flex gap-3 pb-6 last:pb-0">
+          <li key={it.id} className="relative flex items-start gap-3 pb-5 last:pb-0">
             {i < items.length - 1 && (
-              <span aria-hidden className={`absolute left-[13px] top-7 h-[calc(100%-1.75rem)] w-0.5 ${i < maxReached ? "bg-check" : "bg-paper-border"}`} />
+              <span aria-hidden className="absolute left-[11px] top-[1.625rem] h-[calc(100%-1.75rem)] w-px bg-paper-border" />
             )}
             <span
               data-testid={`check-${i}`}
               data-done={done}
-              className={`z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 text-xs font-bold ${
-                done ? "border-check bg-check text-white" : isCurrent ? "border-foreground bg-paper-card" : "border-paper-border bg-paper-card text-muted-foreground"
+              className={`z-10 mt-px flex h-[23px] w-[23px] shrink-0 items-center justify-center rounded-full border-[1.5px] ${
+                done ? "border-check bg-check text-coral-foreground" : isCurrent ? "border-foreground bg-paper-card" : "border-control bg-paper-card"
               }`}
             >
-              {done ? <Check className="h-4 w-4" strokeWidth={3} /> : i + 1}
+              {done ? <Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden /> : isCurrent ? <span className="h-2 w-2 rounded-full bg-foreground" aria-hidden /> : null}
+              <span className="sr-only">{done ? "Done" : isCurrent ? "Current" : "Not started"}</span>
             </span>
             <button
               type="button"
               disabled={!reachable}
               onClick={() => onJump(i)}
               aria-current={isCurrent ? "step" : undefined}
-              className={`pt-0.5 text-left text-sm leading-snug ${isCurrent ? "font-bold" : "font-medium"} ${reachable ? "" : "text-muted-foreground"}`}
+              className={`pt-0.5 text-left text-sm leading-snug ${isCurrent || done ? "font-semibold" : "font-normal"} ${reachable ? "hover:underline hover:underline-offset-4" : "text-muted-foreground"}`}
             >
               {it.title}
             </button>
