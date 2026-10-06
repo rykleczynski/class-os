@@ -1,0 +1,996 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "number",
+      "const": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "hook": {
+      "type": "string",
+      "minLength": 1
+    },
+    "est_minutes": {
+      "type": "number",
+      "minimum": 3,
+      "maximum": 25
+    },
+    "objectives": {
+      "minItems": 3,
+      "maxItems": 3,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recap": {
+      "minItems": 2,
+      "maxItems": 5,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "quiz": {
+      "minItems": 5,
+      "maxItems": 5,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "mcq"
+          },
+          "id": {
+            "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+            "type": "string",
+            "minLength": 1
+          },
+          "q": {
+            "type": "string"
+          },
+          "options": {
+            "minItems": 2,
+            "maxItems": 6,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "answer": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Index of the correct option."
+          },
+          "why": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "q",
+          "options",
+          "answer",
+          "why"
+        ]
+      }
+    },
+    "flashcards": {
+      "minItems": 3,
+      "maxItems": 12,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "front": {
+            "type": "string"
+          },
+          "back": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "front",
+          "back"
+        ]
+      }
+    },
+    "concepts": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "steps": {
+      "minItems": 3,
+      "maxItems": 7,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "blocks": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "prose"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "md": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Short markdown. Never stands alone in a step."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "md"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "keyIdea"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "chart"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "line",
+                        "bar",
+                        "area",
+                        "scatter"
+                      ]
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {
+                          "type": [
+                            "string",
+                            "number"
+                          ]
+                        }
+                      }
+                    },
+                    "x": {
+                      "type": "string",
+                      "description": "Key in each data row used for the x axis."
+                    },
+                    "y": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ],
+                      "description": "Key (or keys, for multiple series) used for the y axis."
+                    },
+                    "xLabel": {
+                      "type": "string"
+                    },
+                    "yLabel": {
+                      "type": "string"
+                    },
+                    "annotations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": [
+                              "string",
+                              "number"
+                            ]
+                          },
+                          "y": {
+                            "type": "number"
+                          },
+                          "label": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "label"
+                        ]
+                      }
+                    },
+                    "caption": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "kind",
+                    "data",
+                    "x",
+                    "y"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "slider"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "formula": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 500,
+                      "description": "Math expression over the named vars, evaluated with a restricted mathjs. Operators + - * / ^ ( ), and sqrt, exp, log, abs, min, max, round, floor, ceil, pi, e. No assignments or function definitions."
+                    },
+                    "vars": {
+                      "minItems": 1,
+                      "maxItems": 6,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "min": {
+                            "type": "number"
+                          },
+                          "max": {
+                            "type": "number"
+                          },
+                          "step": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "default": {
+                            "type": "number"
+                          },
+                          "unit": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "label",
+                          "min",
+                          "max",
+                          "step",
+                          "default"
+                        ]
+                      }
+                    },
+                    "output": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string"
+                        },
+                        "format": {
+                          "default": "number",
+                          "type": "string",
+                          "enum": [
+                            "number",
+                            "currency",
+                            "percent"
+                          ]
+                        },
+                        "decimals": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 6
+                        },
+                        "unit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "label"
+                      ]
+                    },
+                    "plot": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "string",
+                          "description": "Name of the var swept along the x axis."
+                        },
+                        "range": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "number"
+                            }
+                          ],
+                          "additionalItems": false,
+                          "minItems": 2,
+                          "maxItems": 2
+                        },
+                        "points": {
+                          "type": "integer",
+                          "minimum": 10,
+                          "maximum": 400
+                        },
+                        "yLabel": {
+                          "type": "string"
+                        },
+                        "zeroLine": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "x"
+                      ]
+                    },
+                    "caption": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "formula",
+                    "vars",
+                    "output"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "supplyDemand"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "curves": {
+                      "minItems": 1,
+                      "maxItems": 6,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "default": "other",
+                            "type": "string",
+                            "enum": [
+                              "supply",
+                              "demand",
+                              "other"
+                            ]
+                          },
+                          "intercept": {
+                            "type": "number",
+                            "description": "Price at quantity 0 (P = intercept + slope * Q)."
+                          },
+                          "slope": {
+                            "type": "number"
+                          },
+                          "color": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "label",
+                          "intercept",
+                          "slope"
+                        ]
+                      }
+                    },
+                    "shifts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "of": {
+                            "type": "string",
+                            "description": "Label of the curve being shifted."
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "intercept": {
+                            "type": "number"
+                          },
+                          "slope": {
+                            "type": "number"
+                          },
+                          "color": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "of",
+                          "label"
+                        ]
+                      }
+                    },
+                    "areas": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "curves": {
+                            "type": "array",
+                            "items": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ],
+                            "additionalItems": false,
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "description": "Labels (base or shifted) of the two curves bounding the area."
+                          },
+                          "from": {
+                            "type": "number"
+                          },
+                          "to": {
+                            "type": "number"
+                          },
+                          "color": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "label",
+                          "curves",
+                          "from",
+                          "to"
+                        ]
+                      }
+                    },
+                    "xLabel": {
+                      "type": "string"
+                    },
+                    "yLabel": {
+                      "type": "string"
+                    },
+                    "xMax": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "yMax": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "caption": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "curves"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "timeline"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "events": {
+                      "minItems": 2,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "when": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "detail": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "description": "Cash flow in dollars; renders as a green inflow or red outflow.",
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "when",
+                          "title"
+                        ]
+                      }
+                    },
+                    "caption": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "events"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "compare"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "columns": {
+                      "minItems": 2,
+                      "maxItems": 5,
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "rows": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "cells": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "label",
+                          "cells"
+                        ]
+                      }
+                    },
+                    "highlight": {
+                      "description": "Column index to emphasize.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "caption": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "columns",
+                    "rows"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "stepper"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "frames": {
+                      "minItems": 2,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string"
+                          },
+                          "text": {
+                            "type": "string"
+                          },
+                          "math": {
+                            "description": "One line shown in a monospace panel.",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "title",
+                          "text"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "frames"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "flip"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "front": {
+                      "type": "string"
+                    },
+                    "back": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "front",
+                    "back"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "mcq"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "q": {
+                      "type": "string"
+                    },
+                    "options": {
+                      "minItems": 2,
+                      "maxItems": 6,
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "answer": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991,
+                      "description": "Index of the correct option."
+                    },
+                    "why": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "q",
+                    "options",
+                    "answer",
+                    "why"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "sortOrMatch"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "mode": {
+                      "type": "string",
+                      "enum": [
+                        "order",
+                        "match"
+                      ]
+                    },
+                    "prompt": {
+                      "type": "string"
+                    },
+                    "items": {
+                      "minItems": 2,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "target": {
+                            "description": "match mode: index into targets.",
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "label"
+                        ]
+                      }
+                    },
+                    "targets": {
+                      "description": "match mode only.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "why": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "mode",
+                    "prompt",
+                    "items"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "scenario"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "type": "string"
+                    },
+                    "choices": {
+                      "minItems": 2,
+                      "maxItems": 5,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "outcome": {
+                            "type": "string"
+                          },
+                          "verdict": {
+                            "type": "string",
+                            "enum": [
+                              "best",
+                              "ok",
+                              "poor"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "label",
+                          "outcome",
+                          "verdict"
+                        ]
+                      }
+                    },
+                    "debrief": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "prompt",
+                    "choices",
+                    "debrief"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "inTheNews"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "headline": {
+                      "type": "string"
+                    },
+                    "source": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "tieIn": {
+                      "type": "string"
+                    },
+                    "placeholder": {
+                      "description": "True when the story is not a verified real link.",
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "headline",
+                    "source",
+                    "url",
+                    "date",
+                    "tieIn"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "custom"
+                    },
+                    "id": {
+                      "description": "Stable id for attempt tracking. Defaults to <stepId>:<index>.",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "html": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 80,
+                      "maximum": 1200
+                    },
+                    "caption": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "html",
+                    "height"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "blocks"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "title",
+    "hook",
+    "est_minutes",
+    "objectives",
+    "recap",
+    "quiz",
+    "flashcards",
+    "concepts",
+    "steps"
+  ]
+}

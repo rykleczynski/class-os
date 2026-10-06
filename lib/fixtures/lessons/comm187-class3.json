@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "title": "Fairness: objectivity and conflicts of interest",
+  "hook": "Fair sounds simple until someone asks you to define it. Then try doing it with a camera on you.",
+  "est_minutes": 8,
+  "objectives": [
+    "Explain why defining fairness differently leads to different outcomes.",
+    "Separate personal ethics from professional ethics, and objectivity from balance.",
+    "Choose between disclosure and recusal when a conflict of interest, real or apparent, comes up."
+  ],
+  "steps": [
+    {
+      "id": "fairness-broad",
+      "title": "Fairness is bigger than journalism",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Fairness is a broad principle of ethics: free from bias, an even hand. We feel it before we can explain it. Two kids with unequal slices of pie notice at once.\n\nThe trouble starts when you apply it. Take a tax cut for a newly elected official."
+        },
+        {
+          "type": "compare",
+          "title": "Two \"fair\" tax cuts",
+          "columns": [
+            "10% across the board",
+            "Flat $1,000 cut"
+          ],
+          "rows": [
+            {
+              "label": "Pays $100,000 a year",
+              "cells": [
+                "$10,000 cut",
+                "$1,000 cut"
+              ]
+            },
+            {
+              "label": "Pays $100 a year",
+              "cells": [
+                "$10 cut",
+                "Taxes cut to zero"
+              ]
+            },
+            {
+              "label": "The objection",
+              "cells": [
+                "The poorer person gets $10, the wealthier person $10,000",
+                "$1,000 is almost meaningless to the $100,000 payer"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "mcq",
+          "q": "What is the lecture's main point about the tax and sentencing examples?",
+          "options": [
+            "One of the definitions of fair is simply correct",
+            "How you define fair can lead to very different conclusions",
+            "Fairness only matters in criminal justice",
+            "Percentages are always fairer than flat amounts"
+          ],
+          "answer": 1,
+          "why": "Equal percentages, equal sentences, three strikes: each is defended as fair, and each produces a different result.",
+          "id": "mcq-define"
+        }
+      ]
+    },
+    {
+      "id": "personal-professional",
+      "title": "Personal vs professional ethics",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Personal ethics ask: how would you behave if you knew you would never be punished? Professional ethics are not yours. They attach to the job, and they serve society.\n\n> \"The ethics of journalism don't change just because I joined the field of journalism. It's my job as a journalist to understand them and incorporate them.\""
+        },
+        {
+          "type": "sortOrMatch",
+          "mode": "match",
+          "prompt": "Sort each idea into the kind of ethics it belongs to.",
+          "targets": [
+            "Personal ethics",
+            "Professional ethics"
+          ],
+          "items": [
+            {
+              "label": "Would I do this if I would never be punished?",
+              "target": 0
+            },
+            {
+              "label": "Doctors: do no harm",
+              "target": 1
+            },
+            {
+              "label": "Lawyers: zealous representation, even of a client you believe is guilty",
+              "target": 1
+            },
+            {
+              "label": "Your conscience, or your moral code",
+              "target": 0
+            },
+            {
+              "label": "Journalists: inform the public so a democracy can make decisions",
+              "target": 1
+            }
+          ],
+          "why": "Professional duties come with the work and are designed to serve the system, even when one outcome feels unfair."
+        },
+        {
+          "type": "keyIdea",
+          "text": "Journalism is different from the other professions: its job is to supply the information a democracy decides with."
+        }
+      ]
+    },
+    {
+      "id": "objectivity",
+      "title": "Objectivity and the Jan 6 test",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Objectivity is about **facts**. Balance, next class, is about **opinions**. We do not ask journalists to have no experience or views. Like a juror, they set them aside to be fair.\n\n> \"Can you see the world as it is, not as you wish it were?\""
+        },
+        {
+          "type": "scenario",
+          "id": "scn-jan6",
+          "title": "You are reporting from the Capitol on January 6, 2021",
+          "prompt": "Adrenaline is up. Your first paragraph is due. How do you describe what is happening?",
+          "choices": [
+            {
+              "label": "Lead with a label, whichever one feels accurate to you: riot, insurrection, or uprising.",
+              "outcome": "Characterizing words are where your politics leak into the facts. A reader who disagrees with the label stops trusting the rest.",
+              "verdict": "poor"
+            },
+            {
+              "label": "Lead with numbers and description: a police estimate of crowd size, windows broken, injuries, hospital visits. Quote people's motives, and note when a claim, like a stolen election, is false.",
+              "outcome": "Counts and description hold up whatever the reader's politics. Reporting the motive as the person's belief, while flagging the false premise, is accurate to both.",
+              "verdict": "best"
+            },
+            {
+              "label": "Skip the protesters' stated motives, since they rest on a false premise.",
+              "outcome": "Their motives are real facts about why they were there. Dropping them leaves readers with less to decide on.",
+              "verdict": "ok"
+            }
+          ],
+          "debrief": "The check from lecture: would you describe it the same way if the crowd shared your politics? You would not change a casualty count to suit your side. Numbers and description survive that test better than characterization."
+        }
+      ]
+    },
+    {
+      "id": "conflicts",
+      "title": "Conflicts of interest: disclose or recuse",
+      "blocks": [
+        {
+          "type": "prose",
+          "md": "Conflicts come from personal relationships, business ties (including investments), and strongly held beliefs. They can be actual or apparent, and apparent depends on how others see it.\n\nThe LA Times case: a guest editor's publicist was dating the editor who picked him."
+        },
+        {
+          "type": "timeline",
+          "title": "The guest editor case",
+          "events": [
+            {
+              "when": "Early 2000s",
+              "title": "LA Times launches a guest editor program",
+              "detail": "An outsider edits the Sunday opinion section."
+            },
+            {
+              "when": "Selection",
+              "title": "Brian Grazer is invited",
+              "detail": "A Hollywood producer, picked by the editor."
+            },
+            {
+              "when": "A week before print",
+              "title": "An alternative paper reports the relationship",
+              "detail": "Grazer's publicist was dating the editor, Andres."
+            },
+            {
+              "when": "The decision",
+              "title": "The paper cancels the section",
+              "detail": "Andres resigns. The lecturer was later appointed to replace him."
+            }
+          ]
+        },
+        {
+          "type": "scenario",
+          "id": "scn-latimes",
+          "prompt": "You are the publisher. The relationship is now public and neither person denies it. The editor insists he chose Grazer on merit. The section ships in a week.",
+          "choices": [
+            {
+              "label": "Publish as planned and say nothing.",
+              "outcome": "Readers learn about the relationship from a rival paper, not from you, and the appearance of a conflict stands.",
+              "verdict": "poor"
+            },
+            {
+              "label": "Publish it with an explanation of the relationship and how the choice was made.",
+              "outcome": "This is disclosure. It works if you can persuade a reasonable reader. The lecturer notes it was hard here, because the explanation exposed the editor's personal life.",
+              "verdict": "ok"
+            },
+            {
+              "label": "Kill the section and start over.",
+              "outcome": "This is the equivalent of recusal: the appearance is too strong to talk away. It is what the paper did, and it cost the editor his job.",
+              "verdict": "ok"
+            }
+          ],
+          "debrief": "Disclosure and recusal are the two basic remedies editors face. Neither is free, and the lecturer does not name one as correct. What matters is that you choose on purpose."
+        },
+        {
+          "type": "sortOrMatch",
+          "mode": "match",
+          "prompt": "Match each remedy to what it means.",
+          "targets": [
+            "Disclosure",
+            "Recusal"
+          ],
+          "items": [
+            {
+              "label": "Explain the relationship to readers",
+              "target": 0
+            },
+            {
+              "label": "Withdraw, kill the story, start over",
+              "target": 1
+            }
+          ],
+          "why": "Disclosure keeps the piece and explains. Recusal removes the conflicted person or the piece."
+        }
+      ]
+    }
+  ],
+  "recap": [
+    "How you define fairness changes the conclusion, so say which definition you are using.",
+    "Personal ethics come from you. Professional ethics come with the job and serve society.",
+    "Objectivity is about facts, balance is about opinions. Numbers and description beat characterization.",
+    "A conflict can be actual or apparent. Disclosure or recusal are the two basic remedies."
+  ],
+  "quiz": [
+    {
+      "type": "mcq",
+      "q": "In this course, how are objectivity and balance distinguished?",
+      "options": [
+        "They mean the same thing",
+        "Objectivity is about presenting facts, balance is about presenting opinions",
+        "Objectivity is about opinions, balance is about facts",
+        "Objectivity is for editors, balance is for reporters"
+      ],
+      "answer": 1,
+      "why": "Objectivity is perceiving and presenting facts accurately. Balance is presenting different points of view."
+    },
+    {
+      "type": "mcq",
+      "q": "Which check helps keep your politics out of how you describe an event?",
+      "options": [
+        "Use the most dramatic word available",
+        "Ask whether you would describe it the same if the crowd shared your politics",
+        "Avoid all numbers",
+        "Quote only people you agree with"
+      ],
+      "answer": 1,
+      "why": "Numbers and plain description survive the test. Characterizing words are where politics leak in."
+    },
+    {
+      "type": "mcq",
+      "q": "Which is NOT one of the three sources of conflict of interest named in lecture?",
+      "options": [
+        "Personal relationships",
+        "Business relationships, including investments",
+        "Strongly held beliefs",
+        "Working long hours"
+      ],
+      "answer": 3,
+      "why": "The three are personal relationships, business ties, and strongly held beliefs."
+    },
+    {
+      "type": "mcq",
+      "q": "What is an apparent conflict of interest?",
+      "options": [
+        "A conflict you admit to",
+        "A relationship that looks like a conflict to a reasonable outsider, even if you believe it is not",
+        "A conflict that has been resolved",
+        "A conflict between two journalists"
+      ],
+      "answer": 1,
+      "why": "You may sincerely say you have no conflict while someone else, looking at the same facts, sees one."
+    },
+    {
+      "type": "mcq",
+      "q": "Why does the lecturer use the juror analogy?",
+      "options": [
+        "Journalists should have no opinions or experiences",
+        "Jurors and journalists both set aside or contain their experiences to be fair to the people involved",
+        "Journalists must serve on juries",
+        "Jury selection is a model for hiring"
+      ],
+      "answer": 1,
+      "why": "A juror with experiences can still be fair. Journalists are asked to do the same, with the goal of a fair story rather than a verdict."
+    }
+  ],
+  "flashcards": [
+    {
+      "front": "Fairness (broad definition)",
+      "back": "Free from bias or injustice, an even hand. How you define it changes the outcome."
+    },
+    {
+      "front": "Personal ethics",
+      "back": "What guides your behavior if you knew you would never be punished: your conscience or moral code."
+    },
+    {
+      "front": "Professional ethics",
+      "back": "Attach to the job, not the person, and serve society: doctors do no harm, lawyers represent zealously."
+    },
+    {
+      "front": "Objectivity vs balance",
+      "back": "Objectivity: presenting facts accurately. Balance: presenting opinions fairly."
+    },
+    {
+      "front": "Disclosure",
+      "back": "The remedy that keeps the piece and explains the conflict to readers."
+    },
+    {
+      "front": "Recusal",
+      "back": "The remedy where the conflicted person withdraws, or the piece is killed and restarted."
+    }
+  ],
+  "concepts": [
+    "Fairness",
+    "Personal vs professional ethics",
+    "Objectivity",
+    "Balance",
+    "Conflict of interest",
+    "Disclosure",
+    "Recusal"
+  ]
+}
