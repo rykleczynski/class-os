@@ -7,6 +7,7 @@ import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { lessonShellSchema, type OnAttempt } from "@/lib/lesson/schema";
+import { recordAttempt } from "@/lib/attempts";
 import { markCompleted } from "@/lib/progress";
 import { Checklist } from "./Checklist";
 import { Flashcards } from "./Flashcards";
@@ -51,8 +52,8 @@ function Player({ lessonId, lesson, course, initialStage }: Omit<Props, "spec"> 
   const reduce = useReducedMotion();
 
   const onAttempt: OnAttempt = useCallback((blockId, answer, correct) => {
-    // Persistence comes later. For now: local state and a console line.
-    console.debug("[class-os] attempt", { lessonId, blockId, answer, correct });
+    // Local state for the UI, plus a best-effort write to the attempts table.
+    recordAttempt(lessonId, blockId, answer, correct).catch(() => {});
     setAttempts((a) => [...a, { blockId, answer, correct, at: Date.now() }]);
   }, [lessonId]);
 
