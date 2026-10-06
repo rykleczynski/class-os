@@ -56,6 +56,9 @@ function update(slug: string, fn: (p: LessonProgress | undefined) => LessonProgr
     if (next) map[slug] = next;
     else delete map[slug];
     localStorage.setItem(KEY, JSON.stringify(map));
+    // load() folded the legacy ids into `map`, so drop the old key. Otherwise a
+    // reset would see the old completion again.
+    localStorage.removeItem(LEGACY_KEY);
     window.dispatchEvent(new Event(EVENT));
   } catch {
     /* storage unavailable: progress simply is not saved */

@@ -82,6 +82,7 @@ function Player({ lessonId, lesson, course, initialStage, saved }: Omit<Props, "
   }, [lessonId, idx]);
   const startOver = () => {
     resetProgress(lessonId);
+    setAttempts([]);
     setResumed(false);
     setQuizDone(false);
     setMaxReached(0);
