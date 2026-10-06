@@ -22,14 +22,14 @@ export default function BlocksGallery() {
           <Link href="/" className="text-sm font-semibold underline underline-offset-2">
             Dashboard
           </Link>
-          <h1 className="mt-2 text-3xl font-extrabold">Block gallery</h1>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight">Block gallery</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Every block type, rendered from a fixture. The last two entries fail on purpose; the rest of the page keeps working.
           </p>
         </header>
         {GALLERY.map((g, i) => (
           <section key={i} aria-label={g.label} className="space-y-2">
-            <h2 className="text-xs font-bold uppercase tracking-wide text-muted-foreground">{g.label}</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{g.label}</h2>
             {g.note && <p className="text-xs text-muted-foreground">{g.note}</p>}
             <BlockRenderer
               block={g.block}
@@ -41,7 +41,7 @@ export default function BlocksGallery() {
           </section>
         ))}
         <section aria-label="attempt log" className="rounded-2xl border border-dashed border-paper-border p-3">
-          <h2 className="text-xs font-bold uppercase tracking-wide text-muted-foreground">onAttempt log</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">onAttempt log</h2>
           <pre data-testid="attempt-log" className="mt-1 whitespace-pre-wrap font-mono text-xs">{log.length ? log.join("\n") : "(no attempts yet)"}</pre>
         </section>
       </div>

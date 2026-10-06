@@ -20,7 +20,7 @@ export const CUSTOM_CSP = [
 ].join("; ");
 
 export function buildSrcDoc(html: string): string {
-  return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${CUSTOM_CSP}"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;color:#16181d;background:transparent}</style></head><body>${html}</body></html>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${CUSTOM_CSP}"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;color:#1f1d1a;background:transparent}</style></head><body>${html}</body></html>`;
 }
 
 export function Custom({ block }: BlockProps<CustomBlock>) {
@@ -32,7 +32,7 @@ export function Custom({ block }: BlockProps<CustomBlock>) {
         sandbox="allow-scripts"
         srcDoc={srcDoc}
         style={{ height: block.height }}
-        className="block w-full border-0 bg-white"
+        className="block w-full border-0 bg-[#fcfaf6]"
       />
     </BlockFrame>
   );

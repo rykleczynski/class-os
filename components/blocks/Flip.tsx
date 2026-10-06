@@ -13,12 +13,12 @@ export function Flip({ block }: BlockProps<FlipBlock>) {
       onClick={() => setFlipped((f) => !f)}
       aria-pressed={flipped}
       className={`flex min-h-28 w-full flex-col justify-between rounded-2xl border p-4 text-left transition-colors ${
-        flipped ? "border-transparent bg-lime text-lime-foreground" : "border-paper-border bg-paper-card"
+        flipped ? "border-transparent bg-ink text-ink-foreground" : "border-paper-border bg-paper-card shadow-soft hover:border-control"
       }`}
     >
-      <span className="text-xs font-bold uppercase tracking-wide opacity-60">{flipped ? "Answer" : "Tap to flip"}</span>
+      <span className={`text-xs font-semibold uppercase tracking-wide ${flipped ? "text-coral" : "text-muted-foreground"}`}>{flipped ? "Answer" : "Tap to flip"}</span>
       <span className="my-2 text-lg font-semibold leading-snug">{flipped ? block.back : block.front}</span>
-      <RotateCw className="h-4 w-4 self-end opacity-50" aria-hidden />
+      <RotateCw className={`h-4 w-4 self-end ${flipped ? "text-ink-muted" : "text-muted-foreground"}`} aria-hidden />
     </button>
   );
 }

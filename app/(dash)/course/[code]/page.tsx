@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
+import { courseStyle } from "@/lib/course-theme";
 import { getCourse, getLecturesForCourse, getLessonsForCourse, getTranscript, transcriptsPrivate } from "@/lib/data";
 
 export default async function CoursePage({ params }: PageProps<"/course/[code]">) {
@@ -9,23 +10,26 @@ export default async function CoursePage({ params }: PageProps<"/course/[code]">
   if (!course) notFound();
   const [lessons, lectures] = await Promise.all([getLessonsForCourse(course.id), getLecturesForCourse(course.id)]);
   const transcripts = await Promise.all(lectures.map(async (l) => ({ lecture: l, text: await getTranscript(l) })));
-  const dark = course.tone === "dark";
 
   return (
     <div className="space-y-6">
-      <header className={`rounded-3xl p-6 ${dark ? "text-[#16181d]" : "text-white"}`} style={{ background: course.color }}>
-        <p className="text-xs font-bold uppercase tracking-wide opacity-80">
-          {course.code} · {course.category}
-        </p>
-        <h1 className="mt-1 text-2xl font-extrabold">{course.title}</h1>
-        <p className="mt-1 text-sm opacity-80">
+      <header className="rounded-3xl border border-border bg-card p-6 shadow-soft" style={courseStyle(course.slug)}>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-(--course-soft) px-2.5 py-1 text-xs font-semibold text-(--course)">
+            <span className="h-1.5 w-1.5 rounded-full bg-(--course)" aria-hidden />
+            {course.category}
+          </span>
+          <span className="text-xs font-medium tabular-nums text-muted-foreground">{course.code}</span>
+        </div>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{course.title}</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           {course.instructor ? `${course.instructor} · ` : ""}
           {course.schedule} · {course.term}
         </p>
       </header>
 
-      <section aria-label="Lessons" className="rounded-3xl bg-card p-5">
-        <h2 className="text-lg font-extrabold">Lessons</h2>
+      <section aria-label="Lessons" className="rounded-3xl border border-border bg-card p-5 shadow-soft">
+        <h2 className="text-lg font-semibold tracking-tight">Lessons</h2>
         {lessons.length === 0 ? (
           <p className="mt-2 text-sm text-muted-foreground">No lessons yet. They appear after the first recording is processed.</p>
         ) : (
@@ -44,8 +48,8 @@ export default async function CoursePage({ params }: PageProps<"/course/[code]">
         )}
       </section>
 
-      <section aria-label="Recordings" className="rounded-3xl bg-card p-5">
-        <h2 className="text-lg font-extrabold">Recordings and transcripts</h2>
+      <section aria-label="Recordings" className="rounded-3xl border border-border bg-card p-5 shadow-soft">
+        <h2 className="text-lg font-semibold tracking-tight">Recordings and transcripts</h2>
         {transcripts.length === 0 && <p className="mt-2 text-sm text-muted-foreground">No recordings for this course yet.</p>}
         <ul className="mt-3 space-y-3">
           {transcripts.map(({ lecture, text }) => (

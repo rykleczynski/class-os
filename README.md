@@ -86,7 +86,7 @@ flip, mcq, sortOrMatch, scenario, inTheNews, custom.
 ## Layout
 
 ```
-app/(dash)/            dashboard and course pages (left icon sidebar)
+app/(dash)/            dashboard and course pages (labeled sidebar, bottom bar on mobile)
 app/lesson/[id]/       lesson player (error.tsx gives a friendly fallback)
 app/dev/blocks/        block gallery
 components/blocks/     one component per block + BlockRenderer

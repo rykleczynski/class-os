@@ -13,7 +13,7 @@ export function Compare({ block }: BlockProps<CompareBlock>) {
                 <th
                   key={i}
                   scope="col"
-                  className={`p-2 align-bottom font-bold ${block.highlight === i ? "rounded-t-xl bg-lime text-lime-foreground" : ""}`}
+                  className={`p-2.5 align-bottom font-semibold ${block.highlight === i ? "rounded-t-xl bg-ink text-ink-foreground" : ""}`}
                 >
                   {c}
                 </th>
@@ -23,13 +23,13 @@ export function Compare({ block }: BlockProps<CompareBlock>) {
           <tbody>
             {block.rows.map((r, ri) => (
               <tr key={ri}>
-                <th scope="row" className="border-t border-border p-2 align-top text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                <th scope="row" className="border-t border-border p-2.5 align-top text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   {r.label}
                 </th>
                 {block.columns.map((_, ci) => (
                   <td
                     key={ci}
-                    className={`border-t border-border p-2 align-top ${block.highlight === ci ? "bg-lime/30" : ""}`}
+                    className={`border-t border-border p-2.5 align-top ${block.highlight === ci ? "bg-muted" : ""}`}
                   >
                     {r.cells[ci] ?? ""}
                   </td>

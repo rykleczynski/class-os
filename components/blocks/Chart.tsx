@@ -28,7 +28,7 @@ export function Chart({ block }: BlockProps<ChartBlock>) {
         width={48}
         label={block.yLabel ? { value: block.yLabel, angle: -90, position: "insideLeft", fontSize: 12 } : undefined}
       />
-      <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", background: "var(--card)" }} />
+      <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", background: "var(--card)", color: "var(--foreground)" }} cursor={{ fill: "var(--muted)", stroke: "var(--grid)" }} />
     </>
   );
   const marks = (block.annotations ?? []).map((a, i) => {
