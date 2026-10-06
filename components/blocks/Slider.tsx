@@ -56,7 +56,7 @@ export function Slider({ block }: BlockProps<SliderBlock>) {
               </span>
               <input
                 type="range"
-                className="mt-1 h-2 w-full cursor-pointer accent-[var(--chart-1)]"
+                className="mt-2 h-2 w-full cursor-pointer accent-coral"
                 min={v.min}
                 max={v.max}
                 step={v.step}
@@ -67,12 +67,12 @@ export function Slider({ block }: BlockProps<SliderBlock>) {
             </label>
           ))}
         </div>
-        <div className="rounded-xl bg-muted px-4 py-3 text-center sm:min-w-40">
+        <div className="rounded-xl border border-paper-border bg-paper px-4 py-3 text-center sm:min-w-40">
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{out.label}</p>
           {result.ok ? (
             <p
               data-testid="slider-output"
-              className={`text-2xl font-bold tabular-nums ${out.format === "currency" ? (result.value < 0 ? "text-bad" : "text-good") : ""}`}
+              className={`mt-0.5 text-2xl font-semibold tabular-nums tracking-tight ${out.format === "currency" ? (result.value < 0 ? "text-bad" : "text-good") : ""}`}
             >
               {formatValue(result.value, out.format, out.decimals)}
               {out.unit && out.format === "number" ? ` ${out.unit}` : ""}
@@ -108,7 +108,7 @@ export function Slider({ block }: BlockProps<SliderBlock>) {
                 <Tooltip
                   formatter={(v) => formatValue(Number(v), out.format, out.decimals)}
                   labelFormatter={(l) => `${plotVar.label}: ${l}${unit(plotVar.unit)}`}
-                  contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", background: "var(--card)" }}
+                  contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", background: "var(--card)", color: "var(--foreground)" }}
                 />
                 {block.plot.zeroLine !== false && <ReferenceLine y={0} stroke="var(--muted-foreground)" strokeDasharray="4 4" />}
                 <Line dataKey="y" stroke="var(--chart-1)" strokeWidth={2.5} dot={false} isAnimationActive={false} />

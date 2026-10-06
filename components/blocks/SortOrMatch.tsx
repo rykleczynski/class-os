@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Check, X } from "lucide-react";
 import type { SortOrMatchBlock } from "@/lib/lesson/schema";
 import { BlockFrame, type BlockProps } from "./shared";
 
@@ -38,7 +39,9 @@ export function SortOrMatch({ block, blockId, onAttempt }: BlockProps<SortOrMatc
     setResult(null);
   };
 
-  const chip = "rounded-xl border-2 px-3 py-2 text-left text-sm font-medium transition-colors";
+  const chip = "flex min-h-11 items-center gap-2 rounded-xl border-[1.5px] px-3 py-2 text-left text-sm font-medium transition-colors";
+  const mark = (ok: boolean) =>
+    ok ? <Check className="ml-auto h-4 w-4 shrink-0 text-good" strokeWidth={2.5} aria-label="right" /> : <X className="ml-auto h-4 w-4 shrink-0 text-bad" strokeWidth={2.5} aria-label="wrong" />;
 
   return (
     <BlockFrame>
@@ -51,7 +54,7 @@ export function SortOrMatch({ block, blockId, onAttempt }: BlockProps<SortOrMatc
         {block.mode === "order" ? (
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             <div className="space-y-2">
-              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Pool</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pool</p>
               {pool.filter((i) => !order.includes(i)).map((i) => (
                 <button key={i} type="button" disabled={done} onClick={() => setOrder((o) => [...o, i])} className={`${chip} w-full border-border bg-paper-card`}>
                   {block.items[i].label}
@@ -59,17 +62,18 @@ export function SortOrMatch({ block, blockId, onAttempt }: BlockProps<SortOrMatc
               ))}
             </div>
             <div className="space-y-2">
-              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Your order</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Your order</p>
               {order.map((i, pos) => (
                 <button
                   key={i}
                   type="button"
                   disabled={done}
                   onClick={() => setOrder((o) => o.filter((v) => v !== i))}
-                  className={`${chip} w-full ${done ? (i === pos ? "border-good bg-good-soft" : "border-bad bg-bad-soft") : "border-foreground/30 bg-muted"}`}
+                  className={`${chip} w-full ${done ? (i === pos ? "border-good bg-good-soft" : "border-bad bg-bad-soft") : "border-control bg-muted"}`}
                 >
-                  <span className="mr-2 font-bold">{pos + 1}.</span>
-                  {block.items[i].label}
+                  <span className="font-semibold tabular-nums">{pos + 1}.</span>
+                  <span>{block.items[i].label}</span>
+                  {done && mark(i === pos)}
                 </button>
               ))}
               {order.length === 0 && <p className="text-sm text-muted-foreground">Nothing placed yet.</p>}
@@ -83,8 +87,9 @@ export function SortOrMatch({ block, blockId, onAttempt }: BlockProps<SortOrMatc
                 const state = done ? (a === it.target ? "border-good bg-good-soft" : "border-bad bg-bad-soft") : selected === i ? "border-foreground bg-muted" : "border-border bg-paper-card";
                 return (
                   <button key={i} type="button" disabled={done} onClick={() => setSelected(i)} className={`${chip} w-full ${state}`}>
-                    {it.label}
-                    {a !== undefined && <span className="ml-2 rounded-full bg-foreground px-2 py-0.5 text-xs text-background">{block.targets![a]}</span>}
+                    <span>{it.label}</span>
+                    {a !== undefined && <span className="rounded-full bg-primary px-2 py-0.5 text-xs text-primary-foreground">{block.targets![a]}</span>}
+                    {done && mark(a === it.target)}
                   </button>
                 );
               })}
@@ -111,12 +116,12 @@ export function SortOrMatch({ block, blockId, onAttempt }: BlockProps<SortOrMatc
 
         <div className="mt-3 flex items-center gap-2">
           {!done && (
-            <button type="button" disabled={!complete} onClick={check} className="rounded-full bg-foreground px-4 py-1.5 text-sm font-semibold text-background disabled:opacity-40">
+            <button type="button" disabled={!complete} onClick={check} className="inline-flex min-h-10 items-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-40">
               Check
             </button>
           )}
           {(done || order.length > 0 || Object.keys(assign).length > 0) && (
-            <button type="button" onClick={reset} className="rounded-full border border-border px-4 py-1.5 text-sm font-semibold">
+            <button type="button" onClick={reset} className="inline-flex min-h-10 items-center rounded-full border border-border px-4 text-sm font-semibold transition-colors hover:border-control">
               {done ? "Try again" : "Reset"}
             </button>
           )}
@@ -124,7 +129,10 @@ export function SortOrMatch({ block, blockId, onAttempt }: BlockProps<SortOrMatc
 
         {done && (
           <div data-testid="sortormatch-feedback" role="status" className={`mt-3 rounded-xl px-3 py-2 text-sm ${result ? "bg-good-soft text-good" : "bg-bad-soft text-bad"}`}>
-            <p className="font-bold">{result ? "Correct" : "Not quite"}</p>
+            <p className="flex items-center gap-1.5 font-semibold">
+              {result ? <Check className="h-4 w-4" strokeWidth={2.5} aria-hidden /> : <X className="h-4 w-4" strokeWidth={2.5} aria-hidden />}
+              {result ? "Correct" : "Not quite"}
+            </p>
             {block.why && <p className="mt-0.5 text-foreground">{block.why}</p>}
             {!result && block.mode === "order" && (
               <p className="mt-0.5 text-foreground">Right order: {block.items.map((i) => i.label).join(" , ")}</p>

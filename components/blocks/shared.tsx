@@ -30,7 +30,7 @@ export function BlockFrame({
   className?: string;
 }) {
   return (
-    <figure className={`rounded-2xl border border-paper-border bg-paper-card p-4 sm:p-5 ${className}`}>
+    <figure className={`rounded-2xl border border-paper-border bg-paper-card p-4 shadow-soft sm:p-5 ${className}`}>
       {title && <figcaption className="mb-3 text-sm font-semibold">{title}</figcaption>}
       {children}
       {caption && <p className="mt-3 text-xs text-muted-foreground">{caption}</p>}
