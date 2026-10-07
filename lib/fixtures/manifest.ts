@@ -14,6 +14,8 @@ export type ManifestEntry = {
   /** File name under lib/fixtures/transcripts, or null. */
   transcriptFile: string | null;
   summary: string | null;
+  /** Chapter or topic whose slides were missing when the lesson was written. Absent in fixtures. */
+  materials_missing?: string | null;
 };
 
 export const manifest: ManifestEntry[] = [

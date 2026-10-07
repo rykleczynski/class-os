@@ -35,6 +35,8 @@ export type LessonRecord = {
   /** Raw JSON. Validation happens in the renderer so a bad block degrades, not the page. */
   spec: unknown;
   schema_version: number;
+  /** Chapter or topic whose slides were missing at generation time. Absent in fixtures. */
+  materials_missing?: string | null;
 };
 
 /** Fixture mode serves the same lecture list that `npm run sync` pushes to Supabase. */
@@ -145,6 +147,7 @@ const toLesson = (r: LessonRow, courseId: string): LessonRecord => ({
   created_at: r.created_at,
   spec: r.spec,
   schema_version: r.schema_version,
+  materials_missing: r.materials_missing ?? null,
 });
 
 function db() {
@@ -286,6 +289,8 @@ export type LessonSummary = {
   date: string;
   /** Number of teaching steps, before the quiz and flashcards. */
   steps: number;
+  /** Set when the generator found no slides for this lecture. Null or absent otherwise. */
+  materials_missing?: string | null;
 };
 
 /** Every published lesson in lecture order, oldest first. */
@@ -310,6 +315,7 @@ export async function getLessonTimeline(): Promise<LessonSummary[]> {
       est_minutes: l.est_minutes,
       date: starts.get(l.lecture_id) || l.created_at,
       steps: (l.spec as { steps?: unknown[] } | null)?.steps?.length ?? 0,
+      materials_missing: l.materials_missing ?? null,
     }))
     .sort((a, b) => (Date.parse(a.date) || 0) - (Date.parse(b.date) || 0));
 }

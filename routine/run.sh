@@ -6,6 +6,7 @@
 #   CLASSOS_LOOKBACK_DAYS=N    look back N days instead of 7 (dry runs)
 #   CLASSOS_PENDING_FILE=path  test only: use this pending JSON instead of the gate
 #   CLASSOS_MAX_RUNS=N         daily cap on claude invocations (default 6)
+#   CLASSOS_DOWNLOADS=dir      where `npm run materials` looks for slides (default ~/Downloads)
 #
 # Exits 0 on every "nothing to do" path so launchd never retries in a loop.
 set -u
@@ -36,6 +37,10 @@ if ! mkdir "$LOCK" 2>/dev/null; then
 fi
 echo $$ >"$LOCK/pid"
 trap 'rm -rf "$LOCK"' EXIT
+
+# Zero-token slides pickup: copy matching PDF/PPTX/DOCX from ~/Downloads into materials/<course>/.
+# Free, offline-safe and always exits 0, so it runs on every tick before the gate. Prints the file names only.
+npm run -s materials 2>>"$LOG" | while IFS= read -r line; do log "$line"; done
 
 # Daily cap on claude invocations.
 TODAY="$(date +%Y-%m-%d)"
@@ -95,7 +100,7 @@ fi
 
 TOOLS="mcp__claude_ai_Google_Calendar__list_events,mcp__claude_ai_Google_Calendar__get_event"
 TOOLS="$TOOLS,mcp__claude_ai_Wispr_Flow__search_meetings,mcp__claude_ai_Wispr_Flow__get_meeting"
-TOOLS="$TOOLS,WebSearch,WebFetch,Read,Write(content/**),Edit(content/**)"
+TOOLS="$TOOLS,WebSearch,WebFetch,Read,Glob(materials/**),Read(materials/**),Write(content/**),Edit(content/**)"
 TOOLS="$TOOLS,Bash(npm run validate*),Bash(npm run sync*),Bash(npm run status*),Bash(npm run logline*),Bash(npm run calc*)"
 
 [ "$DRY" = "1" ] || echo $((COUNT + 1)) >"$COUNT_FILE"

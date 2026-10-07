@@ -248,6 +248,7 @@ export type Database = {
           est_minutes: number | null
           id: string
           lecture_id: string
+          materials_missing: string | null
           schema_version: number
           slug: string
           spec: Json
@@ -260,6 +261,7 @@ export type Database = {
           est_minutes?: number | null
           id?: string
           lecture_id: string
+          materials_missing?: string | null
           schema_version?: number
           slug: string
           spec: Json
@@ -272,6 +274,7 @@ export type Database = {
           est_minutes?: number | null
           id?: string
           lecture_id?: string
+          materials_missing?: string | null
           schema_version?: number
           slug?: string
           spec?: Json

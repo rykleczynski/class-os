@@ -16,6 +16,8 @@
     "status": "node --env-file-if-exists=.env.generator --import tsx scripts/status.ts",
     "calc": "tsx scripts/calc.ts",
     "logline": "tsx scripts/logline.ts",
+    "materials": "tsx scripts/materials.ts",
+    "test:materials": "tsx scripts/test-materials.ts",
     "pending": "node --env-file-if-exists=.env.generator --import tsx scripts/pending.ts",
     "sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/sync.ts"
   },
