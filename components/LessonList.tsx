@@ -11,6 +11,7 @@ export type LessonItem = {
   est_minutes: number;
   date: string;
   steps: number;
+  materials_missing?: string | null;
 };
 
 type State = "new" | "progress" | "done";
@@ -78,6 +79,11 @@ export function LessonList({ lessons, onNavigate }: { lessons: LessonItem[]; onN
               </p>
               <p className="mt-0.5 font-semibold leading-snug">{l.title}</p>
               {l.summary && <p className="mt-0.5 text-sm text-muted-foreground">{l.summary}</p>}
+              {l.materials_missing && (
+                <p className="mt-1 text-xs text-muted-foreground/80" data-testid="materials-missing">
+                  Slides for {l.materials_missing} weren&apos;t available. Run /refresh-materials, then the lesson can be regenerated.
+                </p>
+              )}
               <div className="mt-1.5 min-h-4">
                 {ready ? <LessonProgressLabel lesson={l} progress={p} /> : <span className="block h-3 w-24 animate-pulse rounded-full bg-muted" data-testid="progress-skeleton" aria-hidden />}
               </div>

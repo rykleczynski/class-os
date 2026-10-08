@@ -18,6 +18,16 @@ export type Course = {
   aliases: string[];
   term: string;
   generation_notes: string;
+  /**
+   * False means the course's syllabus forbids using course content with AI. `npm run materials` never copies
+   * files for it and the generator never reads slides for it. Absent means allowed.
+   */
+  materials_allowed?: boolean;
+  /**
+   * Regex sources (matched case-insensitively) for file names in Downloads (PDF/PPTX/DOCX) that
+   * `npm run materials` files under materials/<slug>/. Strings, not RegExp, so a Course can cross into client components.
+   */
+  materials_patterns?: string[];
 };
 
 export const courses: Course[] = [
@@ -35,6 +45,7 @@ export const courses: Course[] = [
     calendar_event_series_ids: ["_64p2qb9h74s3cd9n6so34b9h"],
     aliases: ["Econ 106F", "Econ 106F Lecture", "ECON 106F Finance"],
     term: "Fall 2026",
+    materials_patterns: ["^Econ 106F Chapter \\d+", "Econ 106F(?! Lab).*Syllabus"],
     generation_notes:
       "Quantitative. Lean on formulas as steppers (walk one calculation a frame at a time), sliders with a plot for anything that depends on a rate or a quantity (NPV vs discount rate, PV vs years), and cash-flow timelines with signed amounts. Use the professor's phrases as quotes (\"a bucket of cash today\"). Keep the arithmetic exact and show it.",
   },
@@ -73,6 +84,8 @@ export const courses: Course[] = [
     calendar_event_series_ids: ["_64p2qc9h68o3gc9k6kqiqc8"],
     aliases: ["Econ 134", "Econ 134 Environmental"],
     term: "Fall 2026",
+    // Opted out: the ECON 134 syllabus forbids using course content with AI.
+    materials_allowed: false,
     generation_notes:
       "Graphical. Use supplyDemand blocks with shifts and shaded areas (deadweight loss, externalities, taxes), marginal-damage versus marginal-benefit curves, and charts of costs. Pair every curve with a one-line takeaway.",
   },
@@ -93,6 +106,7 @@ export const courses: Course[] = [
     calendar_event_series_ids: ["_64p2qb9n64r3cdho74p38b9h", "_64p2qb9o60pjic1g68p36b9h"],
     aliases: ["Econ 106F Discussion", "Econ 106FB", "Econ 106F Lab"],
     term: "Fall 2026",
+    materials_patterns: ["TA Notes 106F", "Econ 106F Lab.*Syllabus"],
     generation_notes:
       "Applied case work. Reuse the ECON 106F toolkit (steppers, sliders with plots, timelines) but organize around the lab case: state the decision, the cash flows, then the answer. Link back to the concept from the lecture.",
   },

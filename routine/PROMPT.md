@@ -47,7 +47,9 @@ Find the event whose recurring series id is in the session's `seriesIds`.
 
 Run `npm run status -- --course "<courseCode>" --start <startsAt> --end <endsAt>`.
 `lesson <slug>` means done: log `already-done` and move on. `none` or
-`lecture-without-lesson` means continue.
+`lecture-without-lesson` means continue. Exception: if the session has `"regenerate": true`, a
+lesson exists on purpose (it was flagged `materials_missing` and Ryan has since added slides). Skip this
+check and rebuild it: sync upserts over the old lesson, and `materials_missing` becomes null if slides are now found.
 
 ### 3. Find the Wispr recording
 
@@ -136,6 +138,20 @@ Read that file and follow the note for this course:
 - ECON 106FB: applied case work. State the decision, the cash flows, then the answer,
   and link back to the lecture concept.
 
+**Course slides (only for courses that allow it).** If the course has `materials_allowed: false`
+in `lib/fixtures/courses.ts` (ECON 134), never look in `materials/` for it, whatever is there. Otherwise
+use Glob on `materials/<course slug>/*` (for example `materials/econ-106f/`) and read the files that match
+this lecture's chapter or topic. The syllabus schedule files in that folder map dates to chapters
+(ECON 106F: Oct 7 and Oct 12 are Ch 4, Oct 14 is Ch 5, and so on). Use the transcript to confirm which
+chapter the professor actually covered. Read PDFs with the Read tool (use `pages` for long decks); skip a
+PPTX or DOCX you cannot read. A course with no `materials_patterns` (COMM 187) has no slides by design: skip this and leave `materials_missing` null.
+
+- Use slides only to check formulas, definitions and the professor's framing. The transcript stays the
+  primary source.
+- Never paste slide text or reproduce a slide's diagram verbatim. Re-derive the figures from your own model.
+- If the slides and the transcript disagree, follow what the professor said in class and keep his notation.
+- `materials/` is read-only for you. Never write there.
+
 **Topics the outline omits.** Budget steps for every topic that took real class time,
 not only the headline ones. Fold small ones into the news tie-in, flashcards or a
 `sortOrMatch`.
@@ -172,9 +188,15 @@ and go to the next session. Otherwise write `content/<slug>/meta.json`:
   "endsAt": "<wispr meeting end, UTC ISO>",
   "wisprShareLink": "<share link or null>",
   "transcriptFile": null,
-  "summary": "<one sentence, under 160 characters>"
+  "summary": "<one sentence, under 160 characters>",
+  "materials_missing": null
 }
 ```
+
+`materials_missing`: for a slides course (one with `materials_patterns` in `courses.ts` and not opted out; so not ECON 134 and not COMM 187),
+if you found no slide file for this lecture's chapter or topic in `materials/<course slug>/`, set it to the
+chapter or topic as a short label, for example `"Ch 4"` or `"Ch 5 (bond pricing)"`. The app then tells Ryan
+the slides were missing. Leave it `null` only after you read usable slides for the chapter. If the only matching file is a PPTX or DOCX you could not read, treat the slides as missing and set it. Never put slide or transcript text in it.
 
 Then `npm run sync -- --only <slug>`. It prints `lesson upserted` on success. The
 Supabase service key is read by the script from an env file; never print, copy or log

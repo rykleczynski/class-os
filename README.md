@@ -133,6 +133,34 @@ launchd (:05 and :35, hours 8-22, plus RunAtLoad)
 Wispr lessons keep no transcript (`transcript.txt` is optional and left out); the
 Wispr share link in `meta.json` is the source of record.
 
+### Course slides (materials/)
+
+Canvas access tokens are disabled at UCLA and BruinLearn is behind SSO and Duo, so an unattended run
+cannot fetch slides. Instead:
+
+- **`npm run materials`** (no LLM, offline-safe, always exits 0). Scans `~/Downloads` (or `CLASSOS_DOWNLOADS`)
+  for PDF, PPTX and DOCX files whose names match a course's `materials_patterns` in
+  `lib/fixtures/courses.ts` and copies them (never moves) into `materials/<course slug>/`, which is gitignored.
+  Files with the same content are skipped, including browser duplicates like `Foo (1).pdf`. It prints one line
+  per new file. `routine/run.sh` calls it at the start of every run, before the gate.
+- **ECON 134 is opted out** (`materials_allowed: false`): its syllabus forbids using course content with AI.
+  The script never copies its files, whatever the patterns say, and the generator never reads slides for it.
+  COMM 187 has no patterns yet.
+- **The generator** (`routine/PROMPT.md`) lists `materials/<course>/` for a slides course and reads the files for
+  the lecture's chapter, only to check formulas, definitions and the professor's framing. The transcript stays
+  the primary source and slide text is never reproduced. The run may `Read` and `Glob` under `materials/**`
+  and cannot write there.
+- **Missing slides flag.** If a slides course has no file for the lecture's chapter, `meta.json` gets
+  `materials_missing: "<chapter>"`, `npm run sync` stores it in `lessons.materials_missing`
+  (`supabase/migrations/0002_materials_missing.sql`, apply it before the next sync), and the course page and
+  lesson picker show a quiet note on that lesson. Fixtures mode treats the field as absent.
+- **`/refresh-materials`** (`.claude/commands/refresh-materials.md`, interactive only; the headless run disables
+  slash commands). Uses Claude in Chrome on `bruinlearn.ucla.edu`: you log in through SSO and Duo yourself, it
+  lists the File items in the ECON 106F and 106FB modules through the Canvas API (GET only), downloads the new
+  ones into `~/Downloads`, then runs `npm run materials`. It never touches ECON 134.
+  After new slides land, regenerate a flagged lesson with `npm run pending -- --retry <slug> --regenerate` (the gate then treats the published lesson as pending until its `materials_missing` flag clears or 3 attempts are used; the session must still be inside the 7-day lookback).
+- Test: `npm run test:materials` (temp Downloads dir with fake files).
+
 ### Catch-up on wake
 
 Ryan may close the laptop right after class, so nothing depends on the Mac being awake
@@ -172,7 +200,7 @@ the 30 per day.
 `claude` runs with `--permission-mode dontAsk` and an allowlist: the Calendar
 `list_events`/`get_event` tools, the Wispr `search_meetings`/`get_meeting` tools,
 WebSearch, WebFetch, Read, Write and Edit under `content/**`, and Bash for
-`npm run validate|sync|status|logline|calc` only (`calc` is a sandboxed arithmetic
+`npm run validate|sync|status|logline|calc` only, plus Read and Glob under `materials/**` (`calc` is a sandboxed arithmetic
 evaluator; there is no `node -e`, so the run cannot read or send the sync key). `.env*` reads are denied.
 The Supabase MCP is deliberately not allowed: `npm run status` does the read-only checks.
 The sync key stays in `../class_OS/.env.local` and is only read by `npm run sync`.

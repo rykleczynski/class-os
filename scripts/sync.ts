@@ -31,6 +31,8 @@ const metaSchema = z.object({
   wisprShareLink: z.string().nullable(),
   transcriptFile: z.string().nullable(),
   summary: z.string().nullable(),
+  /** Chapter or topic whose slides were not in materials/ when the lesson was written. Absent or null means fine. */
+  materials_missing: z.string().nullable().optional(),
 });
 
 type Entry = ManifestEntry & { lessonPath: string; transcriptPath: string | null; transcriptRoot: string };
@@ -188,6 +190,8 @@ async function main() {
           est_minutes: lesson.est_minutes,
           spec: lesson,
           schema_version: lesson.schema_version,
+          // Only touch the column when meta.json says something, so fixtures and older metas never need it.
+          ...("materials_missing" in e ? { materials_missing: e.materials_missing ?? null } : {}),
           status: "published",
         },
         { onConflict: "slug" },

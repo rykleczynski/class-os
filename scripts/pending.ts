@@ -8,6 +8,8 @@
  *
  *   npm run pending [-- --record] [-- --no-inbox]
  *   npm run pending -- --retry <slug>   # clear the inbox note and reset attempts and the 48h clock
+ *   npm run pending -- --retry <slug> --regenerate
+ *       # also rebuild a published lesson that is flagged materials_missing (only while the flag is still set)
  *
  * Exit codes: 0 = pending sessions printed, 3 = nothing to do, 4 = could not check
  * (offline or Supabase error; run.sh treats this as "try again next tick").
@@ -19,7 +21,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { courses } from "../lib/fixtures/courses";
 
 const TZ = "America/Los_Angeles";
@@ -55,6 +57,8 @@ type Session = {
   startsAt: string;
   endsAt: string;
   attempts: number;
+  /** Set by --regenerate: a lesson exists, but it was flagged materials_missing and should be rebuilt. */
+  regenerate?: boolean;
 };
 
 const dtf = new Intl.DateTimeFormat("en-US", {
@@ -137,7 +141,7 @@ function lockAttempts(): void {
   process.exit(4);
 }
 
-type Attempts = Record<string, { count: number; last: string; retryAt?: string }>;
+type Attempts = Record<string, { count: number; last: string; retryAt?: string; regenerate?: boolean }>;
 
 function readAttempts(): Attempts {
   try {
@@ -155,11 +159,17 @@ function retry(slug: string) {
   lockAttempts();
   const attempts = readAttempts();
   const now = new Date().toISOString();
-  attempts[slug] = { count: 0, last: now, retryAt: now };
+  attempts[slug] = { count: 0, last: now, retryAt: now, ...(args.includes("--regenerate") ? { regenerate: true } : {}) };
   mkdirSync(join(contentRoot, "_state"), { recursive: true });
   writeFileSync(stateFile, JSON.stringify(attempts, null, 2));
   rmSync(join(inboxDir, `${slug}.md`), { force: true });
   console.error(`pending: ${slug} reset (attempts 0, 48h clock restarted); it must still be inside the lookback window`);
+}
+
+/** True while the published lesson still has materials_missing set. Best effort: false if the column is not there yet. */
+async function stillFlagged(db: SupabaseClient, slug: string): Promise<boolean> {
+  const { data, error } = await db.from("lessons").select("materials_missing").eq("slug", slug).maybeSingle();
+  return !error && Boolean((data as { materials_missing?: string | null } | null)?.materials_missing);
 }
 
 async function main() {
@@ -202,7 +212,8 @@ async function main() {
     const sStart = Date.parse(s.startsAt);
     const sEnd = Date.parse(s.endsAt);
     const has = lectures.some((l) => l.code === s.courseCode && l.hasLesson && l.start >= sStart - 30 * 60_000 && l.start <= sEnd);
-    if (has) continue;
+    if (has && !(attempts[s.slug]?.regenerate && (await stillFlagged(db, s.slug)))) continue;
+    if (has) s.regenerate = true;
     const inbox = join(inboxDir, `${s.slug}.md`);
     if (existsSync(inbox)) continue;
     s.attempts = attempts[s.slug]?.count ?? 0;
