@@ -158,7 +158,7 @@ cannot fetch slides. Instead:
   slash commands). Uses Claude in Chrome on `bruinlearn.ucla.edu`: you log in through SSO and Duo yourself, it
   lists the File items in the ECON 106F and 106FB modules through the Canvas API (GET only), downloads the new
   ones into `~/Downloads`, then runs `npm run materials`. It never touches ECON 134.
-  After new slides land, regenerate a flagged lesson with `npm run pending -- --retry <slug> --regenerate` (the gate then treats the published lesson as pending until its `materials_missing` flag clears or 3 attempts are used; the session must still be inside the 7-day lookback).
+  After new slides land, regenerate a flagged lesson with `npm run pending -- --retry <slug> --regenerate` (the gate then treats the published lesson as pending until its `materials_missing` flag clears or 3 attempts are used; the session must still be inside the 7-day lookback). Progress is stored per slug in the browser, so after a rebuild use **Start over** on that lesson to drop the old step and quiz score.
 - Test: `npm run test:materials` (temp Downloads dir with fake files).
 
 ### Catch-up on wake
