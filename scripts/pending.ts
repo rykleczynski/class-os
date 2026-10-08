@@ -32,9 +32,9 @@ const MAX_ATTEMPTS = 3;
 const MAX_AGE_HOURS = 48;
 /** MM-DD, local date. Add to this list as the term goes on. */
 const HOLIDAYS = new Set(["11-11", "11-26", "11-27"]);
-/** Local YYYY-MM-DD, inclusive. Outside this window the gate stays idle (breaks). Tighten TERM_END once the term's last day is known. */
+/** Local YYYY-MM-DD, inclusive. Outside this window the gate stays idle (breaks). TERM_END is the day after the last final (ECON 106F, Mon Dec 7). */
 const TERM_START = "2026-09-28";
-const TERM_END = "2026-12-31";
+const TERM_END = "2026-12-08";
 /** At most this many sessions per claude run; --record only spends attempts on the ones emitted. */
 const MAX_PER_RUN = Number(process.env.CLASSOS_MAX_SESSIONS ?? 2);
 
