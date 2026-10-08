@@ -166,10 +166,14 @@ function retry(slug: string) {
   console.error(`pending: ${slug} reset (attempts 0, 48h clock restarted); it must still be inside the lookback window`);
 }
 
-/** True while the published lesson still has materials_missing set. Best effort: false if the column is not there yet. */
+/** True while the published lesson still has materials_missing set. Exits 4 on a query error (for example migration 0002 not applied). */
 async function stillFlagged(db: SupabaseClient, slug: string): Promise<boolean> {
   const { data, error } = await db.from("lessons").select("materials_missing").eq("slug", slug).maybeSingle();
-  return !error && Boolean((data as { materials_missing?: string | null } | null)?.materials_missing);
+  if (error) {
+    console.error(`pending: materials_missing check failed: ${error.message}`);
+    process.exit(4);
+  }
+  return Boolean((data as { materials_missing?: string | null } | null)?.materials_missing);
 }
 
 async function main() {
