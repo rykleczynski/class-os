@@ -23,7 +23,7 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSyn
 import { join } from "node:path";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { courses, courseByCode } from "../lib/fixtures/courses";
-import { TZ, classSessions, codeKey, laDateString } from "../lib/schedule";
+import { TERM_END, TERM_START, TZ, classSessions, codeKey, laDateString } from "../lib/schedule";
 import { isUnsynced, panoptoState } from "./content-state";
 
 /** Override with CLASSOS_LOOKBACK_DAYS (dry runs). */
@@ -182,6 +182,12 @@ async function main() {
     return;
   }
   const now = process.env.CLASSOS_NOW ? Date.parse(process.env.CLASSOS_NOW) : Date.now();
+  // Outside the term the gate is idle no matter what is still unfinished, so Claude never starts during break.
+  const today = laDateString(now);
+  if (today < TERM_START || today > TERM_END) {
+    console.log(`pending: outside term (${TERM_START} to ${TERM_END}), idle`);
+    process.exit(3);
+  }
   const testLecturesFile = process.env.CLASSOS_TEST_LECTURES; // tests: [{code,start,hasLesson}] instead of Supabase
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;

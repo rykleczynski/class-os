@@ -7,9 +7,14 @@ import type { Course } from "./fixtures/courses";
 export const TZ = "America/Los_Angeles";
 /** MM-DD, local date. Add to this list as the term goes on. */
 export const HOLIDAYS = new Set(["11-11", "11-26", "11-27"]);
-/** Local YYYY-MM-DD, inclusive. Outside this window the gate stays idle (breaks). Tighten TERM_END once the term's last day is known. */
+/**
+ * Local YYYY-MM-DD, inclusive. Sessions outside this window are ignored, and the gate itself stays idle
+ * on any day outside it (breaks). TERM_END is the day after the last final (ECON 106F, Mon Dec 7).
+ */
 export const TERM_START = "2026-09-28";
-export const TERM_END = "2026-12-31";
+export const TERM_END = "2026-12-08";
+/** Last day of instruction (Fri Dec 4). Finals week has no lectures, so no session is generated after this. */
+export const CLASSES_END = "2026-12-04";
 
 export type ClassSession = {
   slug: string;
@@ -68,7 +73,7 @@ export function classSessions(
     const { y, m, d, wd } = localDate(now - back * 86400_000);
     const date = `${y}-${pad(m)}-${pad(d)}`;
     if (HOLIDAYS.has(`${pad(m)}-${pad(d)}`)) continue;
-    if (date < TERM_START || date > TERM_END) continue;
+    if (date < TERM_START || date > CLASSES_END) continue;
     for (const c of courseList) {
       if (c.no_class_dates?.includes(date)) continue;
       for (const mt of c.meetings) {
