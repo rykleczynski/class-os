@@ -47,7 +47,9 @@ Find the event whose recurring series id is in the session's `seriesIds`.
 
 Run `npm run status -- --course "<courseCode>" --start <startsAt> --end <endsAt>`.
 `lesson <slug>` means done: log `already-done` and move on. `none` or
-`lecture-without-lesson` means continue.
+`lecture-without-lesson` means continue. Exception: if the session has `"regenerate": true`, a
+lesson exists on purpose (it was flagged `materials_missing` and Ryan has since added slides). Skip this
+check and rebuild it: sync upserts over the old lesson, and `materials_missing` becomes null if slides are now found.
 
 ### 3. Find the Wispr recording
 
@@ -194,7 +196,7 @@ and go to the next session. Otherwise write `content/<slug>/meta.json`:
 `materials_missing`: for a slides course (one with `materials_patterns` in `courses.ts` and not opted out; so not ECON 134 and not COMM 187),
 if you found no slide file for this lecture's chapter or topic in `materials/<course slug>/`, set it to the
 chapter or topic as a short label, for example `"Ch 4"` or `"Ch 5 (bond pricing)"`. The app then tells Ryan
-the slides were missing. Otherwise leave it `null`. Never put slide or transcript text in it.
+the slides were missing. Leave it `null` only after you read usable slides for the chapter. If the only matching file is a PPTX or DOCX you could not read, treat the slides as missing and set it. Never put slide or transcript text in it.
 
 Then `npm run sync -- --only <slug>`. It prints `lesson upserted` on success. The
 Supabase service key is read by the script from an env file; never print, copy or log
