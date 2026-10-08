@@ -221,7 +221,8 @@ async function main() {
     const ageH = (now - Math.max(sEnd, retryAt)) / 3600_000;
     if (s.attempts >= MAX_ATTEMPTS || ageH > MAX_AGE_HOURS) {
       const why = s.attempts >= MAX_ATTEMPTS ? `${s.attempts} generator attempts` : `more than ${MAX_AGE_HOURS}h old`;
-      if (writeInbox) {
+      // A regeneration that gives up keeps its published lesson, so no "needs a manual source" note (it would be wrong).
+      if (writeInbox && !s.regenerate) {
         mkdirSync(inboxDir, { recursive: true });
         writeFileSync(
           inbox,
@@ -239,7 +240,7 @@ async function main() {
     pending.push(s);
   }
 
-  if (gaveUp.length) console.error(`pending: gave up on ${gaveUp.join(", ")} (inbox note ${writeInbox ? "written" : "skipped"})`);
+  if (gaveUp.length) console.error(`pending: gave up on ${gaveUp.join(", ")} (inbox note ${writeInbox ? "written where no lesson exists" : "skipped"})`);
   if (!pending.length) process.exit(3);
   pending.splice(MAX_PER_RUN); // oldest first; the rest wait for the next tick
 
