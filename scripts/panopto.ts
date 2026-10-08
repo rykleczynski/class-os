@@ -8,11 +8,13 @@ type PanoptoCourse = { code: string; transcript_source?: string };
 /** SRT (or WebVTT) to plain text: drops the header, indices, timestamps and cue tags, and joins cue lines. */
 export function srtToText(srt: string): string {
   const out: string[] = [];
-  for (const raw of srt.replace(/^﻿/, "").split(/\r?\n/)) {
-    const line = raw.trim();
+  const lines = srt.replace(/^\uFEFF/, "").split(/\r?\n/).map((l) => l.trim());
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     if (!line) continue;
     if (/^WEBVTT/i.test(line) || /^(NOTE|STYLE|Kind:|Language:)/.test(line)) continue;
-    if (/^\d+$/.test(line)) continue; // cue index
+    // A cue index is only the numeric line right before a timestamp line; number-only caption text stays.
+    if (/^\d+$/.test(line) && /-->/.test(lines[i + 1] ?? "")) continue;
     if (/-->/.test(line)) continue; // timestamp line
     out.push(line.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim());
   }

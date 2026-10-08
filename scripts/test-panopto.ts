@@ -31,6 +31,10 @@ const text = srtToText(SRT);
 ok("srt: indices and timestamps removed", !/-->|^\d+$/m.test(text), JSON.stringify(text));
 ok("srt: caption lines kept in order", text === "Welcome back, today we cover\nexternalities.\nThe Pigouvian tax is the first tool.\n");
 ok("vtt: header and cue ids removed", srtToText("WEBVTT\n\n00:00:01.000 --> 00:00:02.000\nHello there\n") === "Hello there\n");
+ok(
+  "srt: number-only caption text is kept, cue index is dropped",
+  srtToText("1\n00:00:01,000 --> 00:00:02,000\n2026\n\n2\n00:00:02,000 --> 00:00:03,000\n42\nunits\n") === "2026\n42\nunits\n",
+);
 ok("srt: BOM and CRLF handled", srtToText("﻿1\r\n00:00:01,000 --> 00:00:02,000\r\nHi\r\n") === "Hi\n");
 
 // --- file name mapping
@@ -120,8 +124,11 @@ ok("gate: sidecar session id used", gate().sessions.find((s) => s.slug === "econ
 writeFileSync(lectures, "[]");
 const dir = join(gateContent, "econ106f-2026-10-07");
 mkdirSync(dir);
-writeFileSync(join(dir, "lesson.json"), "{}");
-writeFileSync(join(dir, "meta.json"), "{}");
+const lessonFixtures = join(__dirname, "..", "lib", "fixtures", "lessons");
+const validLesson = readFileSync(join(lessonFixtures, readdirSync(lessonFixtures).filter((f) => f.endsWith(".json")).sort()[0]), "utf8");
+const validMeta = JSON.stringify({ slug: "econ106f-2026-10-07", courseCode: "ECON 106F", sourceId: "x", startsAt: "a", endsAt: "b", wisprShareLink: null, transcriptFile: null, summary: null });
+writeFileSync(join(dir, "lesson.json"), validLesson);
+writeFileSync(join(dir, "meta.json"), validMeta);
 ok("sync: files without marker count as unsynced", isUnsynced(gateContent, "econ106f-2026-10-07"));
 const before = attempts()["econ106f-2026-10-07"]?.count ?? 0;
 g = gate("--record");
@@ -130,6 +137,12 @@ ok("gate: unsynced lesson reported", /econ106f-2026-10-07 generated, waiting for
 ok("gate: unsynced lesson spends no attempt", (attempts()["econ106f-2026-10-07"]?.count ?? 0) === before);
 markSynced(gateContent, "econ106f-2026-10-07");
 ok("sync: marker clears unsynced", !isUnsynced(gateContent, "econ106f-2026-10-07"));
+// files sync would reject must not block the generator forever
+writeFileSync(join(dir, "meta.json"), "{}");
+rmSync(join(dir, ".synced"));
+ok("sync: invalid pair is not unsynced", !isUnsynced(gateContent, "econ106f-2026-10-07"));
+g = gate();
+ok("gate: invalid pair falls back to normal attempts", !/econ106f-2026-10-07 generated, waiting/.test(g.err));
 ok("auth: Invalid API key detected", isAuthError("course lookup: Invalid API key") && !isAuthError("lecture upsert: duplicate key"));
 
 // --- give-up note states the real reason

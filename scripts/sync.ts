@@ -7,8 +7,8 @@
  * Sources: the repo manifest (lib/fixtures) plus the gitignored content/ directory,
  * where each generated lecture is content/<slug>/{lesson.json,meta.json,transcript.txt?}.
  * --content-only skips the manifest. Directories starting with "_" are ignored.
- * --unsynced syncs only content/ lessons whose last sync did not complete (no content/<slug>/.synced marker, or the
- * files changed after it) and prints nothing when there are none. run.sh uses it so a failed sync is retried
+ * --unsynced syncs only content/ lessons whose last sync did not complete (no content/<slug>/.synced marker, or lesson.json, meta.json
+ * or the transcript changed after it; files that fail validation are left for the generator) and prints nothing when there are none. run.sh uses it so a failed sync is retried
  * without starting Claude. Exit codes: 0 ok, 1 some lessons skipped, 2 usage or missing key, 5 Supabase rejected the key.
  *
  * Requires SUPABASE_SECRET_KEY (server-only; see .env.example).
@@ -17,27 +17,13 @@ import { existsSync, readdirSync, readFileSync, realpathSync, rmSync } from "nod
 import { join, relative, isAbsolute } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { lessonSchema } from "../lib/lesson/schema";
-import { z } from "zod";
 import { manifest, type ManifestEntry } from "../lib/fixtures/manifest";
-import { isAuthError, isUnsynced, markSynced } from "./content-state";
+import { isAuthError, isUnsynced, markSynced, metaSchema } from "./content-state";
 
 const TERM = "Fall 2026";
 const MIN_TRANSCRIPT_CHARS = 1000;
 const root = join(__dirname, "..", "lib", "fixtures");
 const contentRoot = join(__dirname, "..", "content");
-
-const metaSchema = z.object({
-  slug: z.string().min(1),
-  courseCode: z.string().min(1),
-  sourceId: z.string().min(1),
-  startsAt: z.string().min(1),
-  endsAt: z.string().min(1),
-  wisprShareLink: z.string().nullable(),
-  transcriptFile: z.string().nullable(),
-  summary: z.string().nullable(),
-  /** Chapter or topic whose slides were not in materials/ when the lesson was written. Absent or null means fine. */
-  materials_missing: z.string().nullable().optional(),
-});
 
 type Entry = ManifestEntry & { lessonPath: string; transcriptPath: string | null; transcriptRoot: string };
 

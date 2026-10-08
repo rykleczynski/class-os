@@ -64,8 +64,13 @@ fi
 
 # Re-run sync for lessons that were generated on disk but never reached Supabase (for example a bad key).
 # No Claude and no gate attempt is spent. Exit 5 from sync means Supabase rejected the key.
+# A dry run never writes to Supabase or creates .synced markers, so it skips this entirely.
 sync_pending() {
   local out rc
+  if [ "$DRY" = "1" ]; then
+    log "sync: skipped (dry run)"
+    return 0
+  fi
   out="$(npm run -s sync -- --unsynced 2>&1)"
   rc=$?
   [ -n "$out" ] && printf '%s\n' "$out" | while IFS= read -r line; do log "sync: $line"; done
