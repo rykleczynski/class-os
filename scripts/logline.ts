@@ -7,7 +7,7 @@
 import { appendFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 
-const OUTCOMES = ["generated", "no-recording", "cancelled", "exam", "holiday", "already-done", "failed", "dry-run"] as const;
+const OUTCOMES = ["generated", "no-recording", "cancelled", "exam", "holiday", "already-done", "failed", "dry-run", "awaiting-panopto"] as const;
 const [slug, outcome, secs, ...note] = process.argv.slice(2);
 if (!slug || !/^[a-z0-9-]+$/.test(slug) || !OUTCOMES.includes(outcome as (typeof OUTCOMES)[number])) {
   console.error(`usage: logline <slug> <${OUTCOMES.join("|")}> [seconds] [note]`);

@@ -161,6 +161,33 @@ cannot fetch slides. Instead:
   After new slides land, regenerate a flagged lesson with `npm run pending -- --retry <slug> --regenerate` (the gate then treats the published lesson as pending until its `materials_missing` flag clears or 3 attempts are used; the session must still be inside the 7-day lookback). Progress is stored per slug in the browser, so after a rebuild use **Start over** on that lesson to drop the old step and quiz score.
 - Test: `npm run test:materials` (temp Downloads dir with fake files).
 
+### ECON 134 lectures come from BruinCast (Panopto)
+
+Ryan does not attend ECON 134, so it has no Wispr recording (`transcript_source: "panopto"` in `courses.ts`).
+The slides opt-out above still applies to slides; lecture captions are used.
+
+- `/refresh-materials` (part B) opens the BruinCast tool for course 236048, finds sessions without a lesson and
+  downloads their captions with `GenerateSRT.ashx`. The file lands in Downloads as
+  `<session title>_Captions_English (United States).txt` (SRT contents).
+- `npm run materials` recognizes that name (the `MM_DD_YYYY` gives the date) or `econ134-YYYY-MM-DD.srt`
+  (optionally `econ134-YYYY-MM-DD__<sessionId>.srt`), strips indices and timestamps, and writes
+  `content/econ134-<date>/transcript.txt`. A slug that already has a `transcript.txt` is never overwritten.
+  It is genuine caption text, so sync stores it as is.
+- Until that file exists the gate reports `awaiting-panopto` (stderr and the daily log, once a day), spends no
+  attempt, never gives up, and never starts `claude`. The course page shows "New ECON 134 lecture: run
+  /refresh-materials". Once the file exists the session is handed to the generator with
+  `source.sourceId` = `panopto:<sessionId>` or `panopto:<slug>`, and the 48h clock starts when the file arrived.
+- Test: `npm run test:panopto`.
+
+### When sync fails
+
+`npm run sync` writes `content/<slug>/.synced` after a lesson is stored. If lesson.json and meta.json are on disk
+without that marker (for example a bad `SUPABASE_SECRET_KEY`), `run.sh` runs `npm run sync -- --unsynced` at the
+start and end of every tick: no Claude, no gate attempt, and the gate skips the session meanwhile. A key problem is
+logged as `sync: auth error, check SUPABASE_SECRET_KEY in ~/class_OS/.env.local` (the key is never printed).
+Give-up notes in `content/_inbox/` now state the real reason from the log (no recording, last run failed with a
+note, or no result logged) and a successful sync removes a stale note.
+
 ### Catch-up on wake
 
 Ryan may close the laptop right after class, so nothing depends on the Mac being awake

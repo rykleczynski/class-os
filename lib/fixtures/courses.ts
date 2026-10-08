@@ -24,6 +24,11 @@ export type Course = {
    */
   materials_allowed?: boolean;
   /**
+   * Where lecture transcripts come from. Absent or "wispr": the Wispr recording. "panopto": BruinCast captions that
+   * `npm run materials` converts into content/<slug>/transcript.txt; the generator waits for that file.
+   */
+  transcript_source?: "wispr" | "panopto";
+  /**
    * Regex sources (matched case-insensitively) for file names in Downloads (PDF/PPTX/DOCX) that
    * `npm run materials` files under materials/<slug>/. Strings, not RegExp, so a Course can cross into client components.
    */
@@ -86,6 +91,9 @@ export const courses: Course[] = [
     term: "Fall 2026",
     // Opted out: the ECON 134 syllabus forbids using course content with AI.
     materials_allowed: false,
+    // Ryan does not attend, so there is no Wispr recording: lectures come from BruinCast captions. Lecture
+    // captions are used; the slides opt-out above only covers slides and other course files.
+    transcript_source: "panopto",
     generation_notes:
       "Graphical. Use supplyDemand blocks with shifts and shaded areas (deadweight loss, externalities, taxes), marginal-damage versus marginal-benefit curves, and charts of costs. Pair every curve with a one-line takeaway.",
   },
