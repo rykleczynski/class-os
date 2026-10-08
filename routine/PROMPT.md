@@ -53,6 +53,13 @@ check and rebuild it: sync upserts over the old lesson, and `materials_missing` 
 
 ### 3. Find the Wispr recording
 
+**Panopto sessions skip steps 3 and 4.** If the session has a `source` with `"type": "panopto"` (ECON 134,
+which has no Wispr recording), the caption text is already in `source.transcriptFile` (a plain-text
+conversion of the BruinCast captions, made by `npm run materials`). Do not search Wispr. Read that file in
+full as the transcript, and never modify or rewrite it: it is a genuine file and sync stores it as is. The
+gate only hands you a Panopto session once the file exists. Captions are auto-generated, so apply the
+domain-term fixes below. ECON 134 slides stay off limits (see "Course slides").
+
 `search_meetings` over the class window (widen by 30 minutes each side). Accept a
 meeting when its time range overlaps the class by **at least 50%** (overlap divided by
 the shorter of the two ranges). If none overlap enough, fall back to a title match with
@@ -183,11 +190,11 @@ and go to the next session. Otherwise write `content/<slug>/meta.json`:
 {
   "slug": "<slug>",
   "courseCode": "ECON 106F",
-  "sourceId": "<wispr meeting id>",
-  "startsAt": "<wispr meeting start, UTC ISO>",
-  "endsAt": "<wispr meeting end, UTC ISO>",
-  "wisprShareLink": "<share link or null>",
-  "transcriptFile": null,
+  "sourceId": "<wispr meeting id, or source.sourceId for a Panopto session>",
+  "startsAt": "<wispr meeting start, UTC ISO; the session startsAt for Panopto>",
+  "endsAt": "<wispr meeting end, UTC ISO; the session endsAt for Panopto>",
+  "wisprShareLink": "<share link, or null for Panopto>",
+  "transcriptFile": "<null for Wispr; \"transcript.txt\" for Panopto>",
   "summary": "<one sentence, under 160 characters>",
   "materials_missing": null
 }
@@ -198,7 +205,9 @@ if you found no slide file for this lecture's chapter or topic in `materials/<co
 chapter or topic as a short label, for example `"Ch 4"` or `"Ch 5 (bond pricing)"`. The app then tells Ryan
 the slides were missing. Leave it `null` only after you read usable slides for the chapter. If the only matching file is a PPTX or DOCX you could not read, treat the slides as missing and set it. Never put slide or transcript text in it.
 
-Then `npm run sync -- --only <slug>`. It prints `lesson upserted` on success. The
+Then `npm run sync -- --only <slug>`. It prints `lesson upserted` on success. If it fails, log `failed` with note
+`sync` and move on: the lesson and meta stay on disk and `run.sh` re-runs sync on the next tick without
+starting you again or spending an attempt. The
 Supabase service key is read by the script from an env file; never print, copy or log
 it, and never read env files yourself.
 

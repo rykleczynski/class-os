@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { ExternalLink } from "lucide-react";
 import { LessonList } from "@/components/LessonList";
 import { courseStyle } from "@/lib/course-theme";
+import { datesAwaitingLesson } from "@/lib/schedule";
 import { getCourse, getLecturesForCourse, getLessonTimeline, getTranscript, transcriptsPrivate } from "@/lib/data";
 
 export default async function CoursePage({ params }: PageProps<"/course/[code]">) {
@@ -10,6 +12,12 @@ export default async function CoursePage({ params }: PageProps<"/course/[code]">
   if (!course) notFound();
   const [timeline, lectures] = await Promise.all([getLessonTimeline(), getLecturesForCourse(course.id)]);
   const lessons = timeline.filter((l) => l.course_id === course.id);
+  // Panopto courses have no recording to trigger the generator: nudge when a recent class has no lesson yet.
+  let awaitingCaptions: string[] = [];
+  if (course.transcript_source === "panopto") {
+    await connection(); // reads the clock
+    awaitingCaptions = datesAwaitingLesson(course, lessons.map((l) => l.date));
+  }
   const transcripts = await Promise.all(lectures.map(async (l) => ({ lecture: l, text: await getTranscript(l) })));
 
   return (
@@ -31,6 +39,11 @@ export default async function CoursePage({ params }: PageProps<"/course/[code]">
 
       <section aria-label="Lessons" className="rounded-3xl border border-border bg-card p-5 shadow-soft">
         <h2 className="text-lg font-semibold tracking-tight">Lessons</h2>
+        {awaitingCaptions.length > 0 && (
+          <p className="mt-2 text-sm text-muted-foreground" data-testid="awaiting-panopto">
+            New {course.code} lecture: run /refresh-materials
+          </p>
+        )}
         {lessons.length === 0 ? (
           <p className="mt-2 text-sm text-muted-foreground">No lessons yet. They appear after the first recording is processed.</p>
         ) : (

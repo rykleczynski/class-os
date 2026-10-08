@@ -62,6 +62,27 @@ if ! git pull --ff-only -q >>"$LOG" 2>&1; then
   log "warn: git pull --ff-only failed, running current checkout"
 fi
 
+# Re-run sync for lessons that were generated on disk but never reached Supabase (for example a bad key).
+# No Claude and no gate attempt is spent. Exit 5 from sync means Supabase rejected the key.
+# A dry run never writes to Supabase or creates .synced markers, so it skips this entirely.
+sync_pending() {
+  local out rc
+  if [ "$DRY" = "1" ]; then
+    log "sync: skipped (dry run)"
+    return 0
+  fi
+  out="$(npm run -s sync -- --unsynced 2>&1)"
+  rc=$?
+  [ -n "$out" ] && printf '%s\n' "$out" | while IFS= read -r line; do log "sync: $line"; done
+  case $rc in
+    0) ;;
+    5) log "sync: auth error, check SUPABASE_SECRET_KEY in ~/class_OS/.env.local" ;;
+    2) log "sync: not configured, check SUPABASE_SECRET_KEY in ~/class_OS/.env.local" ;;
+    *) log "sync: some lessons could not be synced (exit $rc), will retry next tick" ;;
+  esac
+}
+sync_pending
+
 # Zero-token gate: no LLM, no MCP. Exit 3 = nothing to do, 4 = could not check.
 if [ -n "${CLASSOS_PENDING_FILE:-}" ]; then
   PENDING="$(cat "$CLASSOS_PENDING_FILE")"
@@ -116,6 +137,7 @@ printf '%s' "$PROMPT" | perl -e 'alarm shift; exec @ARGV' "$TIMEOUT_SECS" \
   --disallowedTools "Read(**/.env*)" \
   >>"$LOG" 2>&1
 rc=$?
+sync_pending # catch anything the run generated but could not sync
 log "claude: exit $rc after $((SECONDS - START))s"
 [ $rc -eq 142 ] && log "claude: timed out after ${TIMEOUT_SECS}s"
 exit 0

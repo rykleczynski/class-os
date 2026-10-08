@@ -19,26 +19,23 @@
  * ("needs a manual source") and the session stops being pending. --record bumps the
  * attempt counter for every pending session (run.sh passes it right before claude runs).
  */
-import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { courses } from "../lib/fixtures/courses";
+import { courses, courseByCode } from "../lib/fixtures/courses";
+import { TERM_END, TERM_START, TZ, classSessions, codeKey, laDateString } from "../lib/schedule";
+import { isUnsynced, panoptoState } from "./content-state";
 
-const TZ = "America/Los_Angeles";
 /** Override with CLASSOS_LOOKBACK_DAYS (dry runs). */
 const LOOKBACK_DAYS = Number(process.env.CLASSOS_LOOKBACK_DAYS ?? 7);
 const MIN_AGE_MIN = 10;
 const MAX_ATTEMPTS = 3;
 const MAX_AGE_HOURS = 48;
-/** MM-DD, local date. Add to this list as the term goes on. */
-const HOLIDAYS = new Set(["11-11", "11-26", "11-27"]);
-/** Local YYYY-MM-DD, inclusive. Outside this window the gate stays idle (breaks). Tighten TERM_END once the term's last day is known. */
-const TERM_START = "2026-09-28";
-const TERM_END = "2026-12-31";
 /** At most this many sessions per claude run; --record only spends attempts on the ones emitted. */
 const MAX_PER_RUN = Number(process.env.CLASSOS_MAX_SESSIONS ?? 2);
 
-const contentRoot = join(__dirname, "..", "content");
+/** CLASSOS_CONTENT_DIR and CLASSOS_NOW exist for tests. */
+const contentRoot = process.env.CLASSOS_CONTENT_DIR || join(__dirname, "..", "content");
 const stateFile = join(contentRoot, "_state", "attempts.json");
 const inboxDir = join(contentRoot, "_inbox");
 
@@ -57,66 +54,14 @@ type Session = {
   startsAt: string;
   endsAt: string;
   attempts: number;
+  /** Set for transcript_source "panopto" courses: the caption text is already in content/<slug>/transcript.txt. */
+  source?: { type: "panopto"; transcriptFile: string; sourceId: string };
   /** Set by --regenerate: a lesson exists, but it was flagged materials_missing and should be rebuilt. */
   regenerate?: boolean;
 };
 
-const dtf = new Intl.DateTimeFormat("en-US", {
-  timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", weekday: "short",
-});
-const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-function localDate(ms: number): { y: number; m: number; d: number; wd: number } {
-  const p = Object.fromEntries(dtf.formatToParts(ms).map((x) => [x.type, x.value]));
-  return { y: +p.year, m: +p.month, d: +p.day, wd: WEEKDAYS.indexOf(p.weekday) };
-}
-
-/** UTC ms for a wall-clock time in America/Los_Angeles (handles DST). */
-function laToUtc(y: number, m: number, d: number, hhmm: string): number {
-  const [hh, mm] = hhmm.split(":").map(Number);
-  const guess = Date.UTC(y, m - 1, d, hh, mm);
-  for (const off of [7, 8]) {
-    const t = guess + off * 3600_000;
-    const l = new Intl.DateTimeFormat("en-US", {
-      timeZone: TZ, hour12: false, hour: "2-digit", minute: "2-digit", year: "numeric", month: "2-digit", day: "2-digit",
-    }).formatToParts(t);
-    const g = Object.fromEntries(l.map((x) => [x.type, x.value]));
-    if (+g.year === y && +g.month === m && +g.day === d && +g.hour % 24 === hh && +g.minute === mm) return t;
-  }
-  return guess + 8 * 3600_000;
-}
-
-const pad = (n: number) => String(n).padStart(2, "0");
-const codeKey = (code: string) => code.toLowerCase().replace(/\s+/g, "");
-
-function computeSessions(now: number): Session[] {
-  const out: Session[] = [];
-  const seen = new Set<string>();
-  for (let back = 0; back <= LOOKBACK_DAYS + 1; back++) {
-    const { y, m, d, wd } = localDate(now - back * 86400_000);
-    const date = `${y}-${pad(m)}-${pad(d)}`;
-    if (HOLIDAYS.has(`${pad(m)}-${pad(d)}`)) continue;
-    if (date < TERM_START || date > TERM_END) continue;
-    for (const c of courses) {
-      if (c.no_class_dates?.includes(date)) continue;
-      for (const mt of c.meetings) {
-        if (!mt.days.includes(wd)) continue;
-        const start = laToUtc(y, m, d, mt.start);
-        const end = laToUtc(y, m, d, mt.end);
-        if (end > now - MIN_AGE_MIN * 60_000) continue;
-        if (end < now - LOOKBACK_DAYS * 86400_000) continue;
-        const slug = `${codeKey(c.code)}-${date}`;
-        if (seen.has(slug)) continue;
-        seen.add(slug);
-        out.push({
-          slug, courseCode: c.code, courseTitle: c.title, seriesIds: c.calendar_event_series_ids, date,
-          startsAt: new Date(start).toISOString(), endsAt: new Date(end).toISOString(), attempts: 0,
-        });
-      }
-    }
-  }
-  return out.sort((a, b) => a.startsAt.localeCompare(b.startsAt));
-}
+const computeSessions = (now: number): Session[] =>
+  classSessions(courses, now, LOOKBACK_DAYS, MIN_AGE_MIN).map((x) => ({ ...x, attempts: 0 }));
 
 const lockDir = join(contentRoot, "_state", "attempts.lock");
 
@@ -166,10 +111,69 @@ function retry(slug: string) {
   console.error(`pending: ${slug} reset (attempts 0, 48h clock restarted); it must still be inside the lookback window`);
 }
 
-/** True while the published lesson still has materials_missing set. Best effort: false if the column is not there yet. */
+/** True while the published lesson still has materials_missing set. Exits 4 on a query error (for example migration 0002 not applied). */
 async function stillFlagged(db: SupabaseClient, slug: string): Promise<boolean> {
   const { data, error } = await db.from("lessons").select("materials_missing").eq("slug", slug).maybeSingle();
-  return !error && Boolean((data as { materials_missing?: string | null } | null)?.materials_missing);
+  if (error) {
+    console.error(`pending: materials_missing check failed: ${error.message}`);
+    process.exit(4);
+  }
+  return Boolean((data as { materials_missing?: string | null } | null)?.materials_missing);
+}
+
+const logDay = (ms: number) => laDateString(ms);
+
+/** The most recent log line for a slug, from content/_log. Used to say why a session was given up on. */
+function lastLogged(slug: string): { outcome: string; note: string } | null {
+  const dir = join(contentRoot, "_log");
+  if (!existsSync(dir)) return null;
+  for (const f of readdirSync(dir).filter((x) => x.endsWith(".log")).sort().reverse()) {
+    const lines = readFileSync(join(dir, f), "utf8").split("\n").reverse();
+    for (const line of lines) {
+      const [, sl, outcome, , ...note] = line.split(" ");
+      if (sl === slug && outcome) return { outcome, note: note.join(" ") };
+    }
+  }
+  return null;
+}
+
+/** One awaiting-panopto log line per slug per day, so the 30 minute ticks do not flood the log. */
+function logAwaitingPanopto(slug: string) {
+  const dir = join(contentRoot, "_log");
+  const file = join(dir, `${logDay(Date.now())}.log`);
+  try {
+    if (existsSync(file) && readFileSync(file, "utf8").split("\n").some((l) => l.includes(` ${slug} awaiting-panopto `))) return;
+    mkdirSync(dir, { recursive: true });
+    appendFileSync(file, `${new Date().toISOString()} ${slug} awaiting-panopto 0s\n`);
+  } catch {
+    /* logging is best effort */
+  }
+}
+
+/** Inbox note text that states the real reason, not a guess. */
+function giveUpNote(s: Pick<Session, "slug" | "courseCode" | "date" | "startsAt" | "endsAt" | "source">, why: string, last = lastLogged(s.slug)): string {
+  let reason: string;
+  let next: string;
+  if (s.source) {
+    reason = `The Panopto captions are in place, but no lesson was produced${last?.outcome === "failed" ? ` (last run: failed${last.note ? `, ${last.note}` : ""})` : ""}.`;
+    next = "Check ~/Library/Logs/class-os-generator.log, then retry.";
+  } else if (last?.outcome === "no-recording") {
+    reason = "The generator found no Wispr recording for this session.";
+    next = `Add a source by hand, for example the Panopto captions, then write content/${codeKey(s.courseCode)}-${s.date}/ following routine/PROMPT.md.`;
+  } else if (last?.outcome === "failed") {
+    reason = `The last generator run failed${last.note ? ` (${last.note})` : ""}.`;
+    next = "Check ~/Library/Logs/class-os-generator.log for the cause.";
+  } else {
+    reason = `The generator never logged a result for this session (last log: ${last?.outcome ?? "none"}).`;
+    next = "Check ~/Library/Logs/class-os-generator.log for the cause.";
+  }
+  return (
+    `# ${s.courseCode} on ${s.date} needs attention\n\n` +
+    `Session ${s.startsAt} to ${s.endsAt}. No lesson exists and the generator gave up (${why}).\n` +
+    `Reason: ${reason}\n${next}\n` +
+    `To try again, run: npm run pending -- --retry ${s.slug}\n` +
+    `(deleting this file alone does not help: the attempt count and the 48h limit still apply).\n`
+  );
 }
 
 async function main() {
@@ -177,60 +181,87 @@ async function main() {
     retry(retrySlug ?? "");
     return;
   }
-  const now = Date.now();
+  const now = process.env.CLASSOS_NOW ? Date.parse(process.env.CLASSOS_NOW) : Date.now();
+  // Outside the term the gate is idle no matter what is still unfinished, so Claude never starts during break.
+  const today = laDateString(now);
+  if (today < TERM_START || today > TERM_END) {
+    console.log(`pending: outside term (${TERM_START} to ${TERM_END}), idle`);
+    process.exit(3);
+  }
+  const testLecturesFile = process.env.CLASSOS_TEST_LECTURES; // tests: [{code,start,hasLesson}] instead of Supabase
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  if (!url || !key) {
+  if (!testLecturesFile && (!url || !key)) {
     console.error("pending: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY not set (.env.generator)");
     process.exit(4);
   }
   const sessions = computeSessions(now);
-  const db = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
-
-  const signal = AbortSignal.timeout(15_000);
-  const { data, error } = await db
-    .from("lectures")
-    .select("starts_at, ends_at, courses(code), lessons(id)")
-    .gte("starts_at", new Date(now - (LOOKBACK_DAYS + 2) * 86400_000).toISOString())
-    .abortSignal(signal);
-  if (error) {
-    console.error(`pending: supabase check failed: ${error.message}`);
-    process.exit(4);
+  let db: SupabaseClient | null = null;
+  let lectures: { code: string | undefined; start: number; hasLesson: boolean }[];
+  if (testLecturesFile) {
+    lectures = JSON.parse(readFileSync(testLecturesFile, "utf8"));
+  } else {
+    db = createClient(url as string, key as string, { auth: { persistSession: false, autoRefreshToken: false } });
+    const signal = AbortSignal.timeout(15_000);
+    const { data, error } = await db
+      .from("lectures")
+      .select("starts_at, ends_at, courses(code), lessons(id)")
+      .gte("starts_at", new Date(now - (LOOKBACK_DAYS + 2) * 86400_000).toISOString())
+      .abortSignal(signal);
+    if (error) {
+      console.error(`pending: supabase check failed: ${error.message}`);
+      process.exit(4);
+    }
+    lectures = (data ?? []).map((l) => {
+      const c = l.courses as unknown as { code: string } | { code: string }[] | null;
+      // The publishable key only sees published lessons, so a lecture row alone does not count as done.
+      const hasLesson = Array.isArray(l.lessons) ? l.lessons.length > 0 : Boolean(l.lessons);
+      return { code: Array.isArray(c) ? c[0]?.code : c?.code, start: Date.parse(l.starts_at as string), hasLesson };
+    });
   }
-  const lectures = (data ?? []).map((l) => {
-    const c = l.courses as unknown as { code: string } | { code: string }[] | null;
-    // The publishable key only sees published lessons, so a lecture row alone does not count as done.
-    const hasLesson = Array.isArray(l.lessons) ? l.lessons.length > 0 : Boolean(l.lessons);
-    return { code: Array.isArray(c) ? c[0]?.code : c?.code, start: Date.parse(l.starts_at as string), hasLesson };
-  });
 
   lockAttempts(); // held until exit so --record cannot overwrite a concurrent --retry
   const attempts = readAttempts();
   const pending: Session[] = [];
   const gaveUp: string[] = [];
+  const awaitingSync: string[] = [];
+  const awaitingPanopto: string[] = [];
   for (const s of sessions) {
     const sStart = Date.parse(s.startsAt);
     const sEnd = Date.parse(s.endsAt);
     const has = lectures.some((l) => l.code === s.courseCode && l.hasLesson && l.start >= sStart - 30 * 60_000 && l.start <= sEnd);
-    if (has && !(attempts[s.slug]?.regenerate && (await stillFlagged(db, s.slug)))) continue;
+    if (has && !(attempts[s.slug]?.regenerate && db && (await stillFlagged(db, s.slug)))) continue;
     if (has) s.regenerate = true;
+    // Generated on disk but the last sync failed: run.sh re-runs sync only. No Claude, no attempt spent.
+    if (isUnsynced(contentRoot, s.slug)) {
+      awaitingSync.push(s.slug);
+      continue;
+    }
+    // Panopto courses (ECON 134) have no Wispr recording: wait for the caption file, spending nothing.
+    let readyAt = 0;
+    if (courseByCode(s.courseCode)?.transcript_source === "panopto") {
+      const st = panoptoState(contentRoot, s.slug);
+      if (!st.ready) {
+        awaitingPanopto.push(s.slug);
+        logAwaitingPanopto(s.slug);
+        continue;
+      }
+      readyAt = st.mtimeMs; // the 48h clock starts when the captions arrive, not at class end
+      s.source = { type: "panopto", transcriptFile: `content/${s.slug}/transcript.txt`, sourceId: `panopto:${st.sessionId ?? s.slug}` };
+    }
     const inbox = join(inboxDir, `${s.slug}.md`);
     if (existsSync(inbox)) continue;
     s.attempts = attempts[s.slug]?.count ?? 0;
     const retryAt = attempts[s.slug]?.retryAt ? Date.parse(attempts[s.slug].retryAt as string) : 0;
-    const ageH = (now - Math.max(sEnd, retryAt)) / 3600_000;
+    const ageH = (now - Math.max(sEnd, retryAt, readyAt)) / 3600_000;
     if (s.attempts >= MAX_ATTEMPTS || ageH > MAX_AGE_HOURS) {
       const why = s.attempts >= MAX_ATTEMPTS ? `${s.attempts} generator attempts` : `more than ${MAX_AGE_HOURS}h old`;
-      if (writeInbox) {
+      // A regeneration that gives up keeps its published lesson, so no "needs a manual source" note (it would be wrong).
+      if (writeInbox && !s.regenerate) {
         mkdirSync(inboxDir, { recursive: true });
         writeFileSync(
           inbox,
-          `# ${s.courseCode} on ${s.date} needs a manual source\n\n` +
-            `Session ${s.startsAt} to ${s.endsAt}. No lesson exists and the generator gave up (${why}).\n` +
-            `Likely no Wispr recording. Add a source by hand, for example the Panopto captions, ` +
-            `then write content/${codeKey(s.courseCode)}-${s.date}/ following routine/PROMPT.md.\n` +
-            `To try again, run: npm run pending -- --retry ${s.slug}\n` +
-            `(deleting this file alone does not help: the attempt count and the 48h limit still apply).\n`,
+          giveUpNote(s, why),
         );
       }
       gaveUp.push(s.slug);
@@ -239,7 +270,9 @@ async function main() {
     pending.push(s);
   }
 
-  if (gaveUp.length) console.error(`pending: gave up on ${gaveUp.join(", ")} (inbox note ${writeInbox ? "written" : "skipped"})`);
+  if (awaitingSync.length) console.error(`pending: ${awaitingSync.join(", ")} generated, waiting for sync (no attempt spent)`);
+  if (awaitingPanopto.length) console.error(`pending: awaiting-panopto ${awaitingPanopto.join(", ")} (no attempt spent): run /refresh-materials`);
+  if (gaveUp.length) console.error(`pending: gave up on ${gaveUp.join(", ")} (inbox note ${writeInbox ? "written where no lesson exists" : "skipped"})`);
   if (!pending.length) process.exit(3);
   pending.splice(MAX_PER_RUN); // oldest first; the rest wait for the next tick
 

@@ -2,38 +2,28 @@
  * Upserts lesson JSON and transcript text from lib/fixtures into Supabase with the
  * service-role key. Files go from disk straight to Supabase; content is never printed.
  *
- *   npm run sync -- [--dry-run] [--only <slug>] [--content-only]
+ *   npm run sync -- [--dry-run] [--only <slug>] [--content-only] [--unsynced]
  *
  * Sources: the repo manifest (lib/fixtures) plus the gitignored content/ directory,
  * where each generated lecture is content/<slug>/{lesson.json,meta.json,transcript.txt?}.
  * --content-only skips the manifest. Directories starting with "_" are ignored.
+ * --unsynced syncs only content/ lessons whose last sync did not complete (no content/<slug>/.synced marker, or lesson.json, meta.json
+ * or the transcript changed after it; files that fail validation are left for the generator) and prints nothing when there are none. run.sh uses it so a failed sync is retried
+ * without starting Claude. Exit codes: 0 ok, 1 some lessons skipped, 2 usage or missing key, 5 Supabase rejected the key.
  *
  * Requires SUPABASE_SECRET_KEY (server-only; see .env.example).
  */
-import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, realpathSync, rmSync } from "node:fs";
 import { join, relative, isAbsolute } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { lessonSchema } from "../lib/lesson/schema";
-import { z } from "zod";
 import { manifest, type ManifestEntry } from "../lib/fixtures/manifest";
+import { isAuthError, isUnsynced, markSynced, metaSchema } from "./content-state";
 
 const TERM = "Fall 2026";
 const MIN_TRANSCRIPT_CHARS = 1000;
 const root = join(__dirname, "..", "lib", "fixtures");
 const contentRoot = join(__dirname, "..", "content");
-
-const metaSchema = z.object({
-  slug: z.string().min(1),
-  courseCode: z.string().min(1),
-  sourceId: z.string().min(1),
-  startsAt: z.string().min(1),
-  endsAt: z.string().min(1),
-  wisprShareLink: z.string().nullable(),
-  transcriptFile: z.string().nullable(),
-  summary: z.string().nullable(),
-  /** Chapter or topic whose slides were not in materials/ when the lesson was written. Absent or null means fine. */
-  materials_missing: z.string().nullable().optional(),
-});
 
 type Entry = ManifestEntry & { lessonPath: string; transcriptPath: string | null; transcriptRoot: string };
 
@@ -87,7 +77,8 @@ const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
 const onlyIdx = args.indexOf("--only");
 const only = onlyIdx >= 0 ? args[onlyIdx + 1] : undefined;
-const contentOnly = args.includes("--content-only");
+const unsynced = args.includes("--unsynced");
+const contentOnly = args.includes("--content-only") || unsynced;
 if (onlyIdx >= 0 && !only) {
   console.error("--only needs a slug");
   process.exit(2);
@@ -117,13 +108,16 @@ async function main() {
   const bySlug = new Map<string, Entry>();
   if (!contentOnly) for (const e of manifestEntries()) bySlug.set(e.slug, e);
   for (const e of content.entries) bySlug.set(e.slug, e); // content/ wins on a slug clash
-  const entries = [...bySlug.values()].filter((e) => !only || e.slug === only);
+  const contentSlugs = new Set(content.entries.map((e) => e.slug));
+  const entries = [...bySlug.values()].filter((e) => (!only || e.slug === only) && (!unsynced || isUnsynced(contentRoot, e.slug)));
+  if (unsynced && entries.length === 0) process.exit(0);
   if (only && entries.length === 0) {
     console.error(`no manifest or content entry for ${only}`);
     process.exit(2);
   }
   const courseIds = new Map<string, string>();
-  let failed = content.bad;
+  let failed = unsynced ? 0 : content.bad;
+  let authFailed = false;
 
   for (const e of entries) {
     const lessonPath = e.lessonPath;
@@ -198,12 +192,22 @@ async function main() {
       );
       if (lesErr) throw new Error(`lesson upsert: ${lesErr.message}`);
       console.log(`${e.slug}: lesson upserted, ${transcriptNote}`);
+      if (contentSlugs.has(e.slug)) {
+        markSynced(contentRoot, e.slug);
+        rmSync(join(contentRoot, "_inbox", `${e.slug}.md`), { force: true }); // a stale give-up note no longer applies
+      }
     } catch (err) {
-      console.error(`${e.slug}: skipped: ${(err as Error).message}`);
+      const msg = (err as Error).message;
       failed++;
+      if (isAuthError(msg)) {
+        console.error(`${e.slug}: sync: auth error, check SUPABASE_SECRET_KEY in ~/class_OS/.env.local`);
+        authFailed = true;
+        break; // every remaining lesson would fail the same way
+      }
+      console.error(`${e.slug}: skipped: ${msg}`);
     }
   }
-  process.exit(failed ? 1 : 0);
+  process.exit(authFailed ? 5 : failed ? 1 : 0);
 }
 
 void main();

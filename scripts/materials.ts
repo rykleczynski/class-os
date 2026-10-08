@@ -6,14 +6,19 @@
  *   npm run materials
  *   CLASSOS_DOWNLOADS=/some/dir   scan this directory instead of ~/Downloads
  *   CLASSOS_MATERIALS_DIR=/dir    file into this directory instead of ./materials (tests)
+ *   CLASSOS_CONTENT_DIR=/dir      write Panopto transcripts under this directory instead of ./content (tests)
+ *
+ * Also converts Panopto (BruinCast) caption files for courses with transcript_source "panopto" into
+ * content/<slug>/transcript.txt. That is lecture text, not slides, so the materials_allowed opt-out does not apply.
  *
  * A course with `materials_allowed: false` is never copied, even if a pattern matches.
  */
 import { createHash } from "node:crypto";
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { extname, join } from "node:path";
 import { courses as realCourses, type Course } from "../lib/fixtures/courses";
+import { captionTarget, looksLikeCaptions, srtToText } from "./panopto";
 
 const EXTENSIONS = new Set([".pdf", ".pptx", ".docx"]);
 
@@ -83,10 +88,53 @@ export function fileMaterials(downloads: string, materialsRoot: string, courseLi
   return filed;
 }
 
+/**
+ * Panopto caption files in Downloads become content/<slug>/transcript.txt (plain text, no indices or timestamps).
+ * Skips a slug whose transcript.txt already exists. Genuine caption text, not model output, so sync stores it as is.
+ */
+export function fileCaptions(downloads: string, contentRoot: string, courseList: Pick<Course, "code" | "transcript_source">[] = realCourses): string[] {
+  let names: string[];
+  try {
+    names = readdirSync(downloads);
+  } catch {
+    return [];
+  }
+  const done: string[] = [];
+  for (const name of names.sort()) {
+    if (name.startsWith(".")) continue;
+    if (/^GenerateSRT/i.test(name) && !captionTarget(name, courseList)) {
+      console.error(`materials: ${name} has no session in its name; rename it to econ134-YYYY-MM-DD.srt to file it`);
+      continue;
+    }
+    const t = captionTarget(name, courseList);
+    if (!t) continue;
+    try {
+      const outDir = join(contentRoot, t.slug);
+      const out = join(outDir, "transcript.txt");
+      if (existsSync(out)) continue;
+      const raw = readFileSync(join(downloads, name), "utf8");
+      if (!looksLikeCaptions(raw)) {
+        console.error(`materials: ${name} does not look like SRT captions, skipped`);
+        continue;
+      }
+      const text = srtToText(raw);
+      mkdirSync(outDir, { recursive: true });
+      writeFileSync(out, text);
+      if (t.sessionId) writeFileSync(join(outDir, "panopto.json"), JSON.stringify({ sessionId: t.sessionId }) + "\n");
+      done.push(t.slug);
+    } catch (err) {
+      console.error(`materials: could not file ${name}: ${(err as Error).message}`);
+    }
+  }
+  return done;
+}
+
 function main() {
   const downloads = process.env.CLASSOS_DOWNLOADS || join(homedir(), "Downloads");
   const root = process.env.CLASSOS_MATERIALS_DIR || join(__dirname, "..", "materials");
   for (const f of fileMaterials(downloads, root)) console.log(`materials: ${f.course}/${f.file}`);
+  const content = process.env.CLASSOS_CONTENT_DIR || join(__dirname, "..", "content");
+  for (const slug of fileCaptions(downloads, content)) console.log(`materials: transcript ${slug}`);
 }
 
 if (require.main === module) {
