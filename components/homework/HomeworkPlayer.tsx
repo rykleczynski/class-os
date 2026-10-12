@@ -22,7 +22,8 @@ type Props = {
   answers: Array<{ module_id: string; answer: string; status: HomeworkStatus | null; updated_at: string }>;
 };
 
-type Entry = { answer: string; status: HomeworkStatus | null; updatedAt: number };
+/** dirty: edited on this device and not yet confirmed saved for exactly this value. */
+type Entry = { answer: string; status: HomeworkStatus | null; dirty: boolean };
 type Entries = Record<string, Entry>;
 type Sync = "pending" | "saving" | "saved" | "retrying" | "failed";
 
@@ -40,8 +41,8 @@ function readDrafts(slug: string): Entries {
     const raw = JSON.parse(localStorage.getItem(draftKey(slug)) ?? "{}") as Record<string, Partial<Entry>>;
     const out: Entries = {};
     for (const [id, e] of Object.entries(raw ?? {})) {
-      if (typeof e?.answer !== "string" || typeof e.updatedAt !== "number") continue;
-      out[id] = { answer: e.answer, status: e.status === "got" || e.status === "review" ? e.status : null, updatedAt: e.updatedAt };
+      if (typeof e?.answer !== "string") continue;
+      out[id] = { answer: e.answer, status: e.status === "got" || e.status === "review" ? e.status : null, dirty: e.dirty === true };
     }
     return out;
   } catch {
@@ -65,7 +66,11 @@ function clearDrafts(slug: string) {
   }
 }
 
-/** Server answers win unless this browser holds a newer, different draft; those are queued for saving. */
+/**
+ * Server answers win unless this browser holds a dirty draft (an edit whose save never
+ * succeeded); those win and are queued for saving. No clock comparison, so a skewed device
+ * clock can neither drop an unsaved draft nor let a stale one overwrite work from elsewhere.
+ */
 function initialEntries(slug: string, modules: HomeworkModule[], answers: Props["answers"]) {
   const server = new Map(answers.map((a) => [a.module_id, a]));
   const local = readDrafts(slug);
@@ -73,11 +78,9 @@ function initialEntries(slug: string, modules: HomeworkModule[], answers: Props[
   const unsaved: string[] = [];
   for (const m of modules) {
     const s = server.get(m.id);
-    const fromServer: Entry = s
-      ? { answer: s.answer, status: s.status, updatedAt: Date.parse(s.updated_at) || 0 }
-      : { answer: "", status: null, updatedAt: 0 };
+    const fromServer: Entry = s ? { answer: s.answer, status: s.status, dirty: false } : { answer: "", status: null, dirty: false };
     const l = local[m.id];
-    if (l && l.updatedAt > fromServer.updatedAt && (l.answer !== fromServer.answer || l.status !== fromServer.status)) {
+    if (l?.dirty) {
       entries[m.id] = l;
       unsaved.push(m.id);
     } else {
@@ -113,6 +116,8 @@ function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: P
   const entriesRef = useRef(init.entries);
   const versions = useRef(new Map<string, number>());
   const timers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
+  // Set by unmount cleanup: an in-flight save that returns afterwards must not retry or set state.
+  const stopped = useRef(false);
 
   const flush = useCallback(
     async function flushOne(id: string): Promise<void> {
@@ -128,8 +133,14 @@ function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: P
       } catch {
         res = { ok: false, reason: "error" };
       }
-      if ((versions.current.get(id) ?? 0) !== version) return; // a newer edit has its own save queued
+      if (stopped.current) return;
+      if ((versions.current.get(id) ?? 0) !== version) return; // a newer edit has its own save queued, still dirty
       if (res.ok) {
+        // Saved exactly this value: the draft is clean, so the server copy wins on the next load.
+        const next: Entries = { ...entriesRef.current, [id]: { ...entriesRef.current[id], dirty: false } };
+        entriesRef.current = next;
+        setEntries(next);
+        writeDrafts(slug, next);
         setSync((s) => ({ ...s, [id]: "saved" }));
       } else if (res.reason === "error") {
         setSync((s) => ({ ...s, [id]: "retrying" }));
@@ -142,8 +153,8 @@ function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: P
     [slug],
   );
 
-  const update = (id: string, patch: Partial<Omit<Entry, "updatedAt">>) => {
-    const next: Entries = { ...entriesRef.current, [id]: { ...entriesRef.current[id], ...patch, updatedAt: Date.now() } };
+  const update = (id: string, patch: Partial<Omit<Entry, "dirty">>) => {
+    const next: Entries = { ...entriesRef.current, [id]: { ...entriesRef.current[id], ...patch, dirty: true } };
     entriesRef.current = next;
     setEntries(next);
     writeDrafts(slug, next);
@@ -153,8 +164,9 @@ function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: P
     setSync((s) => ({ ...s, [id]: "pending" }));
   };
 
-  // Drafts newer than the server copy go up shortly after load; pending saves go up when the tab is hidden.
+  // Dirty drafts go up shortly after load; pending saves go up when the tab is hidden.
   useEffect(() => {
+    stopped.current = false; // dev Strict Mode mounts, cleans up and mounts again
     const t = timers.current;
     for (const id of init.unsaved) t.set(id, setTimeout(() => void flush(id), DEBOUNCE_MS));
     const onHide = () => {
@@ -162,6 +174,7 @@ function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: P
     };
     document.addEventListener("visibilitychange", onHide);
     return () => {
+      stopped.current = true;
       document.removeEventListener("visibilitychange", onHide);
       for (const timer of t.values()) clearTimeout(timer);
       t.clear();

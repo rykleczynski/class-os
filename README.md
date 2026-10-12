@@ -73,7 +73,7 @@ Setup: apply `0003_homework.sql`, then upload through the service-role-only `hom
 
 ```bash
 HOMEWORK_PASSCODE='<long random passcode>' npm run homework:sync -- --only econ134-ps1
-npm run homework:sync -- --dry-run   # validate content/homework/*.json only, no key or network
+npm run homework:sync -- --dry-run   # validate content/homework/*.json only, no passcode, key or network
 ```
 
 The passcode must be at least 16 characters (anyone can guess through the RPC, so make it

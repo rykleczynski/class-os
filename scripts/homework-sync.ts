@@ -8,10 +8,10 @@
  * Each file is content/homework/<slug>.json: { slug, courseCode, title, dueAt, spec }, with spec
  * checked against lib/homework-spec.ts. Every set uploaded in one run gets the same passcode, and
  * re-running replaces the passcode hash. Saved answers are never touched.
- * --dry-run validates the files only: no secret key, no network.
+ * --dry-run validates the files only: no passcode, no secret key, no network.
  * Exit codes: 0 ok, 1 some files skipped, 2 usage, missing passcode or missing key.
  *
- * Requires SUPABASE_SECRET_KEY (server-only; see .env.example) unless --dry-run.
+ * Requires HOMEWORK_PASSCODE and SUPABASE_SECRET_KEY (server-only; see .env.example) unless --dry-run.
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -30,8 +30,9 @@ if (onlyIdx >= 0 && !only) {
   process.exit(2);
 }
 
-const passcode = process.env.HOMEWORK_PASSCODE ?? "";
-if (passcode.length < MIN_PASSCODE) {
+// Trimmed like the unlock form trims its input, so a stray newline in .env cannot lock Ryan out.
+const passcode = (process.env.HOMEWORK_PASSCODE ?? "").trim();
+if (!dryRun && passcode.length < MIN_PASSCODE) {
   console.error(`HOMEWORK_PASSCODE must be set and at least ${MIN_PASSCODE} characters (use a long random one)`);
   process.exit(2);
 }
