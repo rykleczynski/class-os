@@ -195,6 +195,82 @@ export type Database = {
         }
         Relationships: []
       }
+      homework_answers: {
+        Row: {
+          answer: string
+          module_id: string
+          set_id: string
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          answer?: string
+          module_id: string
+          set_id: string
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          module_id?: string
+          set_id?: string
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "homework_answers_set_id_fkey"
+            columns: ["set_id"]
+            isOneToOne: false
+            referencedRelation: "homework_sets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      homework_sets: {
+        Row: {
+          course_id: string
+          created_at: string
+          due_at: string | null
+          id: string
+          passcode_hash: string
+          slug: string
+          spec: Json
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          course_id: string
+          created_at?: string
+          due_at?: string | null
+          id?: string
+          passcode_hash: string
+          slug: string
+          spec: Json
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          course_id?: string
+          created_at?: string
+          due_at?: string | null
+          id?: string
+          passcode_hash?: string
+          slug?: string
+          spec?: Json
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "homework_sets_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lectures: {
         Row: {
           calendar_event_id: string | null
@@ -297,7 +373,31 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      homework_get: {
+        Args: { p_passcode: string; p_slug: string }
+        Returns: Json
+      }
+      homework_save: {
+        Args: {
+          p_answer: string
+          p_module_id: string
+          p_passcode: string
+          p_slug: string
+          p_status?: string
+        }
+        Returns: boolean
+      }
+      homework_upsert: {
+        Args: {
+          p_course_code: string
+          p_due_at: string
+          p_passcode: string
+          p_slug: string
+          p_spec: Json
+          p_title: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
