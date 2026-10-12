@@ -21,7 +21,8 @@
     "test:panopto": "tsx scripts/test-panopto.ts",
     "test:state": "tsx scripts/test-content-state.ts",
     "pending": "node --env-file-if-exists=.env.generator --import tsx scripts/pending.ts",
-    "sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/sync.ts"
+    "sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/sync.ts",
+    "homework:sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/homework-sync.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
