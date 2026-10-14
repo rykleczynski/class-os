@@ -40,8 +40,12 @@ const courseRow = (c: (typeof courses)[number]) => ({
   generation_notes: c.generation_notes, created_at: "2026-01-01T00:00:00Z",
 });
 const entries = manifest.filter((m) => m.courseCode === "ECON 106F");
-const lectureRows = entries.map((e) => ({ id: `lec-${e.slug}`, course_id: econ.id, starts_at: e.startsAt, wispr_share_link: e.wisprShareLink, wispr_meeting_id: e.sourceId, status: "generated" }));
-const lessonRows = entries.map((e) => ({ id: `les-${e.slug}`, slug: e.slug, lecture_id: `lec-${e.slug}`, title: lessonsBySlug[e.slug].title, summary: "s", est_minutes: 10, created_at: e.endsAt, spec: lessonsBySlug[e.slug], schema_version: 1, status: "published", materials_missing: null }));
+const otherEntries = manifest.filter((m) => m.courseCode !== "ECON 106F");
+const courseIdOf = (code: string) => courses.find((c) => c.code === code)!.id;
+const allEntries = manifest.filter((m) => lessonsBySlug[m.slug]);
+const lectureRows = allEntries.map((e) => ({ id: `lec-${e.slug}`, course_id: courseIdOf(e.courseCode), starts_at: e.startsAt, wispr_share_link: e.wisprShareLink, wispr_meeting_id: e.sourceId, status: "generated" }));
+const DRAFT = "econ106f-secret-draft";
+const lessonRows = [...allEntries.map((e) => e.slug), DRAFT].map((slug) => ({ slug, e: allEntries.find((x) => x.slug === slug) ?? entries[0] })).map(({ slug, e }) => ({ id: `les-${slug}`, slug, lecture_id: `lec-${e.slug}`, title: slug === DRAFT ? "SECRET DRAFT LESSON" : lessonsBySlug[e.slug].title, summary: "s", est_minutes: 10, created_at: e.endsAt, spec: lessonsBySlug[e.slug], schema_version: 1, status: slug === DRAFT ? "draft" : "published", materials_missing: null }));
 
 const body = (req: IncomingMessage) => new Promise<string>((res) => { let s = ""; req.on("data", (d) => (s += d)); req.on("end", () => res(s)); });
 const mock = createServer(async (req, res) => {
@@ -71,7 +75,10 @@ const mock = createServer(async (req, res) => {
   }
   if (t === "courses") return out(courses.filter((c) => !eq("id") || c.id === eq("id")).map(courseRow));
   if (t === "lectures") return out(lectureRows.filter((l) => !eq("course_id") || l.course_id === eq("course_id")));
-  if (t === "lessons") return out(lessonRows);
+  if (t === "lessons") {
+    const inList = /^in\.\((.*)\)$/.exec(u.searchParams.get("lecture_id") ?? "")?.[1]?.split(",").map((x) => x.replace(/"/g, ""));
+    return out(lessonRows.filter((l) => (!inList || inList.includes(l.lecture_id)) && (!eq("status") || l.status === eq("status")) && (!eq("slug") || l.slug === eq("slug"))));
+  }
   if (t === "share_links") {
     if (req.method === "POST") {
       const row = { id: crypto.randomUUID(), created_at: new Date().toISOString(), revoked_at: null, last_used_at: null, use_count: 0, ...JSON.parse(await body(req)) };
@@ -172,8 +179,10 @@ async function main() {
     check("guest headers", /noindex/.test(g1.headers.get("x-robots-tag") ?? "") && g1.headers.get("referrer-policy") === "no-referrer");
     const g2 = await get(`${path}/lesson/${entries[0].slug}`);
     check("guest lesson 200", g2.status === 200);
-    const gl = await get(`${path}/lesson/${manifest.find((m) => m.courseCode !== "ECON 106F")!.slug}`);
-    check("guest cannot open another course's lesson", gl.status === 404);
+    const gl = await get(`${path}/lesson/${otherEntries[0].slug}`);
+    check("guest cannot open another course's lesson (it exists in the mock)", gl.status === 404);
+    check("guest cannot open an unpublished lesson", (await get(`${path}/lesson/${DRAFT}`)).status === 404);
+    check("guest list has no other course's or draft lessons", !html.includes("SECRET DRAFT") && otherEntries.every((o) => !html.includes(lessonsBySlug[o.slug].title)));
     check("use_count bumped once per landing visit (lesson page does not count)", shareLinks[0].use_count === 1 && shareLinks[0].last_used_at !== null, `${shareLinks[0].use_count}`);
     const revoked = await callAction(revoke!, [econ.slug, shareLinks[0].id as string], owner);
     check("owner revokes", revoked.text.includes('"ok":true') || revoked.text.includes("revoked_at"), revoked.text.slice(0, 80));

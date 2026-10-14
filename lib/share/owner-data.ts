@@ -17,5 +17,11 @@ export async function getSharePanelState(courseSlug: string): Promise<SharePanel
   if (!decision.ok) return { status: "blocked", reason: decision.reason };
   const store = getShareStore();
   if (!store) return { status: "unavailable", reason: "Sharing needs Supabase. It is off in local fixtures mode." };
-  return { status: "enabled", links: (await store.listForCourse(course.id)).map(toSummary) };
+  try {
+    return { status: "enabled", links: (await store.listForCourse(course.id)).map(toSummary) };
+  } catch (e) {
+    // For example migration 0005 not applied yet: the course page must still load.
+    console.error(`share panel: ${e instanceof Error ? e.message : e}`);
+    return { status: "unavailable", reason: "Sharing is not set up on this database yet." };
+  }
 }

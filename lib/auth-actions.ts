@@ -9,7 +9,7 @@ export type SignInState = { sent?: boolean; error?: string } | null;
 
 /**
  * Sends a magic link, but only when the address is the owner's. Everyone else gets the same
- * reply, so the form does not reveal which address is the owner and never creates accounts.
+ * reply, so the form does not reveal which address is the owner and no other account is ever created.
  */
 export async function sendMagicLink(_prev: SignInState, formData: FormData): Promise<SignInState> {
   const email = normalizeEmail(formData.get("email"));
@@ -22,7 +22,8 @@ export async function sendMagicLink(_prev: SignInState, formData: FormData): Pro
     const proto = h.get("x-forwarded-proto") ?? (host?.startsWith("localhost") ? "http" : "https");
     const { error } = await auth.auth.signInWithOtp({
       email,
-      options: { shouldCreateUser: false, emailRedirectTo: `${proto}://${host}/auth/callback` },
+      options: { // The owner-email check above is the gate, so the first sign-in may create the account.
+      shouldCreateUser: true, emailRedirectTo: `${proto}://${host}/auth/callback` },
     });
     if (error) {
       console.error(`signInWithOtp: ${error.message}`);
