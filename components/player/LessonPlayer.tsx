@@ -19,11 +19,16 @@ type Props = {
   spec: unknown;
   course: { code: string; slug: string; color: string };
   initialStage?: "flashcards";
+  /**
+   * Set for share-link guests: progress goes to their own localStorage namespace, nothing is
+   * sent to the server (no attempts), and the back links point at the shared course page.
+   */
+  guest?: { storageKey: string; backHref: string };
 };
 
 type Attempt = { blockId: string; answer: unknown; correct: boolean; at: number };
 
-export function LessonPlayer({ lessonId, spec, course, initialStage }: Props) {
+export function LessonPlayer({ lessonId, spec, course, initialStage, guest }: Props) {
   const parsed = lessonShellSchema.safeParse(spec);
   if (!parsed.success) {
     return (
@@ -35,19 +40,20 @@ export function LessonPlayer({ lessonId, spec, course, initialStage }: Props) {
       </div>
     );
   }
-  return <ResumeGate lessonId={lessonId} lesson={parsed.data} course={course} initialStage={initialStage} />;
+  return <ResumeGate lessonId={lessonId} lesson={parsed.data} course={course} initialStage={initialStage} guest={guest} />;
 }
 
 type Parsed = ReturnType<typeof lessonShellSchema.parse>;
 
 /** Reads saved progress after mount (localStorage is client-only), then starts the player where the learner left off. */
 function ResumeGate(props: Omit<Props, "spec"> & { lesson: Parsed }) {
-  const { ready, map } = useProgress();
+  const { ready, map } = useProgress(props.guest?.storageKey);
   if (!ready) return <div className="min-h-dvh bg-paper" aria-busy="true" data-testid="player-loading" />;
   return <Player {...props} saved={map[props.lessonId]} />;
 }
 
-function Player({ lessonId, lesson, course, initialStage, saved }: Omit<Props, "spec"> & { lesson: Parsed; saved?: LessonProgress }) {
+function Player({ lessonId, lesson, course, initialStage, guest, saved }: Omit<Props, "spec"> & { lesson: Parsed; saved?: LessonProgress }) {
+  const pkey = guest?.storageKey;
   const nSteps = lesson.steps.length;
   const quizIdx = nSteps;
   const cardsIdx = nSteps + 1;
@@ -66,9 +72,10 @@ function Player({ lessonId, lesson, course, initialStage, saved }: Omit<Props, "
 
   const onAttempt: OnAttempt = useCallback((blockId, answer, correct) => {
     // Local state for the UI, plus a best-effort write to the attempts table.
-    recordAttempt(lessonId, blockId, answer, correct).catch(() => {});
+    // Guests never write to the server; their checks live in this component's state only.
+    if (!guest) recordAttempt(lessonId, blockId, answer, correct).catch(() => {});
     setAttempts((a) => [...a, { blockId, answer, correct, at: Date.now() }]);
-  }, [lessonId]);
+  }, [lessonId, guest]);
 
   const go = (next: number) => {
     setDir(next >= idx ? 1 : -1);
@@ -78,20 +85,20 @@ function Player({ lessonId, lesson, course, initialStage, saved }: Omit<Props, "
   };
   // Persist the current step on every change so a reload or return resumes here.
   useEffect(() => {
-    recordStep(lessonId, idx);
-  }, [lessonId, idx]);
+    recordStep(lessonId, idx, pkey);
+  }, [lessonId, idx, pkey]);
   const startOver = () => {
-    resetProgress(lessonId);
+    resetProgress(lessonId, pkey);
     setAttempts([]);
     setResumed(false);
     setQuizDone(false);
     setMaxReached(0);
     go(0);
-    recordStep(lessonId, 0);
+    recordStep(lessonId, 0, pkey);
   };
   const finishQuiz = () => {
     setQuizDone(true);
-    markCompleted(lessonId);
+    markCompleted(lessonId, pkey);
     go(cardsIdx);
   };
 
@@ -106,7 +113,7 @@ function Player({ lessonId, lesson, course, initialStage, saved }: Omit<Props, "
     <div className="min-h-dvh bg-paper text-foreground">
       <header className="sticky top-0 z-30 border-b border-paper-border bg-paper/90 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3">
-          <Link href={`/course/${course.slug}`} aria-label={`Back to ${course.code}`} className="flex h-10 w-10 items-center justify-center rounded-full border border-paper-border bg-paper-card transition-colors hover:border-control">
+          <Link href={guest?.backHref ?? `/course/${course.slug}`} aria-label={`Back to ${course.code}`} className="flex h-10 w-10 items-center justify-center rounded-full border border-paper-border bg-paper-card transition-colors hover:border-control">
             <ArrowLeft className="h-4 w-4" />
           </Link>
           <div className="min-w-0 flex-1">
@@ -171,7 +178,7 @@ function Player({ lessonId, lesson, course, initialStage, saved }: Omit<Props, "
                 <section>
                   <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Check yourself</h1>
                   <div className="mt-5">
-                    <Quiz lesson={lesson as never} onAttempt={onAttempt} onDone={finishQuiz} onScore={(score, total) => recordQuizScore(lessonId, score, total)} />
+                    <Quiz lesson={lesson as never} onAttempt={onAttempt} onDone={finishQuiz} onScore={(score, total) => recordQuizScore(lessonId, score, total, pkey)} />
                   </div>
                 </section>
               )}
@@ -182,8 +189,8 @@ function Player({ lessonId, lesson, course, initialStage, saved }: Omit<Props, "
                   <div className="mt-5">
                     <Flashcards cards={lesson.flashcards} />
                   </div>
-                  <Link href="/" className="mt-6 inline-flex min-h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">
-                    Back to dashboard
+                  <Link href={guest?.backHref ?? "/"} className="mt-6 inline-flex min-h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+                    {guest ? "Back to the course" : "Back to dashboard"}
                   </Link>
                 </section>
               )}

@@ -6,13 +6,21 @@ import { manifest } from "./fixtures/manifest";
 import { lessonsBySlug } from "./fixtures/lessons-index";
 import { connection } from "next/server";
 import type { Lesson } from "./lesson/schema";
-import { getSupabase, supabaseEnabled } from "./supabase/client";
+import { requireOwner } from "./auth";
+import { getAdmin } from "./supabase/admin";
+import { supabaseEnabled } from "./supabase/client";
 import type { Database } from "./supabase/types";
+import type { ShareGrant } from "./share/service";
 
 /**
  * Data access boundary. Pages call only these functions. When both
  * NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are set the
- * data comes from Supabase; otherwise it comes from the fixtures.
+ * data comes from Supabase, read with the service role (SUPABASE_SECRET_KEY) because
+ * migration 0004 removes every anon grant; otherwise it comes from the fixtures.
+ *
+ * Access control lives here, not in the pages: every owner function starts with
+ * requireOwner(), and the guest_* functions at the bottom need a ShareGrant, which only a
+ * validated share token produces. Layouts do not protect pages in Next, so do not rely on them.
  */
 export type LectureRecord = {
   id: string;
@@ -151,8 +159,8 @@ const toLesson = (r: LessonRow, courseId: string): LessonRecord => ({
 });
 
 function db() {
-  const c = getSupabase();
-  if (!c) throw new Error("Supabase is not configured");
+  const c = getAdmin();
+  if (!c) throw new Error("SUPABASE_SECRET_KEY is not set: content is read server-side with the service role");
   return c;
 }
 
@@ -181,7 +189,7 @@ async function sb_getLessonRows(): Promise<Array<LessonRecord & { course: Course
 async function sb_getLecturesForCourse(courseId: string): Promise<LectureRecord[]> {
   const { data, error } = await db()
     .from("lectures")
-    // Never select transcript here: anon has no column grant for it (see 0001_init.sql).
+    // Never select transcript here: nothing in the app reads it.
     .select("id, course_id, wispr_meeting_id, starts_at, wispr_share_link, status")
     .eq("course_id", courseId)
     .order("starts_at");
@@ -202,33 +210,39 @@ async function sb_getLecturesForCourse(courseId: string): Promise<LectureRecord[
 // ---------------------------------------------------------------------------
 
 export async function getCourses(): Promise<Course[]> {
+  await requireOwner();
   if (!supabaseEnabled) return fixture_getCourses();
   await connection();
   return sb_getCourses();
 }
 
 export async function getCourse(slug: string): Promise<Course | undefined> {
+  await requireOwner();
   if (!supabaseEnabled) return fixture_getCourse(slug);
   return (await getCourses()).find((c) => c.slug === slug);
 }
 
 export async function getAllLessons(): Promise<Array<LessonRecord & { course: Course }>> {
+  await requireOwner();
   if (!supabaseEnabled) return fixture_getAllLessons();
   await connection();
   return sb_getLessonRows();
 }
 
 export async function getLessonsForCourse(courseId: string): Promise<LessonRecord[]> {
+  await requireOwner();
   if (!supabaseEnabled) return fixture_getLessonsForCourse(courseId);
   return (await getAllLessons()).filter((l) => l.course_id === courseId);
 }
 
 export async function getLesson(id: string): Promise<(LessonRecord & { course: Course }) | undefined> {
+  await requireOwner();
   if (!supabaseEnabled) return fixture_getLesson(id);
   return (await getAllLessons()).find((l) => l.id === id);
 }
 
 export async function getLecturesForCourse(courseId: string): Promise<LectureRecord[]> {
+  await requireOwner();
   if (!supabaseEnabled) return fixture_getLecturesForCourse(courseId);
   await connection();
   return sb_getLecturesForCourse(courseId);
@@ -238,16 +252,18 @@ export async function getLecturesForCourse(courseId: string): Promise<LectureRec
 export const transcriptsPrivate = supabaseEnabled;
 
 /**
- * Local transcript text, fixtures mode only. In Supabase mode transcripts are
- * private (anon cannot read the column), so this returns null and the page shows
+ * Local transcript text, fixtures mode only. In Supabase mode the app never
+ * selects the transcript column, so this returns null and the page shows
  * the Wispr share link instead.
  */
 export async function getTranscript(lecture: LectureRecord): Promise<string | null> {
+  await requireOwner();
   if (supabaseEnabled) return null;
   return fixture_getTranscript(lecture);
 }
 
 export async function getFlashcardCount(): Promise<number> {
+  await requireOwner();
   if (!supabaseEnabled) return fixture_getFlashcardCount();
   const all = await getAllLessons();
   return all.reduce((n, l) => n + ((l.spec as Lesson).flashcards?.length ?? 0), 0);
@@ -267,6 +283,7 @@ export type Assessment = {
  * data, so it returns []. Supabase mode reads the public `assessments` table.
  */
 export async function getUpcomingAssessments(): Promise<Assessment[]> {
+  await requireOwner();
   if (!supabaseEnabled) return [];
   await connection();
   const today = new Date().toISOString().slice(0, 10);
@@ -295,6 +312,7 @@ export type LessonSummary = {
 
 /** Every published lesson in lecture order, oldest first. */
 export async function getLessonTimeline(): Promise<LessonSummary[]> {
+  await requireOwner();
   let starts: Map<string, string | null>;
   let all: LessonRecord[];
   if (!supabaseEnabled) {
@@ -326,6 +344,7 @@ export async function getLessonTimeline(): Promise<LessonSummary[]> {
  * only slugs and dates, not lesson specs.
  */
 export async function getLatestLessonSlug(): Promise<string | null> {
+  await requireOwner();
   if (!supabaseEnabled) return (await getLessonTimeline()).at(-1)?.id ?? null;
   await connection();
   const [lessonRows, lectureRows] = await Promise.all([
@@ -337,4 +356,55 @@ export async function getLatestLessonSlug(): Promise<string | null> {
   const starts = new Map(lectureRows.data.map((l) => [l.id, l.starts_at]));
   const when = (r: (typeof lessonRows.data)[number]) => Date.parse(starts.get(r.lecture_id) || r.created_at) || 0;
   return lessonRows.data.reduce<(typeof lessonRows.data)[number] | null>((best, r) => (best && when(best) >= when(r) ? best : r), null)?.slug ?? null;
+}
+
+// ---------------------------------------------------------------------------
+// Guest reads (share links). Each takes a ShareGrant from a validated token.
+// ---------------------------------------------------------------------------
+
+/** Course metadata for a share link's course. Used to validate a token; returns no lessons. */
+export async function guest_findCourse(courseId: string): Promise<Course | undefined> {
+  if (!supabaseEnabled) return courses.find((c) => c.id === courseId);
+  await connection();
+  const { data, error } = await db().from("courses").select("*").eq("id", courseId).maybeSingle();
+  if (error) throw new Error(`courses: ${error.message}`);
+  return data ? toCourse(data) : undefined;
+}
+
+/** What a guest may see about a lesson in the list: no materials notes, no lecture or recording data. */
+export type GuestLessonItem = { id: string; title: string; summary: string; est_minutes: number; date: string; steps: number };
+
+async function guestLessonRows(courseId: string): Promise<Array<LessonRecord & { date: string }>> {
+  if (!supabaseEnabled) {
+    const starts = new Map(lectures.map((l) => [l.id, l.starts_at]));
+    return lessons.filter((l) => l.course_id === courseId).map((l) => ({ ...l, date: starts.get(l.lecture_id) || l.created_at }));
+  }
+  await connection();
+  const lec = await db().from("lectures").select("id, starts_at").eq("course_id", courseId);
+  if (lec.error) throw new Error(`lectures: ${lec.error.message}`);
+  if (lec.data.length === 0) return [];
+  const rows = await db().from("lessons").select("*").eq("status", "published").in("lecture_id", lec.data.map((l) => l.id));
+  if (rows.error) throw new Error(`lessons: ${rows.error.message}`);
+  const starts = new Map(lec.data.map((l) => [l.id, l.starts_at]));
+  return rows.data.map((r) => ({ ...toLesson(r, courseId), date: starts.get(r.lecture_id) || r.created_at }));
+}
+
+export async function guest_getView(grant: ShareGrant): Promise<GuestLessonItem[]> {
+  const rows = await guestLessonRows(grant.courseId);
+  return rows
+    .map((l) => ({
+      id: l.id,
+      title: l.title,
+      summary: l.summary,
+      est_minutes: l.est_minutes,
+      date: l.date,
+      steps: (l.spec as { steps?: unknown[] } | null)?.steps?.length ?? 0,
+    }))
+    .sort((a, b) => (Date.parse(a.date) || 0) - (Date.parse(b.date) || 0));
+}
+
+/** One lesson of the granted course. A slug from any other course is not found. */
+export async function guest_getLesson(grant: ShareGrant, slug: string): Promise<{ id: string; spec: unknown } | undefined> {
+  const hit = (await guestLessonRows(grant.courseId)).find((l) => l.id === slug);
+  return hit ? { id: hit.id, spec: hit.spec } : undefined;
 }

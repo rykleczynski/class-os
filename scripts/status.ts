@@ -1,5 +1,6 @@
 /**
- * Read-only status checks for the generator, using the publishable key only.
+ * Read-only status checks for the generator. Reads with SUPABASE_SECRET_KEY (migration 0004 closed anon reads),
+ * falling back to the publishable key on a database that is not locked yet. Only selects; never writes.
  *
  *   npm run status -- --course "ECON 106F" --start <ISO> --end <ISO>
  *       prints "lesson <slug>", "lecture-without-lesson" or "none"
@@ -11,9 +12,9 @@ import { createClient } from "@supabase/supabase-js";
 const args = process.argv.slice(2);
 const arg = (n: string) => (args.indexOf(n) >= 0 ? args[args.indexOf(n) + 1] : undefined);
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+const key = process.env.SUPABASE_SECRET_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 if (!url || !key) {
-  console.error("status: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY not set (.env.generator)");
+  console.error("status: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SECRET_KEY not set (.env.generator, ../class_OS/.env.local)");
   process.exit(4);
 }
 const db = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
@@ -46,7 +47,7 @@ async function main() {
     .lte("starts_at", new Date(e).toISOString());
   if (error) { console.error(`status: ${error.message}`); process.exit(4); }
   if (!data?.length) { console.log("none"); return; }
-  const { data: lessons, error: lErr } = await db.from("lessons").select("slug").in("lecture_id", data.map((l) => l.id as string));
+  const { data: lessons, error: lErr } = await db.from("lessons").select("slug").eq("status", "published").in("lecture_id", data.map((l) => l.id as string));
   if (lErr) { console.error(`status: ${lErr.message}`); process.exit(4); }
   console.log(lessons?.length ? `lesson ${lessons[0].slug}` : "lecture-without-lesson");
 }

@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { ExternalLink } from "lucide-react";
 import { LessonList } from "@/components/LessonList";
+import { SharePanel } from "@/components/SharePanel";
+import { getSharePanelState } from "@/lib/share/owner-data";
 import { courseStyle } from "@/lib/course-theme";
 import { datesAwaitingLesson } from "@/lib/schedule";
 import { getCourse, getLecturesForCourse, getLessonTimeline, getTranscript, transcriptsPrivate } from "@/lib/data";
@@ -18,17 +20,25 @@ export default async function CoursePage({ params }: PageProps<"/course/[code]">
     await connection(); // reads the clock
     awaitingCaptions = datesAwaitingLesson(course, lessons.map((l) => l.date));
   }
+  const share = await getSharePanelState(course.slug);
   const transcripts = await Promise.all(lectures.map(async (l) => ({ lecture: l, text: await getTranscript(l) })));
 
   return (
     <div className="space-y-6">
       <header className="rounded-3xl border border-border bg-card p-6 shadow-soft" style={courseStyle(course.slug)}>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-(--course-soft) px-2.5 py-1 text-xs font-semibold text-(--course)">
             <span className="h-1.5 w-1.5 rounded-full bg-(--course)" aria-hidden />
             {course.category}
           </span>
           <span className="text-xs font-medium tabular-nums text-muted-foreground">{course.code}</span>
+          </div>
+          {share.status === "enabled" ? (
+            <SharePanel courseSlug={course.slug} courseCode={course.code} status="enabled" initialLinks={share.links} />
+          ) : (
+            <SharePanel courseSlug={course.slug} courseCode={course.code} status={share.status} reason={share.reason} />
+          )}
         </div>
         <h1 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{course.title}</h1>
         <p className="mt-1 text-sm text-muted-foreground">

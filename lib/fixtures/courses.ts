@@ -24,6 +24,13 @@ export type Course = {
    */
   materials_allowed?: boolean;
   /**
+   * False means the course cannot be shared with other people through /s/<token> links. Absent means it can.
+   * Enforced on the server in lib/share/service.ts (creating a link and opening one), not just in the UI.
+   */
+  shareable?: boolean;
+  /** Why `shareable` is false. Shown to the owner in place of the Share button. */
+  share_blocked_reason?: string;
+  /**
    * Where lecture transcripts come from. Absent or "wispr": the Wispr recording. "panopto": BruinCast captions that
    * `npm run materials` converts into content/<slug>/transcript.txt; the generator waits for that file.
    */
@@ -91,6 +98,8 @@ export const courses: Course[] = [
     term: "Fall 2026",
     // Opted out: the ECON 134 syllabus forbids using course content with AI.
     materials_allowed: false,
+    shareable: false,
+    share_blocked_reason: "ECON 134's syllabus prohibits sharing course content",
     // Ryan does not attend, so there is no Wispr recording: lectures come from BruinCast captions. Lecture
     // captions are used; the slides opt-out above only covers slides and other course files.
     transcript_source: "panopto",

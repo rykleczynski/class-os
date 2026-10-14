@@ -24,30 +24,63 @@ npm run seed:build   # regenerate supabase/seed.sql from the fixtures
 npm run homework:sync # upload content/homework/<slug>.json (HOMEWORK_PASSCODE + service key; -- --dry-run, --only <slug>)
 npm run sync        # upsert lessons + transcripts from lib/fixtures into Supabase (service key from SYNC_ENV_FILE, default ../class_OS/.env.local; flags: -- --dry-run, --only <slug>, --content-only; also reads the gitignored content/ directory)
 npm run pending     # zero-token gate: class sessions in the last 7 days with no lecture yet (JSON, exit 3 if none)
-npm run status      # read-only checks with the publishable key: --course/--start/--end, or --upcoming [days]
+npm run status      # read-only checks (service role key from ../class_OS/.env.local): --course/--start/--end, or --upcoming [days]
 npm run logline     # append one outcome line to content/_log/<date>.log (used by the generator)
 npm run build && npm run lint
 npm run smoke        # Playwright smoke test + screenshots (needs the dev server running;
                      # BASE_URL defaults to http://localhost:3000)
 ```
 
-## Data modes and privacy
+## Data modes, sign-in and sharing
 
-Copy `.env.example` to `.env.local`. With both `NEXT_PUBLIC_SUPABASE_URL` and
-`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` unset the app runs on the fixtures. With them set
-it reads from Supabase using the publishable (anon) key only. Never add a service-role key.
+Copy `.env.example` to `.env.local`. With `NEXT_PUBLIC_SUPABASE_URL` and
+`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` unset the app runs on the fixtures, with no sign-in
+(development only: in a production build a missing Supabase config denies everything).
 
-The v1 site is open: there is no login. Everything is publicly readable except
-transcripts. `lectures.transcript` has no SELECT grant for `anon` or `authenticated`
-(column-level grants in `supabase/migrations/0001_init.sql`), so the app never selects it
-and, in Supabase mode, the course page shows the Wispr share link and "Transcript stored
-privately". Fixtures mode still shows the local transcript. The only public write is
-inserting rows into `attempts`, done by the `recordAttempt` server action. Unbounded anon
-inserts are an accepted v1 risk. If abused, add auth or a rate limit.
+With them set the app is private:
+
+- **Owner sign-in.** Supabase Auth email magic link (`@supabase/ssr`, cookie session). Only the
+  address in the server env var `OWNER_EMAIL` can sign in; the form sends a link to no one else
+  and says the same thing either way. `proxy.ts` refreshes the session and bounces visitors without
+  one; every data read in `lib/data.ts` also checks the owner itself, because layouts do not
+  protect pages in Next.
+- **Reads are server-side.** Content is read with the service role (`SUPABASE_SECRET_KEY`,
+  server-only, `lib/supabase/admin.ts` imports `server-only`). Migration `0004_private_reads.sql`
+  removes every anon and authenticated grant, so the publishable key that ships to the browser
+  reads nothing. Transcripts are never selected. Attempts are written by the `recordAttempt`
+  server action, owner only.
+- **Share links.** On a course page, Share creates a link `/s/<token>` for that course only
+  (`share_links`, migration `0005`). The token is 32 random bytes; only its sha256 is stored, so
+  the full URL is shown once at creation. Links can expire (7 days, 30 days, end of term) and be
+  revoked, and the panel shows uses and last used. Guests see the course header, the lesson list and
+  the lesson player, nothing else: no sidebar, no other courses, no recordings, transcripts, Wispr
+  links, assessments or materials notes. Their progress lives in their browser under
+  `classos:guest:<course slug>` and nothing is written to `attempts`. `/s/*` is `noindex`,
+  `Referrer-Policy: no-referrer`, `no-store`. Bad, revoked and expired links all get the same 404.
+- **ECON 134 cannot be shared** (`shareable: false` in `lib/fixtures/courses.ts`: its syllabus
+  prohibits it). `lib/share/service.ts` refuses to create a link and refuses to open an existing one,
+  independent of the UI.
+- **Local mode.** Without Supabase env, sharing is off with a note. For local screenshots and
+  tests, `CLASSOS_DEV_MEMORY_SHARING=1` turns on a throwaway in-memory store (ignored in production).
+
+Env vars (`.env.example`): `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`,
+`SUPABASE_SECRET_KEY` (server-only), `OWNER_EMAIL` (server-only). Supabase Auth needs the Email
+provider on and the production domain as Site URL with `/auth/callback` in the redirect URLs.
+
+The generator's `npm run pending` and `npm run status` now read with `SUPABASE_SECRET_KEY` too
+(loaded from `SYNC_ENV_FILE`, default `../class_OS/.env.local`), because the publishable key reads
+nothing after `0004`.
+
+The homework pages (`/homework/<slug>`) are unchanged: passcode-checked `SECURITY DEFINER` RPCs
+from `0003_homework.sql`, public by design.
+
+Tests: `npm run test:share` (token hashing and validation, ECON 134 refusal, owner rules, no
+network) and `npm run test:share:e2e` (Playwright against a dev server started with
+`CLASSOS_DEV_MEMORY_SHARING=1`; also writes `docs/screenshots/share/`).
 
 Setup: apply `supabase/migrations/0001_init.sql`, then run `supabase/seed.sql` (generated
-by `npm run seed:build`, safe to re-run). Writes to courses, lectures, lessons and
-assessments go through the service role or the Supabase MCP, never the browser.
+by `npm run seed:build`, safe to re-run), then the later migrations in order. Writes to courses,
+lectures, lessons and assessments go through the service role or the Supabase MCP, never the browser.
 
 Pages: `/` dashboard, `/course/econ-106f` course page, `/lesson/econ106f-class3` player,
 `/lesson/comm187-class3` (scenario-based lesson), `/dev/blocks` block gallery
@@ -233,7 +266,7 @@ Each tick starts with `npm run pending`, which uses no LLM and no MCP calls. It
 builds class sessions from `courses.meetings` in `lib/fixtures/courses.ts` (America/Los_Angeles),
 keeps those that ended at least 10 minutes ago in the last 7 days, drops holidays
 (`HOLIDAYS` in `scripts/pending.ts`: Nov 11, 26, 27) and queries Supabase with the
-publishable key for lectures in each session window. Exit 3 means nothing is pending
+service key for lectures in each session window. Exit 3 means nothing is pending
 and `run.sh` stops before `claude`. Exit 4 (offline or Supabase error) also stops quietly.
 
 Limits:
@@ -265,8 +298,8 @@ The sync key stays in `../class_OS/.env.local` and is only read by `npm run sync
 
 1. `npm ci`.
 2. `.env.generator` (gitignored) with `NEXT_PUBLIC_SUPABASE_URL` and
-   `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (the gate and status script use these; both are public values).
-3. `../class_OS/.env.local` with `SUPABASE_SECRET_KEY` (used by `npm run sync` only).
+   `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (both are public values).
+3. `../class_OS/.env.local` with `SUPABASE_SECRET_KEY` (used by `npm run sync`, and by the gate and `npm run status` since migration 0004 closed anon reads).
 4. Make sure `claude` is logged in and the Wispr, Google Calendar connectors are on.
 5. `routine/install.sh`. Remove with `routine/uninstall.sh`.
 
