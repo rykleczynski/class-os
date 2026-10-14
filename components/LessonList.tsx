@@ -56,8 +56,20 @@ export function LessonProgressLabel({ lesson, progress }: { lesson: LessonItem; 
  * Lessons in lecture order with progress states. Shared by the dashboard picker
  * and the course page. Progress is read after mount, so a skeleton shows until then.
  */
-export function LessonList({ lessons, onNavigate }: { lessons: LessonItem[]; onNavigate?: () => void }) {
-  const { ready, map } = useProgress();
+export function LessonList({
+  lessons,
+  onNavigate,
+  basePath = "/lesson",
+  storageKey,
+}: {
+  lessons: LessonItem[];
+  onNavigate?: () => void;
+  /** Where lesson links point. Guests pass /s/<token>/lesson. */
+  basePath?: string;
+  /** localStorage key for progress. Guests pass their own namespace. */
+  storageKey?: string;
+}) {
+  const { ready, map } = useProgress(storageKey);
   const upNext = ready ? lessons.find((l) => !isDone(map[l.id]))?.id : undefined;
 
   return (
@@ -67,7 +79,7 @@ export function LessonList({ lessons, onNavigate }: { lessons: LessonItem[]; onN
         const state = stateOf(p);
         const isNext = l.id === upNext;
         const verb = state === "done" ? "Review" : state === "progress" ? "Resume" : "Start";
-        const href = state === "done" ? `/lesson/${l.id}?stage=flashcards` : `/lesson/${l.id}`;
+        const href = state === "done" ? `${basePath}/${l.id}?stage=flashcards` : `${basePath}/${l.id}`;
         return (
           <li key={l.id} className={`flex flex-wrap items-center gap-x-4 gap-y-2 py-3 ${isNext ? "-mx-3 rounded-2xl bg-muted/60 px-3" : ""}`} data-testid="lesson-row" data-lesson-id={l.id} aria-current={isNext ? "step" : undefined}>
             <div className="min-w-0 flex-1 basis-56">

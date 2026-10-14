@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, GraduationCap, LayoutGrid, Layers } from "lucide-react";
+import { BookOpen, GraduationCap, LayoutGrid, Layers, LogOut } from "lucide-react";
+import { signOut } from "@/lib/auth-actions";
 import { ThemeToggle } from "./ThemeToggle";
 
 type NavItem = { href: string; label: string; short: string; icon: typeof LayoutGrid };
@@ -66,9 +67,15 @@ export function AppSidebar({ latestLesson }: { latestLesson: string | null }) {
             );
           })}
         </ul>
+        <form action={signOut} className="mt-auto">
+          <button type="submit" className="flex min-h-11 w-full items-center gap-3 rounded-xl px-3 text-[0.95rem] font-medium text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground">
+            <LogOut className="h-[1.15rem] w-[1.15rem]" strokeWidth={1.75} aria-hidden />
+            Sign out
+          </button>
+        </form>
         <ThemeToggle
           label="Light / dark"
-          className="mt-auto flex min-h-11 items-center gap-3 rounded-xl px-3 text-[0.95rem] font-medium text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground"
+          className="flex min-h-11 items-center gap-3 rounded-xl px-3 text-[0.95rem] font-medium text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground"
         />
       </nav>
 

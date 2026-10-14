@@ -113,7 +113,7 @@ function retry(slug: string) {
 
 /** True while the published lesson still has materials_missing set. Exits 4 on a query error (for example migration 0002 not applied). */
 async function stillFlagged(db: SupabaseClient, slug: string): Promise<boolean> {
-  const { data, error } = await db.from("lessons").select("materials_missing").eq("slug", slug).maybeSingle();
+  const { data, error } = await db.from("lessons").select("materials_missing").eq("slug", slug).eq("status", "published").maybeSingle();
   if (error) {
     console.error(`pending: materials_missing check failed: ${error.message}`);
     process.exit(4);
@@ -190,9 +190,10 @@ async function main() {
   }
   const testLecturesFile = process.env.CLASSOS_TEST_LECTURES; // tests: [{code,start,hasLesson}] instead of Supabase
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  // Migration 0004 closes anon reads, so the gate reads with the service role. The publishable key is only a fallback for databases not yet locked.
+  const key = process.env.SUPABASE_SECRET_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   if (!testLecturesFile && (!url || !key)) {
-    console.error("pending: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY not set (.env.generator)");
+    console.error("pending: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SECRET_KEY not set (.env.generator, ../class_OS/.env.local)");
     process.exit(4);
   }
   const sessions = computeSessions(now);
@@ -205,7 +206,7 @@ async function main() {
     const signal = AbortSignal.timeout(15_000);
     const { data, error } = await db
       .from("lectures")
-      .select("starts_at, ends_at, courses(code), lessons(id)")
+      .select("starts_at, ends_at, courses(code), lessons(id, status)")
       .gte("starts_at", new Date(now - (LOOKBACK_DAYS + 2) * 86400_000).toISOString())
       .abortSignal(signal);
     if (error) {
@@ -214,8 +215,9 @@ async function main() {
     }
     lectures = (data ?? []).map((l) => {
       const c = l.courses as unknown as { code: string } | { code: string }[] | null;
-      // The publishable key only sees published lessons, so a lecture row alone does not count as done.
-      const hasLesson = Array.isArray(l.lessons) ? l.lessons.length > 0 : Boolean(l.lessons);
+      // Only published lessons count (the lessons(id) join is filtered below), so a lecture row alone does not count as done.
+      const embedded = (Array.isArray(l.lessons) ? l.lessons : l.lessons ? [l.lessons] : []) as { status?: string }[];
+      const hasLesson = embedded.some((x) => x.status === "published");
       return { code: Array.isArray(c) ? c[0]?.code : c?.code, start: Date.parse(l.starts_at as string), hasLesson };
     });
   }
