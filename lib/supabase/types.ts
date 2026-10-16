@@ -368,6 +368,53 @@ export type Database = {
           },
         ]
       }
+      reviews: {
+        Row: {
+          course_id: string
+          exam_at: string | null
+          exam_title: string
+          generated_at: string
+          id: string
+          schema_version: number
+          slug: string
+          spec: Json
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          course_id: string
+          exam_at?: string | null
+          exam_title: string
+          generated_at: string
+          id?: string
+          schema_version?: number
+          slug: string
+          spec: Json
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          course_id?: string
+          exam_at?: string | null
+          exam_title?: string
+          generated_at?: string
+          id?: string
+          schema_version?: number
+          slug?: string
+          spec?: Json
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       share_links: {
         Row: {
           course_id: string

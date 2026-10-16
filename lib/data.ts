@@ -1,11 +1,13 @@
 import "server-only";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { courses, courseBySlug, courseByCode, type Course } from "./fixtures/courses";
 import { manifest } from "./fixtures/manifest";
 import { lessonsBySlug } from "./fixtures/lessons-index";
 import { connection } from "next/server";
 import type { Lesson } from "./lesson/schema";
+import { reviewsRoot } from "./review/paths";
+import { reviewSchema } from "./review/schema";
 import { requireOwner } from "./auth";
 import { getAdmin } from "./supabase/admin";
 import { supabaseEnabled } from "./supabase/client";
@@ -294,6 +296,98 @@ export async function getUpcomingAssessments(): Promise<Assessment[]> {
     .order("due_at");
   if (error) throw new Error(`assessments: ${error.message}`);
   return data;
+}
+
+/** A review as listed on the course page and dashboard. The full spec is only read by getReview. */
+export type ReviewSummary = { slug: string; course_id: string; title: string; exam_title: string; exam_at: string | null; generated_at: string };
+export type ReviewRecord = ReviewSummary & { course: Course; spec: unknown };
+
+/** Fixtures mode reads content/reviews/<slug>/review.json from disk; only files that pass the schema are served. */
+async function fixture_reviews(): Promise<ReviewRecord[]> {
+  const root = reviewsRoot();
+  let dirs: string[];
+  try {
+    dirs = (await readdir(root, { withFileTypes: true })).filter((d) => d.isDirectory()).map((d) => d.name);
+  } catch {
+    return [];
+  }
+  const out: ReviewRecord[] = [];
+  for (const slug of dirs) {
+    try {
+      const parsed = reviewSchema.safeParse(JSON.parse(await readFile(join(root, slug, "review.json"), "utf8")));
+      const course = parsed.success ? courseByCode(parsed.data.courseCode) : undefined;
+      if (!parsed.success || !course || parsed.data.slug !== slug) continue;
+      const r = parsed.data;
+      out.push({ slug, course_id: course.id, course, title: r.title, exam_title: r.exam.title, exam_at: r.exam.startsAt, generated_at: r.generatedAt, spec: r });
+    } catch {
+      /* no review.json yet (only sources/) or unreadable: skip */
+    }
+  }
+  return out;
+}
+
+const byExamDate = (a: ReviewSummary, b: ReviewSummary) => (a.exam_at ?? "9999").localeCompare(b.exam_at ?? "9999");
+
+/** Every review for a course, soonest exam first. */
+export async function getReviewsForCourse(courseId: string): Promise<ReviewSummary[]> {
+  await requireOwner();
+  if (!supabaseEnabled) return (await fixture_reviews()).filter((r) => r.course_id === courseId).sort(byExamDate);
+  await connection();
+  const { data, error } = await db()
+    .from("reviews")
+    .select("slug, course_id, title, exam_title, exam_at, generated_at")
+    .eq("course_id", courseId)
+    .order("exam_at");
+  if (error) return reviewsUnavailable(error.message);
+  return data;
+}
+
+/** For example migration 0006 not applied yet: the course page and dashboard must still load. */
+function reviewsUnavailable(message: string): [] {
+  console.error(`reviews: ${message}`);
+  return [];
+}
+
+/** Reviews whose exam has not started yet (or has no date), soonest first. Used by the dashboard. */
+export async function getUpcomingReviews(): Promise<Array<ReviewSummary & { course: Course }>> {
+  await requireOwner();
+  await connection(); // reads the clock
+  const now = new Date().toISOString();
+  let rows: Array<ReviewSummary & { course: Course }>;
+  if (!supabaseEnabled) rows = await fixture_reviews();
+  else {
+    const [all, { data, error }] = await Promise.all([
+      sb_getCourses(),
+      db().from("reviews").select("slug, course_id, title, exam_title, exam_at, generated_at").or(`exam_at.is.null,exam_at.gte.${now}`),
+    ]);
+    if (error) return reviewsUnavailable(error.message);
+    rows = data.flatMap((r) => {
+      const course = all.find((c) => c.id === r.course_id);
+      return course ? [{ ...r, course }] : [];
+    });
+  }
+  return rows.filter((r) => !r.exam_at || r.exam_at >= now).sort(byExamDate);
+}
+
+export async function getReview(slug: string): Promise<ReviewRecord | undefined> {
+  await requireOwner();
+  if (!supabaseEnabled) return (await fixture_reviews()).find((r) => r.slug === slug);
+  await connection();
+  const { data, error } = await db().from("reviews").select("*").eq("slug", slug).maybeSingle();
+  if (error) throw new Error(`reviews: ${error.message}`);
+  if (!data) return undefined;
+  const course = (await sb_getCourses()).find((c) => c.id === data.course_id);
+  if (!course) return undefined;
+  return {
+    slug: data.slug,
+    course_id: data.course_id,
+    course,
+    title: data.title,
+    exam_title: data.exam_title,
+    exam_at: data.exam_at,
+    generated_at: data.generated_at,
+    spec: data.spec,
+  };
 }
 
 export type LessonSummary = {

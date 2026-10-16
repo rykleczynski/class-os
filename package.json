@@ -25,7 +25,12 @@
     "test:state": "tsx scripts/test-content-state.ts",
     "pending": "node --env-file-if-exists=.env.generator --env-file-if-exists=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/pending.ts",
     "sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/sync.ts",
-    "homework:sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/homework-sync.ts"
+    "review:bundle": "tsx scripts/review-bundle.ts",
+    "review:assemble": "tsx scripts/review-assemble.ts",
+    "validate:review":"tsx scripts/validate-review.ts",
+    "test:review": "tsx scripts/test-review.ts",
+    "review:sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/review-sync.ts",
+    "homework:sync":"node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/homework-sync.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

@@ -1,7 +1,11 @@
 import { Fragment, type ReactNode } from "react";
 
-/** Tiny markdown subset: paragraphs, "- " lists, "> " quotes, **bold**, *italic*, `code`, [links](https://...). */
-const INLINE = /(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|\[[^\]]+\]\(https?:\/\/[^)\s]+\))/g;
+/**
+ * Tiny markdown subset: paragraphs, "- " lists, "> " quotes, **bold**, *italic*, `code`, [links](https://...).
+ * Emphasis follows markdown's flanking rule: a "*" touching a letter or digit on its outer side is a literal, so
+ * "tau*Q" or "N*p f'(N)" stay as math instead of turning the text between two products italic.
+ */
+const INLINE = /((?<![\w*])\*\*(?!\s)[^*]+?(?<!\s)\*\*(?![\w*])|(?<![\w*])\*(?![\s*])[^*\n]+?(?<!\s)\*(?![\w*])|`[^`]+`|\[[^\]]+\]\(https?:\/\/[^)\s]+\))/g;
 
 function inline(text: string): ReactNode[] {
   return text.split(INLINE).map((part, i) => {
