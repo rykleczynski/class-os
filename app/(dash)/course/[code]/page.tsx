@@ -1,18 +1,22 @@
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
-import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { LessonList } from "@/components/LessonList";
 import { SharePanel } from "@/components/SharePanel";
 import { getSharePanelState } from "@/lib/share/owner-data";
 import { courseStyle } from "@/lib/course-theme";
 import { datesAwaitingLesson } from "@/lib/schedule";
-import { getCourse, getLecturesForCourse, getLessonTimeline, getTranscript, transcriptsPrivate } from "@/lib/data";
+import { getCourse, getLecturesForCourse, getLessonTimeline, getReviewsForCourse, getTranscript, transcriptsPrivate } from "@/lib/data";
+
+const examDate = (iso: string) =>
+  new Date(iso).toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/Los_Angeles" });
 
 export default async function CoursePage({ params }: PageProps<"/course/[code]">) {
   const { code } = await params;
   const course = await getCourse(code);
   if (!course) notFound();
-  const [timeline, lectures] = await Promise.all([getLessonTimeline(), getLecturesForCourse(course.id)]);
+  const [timeline, lectures, reviews] = await Promise.all([getLessonTimeline(), getLecturesForCourse(course.id), getReviewsForCourse(course.id)]);
   const lessons = timeline.filter((l) => l.course_id === course.id);
   // Panopto courses have no recording to trigger the generator: nudge when a recent class has no lesson yet.
   let awaitingCaptions: string[] = [];
@@ -47,7 +51,26 @@ export default async function CoursePage({ params }: PageProps<"/course/[code]">
         </p>
       </header>
 
-      <section aria-label="Lessons" className="rounded-3xl border border-border bg-card p-5 shadow-soft">
+      {reviews.length > 0 && (
+        <section aria-label="Exam reviews" className="rounded-3xl border border-border bg-card p-5 shadow-soft">
+          <h2 className="text-lg font-semibold tracking-tight">Exam reviews</h2>
+          <ul className="mt-3 space-y-2">
+            {reviews.map((r) => (
+              <li key={r.slug}>
+                <Link href={`/review/${r.slug}`} className="flex items-center justify-between gap-3 rounded-2xl border border-border p-3 transition-colors hover:border-control" data-testid="review-link">
+                  <span className="min-w-0">
+                    <span className="block font-semibold">{r.title}</span>
+                    <span className="block text-sm text-muted-foreground">{r.exam_at ? examDate(r.exam_at) : "Date not announced"}</span>
+                  </span>
+                  <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section aria-label="Lessons"className="rounded-3xl border border-border bg-card p-5 shadow-soft">
         <h2 className="text-lg font-semibold tracking-tight">Lessons</h2>
         {awaitingCaptions.length > 0 && (
           <p className="mt-2 text-sm text-muted-foreground" data-testid="awaiting-panopto">

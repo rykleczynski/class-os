@@ -5,7 +5,7 @@ import {
   stepHasVisualOrInteraction,
   stepProseWords,
 } from "../lib/lesson/schema";
-import { checkFormula } from "../lib/lesson/safe-eval";
+import { blockIssues, longestAnswerTell } from "../lib/lesson/checks";
 
 const MAX_PROSE_ERROR = 150;
 const MAX_PROSE_WARN = 120;
@@ -51,33 +51,15 @@ for (const file of files) {
       else if (words > MAX_PROSE_WARN) warnings.push(`step ${step.id}: ${words} prose words (target <= ${MAX_PROSE_WARN})`);
       if (!stepHasVisualOrInteraction(step)) errors.push(`step ${step.id}: no visual or interactive block`);
       step.blocks.forEach((b, i) => {
-        const where = `step ${step.id} block ${i} (${b.type})`;
-        if (b.type === "mcq" && b.answer >= b.options.length) errors.push(`${where}: answer index out of range`);
-        if (b.type === "slider") {
-          const msg = checkFormula(b.formula, b.vars);
-          if (msg) errors.push(`${where}: ${msg}`);
-          if (b.plot && !b.vars.some((v) => v.name === b.plot!.x)) errors.push(`${where}: plot.x is not a var`);
-        }
-        if (b.type === "supplyDemand") {
-          const labels = new Set([...b.curves.map((c) => c.label), ...(b.shifts ?? []).map((s) => s.label)]);
-          for (const s of b.shifts ?? []) if (!b.curves.some((c) => c.label === s.of)) errors.push(`${where}: shift of unknown curve ${s.of}`);
-          for (const a of b.areas ?? []) for (const l of a.curves) if (!labels.has(l)) errors.push(`${where}: area references unknown curve ${l}`);
-        }
+        for (const msg of blockIssues(b)) errors.push(`step ${step.id} block ${i} (${b.type}): ${msg}`);
       });
     }
     lesson.quiz.forEach((q, i) => {
       if (q.answer >= q.options.length) errors.push(`quiz ${i}: answer index out of range`);
     });
-    // Answer-length tell: warn when the correct option is strictly the longest in more than half the MCQs.
     const mcqs = [...lesson.steps.flatMap((s) => s.blocks.filter((b) => b.type === "mcq")), ...lesson.quiz];
-    const longest = mcqs.filter((q) => {
-      const lens = q.options.map((o) => o.length);
-      const a = lens[q.answer];
-      return lens.filter((l) => l === a).length === 1 && a === Math.max(...lens);
-    }).length;
-    if (mcqs.length && longest > mcqs.length / 2) {
-      warnings.push(`correct option is strictly the longest in ${longest}/${mcqs.length} MCQs; rebalance option lengths`);
-    }
+    const tell = longestAnswerTell(mcqs);
+    if (tell) warnings.push(tell);
     if (!lesson.steps.some((s) => s.blocks.some((b) => b.type === "inTheNews")) && lesson.steps.length >= 5) {
       warnings.push("no inTheNews block");
     }
