@@ -12,6 +12,7 @@ import { assembleReview, balanceSides, frameIssues, reviewFrameSchema, reviewPar
 import { reviewErrors, reviewLint, reviewSchema, type ReviewSection } from "../lib/review/schema";
 import { buildBundle, cleanTranscript, examSignals, renderBundle } from "../lib/review/sources";
 import { parseTab } from "../lib/review/tabs";
+import { applyPending, diffState, mergePending, type ReviewState } from "../lib/review/progress";
 
 const econ134 = courses.find((c) => c.code === "ECON 134")!;
 const econ106 = courses.find((c) => c.code === "ECON 106F")!;
@@ -242,6 +243,22 @@ test("bundle: ECON 134 never lists materials, a slides course does; window and m
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test("pending changes replay over newer stored state without clobbering it", () => {
+  const base: ReviewState = { can: ["s:a", "s:b"], answers: { "q:a": "old", "q:b": "keep" }, scores: { "q:a": 2 } };
+  const mine: ReviewState = { can: ["s:a", "s:c"], answers: { "q:a": "mine" }, scores: { "q:a": 2, "q:b": 1 } };
+  const p = diffState(base, mine);
+  assert.deepEqual(p, { can: { "s:c": true, "s:b": false }, answers: { "q:a": "mine", "q:b": null }, scores: { "q:b": 1 } });
+  // Meanwhile another tab saved a new answer and a new tick.
+  const theirs: ReviewState = { can: ["s:a", "s:b", "s:z"], answers: { "q:a": "old", "q:b": "keep", "q:z": "theirs" }, scores: { "q:a": 2 } };
+  const out = applyPending(theirs, p);
+  assert.deepEqual(new Set(out.can), new Set(["s:a", "s:z", "s:c"]), "their tick kept, my untick and tick applied");
+  assert.deepEqual(out.answers, { "q:a": "mine", "q:z": "theirs" }, "their answer kept, my edit and delete applied");
+  assert.deepEqual(out.scores, { "q:a": 2, "q:b": 1 });
+  const later = mergePending(p, { can: { "s:c": false }, answers: { "q:a": "newer" }, scores: {} });
+  assert.equal(later.can["s:c"], false);
+  assert.equal(later.answers["q:a"], "newer");
 });
 
 test("parseTab accepts known tabs only", () => {

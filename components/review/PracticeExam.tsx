@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Countdown } from "@/lib/review/countdown";
+import { useTimeLeft, type Countdown } from "@/lib/review/countdown";
 import { Pause, Play, RotateCcw } from "lucide-react";
 import { Md } from "@/components/Md";
 import { partLabel, type PracticeQuestion, type Review } from "@/lib/review/schema";
@@ -205,7 +205,8 @@ function Part({ q, i, state, update }: { q: PracticeQuestion; i: number; state: 
 
 /** The mock-exam clock. The countdown lives in the page shell, so switching tabs does not reset it. */
 function Timer({ timer }: { timer: Countdown }) {
-  const { left, running, total } = timer;
+  const { left, running } = useTimeLeft(timer); // the per-second render stays in this card
+  const { total } = timer;
   const mm = Math.floor(left / 60);
   const ss = String(left % 60).padStart(2, "0");
   return (
