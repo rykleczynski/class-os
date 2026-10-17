@@ -9,7 +9,7 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { z } from "zod";
-import { assembleReview, reviewFrameSchema, reviewPartSchema } from "../lib/review/assemble";
+import { assembleReview, frameIssues, reviewFrameSchema, reviewPartSchema } from "../lib/review/assemble";
 import { reviewsRoot } from "../lib/review/paths";
 import { reviewErrors, reviewLint, reviewSchema } from "../lib/review/schema";
 
@@ -50,6 +50,12 @@ if (frame.slug !== slug) {
 const partFiles = readdirSync(partsDir).filter((f) => f.endsWith(".json")).sort();
 const parts = partFiles.map((f) => load(join(partsDir, f), reviewPartSchema));
 
+const refErrors = frameIssues(frame, parts);
+if (refErrors.length) {
+  console.error(`FAIL ${join(dir, "frame.json")}`);
+  refErrors.forEach((e) => console.error(`  - ${e}`));
+  process.exit(1);
+}
 const result = reviewSchema.safeParse(assembleReview(frame, parts));
 const errors = result.success ? reviewErrors(result.data.sections) : result.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`);
 if (!result.success || errors.length) {

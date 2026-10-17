@@ -20,8 +20,12 @@ const empty: ReviewState = { can: [], answers: {}, scores: {} };
 export const reviewKey = (slug: string) => `classos:review:${slug}`;
 
 const cache = new Map<string, { raw: string | null; state: ReviewState }>();
+/** State for keys whose last save failed (storage blocked or full). Edits keep working until a reload. */
+const memory = new Map<string, ReviewState>();
 
 function read(key: string): ReviewState {
+  const mem = memory.get(key);
+  if (mem) return mem;
   let raw: string | null = null;
   try {
     raw = localStorage.getItem(key);
@@ -53,16 +57,20 @@ function subscribe(cb: () => void) {
 export function useReviewState(slug: string) {
   const key = reviewKey(slug);
   const state = useSyncExternalStore(subscribe, () => read(key), () => empty);
+  const persistent = useSyncExternalStore(subscribe, () => !memory.has(key), () => true);
   const update = useCallback(
     (fn: (s: ReviewState) => ReviewState) => {
+      const next = fn(read(key));
       try {
-        localStorage.setItem(key, JSON.stringify(fn(read(key))));
-        window.dispatchEvent(new Event(EVENT));
+        localStorage.setItem(key, JSON.stringify(next));
+        memory.delete(key);
       } catch {
-        /* storage unavailable: not saved */
+        memory.set(key, next); // not saved, but the edit still shows
       }
+      window.dispatchEvent(new Event(EVENT));
     },
     [key],
   );
-  return { state, update };
+  /** False once a save has failed: the page warns that progress will not survive a reload. */
+  return { state, update, persistent };
 }

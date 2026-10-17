@@ -8,7 +8,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { courses } from "../lib/fixtures/courses";
-import { assembleReview, balanceSides, reviewFrameSchema, reviewPartSchema, type ReviewFrame, type ReviewPart } from "../lib/review/assemble";
+import { assembleReview, balanceSides, frameIssues, reviewFrameSchema, reviewPartSchema, type ReviewFrame, type ReviewPart } from "../lib/review/assemble";
 import { reviewErrors, reviewLint, reviewSchema, type ReviewSection } from "../lib/review/schema";
 import { buildBundle, cleanTranscript, examSignals, renderBundle } from "../lib/review/sources";
 import { parseTab } from "../lib/review/tabs";
@@ -150,6 +150,28 @@ test("mock ids pass through assembly and must name real questions", () => {
   assert.deepEqual(ok.practiceExam.mock, ["welfare-q1", "cross-1"]);
   const bad = reviewSchema.safeParse(assembleReview({ ...frame, practiceExam: { ...frame.practiceExam, mock: ["ghost-q"] } }, parts));
   assert.ok(!bad.success && bad.error.issues.some((i) => i.message === "unknown question ghost-q"));
+});
+
+test("duplicate mock ids and duplicate part labels are rejected", () => {
+  const dupMock = reviewSchema.safeParse(assembleReview({ ...frame, practiceExam: { ...frame.practiceExam, mock: ["cross-1", "cross-1"] } }, parts));
+  assert.ok(!dupMock.success && dupMock.error.issues.some((i) => i.message === "duplicate mock question cross-1"));
+  const q = question("labels", ["ext"]);
+  q.parts = [{ label: "a", prompt: "x", points: 1 }, { label: "(a)", prompt: "y", points: 1 }];
+  const r0 = assembleReview(frame, parts);
+  const dupLabel = reviewSchema.safeParse({ ...r0, practiceExam: { ...r0.practiceExam, questions: [...r0.practiceExam.questions, q] } });
+  assert.ok(!dupLabel.success && dupLabel.error.issues.some((i) => i.message === "part labels must be unique"), '"a" and "(a)" are the same label');
+});
+
+test("frameIssues catches typos in order, drop and mock", () => {
+  assert.deepEqual(frameIssues(frame, parts), []);
+  const bad = { ...frame, practiceExam: { ...frame.practiceExam, order: ["cross-1", "crossx", "cross-1"], drop: ["ext-q9"], mock: ["welfare-q1", "ext-q9"] } };
+  const issues = frameIssues(bad, parts);
+  assert.ok(issues.includes("practiceExam.order: unknown question crossx"));
+  assert.ok(issues.includes("practiceExam.drop: unknown question ext-q9"));
+  assert.ok(issues.includes("practiceExam.mock: unknown question ext-q9"));
+  assert.ok(issues.includes("practiceExam.order: duplicate cross-1"));
+  const dropped = frameIssues({ ...frame, practiceExam: { ...frame.practiceExam, drop: ["ext-q1"], mock: ["ext-q1"] } }, parts);
+  assert.deepEqual(dropped, ["practiceExam.mock: ext-q1 is also in drop"]);
 });
 
 test("a question needs one solution per part", () => {

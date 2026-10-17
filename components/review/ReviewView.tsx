@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { courseStyle } from "@/lib/course-theme";
 import { reviewSchema, type Review } from "@/lib/review/schema";
 import { useReviewState } from "@/lib/review/progress";
+import { useCountdown } from "@/lib/review/countdown";
 import { Overview } from "./Overview";
 import { TopicGuide } from "./TopicGuide";
 import { PracticeExam } from "./PracticeExam";
@@ -35,7 +36,8 @@ export function ReviewView({ spec, course, initialTab }: Props) {
 function Shell({ review, course, initialTab }: { review: Review; course: Props["course"]; initialTab?: TabId }) {
   const [tab, setTab] = useState<TabId>(initialTab ?? "overview");
   const [section, setSection] = useState(review.sections[0].id);
-  const { state, update } = useReviewState(review.slug);
+  const { state, update, persistent } = useReviewState(review.slug);
+  const timer = useCountdown(review.practiceExam.minutes); // held here so switching tabs keeps the clock
 
   const go = (next: TabId, sectionId?: string) => {
     setTab(next);
@@ -84,7 +86,12 @@ function Shell({ review, course, initialTab }: { review: Review; course: Props["
       <main className="mx-auto max-w-6xl px-4 pb-32 pt-6" role="tabpanel">
         {tab === "overview" && <Overview review={review} state={state} onOpenSection={(id) => go("topics", id)} onStartPractice={() => go("practice")} />}
         {tab === "topics" && <TopicGuide review={review} sectionId={section} onSection={setSection} state={state} update={update} />}
-        {tab === "practice" && <PracticeExam review={review} state={state} update={update} />}
+        {!persistent && (
+          <p role="status" className="mb-4 rounded-2xl bg-warn-soft px-4 py-2.5 text-sm text-warn">
+            This browser is not saving your progress. Ticks and answers will be lost when you reload.
+          </p>
+        )}
+        {tab === "practice" && <PracticeExam review={review} state={state} update={update} timer={timer} />}
         {tab === "sheet" && <NotesSheet review={review} />}
         {tab === "cards" && <ReviewCards review={review} />}
       </main>

@@ -326,7 +326,9 @@ async function fixture_reviews(): Promise<ReviewRecord[]> {
   return out;
 }
 
-const byExamDate = (a: ReviewSummary, b: ReviewSummary) => (a.exam_at ?? "9999").localeCompare(b.exam_at ?? "9999");
+/** Exam time in ms; no date sorts last. Parsed, because fixtures keep offsets like -07:00 and Supabase returns UTC. */
+const examTime = (r: ReviewSummary) => (r.exam_at ? Date.parse(r.exam_at) : Infinity);
+const byExamDate = (a: ReviewSummary, b: ReviewSummary) => examTime(a) - examTime(b);
 
 /** Every review for a course, soonest exam first. */
 export async function getReviewsForCourse(courseId: string): Promise<ReviewSummary[]> {
@@ -366,7 +368,7 @@ export async function getUpcomingReviews(): Promise<Array<ReviewSummary & { cour
       return course ? [{ ...r, course }] : [];
     });
   }
-  return rows.filter((r) => !r.exam_at || r.exam_at >= now).sort(byExamDate);
+  return rows.filter((r) => examTime(r) >= Date.parse(now)).sort(byExamDate);
 }
 
 export async function getReview(slug: string): Promise<ReviewRecord | undefined> {

@@ -152,12 +152,19 @@ export const reviewSchema = reviewObjectSchema.superRefine((r, ctx) => {
     qIds.add(q.id);
     if (q.solutions.length !== q.parts.length)
       ctx.addIssue({ code: "custom", message: "one solution per part", path: ["practiceExam", "questions", i, "solutions"] });
+    // Saved answers and scores are keyed by part label, so labels must be unique within a question.
+    const labels = q.parts.map((p) => partLabel(p.label));
+    if (new Set(labels).size !== labels.length)
+      ctx.addIssue({ code: "custom", message: "part labels must be unique", path: ["practiceExam", "questions", i, "parts"] });
     q.sectionIds.forEach((id, j) => {
       if (!sectionIds.has(id)) ctx.addIssue({ code: "custom", message: `unknown section ${id}`, path: ["practiceExam", "questions", i, "sectionIds", j] });
     });
   });
+  const mockIds = new Set<string>();
   r.practiceExam.mock.forEach((id, i) => {
     if (!qIds.has(id)) ctx.addIssue({ code: "custom", message: `unknown question ${id}`, path: ["practiceExam", "mock", i] });
+    if (mockIds.has(id)) ctx.addIssue({ code: "custom", message: `duplicate mock question ${id}`, path: ["practiceExam", "mock", i] });
+    mockIds.add(id);
   });
   const refs: Array<[string, (string | number)[]]> = [
     ...r.flashcards.map((f, i): [string, (string | number)[]] => [f.sectionId, ["flashcards", i, "sectionId"]]),
@@ -165,6 +172,9 @@ export const reviewSchema = reviewObjectSchema.superRefine((r, ctx) => {
   ];
   for (const [id, path] of refs) if (!sectionIds.has(id)) ctx.addIssue({ code: "custom", message: `unknown section ${id}`, path });
 });
+
+/** A part label without wrapping parentheses: drafts write "a" or "(a)". */
+export const partLabel = (label: string) => label.replace(/^\((.*)\)$/, "$1");
 
 export type Review = z.infer<typeof reviewSchema>;
 export type ReviewSection = z.infer<typeof reviewSectionSchema>;

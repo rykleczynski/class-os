@@ -1,14 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import type { Countdown } from "@/lib/review/countdown";
 import { Pause, Play, RotateCcw } from "lucide-react";
 import { Md } from "@/components/Md";
-import type { PracticeQuestion, Review } from "@/lib/review/schema";
+import { partLabel, type PracticeQuestion, type Review } from "@/lib/review/schema";
 import type { ReviewState } from "@/lib/review/progress";
 import { Card } from "./shared";
 
 type Update = (fn: (s: ReviewState) => ReviewState) => void;
-const partKey = (q: PracticeQuestion, i: number) => `${q.id}:${i}`;
+/** By label, not position, so saved work stays with its prompt when a rebuild adds or reorders parts. */
+const partKey = (q: PracticeQuestion, i: number) => `${q.id}:${partLabel(q.parts[i].label)}`;
 
 /** Splits questions into the timed mock (in mock order; all questions when no mock is set) and extra practice grouped by topic. */
 export function splitPractice(review: Review) {
@@ -34,7 +36,7 @@ function tally(qs: PracticeQuestion[], state: ReviewState) {
   };
 }
 
-export function PracticeExam({ review, state, update }: { review: Review; state: ReviewState; update: Update }) {
+export function PracticeExam({ review, state, update, timer }: { review: Review; state: ReviewState; update: Update; timer: Countdown }) {
   const exam = review.practiceExam;
   const sectionTitle = new Map(review.sections.map((s) => [s.id, s.title]));
   const titles = (q: PracticeQuestion) => q.sectionIds.map((id) => sectionTitle.get(id) ?? id);
@@ -78,7 +80,7 @@ export function PracticeExam({ review, state, update }: { review: Review; state:
       </div>
       {/* Timer first on phones, where a sidebar would land below every question. */}
       <aside className="order-first space-y-6 lg:sticky lg:top-32 lg:order-none lg:self-start">
-        <Timer minutes={exam.minutes} />
+        <Timer timer={timer} />
         <Card title="Mock exam score">
           <p className="text-3xl font-semibold tabular-nums">
             {m.earned}
@@ -128,7 +130,7 @@ function Question({ n, q, sections, state, update }: { n?: number; q: PracticeQu
 
 function Part({ q, i, state, update }: { q: PracticeQuestion; i: number; state: ReviewState; update: Update }) {
   const p = q.parts[i];
-  const label = p.label.replace(/^\((.*)\)$/, "$1"); // drafts write "a" or "(a)"
+  const label = partLabel(p.label);
   const key = partKey(q, i);
   const [open, setOpen] = useState(false);
   const score = state.scores[key];
@@ -201,16 +203,9 @@ function Part({ q, i, state, update }: { q: PracticeQuestion; i: number; state: 
   );
 }
 
-/** A countdown for sitting the practice exam under time. Not persisted: a reload starts over. */
-function Timer({ minutes }: { minutes: number }) {
-  const [left, setLeft] = useState(minutes * 60);
-  const [running, setRunning] = useState(false);
-  useEffect(() => {
-    if (!running) return;
-    const t = setInterval(() => setLeft((s) => Math.max(0, s - 1)), 1000);
-    return () => clearInterval(t);
-  }, [running]);
-  const stopped = running && left === 0;
+/** The mock-exam clock. The countdown lives in the page shell, so switching tabs does not reset it. */
+function Timer({ timer }: { timer: Countdown }) {
+  const { left, running, total } = timer;
   const mm = Math.floor(left / 60);
   const ss = String(left % 60).padStart(2, "0");
   return (
@@ -218,20 +213,13 @@ function Timer({ minutes }: { minutes: number }) {
       <p className={`font-mono text-3xl tabular-nums ${left === 0 ? "text-bad" : ""}`} aria-live="polite">
         {mm}:{ss}
       </p>
-      <p className="mt-1 text-xs text-muted-foreground">{stopped ? "Time. Pens down." : `${minutes} minutes, like the real thing.`}</p>
+      <p className="mt-1 text-xs text-muted-foreground">{left === 0 ? "Time. Pens down." : `${total / 60} minutes, like the real thing.`}</p>
       <div className="mt-3 flex gap-2">
-        <button type="button" onClick={() => setRunning((r) => !r)} disabled={left === 0} className="inline-flex min-h-10 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-40">
+        <button type="button" onClick={running ? timer.pause : timer.start} disabled={left === 0} className="inline-flex min-h-10 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-40">
           {running ? <Pause className="h-3.5 w-3.5" aria-hidden /> : <Play className="h-3.5 w-3.5" aria-hidden />}
-          {running ? "Pause" : left === minutes * 60 ? "Start" : "Resume"}
+          {running ? "Pause" : left === total ? "Start" : "Resume"}
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            setRunning(false);
-            setLeft(minutes * 60);
-          }}
-          className="inline-flex min-h-10 items-center rounded-full border border-border px-3.5 text-sm font-semibold hover:border-control"
-        >
+        <button type="button" onClick={timer.reset} className="inline-flex min-h-10 items-center rounded-full border border-border px-3.5 text-sm font-semibold hover:border-control">
           Reset
         </button>
       </div>

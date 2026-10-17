@@ -56,7 +56,24 @@ export function balanceSides<T extends { lines: string[] }>(blocks: T[], n: numb
   return sides.filter((s) => s.length > 0);
 }
 
-/** Merges a frame and its parts (in the given order) into a review. The result still needs reviewSchema validation. */
+/**
+ * Question ids in the frame's order, drop and mock that name no question, and mock ids that are also dropped.
+ * order and drop vanish during assembly, so a typo there would otherwise pass silently.
+ */
+export function frameIssues(frame: ReviewFrame, parts: ReviewPart[]): string[] {
+  const ids = new Set([...parts.flatMap((p) => p.practiceQuestions), ...frame.practiceExam.questions].map((q) => q.id));
+  const { order, drop, mock } = frame.practiceExam;
+  const dropped = new Set(drop);
+  return [
+    ...(["order", "drop", "mock"] as const).flatMap((field) =>
+      frame.practiceExam[field].filter((id) => !ids.has(id)).map((id) => `practiceExam.${field}: unknown question ${id}`),
+    ),
+    ...mock.filter((id) => dropped.has(id)).map((id) => `practiceExam.mock: ${id} is also in drop`),
+    ...order.filter((id, i) => order.indexOf(id) !== i).map((id) => `practiceExam.order: duplicate ${id}`),
+  ];
+}
+
+/** Merges a frame and its parts (in the given order) into a review. Check frameIssues first; the result still needs reviewSchema validation. */
 export function assembleReview(frame: ReviewFrame, parts: ReviewPart[]): Review {
   const { practiceExam: pe, notesSheet: ns, ...rest } = frame;
   const all = [...parts.flatMap((p) => p.practiceQuestions), ...pe.questions];
