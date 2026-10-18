@@ -15,13 +15,21 @@ export type ReviewState = {
   answers: Record<string, string>;
   /** Points awarded to yourself by "<questionId>:<part label>", after revealing the solution. */
   scores: Record<string, number>;
+  /** Notes-builder item ids already written on the handwritten sheet. */
+  sheet: string[];
 };
 
-/** Changes not yet saved. null deletes a key; for `can`, true ticks and false unticks. */
-export type Pending = { can: Record<string, boolean>; answers: Record<string, string | null>; scores: Record<string, number | null> };
+/** Changes not yet saved. null deletes a key; for the tick lists, true ticks and false unticks. */
+export type Pending = {
+  can: Record<string, boolean>;
+  sheet: Record<string, boolean>;
+  answers: Record<string, string | null>;
+  scores: Record<string, number | null>;
+};
 
 const EVENT = "classos:review";
-const empty: ReviewState = { can: [], answers: {}, scores: {} };
+const empty: ReviewState = { can: [], answers: {}, scores: {}, sheet: [] };
+const noChanges = (): Pending => ({ can: {}, sheet: {}, answers: {}, scores: {} });
 export const reviewKey = (slug: string) => `classos:review:${slug}`;
 
 function diffRecord<T>(a: Record<string, T>, b: Record<string, T>): Record<string, T | null> {
@@ -39,30 +47,49 @@ function applyRecord<T>(base: Record<string, T>, changes: Record<string, T | nul
   return out;
 }
 
+function diffTicks(a: string[], b: string[]): Record<string, boolean> {
+  const was = new Set(a);
+  const now = new Set(b);
+  const out: Record<string, boolean> = {};
+  for (const k of now) if (!was.has(k)) out[k] = true;
+  for (const k of was) if (!now.has(k)) out[k] = false;
+  return out;
+}
+
+function applyTicks(base: string[], changes: Record<string, boolean>): string[] {
+  const out = new Set(base);
+  for (const [k, on] of Object.entries(changes)) {
+    if (on) out.add(k);
+    else out.delete(k);
+  }
+  return [...out];
+}
+
 /** What changed from a to b. */
 export function diffState(a: ReviewState, b: ReviewState): Pending {
-  const was = new Set(a.can);
-  const now = new Set(b.can);
-  const can: Record<string, boolean> = {};
-  for (const k of now) if (!was.has(k)) can[k] = true;
-  for (const k of was) if (!now.has(k)) can[k] = false;
-  return { can, answers: diffRecord(a.answers, b.answers), scores: diffRecord(a.scores, b.scores) };
+  return {
+    can: diffTicks(a.can, b.can),
+    sheet: diffTicks(a.sheet, b.sheet),
+    answers: diffRecord(a.answers, b.answers),
+    scores: diffRecord(a.scores, b.scores),
+  };
 }
 
 /** Later changes win per key. */
 export const mergePending = (a: Pending, b: Pending): Pending => ({
   can: { ...a.can, ...b.can },
+  sheet: { ...a.sheet, ...b.sheet },
   answers: { ...a.answers, ...b.answers },
   scores: { ...a.scores, ...b.scores },
 });
 
 export function applyPending(s: ReviewState, p: Pending): ReviewState {
-  const can = new Set(s.can);
-  for (const [k, on] of Object.entries(p.can)) {
-    if (on) can.add(k);
-    else can.delete(k);
-  }
-  return { can: [...can], answers: applyRecord(s.answers, p.answers), scores: applyRecord(s.scores, p.scores) };
+  return {
+    can: applyTicks(s.can, p.can),
+    sheet: applyTicks(s.sheet, p.sheet),
+    answers: applyRecord(s.answers, p.answers),
+    scores: applyRecord(s.scores, p.scores),
+  };
 }
 
 const stored = new Map<string, { raw: string | null; state: ReviewState }>();
@@ -82,7 +109,7 @@ function readStored(key: string): ReviewState {
   let state = empty;
   try {
     const v = JSON.parse(raw ?? "null") as Partial<ReviewState> | null;
-    if (v) state = { can: Array.isArray(v.can) ? v.can : [], answers: v.answers ?? {}, scores: v.scores ?? {} };
+    if (v) state = { can: Array.isArray(v.can) ? v.can : [], answers: v.answers ?? {}, scores: v.scores ?? {}, sheet: Array.isArray(v.sheet) ? v.sheet : [] };
   } catch {
     /* corrupt value: start fresh */
   }
@@ -117,7 +144,7 @@ export function useReviewState(slug: string) {
   const update = useCallback(
     (fn: (s: ReviewState) => ReviewState) => {
       const current = read(key);
-      const changes = mergePending(pending.get(key) ?? { can: {}, answers: {}, scores: {} }, diffState(current, fn(current)));
+      const changes = mergePending(pending.get(key) ?? noChanges(), diffState(current, fn(current)));
       try {
         // Replay onto what is stored now, not onto this tab's copy, so another tab's saves survive.
         localStorage.setItem(key, JSON.stringify(applyPending(readStored(key), changes)));

@@ -5,19 +5,19 @@ import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { courseStyle } from "@/lib/course-theme";
-import { reviewSchema, type Review } from "@/lib/review/schema";
+import { reviewSchema, type PracticeSet, type Review } from "@/lib/review/schema";
 import { useReviewState } from "@/lib/review/progress";
 import { useCountdown } from "@/lib/review/countdown";
 import { Overview } from "./Overview";
 import { TopicGuide } from "./TopicGuide";
-import { PracticeExam } from "./PracticeExam";
+import { MOCK_ID, PracticeExam, type ExamChoice } from "./PracticeExam";
 import { NotesSheet } from "./NotesSheet";
 import { ReviewCards } from "./ReviewCards";
 import { TABS, type TabId } from "@/lib/review/tabs";
 
-type Props = { spec: unknown; course: { code: string; slug: string }; initialTab?: TabId };
+type Props = { spec: unknown; generated: PracticeSet[]; course: { code: string; slug: string }; initialTab?: TabId };
 
-export function ReviewView({ spec, course, initialTab }: Props) {
+export function ReviewView({ spec, generated, course, initialTab }: Props) {
   const parsed = reviewSchema.safeParse(spec);
   if (!parsed.success) {
     const first = parsed.error.issues[0];
@@ -30,14 +30,21 @@ export function ReviewView({ spec, course, initialTab }: Props) {
       </div>
     );
   }
-  return <Shell review={parsed.data} course={course} initialTab={initialTab} />;
+  return <Shell review={parsed.data} generated={generated} course={course} initialTab={initialTab} />;
 }
 
-function Shell({ review, course, initialTab }: { review: Review; course: Props["course"]; initialTab?: TabId }) {
+function Shell({ review, generated, course, initialTab }: { review: Review; generated: PracticeSet[]; course: Props["course"]; initialTab?: TabId }) {
   const [tab, setTab] = useState<TabId>(initialTab ?? "overview");
   const [section, setSection] = useState(review.sections[0].id);
   const { state, update, persistent } = useReviewState(review.slug);
-  const timer = useCountdown(review.practiceExam.minutes); // held here so switching tabs keeps the clock
+  // Held here so switching tabs keeps the clock and the chosen exam; switching exams refills the clock.
+  const timer = useCountdown(review.practiceExam.minutes);
+  const [examId, setExamId] = useState(MOCK_ID);
+  const selectExam = (c: ExamChoice) => {
+    if (c.id === examId) return;
+    setExamId(c.id);
+    timer.reset(c.minutes);
+  };
 
   const go = (next: TabId, sectionId?: string) => {
     setTab(next);
@@ -84,15 +91,19 @@ function Shell({ review, course, initialTab }: { review: Review; course: Props["
       </header>
 
       <main className="mx-auto max-w-6xl px-4 pb-32 pt-6" role="tabpanel">
-        {tab === "overview" && <Overview review={review} state={state} onOpenSection={(id) => go("topics", id)} onStartPractice={() => go("practice")} />}
-        {tab === "topics" && <TopicGuide review={review} sectionId={section} onSection={setSection} state={state} update={update} />}
         {!persistent && (
           <p role="status" className="mb-4 rounded-2xl bg-warn-soft px-4 py-2.5 text-sm text-warn">
             This browser is not saving your progress. Ticks and answers will be lost when you reload.
           </p>
         )}
-        {tab === "practice" && <PracticeExam review={review} state={state} update={update} timer={timer} />}
-        {tab === "sheet" && <NotesSheet review={review} />}
+        {tab === "overview" && (
+          <Overview review={review} state={state} onOpenSection={(id) => go("topics", id)} onStartPractice={() => go("practice")} onOpenSheet={() => go("sheet")} />
+        )}
+        {tab === "sheet" && <NotesSheet review={review} state={state} update={update} />}
+        {tab === "topics" && <TopicGuide review={review} sectionId={section} onSection={setSection} state={state} update={update} />}
+        {tab === "practice" && (
+          <PracticeExam review={review} generated={generated} state={state} update={update} timer={timer} activeId={examId} onSelect={selectExam} />
+        )}
         {tab === "cards" && <ReviewCards review={review} />}
       </main>
     </div>

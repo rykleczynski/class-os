@@ -368,6 +368,53 @@ export type Database = {
           },
         ]
       }
+      generation_attempts: {
+        Row: {
+          created_at: string
+          id: number
+          review_slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          review_slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          review_slug?: string
+        }
+        Relationships: []
+      }
+      generated_exams: {
+        Row: {
+          created_at: string
+          id: string
+          review_slug: string
+          spec: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          review_slug: string
+          spec: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          review_slug?: string
+          spec?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generated_exams_review_slug_fkey"
+            columns: ["review_slug"]
+            isOneToOne: false
+            referencedRelation: "reviews"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
       reviews: {
         Row: {
           course_id: string
@@ -488,6 +535,10 @@ export type Database = {
           p_title: string
         }
         Returns: string
+      }
+      reserve_generation: {
+        Args: { p_slug: string; p_cap: number }
+        Returns: boolean
       }
       share_link_touch: {
         Args: { p_id: string }

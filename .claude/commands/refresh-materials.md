@@ -8,13 +8,14 @@ only: BruinLearn sits behind UCLA SSO and Duo, so it cannot run unattended.
 Rules:
 - Read-only on Canvas. GET requests and file downloads only. Never submit a form, post, or change anything.
 - Never type credentials or a Duo code. If a login page appears, stop and ask Ryan to log in.
-- Only these courses. **ECON 134 (course 236048) is slides-off-limits**: its syllabus forbids using course
-  content with AI. Never list its modules or files and never download slides or other files from it. The one
-  exception is the lecture captions in part B below, which Ryan has chosen to use.
+- Only these courses. **ECON 134 (course 236048)**: its syllabus restricts AI use of course content; Ryan chose
+  on 2026-10-17 to use its files anyway (slides, problem sets, past midterms, syllabus). Its files are linked from
+  the course **front page**, not from modules: see step 4b. Sharing ECON 134 stays off.
 
 | Course id | Course | materials/ folder |
 |---|---|---|
 | 236096 | ECON 106F | `econ-106f` |
+| 236048 | ECON 134 (files on the front page, step 4b) | `econ-134` |
 | 241549 | ECON 106FB (TA site) | `econ-106fb` |
 | 235737 | COMM 187 | none (no slides; list only if Ryan asks) |
 
@@ -42,7 +43,24 @@ Part A, slides (ECON 106F and 106FB):
    ```
 
    If the response is HTML (a redirect to login) or 401/403, treat it as a login problem and go back to step 3.
-5. Compare the File items with what is already in `materials/<folder>/` (list the folder with Glob). `npm run materials` matches on the downloaded file name, so a file only counts as present if the same name exists there. Pick only the new ones that matter: for ECON 106F that is names like `Econ 106F Chapter N ...` and the syllabus; for ECON 106FB it is `TA Notes 106F ...` and the lab syllabus. Skip anything else, and tell Ryan what you skipped.
+
+4b. For ECON 134 (236048), list the files linked from the front page instead (same-origin GET):
+
+   ```js
+   const r = await fetch(`/api/v1/courses/236048/front_page`, { credentials: "include", headers: { Accept: "application/json" } });
+   const doc = new DOMParser().parseFromString((await r.json()).body, "text/html");
+   const out = [];
+   for (const a of doc.querySelectorAll("a")) {
+     const m = (a.getAttribute("href") || "").match(/\/files\/(\d+)/);
+     if (!m) continue;
+     const f = await (await fetch(`/api/v1/courses/236048/files/${m[1]}`, { credentials: "include", headers: { Accept: "application/json" } })).json();
+     out.push({ fileId: m[1], title: f.display_name, size: f.size });
+   }
+   JSON.stringify(out);
+   ```
+
+   The names look like `Econ_134_F26_L7.pdf`, `Econ_134_F26_PS2.pdf`, `Econ_134_F24_midterm2_solutions.pdf`.
+5. Compare the File items with what is already in `materials/<folder>/` (list the folder with Glob). `npm run materials` matches on the downloaded file name, so a file only counts as present if the same name exists there. Pick only the new ones that matter: for ECON 106F that is names like `Econ 106F Chapter N ...` and the syllabus; for ECON 106FB it is `TA Notes 106F ...` and the lab syllabus; for ECON 134 it is every `Econ_134_F<yy>_...` file (slides, problem sets and solutions, past exams and solutions, syllabus). Skip anything else, and tell Ryan what you skipped.
 6. Download each new file by navigating the tab to `https://bruinlearn.ucla.edu/courses/<courseId>/files/<fileId>/download?download_frd=1`. The file lands in `~/Downloads`. Pause briefly between downloads.
 7. Run `npm run materials`. It copies files whose names match each course's `materials_patterns` (in `lib/fixtures/courses.ts`) into `materials/<folder>/` and prints one line per new file. If a downloaded file does not show up, its name does not match a pattern; report that rather than renaming or editing patterns.
 8. Close the tab with `tabs_close_mcp`, unless you are about to do part B in it.
@@ -53,7 +71,7 @@ recording; the lesson is built from the Panopto captions. Do this in the same se
 
 1. In the BruinCast tool at `https://bruinlearn.ucla.edu/courses/236048/external_tools/8676`, find the sessions
    titled like `26F-ECON134-1 Week N MM/DD/YYYY` (use `get_page_text` or `read_page`; the list may be inside an
-   iframe). Do not open anything else in course 236048. If Panopto asks for SSO or Duo, stop and ask Ryan to log in.
+   iframe). If Panopto asks for SSO or Duo, stop and ask Ryan to log in.
 2. For each session date, skip it if `content/econ134-<YYYY-MM-DD>/transcript.txt` already exists. For the rest, run
    `npm run status -- --course "ECON 134" --start <class start UTC ISO> --end <class end UTC ISO>` (Mon/Wed 2:00-3:15
    PM Los Angeles); `lesson <slug>` means it is done, so skip it too. Only sessions on or after 2026-09-28 count.

@@ -8,7 +8,30 @@ import type { Review } from "@/lib/review/schema";
 import type { ReviewState } from "@/lib/review/progress";
 import { Card, Meter, WeightBadge, fmtDate, readiness } from "./shared";
 
-const SOURCE_LABEL = { syllabus: "Syllabus", lecture: "Lecture", announcement: "Announcement", "past-exam": "Past exam" } as const;
+/** First thing on the page: the handwritten notes sheet, with how much of the must-have list is already on it. */
+function StartHere({ review, state, onOpenSheet }: { review: Review; state: ReviewState; onOpenSheet: () => void }) {
+  const items = review.notesBuilder?.lectures.flatMap((l) => l.items) ?? [];
+  const must = items.filter((i) => i.priority === "must");
+  const written = new Set(state.sheet);
+  const done = must.filter((i) => written.has(i.id)).length;
+  return (
+    <section aria-label="Start here" className="rounded-3xl border-2 border-(--course) bg-paper-card p-5 shadow-soft sm:p-6">
+      <p className="text-xs font-semibold uppercase tracking-wide text-(--course)">Start here</p>
+      <h2 className="mt-1 text-lg font-semibold tracking-tight">Write your notes sheet</h2>
+      <p className="mt-1 text-sm text-muted-foreground">
+        {review.notesBuilder?.lectures.length} lectures, {items.length} lines worth writing, {must.length} of them must-haves. Building it is your first pass through everything on the exam.
+      </p>
+      <div className="mt-3 max-w-sm">
+        <Meter label="Must-haves on your sheet" done={done} total={must.length} />
+      </div>
+      <button type="button" onClick={onOpenSheet} className="mt-4 inline-flex min-h-10 items-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground">
+        {done === 0 ? "Start the notes sheet" : "Keep going"} <ArrowRight className="h-4 w-4" aria-hidden />
+      </button>
+    </section>
+  );
+}
+
+const SOURCE_LABEL ={ syllabus: "Syllabus", lecture: "Lecture", announcement: "Announcement", "past-exam": "Past exam" } as const;
 
 /** The current minute (ms), refreshed every minute. Null on the server so the first client render matches. */
 function useMinute(): number | null {
@@ -29,7 +52,9 @@ function useDaysLeft(startsAt: string | null): number | null {
   return Math.ceil((Date.parse(startsAt) - now) / 86_400_000);
 }
 
-export function Overview({ review, state, onOpenSection, onStartPractice }: { review: Review; state: ReviewState; onOpenSection: (id: string) => void; onStartPractice: () => void }) {
+type Props = { review: Review; state: ReviewState; onOpenSection: (id: string) => void; onStartPractice: () => void; onOpenSheet: () => void };
+
+export function Overview({ review, state, onOpenSection, onStartPractice, onOpenSheet }: Props) {
   const { exam } = review;
   const days = useDaysLeft(exam.startsAt);
   const total = readiness(review, state);
@@ -40,6 +65,7 @@ export function Overview({ review, state, onOpenSection, onStartPractice }: { re
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
       <div className="min-w-0 space-y-6">
+        {review.notesBuilder && <StartHere review={review} state={state} onOpenSheet={onOpenSheet} />}
         <section className="rounded-3xl bg-ink p-6 text-ink-foreground">
           <p className="flex items-center gap-2 text-sm font-semibold text-ink-muted">
             <CalendarClock className="h-4 w-4" aria-hidden /> {when}

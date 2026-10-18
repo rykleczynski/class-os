@@ -7,7 +7,8 @@ import { lessonsBySlug } from "./fixtures/lessons-index";
 import { connection } from "next/server";
 import type { Lesson } from "./lesson/schema";
 import { reviewsRoot } from "./review/paths";
-import { reviewSchema } from "./review/schema";
+import { reviewSchema, type PracticeSet } from "./review/schema";
+import { listGenerated } from "./review/generated-store";
 import { requireOwner } from "./auth";
 import { getAdmin } from "./supabase/admin";
 import { supabaseEnabled } from "./supabase/client";
@@ -390,6 +391,13 @@ export async function getReview(slug: string): Promise<ReviewRecord | undefined>
     generated_at: data.generated_at,
     spec: data.spec,
   };
+}
+
+/** Practice exams generated for a review, newest first. Owner only. */
+export async function getGeneratedExams(slug: string): Promise<PracticeSet[]> {
+  await requireOwner();
+  if (supabaseEnabled) await connection();
+  return listGenerated(slug);
 }
 
 export type LessonSummary = {

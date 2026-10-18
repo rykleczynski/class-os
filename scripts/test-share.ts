@@ -145,11 +145,15 @@ async function main() {
     assert.equal(shareDecision(econ134).ok, false);
   });
 
-  await test("a materials opt-out also blocks sharing", () => {
-    // ECON 134 has both flags; materials_allowed alone must be enough, so check the rule through the data.
-    const optedOut = courses.filter((c) => c.materials_allowed === false);
-    assert.ok(optedOut.length >= 1);
-    for (const c of optedOut) assert.equal(shareDecision(c).ok, false, c.code);
+  await test("ECON 134 stays unshareable on shareable: false alone, now that its course files are allowed", () => {
+    assert.notEqual(econ134.materials_allowed, false, "course files are allowed");
+    assert.equal(econ134.shareable, false);
+    const d = shareDecision(econ134);
+    assert.ok(!d.ok && d.reason === econ134.share_blocked_reason);
+  });
+
+  await test("any course that opts out of materials is also blocked from sharing", () => {
+    for (const c of courses.filter((x) => x.materials_allowed === false)) assert.equal(shareDecision(c).ok, false, c.code);
   });
 
   await test("label and expiry validation", async () => {
