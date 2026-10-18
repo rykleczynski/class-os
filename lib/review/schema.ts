@@ -240,9 +240,9 @@ export const reviewSchema = reviewObjectSchema.superRefine((r, ctx) => {
     for (const issue of questionIssues(questions, sectionIds)) ctx.addIssue({ code: "custom", message: issue.message, path: [...base, ...issue.path] });
   }
   const mockPool = new Set(r.practiceExam.questions.map((q) => q.id));
-  const examIds = new Set<string>();
+  const examIds = new Set<string>(["mock"]); // the picker's id for the lecture-built mock
   r.pastExams.forEach((e, k) => {
-    if (examIds.has(e.id)) ctx.addIssue({ code: "custom", message: "past exam ids must be unique", path: ["pastExams", k, "id"] });
+    if (examIds.has(e.id)) ctx.addIssue({ code: "custom", message: e.id === "mock" ? "\"mock\" is reserved for the lecture-built mock" : "past exam ids must be unique", path: ["pastExams", k, "id"] });
     examIds.add(e.id);
     if (e.kind !== "past") ctx.addIssue({ code: "custom", message: "pastExams holds kind \"past\" only", path: ["pastExams", k, "kind"] });
   });

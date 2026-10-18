@@ -201,8 +201,8 @@ function ExamPicker({ review, choices, activeId, state, onSelect }: { review: Re
           })}
         </div>
         {review.pastExams.length > 0 && (
-          // The new exam is not in the list until the page refreshes; select it now, timed like the exams it was modeled on.
-          <GeneratePanel review={review} onGenerated={(id) => onSelect({ ...choices[0], id, minutes: review.pastExams.at(-1)?.minutes ?? choices[0].minutes })} />
+          // The new exam is not in the list until the page refreshes; select it now with its own saved length.
+          <GeneratePanel review={review} onGenerated={(id, minutes) => onSelect({ ...choices[0], id, minutes })} />
         )}
       </div>
     </Card>
@@ -232,7 +232,7 @@ function DeleteGenerated({ slug, choice, wasActive, onDeleted }: { slug: string;
   );
 }
 
-function GeneratePanel({ review, onGenerated }: { review: Review; onGenerated: (id: string) => void }) {
+function GeneratePanel({ review, onGenerated }: { review: Review; onGenerated: (id: string, minutes: number) => void }) {
   const [basedOn, setBasedOn] = useState("all");
   const [difficulty, setDifficulty] = useState<"same" | "harder" | "easier">("same");
   const [error, setError] = useState<string | null>(null);
@@ -241,7 +241,7 @@ function GeneratePanel({ review, onGenerated }: { review: Review; onGenerated: (
     start(async () => {
       setError(null);
       const r = await generateExam(review.slug, { basedOn, difficulty });
-      if (r.ok) onGenerated(r.id);
+      if (r.ok) onGenerated(r.id, r.minutes);
       else setError(r.error);
     });
   return (

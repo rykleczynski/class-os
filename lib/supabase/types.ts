@@ -368,6 +368,24 @@ export type Database = {
           },
         ]
       }
+      generation_attempts: {
+        Row: {
+          created_at: string
+          id: number
+          review_slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          review_slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          review_slug?: string
+        }
+        Relationships: []
+      }
       generated_exams: {
         Row: {
           created_at: string
@@ -517,6 +535,10 @@ export type Database = {
           p_title: string
         }
         Returns: string
+      }
+      reserve_generation: {
+        Args: { p_slug: string; p_cap: number }
+        Returns: boolean
       }
       share_link_touch: {
         Args: { p_id: string }

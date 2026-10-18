@@ -28,7 +28,7 @@ export async function listGenerated(slug: string): Promise<PracticeSet[]> {
   if (!supabaseEnabled) {
     let files: string[];
     try {
-      files = (await readdir(dir(slug))).filter((f) => f.endsWith(".json"));
+      files = (await readdir(dir(slug))).filter((f) => f.endsWith(".json") && f !== "attempts.json");
     } catch {
       return [];
     }
@@ -43,10 +43,36 @@ export async function listGenerated(slug: string): Promise<PracticeSet[]> {
   return data.map((r) => parse(r.spec)).filter((s): s is PracticeSet => s !== null);
 }
 
-/** Generations started today (UTC), for the daily cap. */
-export async function countGeneratedToday(slug: string): Promise<number> {
-  const today = new Date().toISOString().slice(0, 10);
-  return (await listGenerated(slug)).filter((s) => (s.generated?.createdAt ?? "").startsWith(today)).length;
+/** Fixtures mode: attempt times per review, kept in content/reviews/<slug>/generated/attempts.json. */
+const attemptsFile = (slug: string) => join(dir(slug), "attempts.json");
+let fixtureLock: Promise<unknown> = Promise.resolve();
+
+/**
+ * Reserves one generation attempt for today (UTC) before the model is called. Returns false once `cap` attempts
+ * exist today. Attempts are never refunded, so failed calls and deleted exams still count, and the Supabase
+ * function serializes concurrent requests (0008). Fixtures mode serializes within this process.
+ */
+export async function reserveGeneration(slug: string, cap: number): Promise<boolean> {
+  if (supabaseEnabled) {
+    const { data, error } = await db().rpc("reserve_generation", { p_slug: slug, p_cap: cap });
+    if (error) throw new Error(`reserve_generation: ${error.message}`);
+    return data === true;
+  }
+  const run = fixtureLock.then(async () => {
+    let times: string[] = [];
+    try {
+      times = JSON.parse(await readFile(attemptsFile(slug), "utf8")) as string[];
+    } catch {
+      /* first attempt */
+    }
+    const today = new Date().toISOString().slice(0, 10);
+    if (times.filter((t) => t.startsWith(today)).length >= cap) return false;
+    await mkdir(dir(slug), { recursive: true });
+    await writeFile(attemptsFile(slug), JSON.stringify([...times, new Date().toISOString()]));
+    return true;
+  });
+  fixtureLock = run.catch(() => {});
+  return run;
 }
 
 export async function saveGenerated(slug: string, set: PracticeSet): Promise<void> {

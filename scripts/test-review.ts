@@ -163,6 +163,13 @@ test("duplicate mock ids and duplicate part labels are rejected", () => {
   assert.ok(!dupLabel.success && dupLabel.error.issues.some((i) => i.message === "part labels must be unique"), '"a" and "(a)" are the same label');
 });
 
+test("a past exam cannot take the mock's id", () => {
+  const set = { id: "mock", title: "Past", kind: "past" as const, source: "s", minutes: 75, instructions: "i", questions: [question("p-q1", ["ext"])] };
+  const r = reviewSchema.safeParse(assembleReview(frame, parts, { pastExams: [set] }));
+  assert.ok(!r.success && r.error.issues.some((i) => i.message.includes('"mock" is reserved')));
+  assert.ok(reviewSchema.safeParse(assembleReview(frame, parts, { pastExams: [{ ...set, id: "f24-midterm-1" }] })).success);
+});
+
 test("frameIssues catches typos in order, drop and mock", () => {
   assert.deepEqual(frameIssues(frame, parts), []);
   const bad = { ...frame, practiceExam: { ...frame.practiceExam, order: ["cross-1", "crossx", "cross-1"], drop: ["ext-q9"], mock: ["welfare-q1", "ext-q9"] } };
