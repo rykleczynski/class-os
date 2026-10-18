@@ -96,12 +96,14 @@ export const courses: Course[] = [
     calendar_event_series_ids: ["_64p2qc9h68o3gc9k6kqiqc8"],
     aliases: ["Econ 134", "Econ 134 Environmental"],
     term: "Fall 2026",
-    // Opted out: the ECON 134 syllabus forbids using course content with AI.
-    materials_allowed: false,
+    // Course files are used (slides, problem sets, past midterms, syllabus). The ECON 134 syllabus restricts AI use
+    // of course content; Ryan chose on 2026-10-17 to use them anyway and owns that call. Sharing stays off:
+    // the syllabus also prohibits sharing course content, and that is a separate rule.
+    // Course files are named like Econ_134_F26_L3.pdf, Econ_134_F25_midterm1_solutions.pdf, Econ_134_F26_syllabus.pdf.
+    materials_patterns: ["^Econ_134_F\\d{2}_"],
     shareable: false,
     share_blocked_reason: "ECON 134's syllabus prohibits sharing course content",
-    // Ryan does not attend, so there is no Wispr recording: lectures come from BruinCast captions. Lecture
-    // captions are used; the slides opt-out above only covers slides and other course files.
+    // Ryan does not attend, so there is no Wispr recording: lectures come from BruinCast captions.
     transcript_source: "panopto",
     generation_notes:
       "Graphical. Use supplyDemand blocks with shifts and shaded areas (deadweight loss, externalities, taxes), marginal-damage versus marginal-benefit curves, and charts of costs. Pair every curve with a one-line takeaway.",

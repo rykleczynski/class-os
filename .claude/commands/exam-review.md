@@ -19,9 +19,10 @@ pushed past the exam.
   Start with `--from` at the first lecture of the term; rerun with a tighter window once you know the scope.
 - Read `content/reviews/<slug>/sources/README.md`. Its "What was said about exams" section lists every transcript
   line that mentions exams, with context. The professor often states the scope in the last lecture before the exam.
-- If the README lists course files, read the syllabus for the exam policy and coverage. If it says the course
-  opted out (`materials_allowed: false`, for example ECON 134), never read `materials/<course>/`: the scope
-  comes from lecture only, and `exam.scope.gaps` says so.
+- If the README lists course files, read the syllabus for the exam policy and coverage, the slides for each
+  lecture, problem sets with solutions, and any past exams with solutions. If it says the course opted out
+  (`materials_allowed: false`), never read `materials/<course>/`: the scope comes from lecture only, and
+  `exam.scope.gaps` says so.
 - If the date or scope is still unknown, ask Ryan. Do not guess an exam date: leave `startsAt` null.
 
 ## 2. Draft in parts
@@ -37,7 +38,16 @@ The contract is `lib/review/schema.ts`; blocks are the lesson kit in `lib/lesson
   the exam, the big picture, cross-topic connections, cross-topic practice questions, practice exam
   instructions, minutes and question order, and the notes-sheet allowance and number of sides.
 
-Check each part as you go: `npm run validate:review -- --part <file>`.
+- `content/reviews/<slug>/past/<yyyy>-<id>.json` (when past exams exist): one practice set per past exam
+  (`practiceSetSchema`, kind "past"), transcribed faithfully with the posted solutions, a `difficulty` of 1-5 on
+  every question (the scale is in the schema) so generated exams can match it, and `sectionIds` from the
+  review's sections. Add a `past/ANALYSIS.md` on structure, recurring topics and difficulty for the other drafts.
+- `content/reviews/<slug>/notes-builder.json`: direction for the allowed notes sheet, lecture by lecture
+  (`notesBuilderSchema`): each line worth writing with its priority (must, should, nice) and why, how much room
+  each lecture deserves, and layout tips. Ground the priorities in past exams and problem sets.
+
+Check each file as you go: `npm run validate:review -- --part <file>`, `-- --past <file> --sections <ids>`,
+`-- --notes <file>`.
 
 Depth bar, per section: a full summary in the professor's framing and notation; every defined term; every model,
 condition and estimating equation (for an estimating equation: what the coefficient means, what variation

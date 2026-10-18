@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { practiceQuestionSchema, reviewObjectSchema, reviewSectionSchema, type Review } from "./schema";
+import { practiceQuestionSchema, reviewObjectSchema, reviewSectionSchema, type NotesBuilder, type PracticeSet, type Review } from "./schema";
 
 /**
  * A review is drafted in pieces, so no single write has to produce one very large JSON file:
@@ -17,7 +17,7 @@ export const reviewPartSchema = z.object({
   notesSheet: z.array(notesBlock).default([]),
 });
 
-export const reviewFrameSchema = reviewObjectSchema.omit({ sections: true, practiceExam: true, notesSheet: true, flashcards: true, selfCheck: true }).extend({
+export const reviewFrameSchema = reviewObjectSchema.omit({ sections: true, practiceExam: true, notesSheet: true, flashcards: true, selfCheck: true, pastExams: true, notesBuilder: true }).extend({
   practiceExam: z.object({
     instructions: z.string().min(1),
     minutes: z.number().int().positive(),
@@ -73,8 +73,11 @@ export function frameIssues(frame: ReviewFrame, parts: ReviewPart[]): string[] {
   ];
 }
 
-/** Merges a frame and its parts (in the given order) into a review. Check frameIssues first; the result still needs reviewSchema validation. */
-export function assembleReview(frame: ReviewFrame, parts: ReviewPart[]): Review {
+/**
+ * Merges a frame and its parts (in the given order) into a review, with past exams (past/*.json, oldest first) and
+ * the notes builder (notes-builder.json) when present. Check frameIssues first; the result still needs reviewSchema validation.
+ */
+export function assembleReview(frame: ReviewFrame, parts: ReviewPart[], extras: { pastExams?: PracticeSet[]; notesBuilder?: NotesBuilder } = {}): Review {
   const { practiceExam: pe, notesSheet: ns, ...rest } = frame;
   const all = [...parts.flatMap((p) => p.practiceQuestions), ...pe.questions];
   const rank = new Map(pe.order.map((id, i) => [id, i]));
@@ -91,5 +94,7 @@ export function assembleReview(frame: ReviewFrame, parts: ReviewPart[]): Review 
     notesSheet: { allowance: ns.allowance, sides: balanceSides([...ns.lead, ...parts.flatMap((p) => p.notesSheet)], ns.sides) },
     flashcards: parts.flatMap((p) => p.flashcards),
     selfCheck: parts.flatMap((p) => p.selfCheck),
+    pastExams: extras.pastExams ?? [],
+    ...(extras.notesBuilder ? { notesBuilder: extras.notesBuilder } : {}),
   };
 }

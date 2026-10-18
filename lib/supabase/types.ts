@@ -368,6 +368,35 @@ export type Database = {
           },
         ]
       }
+      generated_exams: {
+        Row: {
+          created_at: string
+          id: string
+          review_slug: string
+          spec: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          review_slug: string
+          spec: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          review_slug?: string
+          spec?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generated_exams_review_slug_fkey"
+            columns: ["review_slug"]
+            isOneToOne: false
+            referencedRelation: "reviews"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
       reviews: {
         Row: {
           course_id: string

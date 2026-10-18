@@ -84,7 +84,83 @@ export const practiceQuestionSchema = z.object({
   solutions: z.array(md).min(1),
   /** What a grader would look for. */
   rubric: z.array(z.string().min(1)),
+  /**
+   * 1 (direct recall or a one-step calculation) to 5 (a multi-step model in an unseen setting plus interpretation).
+   * Rated for past-exam questions so generated exams can match their difficulty.
+   */
+  difficulty: z.number().int().min(1).max(5).optional(),
 });
+
+/** A whole exam to sit: a past midterm transcribed from the course site, or one generated from the past ones. */
+export const practiceSetSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]{0,79}$/),
+  title: z.string().min(1),
+  kind: z.enum(["past", "generated"]),
+  /** Where it came from, e.g. "Fall 2024 Midterm 1 and its posted solutions". */
+  source: z.string().min(1),
+  minutes: z.number().int().positive(),
+  instructions: md,
+  questions: z.array(practiceQuestionSchema).min(1),
+  /** Set on generated exams. */
+  generated: z
+    .object({
+      basedOn: z.array(z.string()).min(1),
+      difficulty: z.enum(["same", "harder", "easier"]),
+      model: z.string().min(1),
+      createdAt: z.iso.datetime({ offset: true }),
+    })
+    .optional(),
+});
+
+/**
+ * Direction for a handwritten notes sheet, grouped by lecture: what to write, how important each line is and why,
+ * and how much room each lecture deserves. The page turns it into a checklist ticked off while writing.
+ */
+export const notesBuilderSchema = z.object({
+  /** The rule as stated, e.g. "One sheet of paper, both sides." */
+  allowance: z.string().min(1),
+  sides: z.number().int().min(1).max(6),
+  /** How to lay the sheet out by hand: order, what goes on which side, writing small without losing legibility. */
+  layout: z.array(md).min(1),
+  lectures: z
+    .array(
+      z.object({
+        date: localDate,
+        title: z.string().min(1),
+        /** Room to give it, e.g. "About a third of side 1: this is the core model." */
+        space: z.string().min(1),
+        items: z
+          .array(
+            z.object({
+              id: z.string().regex(/^[a-z0-9-]+$/),
+              kind: z.enum(["formula", "definition", "result", "method", "example", "warning"]),
+              /** One terse line as Ryan would write it on the sheet. */
+              text: z.string().min(1).max(220),
+              priority: z.enum(["must", "should", "nice"]),
+              /** Why it earns space: tested on a past midterm, needed for a standard calculation, easy to misremember. */
+              why: z.string().min(1),
+            }),
+          )
+          .min(1),
+      }),
+    )
+    .min(1),
+});
+
+/** Per-question checks shared by the mock, past exams and generated exams. Returns issues with paths relative to `questions`. */
+export function questionIssues(questions: PracticeQuestion[], sectionIds: Set<string>): Array<{ message: string; path: (string | number)[] }> {
+  const out: Array<{ message: string; path: (string | number)[] }> = [];
+  questions.forEach((q, i) => {
+    if (q.solutions.length !== q.parts.length) out.push({ message: "one solution per part", path: [i, "solutions"] });
+    // Saved answers and scores are keyed by part label, so labels must be unique within a question.
+    const labels = q.parts.map((p) => partLabel(p.label));
+    if (new Set(labels).size !== labels.length) out.push({ message: "part labels must be unique", path: [i, "parts"] });
+    q.sectionIds.forEach((id, j) => {
+      if (!sectionIds.has(id)) out.push({ message: `unknown section ${id}`, path: [i, "sectionIds", j] });
+    });
+  });
+  return out;
+}
 
 /** The review object without the cross-reference checks, so drafts (lib/review/assemble.ts) can derive from it. */
 export const reviewObjectSchema = z.object({
@@ -125,6 +201,10 @@ export const reviewObjectSchema = z.object({
     /** Question ids that make up the timed mock exam, in order. The rest are extra practice by topic. Empty: all of them. */
     mock: z.array(z.string()).default([]),
   }),
+  /** Past exams transcribed from the course site, oldest first. Generated exams live in their own store. */
+  pastExams: z.array(practiceSetSchema).default([]),
+  /** Candidate notes-sheet lines by lecture, for the builder tab. Absent: the page shows notesSheet only. */
+  notesBuilder: notesBuilderSchema.optional(),
   /** A draft for the allowed notes sheet. Each column is one side. */
   notesSheet: z.object({
     allowance: z.string().min(1),
@@ -146,26 +226,42 @@ export const reviewSchema = reviewObjectSchema.superRefine((r, ctx) => {
       if (!lectureDates.has(d)) ctx.addIssue({ code: "custom", message: `lecture ${d} is not in exam.scope.lectures`, path: ["sections", i, "lectures", j] });
     }),
   );
+  // Question ids key saved answers, so they must be unique across the mock pool and every past exam.
   const qIds = new Set<string>();
-  r.practiceExam.questions.forEach((q, i) => {
-    if (qIds.has(q.id)) ctx.addIssue({ code: "custom", message: "question ids must be unique", path: ["practiceExam", "questions", i, "id"] });
-    qIds.add(q.id);
-    if (q.solutions.length !== q.parts.length)
-      ctx.addIssue({ code: "custom", message: "one solution per part", path: ["practiceExam", "questions", i, "solutions"] });
-    // Saved answers and scores are keyed by part label, so labels must be unique within a question.
-    const labels = q.parts.map((p) => partLabel(p.label));
-    if (new Set(labels).size !== labels.length)
-      ctx.addIssue({ code: "custom", message: "part labels must be unique", path: ["practiceExam", "questions", i, "parts"] });
-    q.sectionIds.forEach((id, j) => {
-      if (!sectionIds.has(id)) ctx.addIssue({ code: "custom", message: `unknown section ${id}`, path: ["practiceExam", "questions", i, "sectionIds", j] });
+  const sets: Array<[PracticeQuestion[], (string | number)[]]> = [
+    [r.practiceExam.questions, ["practiceExam", "questions"]],
+    ...r.pastExams.map((e, k): [PracticeQuestion[], (string | number)[]] => [e.questions, ["pastExams", k, "questions"]]),
+  ];
+  for (const [questions, base] of sets) {
+    questions.forEach((q, i) => {
+      if (qIds.has(q.id)) ctx.addIssue({ code: "custom", message: "question ids must be unique", path: [...base, i, "id"] });
+      qIds.add(q.id);
     });
+    for (const issue of questionIssues(questions, sectionIds)) ctx.addIssue({ code: "custom", message: issue.message, path: [...base, ...issue.path] });
+  }
+  const mockPool = new Set(r.practiceExam.questions.map((q) => q.id));
+  const examIds = new Set<string>();
+  r.pastExams.forEach((e, k) => {
+    if (examIds.has(e.id)) ctx.addIssue({ code: "custom", message: "past exam ids must be unique", path: ["pastExams", k, "id"] });
+    examIds.add(e.id);
+    if (e.kind !== "past") ctx.addIssue({ code: "custom", message: "pastExams holds kind \"past\" only", path: ["pastExams", k, "kind"] });
   });
   const mockIds = new Set<string>();
   r.practiceExam.mock.forEach((id, i) => {
-    if (!qIds.has(id)) ctx.addIssue({ code: "custom", message: `unknown question ${id}`, path: ["practiceExam", "mock", i] });
+    if (!mockPool.has(id)) ctx.addIssue({ code: "custom", message: `unknown question ${id}`, path: ["practiceExam", "mock", i] });
     if (mockIds.has(id)) ctx.addIssue({ code: "custom", message: `duplicate mock question ${id}`, path: ["practiceExam", "mock", i] });
     mockIds.add(id);
   });
+  if (r.notesBuilder) {
+    const itemIds = new Set<string>();
+    r.notesBuilder.lectures.forEach((l, i) => {
+      if (!lectureDates.has(l.date)) ctx.addIssue({ code: "custom", message: `lecture ${l.date} is not in exam.scope.lectures`, path: ["notesBuilder", "lectures", i, "date"] });
+      l.items.forEach((it, j) => {
+        if (itemIds.has(it.id)) ctx.addIssue({ code: "custom", message: `duplicate notes item ${it.id}`, path: ["notesBuilder", "lectures", i, "items", j, "id"] });
+        itemIds.add(it.id);
+      });
+    });
+  }
   const refs: Array<[string, (string | number)[]]> = [
     ...r.flashcards.map((f, i): [string, (string | number)[]] => [f.sectionId, ["flashcards", i, "sectionId"]]),
     ...r.selfCheck.map((c, i): [string, (string | number)[]] => [c.sectionId, ["selfCheck", i, "sectionId"]]),
@@ -179,6 +275,8 @@ export const partLabel = (label: string) => label.replace(/^\((.*)\)$/, "$1");
 export type Review = z.infer<typeof reviewSchema>;
 export type ReviewSection = z.infer<typeof reviewSectionSchema>;
 export type PracticeQuestion = z.infer<typeof practiceQuestionSchema>;
+export type PracticeSet = z.infer<typeof practiceSetSchema>;
+export type NotesBuilder = z.infer<typeof notesBuilderSchema>;
 
 /** Errors the schema cannot express: block formulas and curve references, MCQ answer indices. */
 export function reviewErrors(sections: ReviewSection[]): string[] {

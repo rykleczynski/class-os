@@ -12,12 +12,15 @@ const idle = () => () => {};
  * Not persisted: a reload starts over.
  */
 export function useCountdown(minutes: number) {
-  const total = minutes * 60;
-  const [s, setS] = useState<{ endsAt: number | null; left: number }>({ endsAt: null, left: total });
-  const start = useCallback(() => setS((p) => (p.endsAt === null && p.left > 0 ? { endsAt: nowSec() + p.left, left: p.left } : p)), []);
-  const pause = useCallback(() => setS((p) => (p.endsAt === null ? p : { endsAt: null, left: Math.max(0, p.endsAt - nowSec()) })), []);
-  const reset = useCallback(() => setS({ endsAt: null, left: total }), [total]);
-  return { total, endsAt: s.endsAt, pausedLeft: s.left, start, pause, reset };
+  const [s, setS] = useState<{ total: number; endsAt: number | null; left: number }>({ total: minutes * 60, endsAt: null, left: minutes * 60 });
+  const start = useCallback(() => setS((p) => (p.endsAt === null && p.left > 0 ? { ...p, endsAt: nowSec() + p.left } : p)), []);
+  const pause = useCallback(() => setS((p) => (p.endsAt === null ? p : { ...p, endsAt: null, left: Math.max(0, p.endsAt - nowSec()) })), []);
+  /** Stops and refills the clock; pass minutes to switch to an exam of a different length. */
+  const reset = useCallback((nextMinutes?: number) => setS((p) => {
+    const total = nextMinutes ? nextMinutes * 60 : p.total;
+    return { total, endsAt: null, left: total };
+  }), []);
+  return { total: s.total, endsAt: s.endsAt, pausedLeft: s.left, start, pause, reset };
 }
 
 export type Countdown = ReturnType<typeof useCountdown>;

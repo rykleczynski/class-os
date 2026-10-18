@@ -27,15 +27,17 @@
     "sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/sync.ts",
     "review:bundle": "tsx scripts/review-bundle.ts",
     "review:assemble": "tsx scripts/review-assemble.ts",
-    "validate:review":"tsx scripts/validate-review.ts",
+    "validate:review": "tsx scripts/validate-review.ts",
     "test:review": "tsx scripts/test-review.ts",
+    "test:generate": "tsx scripts/test-generate.ts",
     "review:sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/review-sync.ts",
-    "homework:sync":"node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/homework-sync.ts"
+    "homework:sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/homework-sync.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.2",
+    "ai": "^7.0.143",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
     "d3": "^7.9.0",

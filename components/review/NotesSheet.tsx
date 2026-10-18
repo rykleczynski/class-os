@@ -1,10 +1,131 @@
 "use client";
 
-import { Printer } from "lucide-react";
-import type { Review } from "@/lib/review/schema";
+import { useState } from "react";
+import { Check, Printer } from "lucide-react";
+import { Md } from "@/components/Md";
+import type { NotesBuilder, Review } from "@/lib/review/schema";
+import type { ReviewState } from "@/lib/review/progress";
+import { Card, Meter, fmtDate } from "./shared";
 
-/** The allowed notes sheet, drafted. Prints one side per page. */
-export function NotesSheet({ review }: { review: Review }) {
+type Update = (fn: (s: ReviewState) => ReviewState) => void;
+
+/** The Notes sheet tab: a guide for the handwritten sheet when the review has one, else the printable draft. */
+export function NotesSheet({ review, state, update }: { review: Review; state: ReviewState; update: Update }) {
+  return review.notesBuilder ? <NotesGuide guide={review.notesBuilder} state={state} update={update} /> : <PrintableDraft review={review} />;
+}
+
+const PRIORITY = {
+  must: { label: "Must", cls: "bg-coral-soft text-coral" },
+  should: { label: "Should", cls: "bg-warn-soft text-warn" },
+  nice: { label: "Nice", cls: "bg-muted text-muted-foreground" },
+} as const;
+
+const KIND: Record<NotesBuilder["lectures"][number]["items"][number]["kind"], string> = {
+  formula: "Formula",
+  definition: "Definition",
+  result: "Result",
+  method: "Method",
+  example: "Example",
+  warning: "Watch out",
+};
+
+function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: ReviewState; update: Update }) {
+  const [mustOnly, setMustOnly] = useState(false);
+  const written = new Set(state.sheet);
+  const all = guide.lectures.flatMap((l) => l.items);
+  const must = all.filter((i) => i.priority === "must");
+  const count = (items: typeof all) => ({ done: items.filter((i) => written.has(i.id)).length, total: items.length });
+  const toggle = (id: string) => update((s) => ({ ...s, sheet: written.has(id) ? s.sheet.filter((x) => x !== id) : [...s.sheet, id] }));
+
+  return (
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="min-w-0 space-y-6">
+        <header>
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Your notes sheet</h1>
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+            {guide.allowance} Everything worth writing on it, lecture by lecture. Tick each line once it is on your sheet.
+          </p>
+        </header>
+
+        <nav aria-label="Lectures" className="flex flex-wrap gap-2">
+          {guide.lectures.map((l) => (
+            <a key={l.date} href={`#lecture-${l.date}`} className="rounded-full border border-border px-3 py-1.5 text-sm font-semibold hover:border-control">
+              {fmtDate(l.date)}
+            </a>
+          ))}
+          <label className="ml-auto flex items-center gap-2 text-sm font-semibold">
+            <input type="checkbox" checked={mustOnly} onChange={(e) => setMustOnly(e.target.checked)} className="h-4 w-4 accent-(--course)" />
+            Must-haves only
+          </label>
+        </nav>
+
+        {guide.lectures.map((l) => {
+          const items = mustOnly ? l.items.filter((i) => i.priority === "must") : l.items;
+          const c = count(l.items);
+          return (
+            <section key={l.date} id={`lecture-${l.date}`} aria-labelledby={`lecture-${l.date}-title`} className="scroll-mt-32 rounded-3xl border border-paper-border bg-paper-card p-5 shadow-soft sm:p-6">
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{fmtDate(l.date)}</p>
+              <h2 id={`lecture-${l.date}-title`} className="mt-0.5 text-lg font-semibold tracking-tight">
+                {l.title}
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">{l.space}</p>
+              <div className="mt-3">
+                <Meter label="Written" done={c.done} total={c.total} />
+              </div>
+              <ul className="mt-4 space-y-2">
+                {items.map((it) => {
+                  const on = written.has(it.id);
+                  return (
+                    <li key={it.id}>
+                      <label className={`flex cursor-pointer gap-3 rounded-2xl border p-3 transition-colors ${on ? "border-good bg-good-soft/50" : "border-paper-border hover:border-control"}`}>
+                        <input type="checkbox" checked={on} onChange={() => toggle(it.id)} className="mt-1 h-4 w-4 shrink-0 accent-(--course)" />
+                        <span className="min-w-0 flex-1">
+                          <span className="flex flex-wrap items-center gap-2">
+                            <span className={`rounded-full px-2 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wide ${PRIORITY[it.priority].cls}`}>{PRIORITY[it.priority].label}</span>
+                            <span className="text-xs font-semibold text-muted-foreground">{KIND[it.kind]}</span>
+                          </span>
+                          <span className={`mt-1.5 block font-mono text-sm leading-relaxed ${on ? "text-muted-foreground line-through decoration-good/60" : ""}`}>{it.text}</span>
+                          <span className="mt-1 block text-xs text-muted-foreground">{it.why}</span>
+                        </span>
+                      </label>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          );
+        })}
+      </div>
+
+      <aside className="order-first space-y-6 lg:sticky lg:top-32 lg:order-none lg:self-start">
+        <Card title="Progress">
+          <div className="space-y-3">
+            <Meter label="Must-haves written" done={count(must).done} total={count(must).total} />
+            <Meter label="Everything" done={count(all).done} total={count(all).total} />
+          </div>
+          {count(must).total > 0 && count(must).done === count(must).total && (
+            <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-good">
+              <Check className="h-4 w-4" aria-hidden /> Every must-have is on your sheet.
+            </p>
+          )}
+        </Card>
+        <Card title="Laying it out">
+          <ul className="space-y-2 text-sm">
+            {guide.layout.map((tip, i) => (
+              <li key={i} className="flex gap-2">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-(--course)" aria-hidden />
+                <Md text={tip} />
+              </li>
+            ))}
+          </ul>
+        </Card>
+      </aside>
+    </div>
+  );
+}
+
+/** The allowed notes sheet, drafted. Prints one side per page. Used when a review has no notes guide. */
+function PrintableDraft({ review }: { review: Review }) {
   const { notesSheet } = review;
   return (
     <div className="space-y-6">

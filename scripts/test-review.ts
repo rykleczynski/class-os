@@ -215,7 +215,7 @@ test("examSignals finds midterm mentions and merges overlapping windows", () => 
   assert.ok(!s[0].context.includes("g"));
 });
 
-test("bundle: ECON 134 never lists materials, a slides course does; window and missing lessons", () => {
+test("bundle: an opted-out course never lists materials, ECON 134 and 106F do; window and missing lessons", () => {
   const dir = mkdtempSync(join(tmpdir(), "review-"));
   try {
     const content = join(dir, "content");
@@ -228,15 +228,19 @@ test("bundle: ECON 134 never lists materials, a slides course does; window and m
     mkdirSync(join(dir, "materials", "econ-106f"), { recursive: true });
     writeFileSync(join(dir, "materials", "econ-106f", "Syllabus.pdf"), "x");
 
-    const b = buildBundle(econ134, { repoRoot: dir, contentRoot: content, from: "2026-09-28", to: "2026-10-14" });
+    // The opt-out mechanism, on a course that sets it (ECON 134 no longer does).
+    const optedOut = { ...econ134, materials_allowed: false };
+    const b = buildBundle(optedOut, { repoRoot: dir, contentRoot: content, from: "2026-09-28", to: "2026-10-14" });
     assert.equal(b.materials, null, "opted-out course: materials are never listed");
     assert.deepEqual(b.lectures.map((l) => l.date), ["2026-10-14"], "later lecture is outside the window");
     assert.equal(b.lectures[0].lessonSlug, null);
     assert.equal(b.signals.length, 1);
-    const files = renderBundle(econ134, b, { slug: "econ134-midterm-1", title: "Midterm 1", from: "2026-09-28", to: "2026-10-14" });
+    const files = renderBundle(optedOut, b, { slug: "econ134-midterm-1", title: "Midterm 1", from: "2026-09-28", to: "2026-10-14" });
     assert.ok(files["README.md"].includes("Do not read materials/econ-134/"));
     assert.ok(!files["README.md"].includes("syllabus.pdf"));
     assert.equal(files["transcripts/2026-10-14.txt"], "We have a midterm next Monday.\n");
+
+    assert.deepEqual(buildBundle(econ134, { repoRoot: dir, contentRoot: content, from: "2026-09-28", to: "2026-10-14" }).materials, [join("materials", "econ-134", "syllabus.pdf")], "ECON 134 now lists its course files");
 
     const b106 = buildBundle(econ106, { repoRoot: dir, contentRoot: content, from: "2026-09-28", to: "2026-10-14" });
     assert.deepEqual(b106.materials, [join("materials", "econ-106f", "Syllabus.pdf")]);
@@ -246,17 +250,18 @@ test("bundle: ECON 134 never lists materials, a slides course does; window and m
 });
 
 test("pending changes replay over newer stored state without clobbering it", () => {
-  const base: ReviewState = { can: ["s:a", "s:b"], answers: { "q:a": "old", "q:b": "keep" }, scores: { "q:a": 2 } };
-  const mine: ReviewState = { can: ["s:a", "s:c"], answers: { "q:a": "mine" }, scores: { "q:a": 2, "q:b": 1 } };
+  const base: ReviewState = { can: ["s:a", "s:b"], answers: { "q:a": "old", "q:b": "keep" }, scores: { "q:a": 2 }, sheet: ["l1-x"] };
+  const mine: ReviewState = { can: ["s:a", "s:c"], answers: { "q:a": "mine" }, scores: { "q:a": 2, "q:b": 1 }, sheet: ["l1-x", "l2-y"] };
   const p = diffState(base, mine);
-  assert.deepEqual(p, { can: { "s:c": true, "s:b": false }, answers: { "q:a": "mine", "q:b": null }, scores: { "q:b": 1 } });
-  // Meanwhile another tab saved a new answer and a new tick.
-  const theirs: ReviewState = { can: ["s:a", "s:b", "s:z"], answers: { "q:a": "old", "q:b": "keep", "q:z": "theirs" }, scores: { "q:a": 2 } };
+  assert.deepEqual(p, { can: { "s:c": true, "s:b": false }, sheet: { "l2-y": true }, answers: { "q:a": "mine", "q:b": null }, scores: { "q:b": 1 } });
+  // Meanwhile another tab saved a new answer and new ticks.
+  const theirs: ReviewState = { can: ["s:a", "s:b", "s:z"], answers: { "q:a": "old", "q:b": "keep", "q:z": "theirs" }, scores: { "q:a": 2 }, sheet: ["l1-x", "l3-z"] };
   const out = applyPending(theirs, p);
   assert.deepEqual(new Set(out.can), new Set(["s:a", "s:z", "s:c"]), "their tick kept, my untick and tick applied");
+  assert.deepEqual(new Set(out.sheet), new Set(["l1-x", "l3-z", "l2-y"]), "sheet ticks from both tabs");
   assert.deepEqual(out.answers, { "q:a": "mine", "q:z": "theirs" }, "their answer kept, my edit and delete applied");
   assert.deepEqual(out.scores, { "q:a": 2, "q:b": 1 });
-  const later = mergePending(p, { can: { "s:c": false }, answers: { "q:a": "newer" }, scores: {} });
+  const later = mergePending(p, { can: { "s:c": false }, sheet: {}, answers: { "q:a": "newer" }, scores: {} });
   assert.equal(later.can["s:c"], false);
   assert.equal(later.answers["q:a"], "newer");
 });

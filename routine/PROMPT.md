@@ -58,7 +58,8 @@ which has no Wispr recording), the caption text is already in `source.transcript
 conversion of the BruinCast captions, made by `npm run materials`). Do not search Wispr. Read that file in
 full as the transcript, and never modify or rewrite it: it is a genuine file and sync stores it as is. The
 gate only hands you a Panopto session once the file exists. Captions are auto-generated, so apply the
-domain-term fixes below. ECON 134 slides stay off limits (see "Course slides").
+domain-term fixes below. ECON 134 has slides too (see "Course slides"): use them to fix caption errors in
+formulas and names.
 
 `search_meetings` over the class window (widen by 30 minutes each side). Accept a
 meeting when its time range overlaps the class by **at least 50%** (overlap divided by
@@ -146,10 +147,11 @@ Read that file and follow the note for this course:
   and link back to the lecture concept.
 
 **Course slides (only for courses that allow it).** If the course has `materials_allowed: false`
-in `lib/fixtures/courses.ts` (ECON 134), never look in `materials/` for it, whatever is there. Otherwise
+in `lib/fixtures/courses.ts`, never look in `materials/` for it, whatever is there. Otherwise
 use Glob on `materials/<course slug>/*` (for example `materials/econ-106f/`) and read the files that match
 this lecture's chapter or topic. The syllabus schedule files in that folder map dates to chapters
-(ECON 106F: Oct 7 and Oct 12 are Ch 4, Oct 14 is Ch 5, and so on). Use the transcript to confirm which
+(ECON 106F: Oct 7 and Oct 12 are Ch 4, Oct 14 is Ch 5, and so on). ECON 134 slides are numbered by lecture:
+`materials/econ-134/Econ_134_F26_L<N>.pdf` is the Nth lecture of the term (L1 = Sep 28, L6 = Oct 14). Use the transcript to confirm which
 chapter the professor actually covered. Read PDFs with the Read tool (use `pages` for long decks); skip a
 PPTX or DOCX you cannot read. A course with no `materials_patterns` (COMM 187) has no slides by design: skip this and leave `materials_missing` null.
 
@@ -200,7 +202,7 @@ and go to the next session. Otherwise write `content/<slug>/meta.json`:
 }
 ```
 
-`materials_missing`: for a slides course (one with `materials_patterns` in `courses.ts` and not opted out; so not ECON 134 and not COMM 187),
+`materials_missing`: for a slides course (one with `materials_patterns` in `courses.ts` and not opted out; so not COMM 187),
 if you found no slide file for this lecture's chapter or topic in `materials/<course slug>/`, set it to the
 chapter or topic as a short label, for example `"Ch 4"` or `"Ch 5 (bond pricing)"`. The app then tells Ryan
 the slides were missing. Leave it `null` only after you read usable slides for the chapter. If the only matching file is a PPTX or DOCX you could not read, treat the slides as missing and set it. Never put slide or transcript text in it.
