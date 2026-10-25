@@ -90,6 +90,7 @@ export const courses: Course[] = [
     instructor: "Rafey",
     schedule: "Mon/Wed 2:00-3:15",
     meetings: [{ days: [1, 3], start: "14:00", end: "15:15" }],
+    no_class_dates: ["2026-10-19"], // midterm, no lecture
     color: "#16181d",
     tone: "light",
     // TODO: this is the Wednesday series. The Monday 2:00 slot may be a separate series; find its id and add it here.
