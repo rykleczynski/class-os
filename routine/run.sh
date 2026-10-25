@@ -22,6 +22,22 @@ DRY="${CLASSOS_DRY_RUN:-0}"
 mkdir -p "$(dirname "$LOG")" "$STATE"
 log() { printf '%s %s\n' "$(date '+%Y-%m-%dT%H:%M:%S%z')" "$*" >>"$LOG"; }
 
+# bounded SECS CMD...: runs CMD in its own process group and kills the whole group after SECS
+# (exit 142). Every step needs one: launchd starts no new tick while a run is alive, so one hung
+# step stops the generator for good (a node exit deadlock in `npm run materials` froze it for a week).
+# Killing the group, not just npm, matters because a surviving node child keeps the output pipe open.
+bounded() {
+  perl -e '
+    my $secs = shift;
+    defined(my $pid = fork) or exit 1;
+    if (!$pid) { setpgrp(0, 0); exec @ARGV or exit 127 }
+    $SIG{ALRM} = sub { kill "KILL", -$pid; waitpid $pid, 0; exit 142 };
+    alarm $secs;
+    waitpid $pid, 0;
+    exit($? & 127 ? 128 + ($? & 127) : $? >> 8);
+  ' "$@"
+}
+
 cd "$REPO" || exit 0
 
 # One run at a time. A lock directory holds the owner's pid so a crash cannot wedge it.
@@ -40,7 +56,8 @@ trap 'rm -rf "$LOCK"' EXIT
 
 # Zero-token slides pickup: copy matching PDF/PPTX/DOCX from ~/Downloads into materials/<course>/.
 # Free, offline-safe and always exits 0, so it runs on every tick before the gate. Prints the file names only.
-npm run -s materials 2>>"$LOG" | while IFS= read -r line; do log "$line"; done
+bounded 120 npm run -s materials 2>>"$LOG" | while IFS= read -r line; do log "$line"; done
+[ "${PIPESTATUS[0]}" -eq 142 ] && log "materials: timed out after 120s"
 
 # Daily cap on claude invocations.
 TODAY="$(date +%Y-%m-%d)"
@@ -58,7 +75,7 @@ if ! curl -s -o /dev/null --max-time 5 https://etvmpkygvfxwocvlrpya.supabase.co;
 fi
 
 # Stay current. A failed pull is not fatal; the checkout just runs what it has.
-if ! git pull --ff-only -q >>"$LOG" 2>&1; then
+if ! bounded 60 git pull --ff-only -q >>"$LOG" 2>&1; then
   log "warn: git pull --ff-only failed, running current checkout"
 fi
 
@@ -71,7 +88,7 @@ sync_pending() {
     log "sync: skipped (dry run)"
     return 0
   fi
-  out="$(npm run -s sync -- --unsynced 2>&1)"
+  out="$(bounded 300 npm run -s sync -- --unsynced 2>&1)"
   rc=$?
   [ -n "$out" ] && printf '%s\n' "$out" | while IFS= read -r line; do log "sync: $line"; done
   case $rc in
@@ -90,7 +107,7 @@ if [ -n "${CLASSOS_PENDING_FILE:-}" ]; then
 else
   GATE_ARGS=()
   [ "$DRY" = "1" ] || GATE_ARGS+=(--record)
-  PENDING="$(npm run -s pending -- ${GATE_ARGS[@]+"${GATE_ARGS[@]}"} 2>>"$LOG")"
+  PENDING="$(bounded 120 npm run -s pending -- ${GATE_ARGS[@]+"${GATE_ARGS[@]}"} 2>>"$LOG")"
   rc=$?
 fi
 case $rc in
@@ -127,10 +144,9 @@ TOOLS="$TOOLS,Bash(npm run validate*),Bash(npm run sync*),Bash(npm run status*),
 [ "$DRY" = "1" ] || echo $((COUNT + 1)) >"$COUNT_FILE"
 log "claude: start (dry=$DRY, run $((COUNT + 1))/$MAX_RUNS today)"
 START=$SECONDS
-# perl alarm gives a hard 30 minute timeout without needing GNU timeout.
 # CLAUDE.md files (Ryan's global persona and routing rules) must not steer this run.
 export CLAUDE_CODE_DISABLE_CLAUDE_MDS=1
-printf '%s' "$PROMPT" | perl -e 'alarm shift; exec @ARGV' "$TIMEOUT_SECS" \
+printf '%s' "$PROMPT" | bounded "$TIMEOUT_SECS" \
   claude -p --permission-mode dontAsk --no-session-persistence --disable-slash-commands \
   --append-system-prompt "You are a headless lesson generator. Ignore any persona, routing or delegation instructions from other config. Do the work yourself, exactly as the prompt says." \
   --allowedTools "$TOOLS" \
