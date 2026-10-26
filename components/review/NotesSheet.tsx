@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
+import Link from "next/link";
 import { Check, Printer } from "lucide-react";
 import { Md } from "@/components/Md";
-import { glossaryMatcher, type GlossaryEntry } from "@/lib/review/glossary";
+import { glossaryMatcher, shortMeaning } from "@/lib/review/glossary";
 import type { NotesBuilder, Review } from "@/lib/review/schema";
 import type { ReviewState } from "@/lib/review/progress";
 import { Card, Meter, fmtDate } from "./shared";
@@ -12,7 +13,7 @@ type Update = (fn: (s: ReviewState) => ReviewState) => void;
 
 /** The Notes sheet tab: a guide for the handwritten sheet when the review has one, else the printable draft. */
 export function NotesSheet({ review, state, update }: { review: Review; state: ReviewState; update: Update }) {
-  return review.notesBuilder ? <NotesGuide guide={review.notesBuilder} state={state} update={update} /> : <PrintableDraft review={review} />;
+  return review.notesBuilder ? <NotesGuide review={review} guide={review.notesBuilder} state={state} update={update} /> : <PrintableDraft review={review} />;
 }
 
 const PRIORITY = {
@@ -30,7 +31,7 @@ const KIND: Record<NotesBuilder["lectures"][number]["items"][number]["kind"], st
   warning: "Watch out",
 };
 
-function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: ReviewState; update: Update }) {
+function NotesGuide({ review, guide, state, update }: { review: Review; guide: NotesBuilder; state: ReviewState; update: Update }) {
   const [mustOnly, setMustOnly] = useState(false);
   const [showKey, setShowKey] = useState(true);
   const matcher = useMemo(() => glossaryMatcher(guide.glossary), [guide.glossary]);
@@ -43,11 +44,22 @@ function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: Revi
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
       <div className="min-w-0 space-y-6">
-        <header>
-          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Your notes sheet</h1>
-          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-            {guide.allowance} Everything worth writing on it, lecture by lecture. Tick each line once it is on your sheet.
-          </p>
+        <header className="flex flex-wrap items-end justify-between gap-3">
+          <div className="max-w-2xl">
+            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Your notes sheet</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {guide.allowance} Everything worth writing on it, lecture by lecture. Tick each line once it is on your sheet.
+            </p>
+          </div>
+          {review.printSheet && (
+            <Link
+              href={`/review/${review.slug}/sheet`}
+              target="_blank"
+              className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
+            >
+              <Printer className="h-4 w-4" aria-hidden /> Make my printable sheet
+            </Link>
+          )}
         </header>
 
         <nav aria-label="Lectures" className="flex flex-wrap gap-2">
@@ -86,7 +98,8 @@ function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: Revi
               <ul className="mt-4 space-y-2">
                 {items.map((it) => {
                   const on = written.has(it.id);
-                  const terms = showKey ? matcher.termsIn(it.text) : [];
+                  // Spell each term out once per line, right where it is first used.
+                  const spelled = new Set<string>();
                   return (
                     <li key={it.id}>
                       <label className={`flex cursor-pointer gap-3 rounded-2xl border p-3 transition-colors ${on ? "border-good bg-good-soft/50" : "border-paper-border hover:border-control"}`}>
@@ -97,17 +110,20 @@ function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: Revi
                             <span className="text-xs font-semibold text-muted-foreground">{KIND[it.kind]}</span>
                           </span>
                           <span className={`mt-1.5 block font-mono text-sm leading-relaxed ${on ? "text-muted-foreground line-through decoration-good/60" : ""}`}>
-                            {matcher.segments(it.text).map((s, k) =>
-                              s.entry ? (
-                                <abbr key={k} title={s.entry.meaning} className={`cursor-help ${on ? "" : "underline decoration-dotted decoration-muted-foreground/60 underline-offset-2"}`}>
-                                  {s.text}
-                                </abbr>
-                              ) : (
-                                s.text
-                              ),
-                            )}
+                            {matcher.segments(it.text).map((s, k) => {
+                              if (!s.entry) return s.text;
+                              const first = showKey && !spelled.has(s.entry.term);
+                              spelled.add(s.entry.term);
+                              return (
+                                <Fragment key={k}>
+                                  <abbr title={s.entry.meaning} className="cursor-help no-underline">
+                                    {s.text}
+                                  </abbr>
+                                  {first && <span className="font-sans text-(--course)"> ({shortMeaning(s.entry)})</span>}
+                                </Fragment>
+                              );
+                            })}
                           </span>
-                          {terms.length > 0 && <TermKey terms={terms} />}
                           <span className="mt-1 block text-xs text-muted-foreground">{it.why}</span>
                         </span>
                       </label>
@@ -159,20 +175,6 @@ function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: Revi
         </Card>
       </aside>
     </div>
-  );
-}
-
-/** The abbreviations one line uses, spelled out under it. */
-function TermKey({ terms }: { terms: GlossaryEntry[] }) {
-  return (
-    <span className="mt-1.5 block rounded-xl bg-muted/60 px-2.5 py-1.5 text-xs leading-relaxed">
-      {terms.map((e, i) => (
-        <span key={e.term}>
-          {i > 0 && <span className="text-muted-foreground"> · </span>}
-          <span className="font-mono font-semibold">{e.term}</span> <span className="text-muted-foreground">{e.meaning}</span>
-        </span>
-      ))}
-    </span>
   );
 }
 

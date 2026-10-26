@@ -154,6 +154,32 @@ export const notesBuilderSchema = z.object({
     .default([]),
 });
 
+/**
+ * The notes sheet ready to print: plain words, every abbreviation spelled out where it is used, laid out by
+ * question type. Each side is one printed page (letter, two columns). Lines take the Md inline subset; put
+ * formulas in `backticks`.
+ */
+export const printSheetSchema = z.object({
+  title: z.string().min(1),
+  sides: z
+    .array(
+      z
+        .array(
+          z.object({
+            heading: z.string().min(1),
+            /** Heading colour, so related blocks read as a group. */
+            tone: z.enum(["blue", "green", "orange", "purple", "red", "gray"]).default("gray"),
+            lines: z.array(z.string().min(1).max(260)).min(1),
+            /** Mistakes to avoid, printed under the lines with a "Watch out" label. */
+            watch: z.array(z.string().min(1).max(260)).default([]),
+          }),
+        )
+        .min(1),
+    )
+    .min(1)
+    .max(2),
+});
+
 /** Per-question checks shared by the mock, past exams and generated exams. Returns issues with paths relative to `questions`. */
 export function questionIssues(questions: PracticeQuestion[], sectionIds: Set<string>): Array<{ message: string; path: (string | number)[] }> {
   const out: Array<{ message: string; path: (string | number)[] }> = [];
@@ -212,6 +238,8 @@ export const reviewObjectSchema = z.object({
   pastExams: z.array(practiceSetSchema).default([]),
   /** Candidate notes-sheet lines by lecture, for the builder tab. Absent: the page shows notesSheet only. */
   notesBuilder: notesBuilderSchema.optional(),
+  /** The finished sheet to print from the Notes sheet tab. Absent: no print button. */
+  printSheet: printSheetSchema.optional(),
   /** A draft for the allowed notes sheet. Each column is one side. */
   notesSheet: z.object({
     allowance: z.string().min(1),
@@ -284,6 +312,7 @@ export type ReviewSection = z.infer<typeof reviewSectionSchema>;
 export type PracticeQuestion = z.infer<typeof practiceQuestionSchema>;
 export type PracticeSet = z.infer<typeof practiceSetSchema>;
 export type NotesBuilder = z.infer<typeof notesBuilderSchema>;
+export type PrintSheet = z.infer<typeof printSheetSchema>;
 
 /** Errors the schema cannot express: block formulas and curve references, MCQ answer indices. */
 export function reviewErrors(sections: ReviewSection[]): string[] {

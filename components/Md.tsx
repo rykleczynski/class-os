@@ -29,6 +29,11 @@ function inline(text: string): ReactNode[] {
   });
 }
 
+/** One line of the inline subset (bold, italic, `code`, links) with no paragraph wrapper. */
+export function MdInline({ text }: { text: string }) {
+  return <>{inline(text)}</>;
+}
+
 export function Md({ text, className = "" }: { text: string; className?: string }) {
   const chunks = text.split(/\n{2,}/).map((c) => c.trim()).filter(Boolean);
   return (

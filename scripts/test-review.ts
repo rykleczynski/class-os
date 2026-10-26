@@ -9,8 +9,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { courses } from "../lib/fixtures/courses";
 import { assembleReview, balanceSides, frameIssues, reviewFrameSchema, reviewPartSchema, type ReviewFrame, type ReviewPart } from "../lib/review/assemble";
-import { glossaryMatcher } from "../lib/review/glossary";
-import { reviewErrors, reviewLint, reviewSchema, type ReviewSection } from "../lib/review/schema";
+import { glossaryMatcher, shortMeaning } from "../lib/review/glossary";
+import { printSheetSchema, reviewErrors, reviewLint, reviewSchema, type ReviewSection } from "../lib/review/schema";
 import { buildBundle, cleanTranscript, examSignals, renderBundle } from "../lib/review/sources";
 import { parseTab } from "../lib/review/tabs";
 import { applyPending, diffState, mergePending, type ReviewState } from "../lib/review/progress";
@@ -284,6 +284,24 @@ test("glossary matcher: longest spelling wins, whole tokens only, symbols match 
   assert.deepEqual(m.termsIn("don't solve for y'all").map((e) => e.term), [], "an apostrophe is part of the word");
   assert.equal(m.segments("PV = C/r").map((s) => s.text).join(""), "PV = C/r", "segments rebuild the line");
   assert.deepEqual(glossaryMatcher([]).segments("PV"), [{ text: "PV" }]);
+});
+
+test("shortMeaning keeps the name, drops the explanation", () => {
+  const e = (meaning: string) => ({ term: "x", aka: [], meaning });
+  assert.equal(shortMeaning(e("Annual percentage rate: the QUOTED yearly rate. Divide by k")), "Annual percentage rate");
+  assert.equal(shortMeaning(e("Net present value = PV of what comes in − the cost")), "Net present value");
+  assert.equal(shortMeaning(e("Future value. On a bond: face value")), "Future value");
+  assert.equal(shortMeaning(e("Periods per year (12 = monthly, 2 = semiannual)")), "Periods per year (12 = monthly, 2 = semiannual)");
+});
+
+test("print sheet: assembled when given, two sides at most, tone and watch default", () => {
+  const sheet = printSheetSchema.parse({ title: "T", sides: [[{ heading: "H", lines: ["`PV = C ÷ r`"] }]] });
+  assert.equal(sheet.sides[0][0].tone, "gray");
+  assert.deepEqual(sheet.sides[0][0].watch, []);
+  const r = reviewSchema.safeParse(assembleReview(frame, parts, { printSheet: sheet }));
+  assert.ok(r.success && r.data.printSheet?.title === "T");
+  assert.equal(assembleReview(frame, parts).printSheet, undefined);
+  assert.ok(!printSheetSchema.safeParse({ title: "T", sides: [[sheet.sides[0][0]], [sheet.sides[0][0]], [sheet.sides[0][0]]] }).success, "one sheet of paper has two sides");
 });
 
 test("parseTab accepts known tabs only", () => {
