@@ -15,6 +15,7 @@ import { join, resolve } from "node:path";
 import type { z } from "zod";
 import { reviewPartSchema } from "../lib/review/assemble";
 import { reviewsRoot } from "../lib/review/paths";
+import { formulaErrors } from "../lib/review/sheet-math";
 import { notesBuilderSchema, practiceSetSchema, printSheetSchema, questionIssues, reviewErrors, reviewLint, reviewSchema } from "../lib/review/schema";
 
 const issues = (e: z.ZodError) => e.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`);
@@ -40,7 +41,7 @@ function check(file: string, part: boolean): boolean {
     errors = p.success ? [] : issues(p.error);
   } else if (print) {
     const p = printSheetSchema.safeParse(raw);
-    errors = p.success ? [] : issues(p.error);
+    errors = p.success ? formulaErrors(p.data) : issues(p.error);
   } else {
     const p = reviewSchema.safeParse(raw);
     errors = p.success ? reviewErrors(p.data.sections) : issues(p.error);
