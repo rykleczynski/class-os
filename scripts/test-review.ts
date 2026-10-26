@@ -9,6 +9,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { courses } from "../lib/fixtures/courses";
 import { assembleReview, balanceSides, frameIssues, reviewFrameSchema, reviewPartSchema, type ReviewFrame, type ReviewPart } from "../lib/review/assemble";
+import { glossaryMatcher } from "../lib/review/glossary";
 import { reviewErrors, reviewLint, reviewSchema, type ReviewSection } from "../lib/review/schema";
 import { buildBundle, cleanTranscript, examSignals, renderBundle } from "../lib/review/sources";
 import { parseTab } from "../lib/review/tabs";
@@ -271,6 +272,18 @@ test("pending changes replay over newer stored state without clobbering it", () 
   const later = mergePending(p, { can: { "s:c": false }, sheet: {}, answers: { "q:a": "newer" }, scores: {} });
   assert.equal(later.can["s:c"], false);
   assert.equal(later.answers["q:a"], "newer");
+});
+
+test("glossary matcher: longest spelling wins, whole tokens only, symbols match inside words", () => {
+  const g = (term: string, aka: string[] = []) => ({ term, aka, meaning: `m:${term}` });
+  const m = glossaryMatcher([g("YTM"), g("YTM_n"), g("PV", ["PVs"]), g("Δ"), g("AR"), g("y")]);
+  assert.deepEqual(m.termsIn("YTM_n = (FV/P)^(1/n) and YTM").map((e) => e.term), ["YTM_n", "YTM"]);
+  assert.deepEqual(m.termsIn("known PVs, PV, NPV, PVX").map((e) => e.term), ["PV"], "PVs is an aka of PV; NPV and PVX are not PV");
+  assert.deepEqual(m.termsIn("CFO = NI − ΔAR").map((e) => e.term), ["Δ", "AR"]);
+  assert.deepEqual(m.termsIn("yearly yield, y = YTM / k").map((e) => e.term), ["y", "YTM"]);
+  assert.deepEqual(m.termsIn("don't solve for y'all").map((e) => e.term), [], "an apostrophe is part of the word");
+  assert.equal(m.segments("PV = C/r").map((s) => s.text).join(""), "PV = C/r", "segments rebuild the line");
+  assert.deepEqual(glossaryMatcher([]).segments("PV"), [{ text: "PV" }]);
 });
 
 test("parseTab accepts known tabs only", () => {
