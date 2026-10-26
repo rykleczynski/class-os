@@ -156,8 +156,8 @@ export const notesBuilderSchema = z.object({
 
 /**
  * The notes sheet ready to print: plain words, every abbreviation spelled out where it is used, laid out by
- * question type. Each side is one printed page (letter, two columns). Lines take the Md inline subset; put
- * formulas in `backticks`.
+ * question type. Each side is one printed page (letter, two columns). Lines take the Md inline subset; each
+ * formula goes in `backticks` as LaTeX (KaTeX), so fractions stack and powers are raised: `PV = \frac{C}{r}`.
  */
 export const printSheetSchema = z.object({
   title: z.string().min(1),
@@ -169,9 +169,9 @@ export const printSheetSchema = z.object({
             heading: z.string().min(1),
             /** Heading colour, so related blocks read as a group. */
             tone: z.enum(["blue", "green", "orange", "purple", "red", "gray"]).default("gray"),
-            lines: z.array(z.string().min(1).max(260)).min(1),
+            lines: z.array(z.string().min(1).max(400)).min(1),
             /** Mistakes to avoid, printed under the lines with a "Watch out" label. */
-            watch: z.array(z.string().min(1).max(260)).default([]),
+            watch: z.array(z.string().min(1).max(400)).default([]),
           }),
         )
         .min(1),

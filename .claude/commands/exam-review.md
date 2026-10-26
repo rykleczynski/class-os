@@ -50,7 +50,7 @@ The contract is `lib/review/schema.ts`; blocks are the lesson kit in `lib/lesson
   the tab spells each one out in brackets right after it, using the part before the first ":", " = " or ". ".
 - `content/reviews/<slug>/print-sheet.json`: the finished sheet to print (`printSheetSchema`), one entry per side
   of the allowance (two at most). Write it so a tired reader gets it at a glance: plain words, short lines,
-  formulas in `backticks`, and every abbreviation spelled out in the line that uses it ("APR (annual percentage
+  each formula in `backticks` as LaTeX so it typesets (`\frac{C}{r}`, `(1+r)^{N}`, `10{,}000` for thousands), and every abbreviation spelled out in the line that uses it ("APR (annual percentage
   rate)"), never in a separate key. Group blocks by question type with a `tone` per group and put mistakes in
   `watch`. It prints at 10pt in two columns; the page at `/review/<slug>/sheet` warns when a side runs over.
 

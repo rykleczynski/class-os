@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Printer, TriangleAlert } from "lucide-react";
+import "katex/dist/katex.min.css";
 import { MdInline } from "@/components/Md";
 import type { PrintSheet as Sheet } from "@/lib/review/schema";
+import { renderFormula, splitFormulas } from "@/lib/review/sheet-math";
 
 type Tone = Sheet["sides"][number][number]["tone"];
 
@@ -23,8 +25,12 @@ const CSS = `
 .sheet-page { width: 8.5in; height: 11in; padding: 0.3in 0.32in; background: #fff; color: #111; box-sizing: border-box; }
 /* A fixed height, not flex: column-fill auto needs it to start the second column. 10.4in of page less the title. */
 .sheet-cols { height: 10.1in; columns: 2; column-gap: 0.22in; column-fill: auto; overflow: hidden; font-size: 10pt; line-height: 1.28; }
-.sheet-cols code { background: #f1f1ef; color: #111; border-radius: 3px; padding: 0 2px; font-size: 0.97em; white-space: normal; }
-.sheet-block { break-inside: avoid; margin-bottom: 0.09in; }
+/* Formulas are typeset by KaTeX (stacked fractions, raised powers). One never breaks across lines: it moves down whole. */
+.sheet-cols .katex { font-size: 1.08em; white-space: nowrap; }
+/* A block may run on into the next column, but a heading stays with its first line and a line never splits. */
+.sheet-block { margin-bottom: 0.09in; }
+.sheet-block h2 { break-after: avoid; }
+.sheet-block li { break-inside: avoid; }
 @media print {
   html, body { background: #fff !important; }
   .sheet-page { box-shadow: none !important; margin: 0 !important; break-after: page; }
@@ -86,22 +92,22 @@ export function PrintSheet({ sheet, slug, courseCode }: { sheet: Sheet; slug: st
                   </h2>
                   <ul className="mt-[2px] space-y-[1.5px] pl-[2px]">
                     {b.lines.map((l, k) => (
-                      <li key={k} className="flex gap-[5px]">
+                      <li key={k} className="flex items-baseline gap-[5px]">
                         <span aria-hidden style={{ color: TONE[b.tone].ink }}>
                           •
                         </span>
                         <span className="min-w-0">
-                          <MdInline text={l} />
+                          <SheetLine text={l} />
                         </span>
                       </li>
                     ))}
                     {b.watch.map((l, k) => (
-                      <li key={`w${k}`} className="flex gap-[5px] text-[#9b2b20]">
+                      <li key={`w${k}`} className="flex items-baseline gap-[5px] text-[#9b2b20]">
                         <span aria-hidden className="font-bold">
                           !
                         </span>
                         <span className="min-w-0">
-                          <strong>Watch out:</strong> <MdInline text={l} />
+                          <strong>Watch out:</strong> <SheetLine text={l} />
                         </span>
                       </li>
                     ))}
@@ -113,5 +119,12 @@ export function PrintSheet({ sheet, slug, courseCode }: { sheet: Sheet; slug: st
         ))}
       </div>
     </div>
+  );
+}
+
+/** Plain words through the Md inline subset; each `backtick` formula typeset as maths. */
+function SheetLine({ text }: { text: string }) {
+  return splitFormulas(text).map((part, i) =>
+    part.math ? <span key={i} dangerouslySetInnerHTML={{ __html: renderFormula(part.text) }} /> : <MdInline key={i} text={part.text} />,
   );
 }

@@ -12,6 +12,7 @@ import { assembleReview, balanceSides, frameIssues, reviewFrameSchema, reviewPar
 import { glossaryMatcher, shortMeaning } from "../lib/review/glossary";
 import { printSheetSchema, reviewErrors, reviewLint, reviewSchema, type ReviewSection } from "../lib/review/schema";
 import { buildBundle, cleanTranscript, examSignals, renderBundle } from "../lib/review/sources";
+import { formulaErrors, splitFormulas } from "../lib/review/sheet-math";
 import { parseTab } from "../lib/review/tabs";
 import { applyPending, diffState, mergePending, type ReviewState } from "../lib/review/progress";
 
@@ -302,6 +303,17 @@ test("print sheet: assembled when given, two sides at most, tone and watch defau
   assert.ok(r.success && r.data.printSheet?.title === "T");
   assert.equal(assembleReview(frame, parts).printSheet, undefined);
   assert.ok(!printSheetSchema.safeParse({ title: "T", sides: [[sheet.sides[0][0]], [sheet.sides[0][0]], [sheet.sides[0][0]]] }).success, "one sheet of paper has two sides");
+});
+
+test("print sheet formulas: backticks are LaTeX, dollar amounts stay text, bad LaTeX is caught", () => {
+  assert.deepEqual(splitFormulas("$15,000 → `\\frac{a}{b}` today"), [
+    { text: "$15,000 → ", math: false },
+    { text: "\\frac{a}{b}", math: true },
+    { text: " today", math: false },
+  ]);
+  const sheet = (line: string) => printSheetSchema.parse({ title: "T", sides: [[{ heading: "H", lines: [line] }]] });
+  assert.deepEqual(formulaErrors(sheet("`PV = \\frac{C}{r-g}`")), []);
+  assert.equal(formulaErrors(sheet("`\\frac{C}{r`")).length, 1);
 });
 
 test("parseTab accepts known tabs only", () => {

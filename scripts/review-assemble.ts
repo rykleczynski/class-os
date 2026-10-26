@@ -11,6 +11,7 @@ import { join } from "node:path";
 import type { z } from "zod";
 import { assembleReview, frameIssues, reviewFrameSchema, reviewPartSchema } from "../lib/review/assemble";
 import { reviewsRoot } from "../lib/review/paths";
+import { formulaErrors } from "../lib/review/sheet-math";
 import { notesBuilderSchema, practiceSetSchema, printSheetSchema, reviewErrors, reviewLint, reviewSchema } from "../lib/review/schema";
 
 const slug = process.argv[2];
@@ -66,7 +67,7 @@ const printPath = join(dir, "print-sheet.json");
 const printSheet = existsSync(printPath) ? load(printPath, printSheetSchema) : undefined;
 
 const result = reviewSchema.safeParse(assembleReview(frame, parts, { pastExams, notesBuilder, printSheet }));
-const errors = result.success ? reviewErrors(result.data.sections) : result.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`);
+const errors = result.success ? [...reviewErrors(result.data.sections), ...(result.data.printSheet ? formulaErrors(result.data.printSheet).map((e) => `printSheet.${e}`) : [])] : result.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`);
 if (!result.success || errors.length) {
   console.error(`FAIL assembled ${slug}`);
   errors.slice(0, 30).forEach((e) => console.error(`  - ${e}`));
