@@ -145,6 +145,13 @@ export const notesBuilderSchema = z.object({
       }),
     )
     .min(1),
+  /**
+   * Every abbreviation and symbol the item lines use, spelled out. Matched case-sensitively as whole tokens, so
+   * list each spelling the lines use (term plus aka). The tab underlines them and keys each line.
+   */
+  glossary: z
+    .array(z.object({ term: z.string().min(1).max(24), aka: z.array(z.string().min(1).max(24)).default([]), meaning: z.string().min(1).max(200) }))
+    .default([]),
 });
 
 /** Per-question checks shared by the mock, past exams and generated exams. Returns issues with paths relative to `questions`. */

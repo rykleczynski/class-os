@@ -44,7 +44,9 @@ The contract is `lib/review/schema.ts`; blocks are the lesson kit in `lib/lesson
   review's sections. Add a `past/ANALYSIS.md` on structure, recurring topics and difficulty for the other drafts.
 - `content/reviews/<slug>/notes-builder.json`: direction for the allowed notes sheet, lecture by lecture
   (`notesBuilderSchema`): each line worth writing with its priority (must, should, nice) and why, how much room
-  each lecture deserves, and layout tips. Ground the priorities in past exams and problem sets.
+  each lecture deserves, and layout tips. Ground the priorities in past exams and problem sets. Lines are terse, so
+  add a `glossary` entry for every abbreviation, variable and symbol they use (the spelling exactly as written,
+  plus any `aka` variants), meaning in plain words; the tab underlines each one and spells it out under the line.
 
 Check each file as you go: `npm run validate:review -- --part <file>`, `-- --past <file> --sections <ids>`,
 `-- --notes <file>`.

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Check, Printer } from "lucide-react";
 import { Md } from "@/components/Md";
+import { glossaryMatcher, type GlossaryEntry } from "@/lib/review/glossary";
 import type { NotesBuilder, Review } from "@/lib/review/schema";
 import type { ReviewState } from "@/lib/review/progress";
 import { Card, Meter, fmtDate } from "./shared";
@@ -31,6 +32,8 @@ const KIND: Record<NotesBuilder["lectures"][number]["items"][number]["kind"], st
 
 function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: ReviewState; update: Update }) {
   const [mustOnly, setMustOnly] = useState(false);
+  const [showKey, setShowKey] = useState(true);
+  const matcher = useMemo(() => glossaryMatcher(guide.glossary), [guide.glossary]);
   const written = new Set(state.sheet);
   const all = guide.lectures.flatMap((l) => l.items);
   const must = all.filter((i) => i.priority === "must");
@@ -53,10 +56,18 @@ function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: Revi
               {fmtDate(l.date)}
             </a>
           ))}
-          <label className="ml-auto flex items-center gap-2 text-sm font-semibold">
-            <input type="checkbox" checked={mustOnly} onChange={(e) => setMustOnly(e.target.checked)} className="h-4 w-4 accent-(--course)" />
-            Must-haves only
-          </label>
+          <span className="ml-auto flex flex-wrap items-center gap-4">
+            {guide.glossary.length > 0 && (
+              <label className="flex items-center gap-2 text-sm font-semibold">
+                <input type="checkbox" checked={showKey} onChange={(e) => setShowKey(e.target.checked)} className="h-4 w-4 accent-(--course)" />
+                Spell out abbreviations
+              </label>
+            )}
+            <label className="flex items-center gap-2 text-sm font-semibold">
+              <input type="checkbox" checked={mustOnly} onChange={(e) => setMustOnly(e.target.checked)} className="h-4 w-4 accent-(--course)" />
+              Must-haves only
+            </label>
+          </span>
         </nav>
 
         {guide.lectures.map((l) => {
@@ -75,6 +86,7 @@ function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: Revi
               <ul className="mt-4 space-y-2">
                 {items.map((it) => {
                   const on = written.has(it.id);
+                  const terms = showKey ? matcher.termsIn(it.text) : [];
                   return (
                     <li key={it.id}>
                       <label className={`flex cursor-pointer gap-3 rounded-2xl border p-3 transition-colors ${on ? "border-good bg-good-soft/50" : "border-paper-border hover:border-control"}`}>
@@ -84,7 +96,18 @@ function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: Revi
                             <span className={`rounded-full px-2 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wide ${PRIORITY[it.priority].cls}`}>{PRIORITY[it.priority].label}</span>
                             <span className="text-xs font-semibold text-muted-foreground">{KIND[it.kind]}</span>
                           </span>
-                          <span className={`mt-1.5 block font-mono text-sm leading-relaxed ${on ? "text-muted-foreground line-through decoration-good/60" : ""}`}>{it.text}</span>
+                          <span className={`mt-1.5 block font-mono text-sm leading-relaxed ${on ? "text-muted-foreground line-through decoration-good/60" : ""}`}>
+                            {matcher.segments(it.text).map((s, k) =>
+                              s.entry ? (
+                                <abbr key={k} title={s.entry.meaning} className={`cursor-help ${on ? "" : "underline decoration-dotted decoration-muted-foreground/60 underline-offset-2"}`}>
+                                  {s.text}
+                                </abbr>
+                              ) : (
+                                s.text
+                              ),
+                            )}
+                          </span>
+                          {terms.length > 0 && <TermKey terms={terms} />}
                           <span className="mt-1 block text-xs text-muted-foreground">{it.why}</span>
                         </span>
                       </label>
@@ -109,6 +132,21 @@ function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: Revi
             </p>
           )}
         </Card>
+        {guide.glossary.length > 0 && (
+          <Card title="Key">
+            <details>
+              <summary className="cursor-pointer text-sm font-semibold">Every abbreviation on the sheet ({guide.glossary.length})</summary>
+              <dl className="mt-3 max-h-[50vh] space-y-1.5 overflow-y-auto pr-1 text-sm">
+                {guide.glossary.map((e) => (
+                  <div key={e.term}>
+                    <dt className="inline font-mono font-semibold">{[e.term, ...e.aka].join(", ")}</dt>
+                    <dd className="inline text-muted-foreground"> {e.meaning}</dd>
+                  </div>
+                ))}
+              </dl>
+            </details>
+          </Card>
+        )}
         <Card title="Laying it out">
           <ul className="space-y-2 text-sm">
             {guide.layout.map((tip, i) => (
@@ -121,6 +159,20 @@ function NotesGuide({ guide, state, update }: { guide: NotesBuilder; state: Revi
         </Card>
       </aside>
     </div>
+  );
+}
+
+/** The abbreviations one line uses, spelled out under it. */
+function TermKey({ terms }: { terms: GlossaryEntry[] }) {
+  return (
+    <span className="mt-1.5 block rounded-xl bg-muted/60 px-2.5 py-1.5 text-xs leading-relaxed">
+      {terms.map((e, i) => (
+        <span key={e.term}>
+          {i > 0 && <span className="text-muted-foreground"> · </span>}
+          <span className="font-mono font-semibold">{e.term}</span> <span className="text-muted-foreground">{e.meaning}</span>
+        </span>
+      ))}
+    </span>
   );
 }
 
