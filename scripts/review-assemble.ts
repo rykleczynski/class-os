@@ -1,6 +1,6 @@
 /**
  * Builds content/reviews/<slug>/review.json from frame.json and parts/*.json (merged in file-name order), plus
- * past/*.json (past exams, file-name order) and notes-builder.json when present, then validates it. The review is written only when it passes the schema and the block checks.
+ * past/*.json (past exams, file-name order), notes-builder.json and print-sheet.json when present, then validates it. The review is written only when it passes the schema and the block checks.
  *
  *   npm run review:assemble -- <slug>
  *
@@ -11,7 +11,7 @@ import { join } from "node:path";
 import type { z } from "zod";
 import { assembleReview, frameIssues, reviewFrameSchema, reviewPartSchema } from "../lib/review/assemble";
 import { reviewsRoot } from "../lib/review/paths";
-import { notesBuilderSchema, practiceSetSchema, reviewErrors, reviewLint, reviewSchema } from "../lib/review/schema";
+import { notesBuilderSchema, practiceSetSchema, printSheetSchema, reviewErrors, reviewLint, reviewSchema } from "../lib/review/schema";
 
 const slug = process.argv[2];
 if (!slug || !/^[a-z0-9][a-z0-9-]{0,79}$/.test(slug)) {
@@ -62,7 +62,10 @@ const pastExams = pastFiles.map((f) => load(join(pastDir, f), practiceSetSchema)
 const notesPath = join(dir, "notes-builder.json");
 const notesBuilder = existsSync(notesPath) ? load(notesPath, notesBuilderSchema) : undefined;
 
-const result = reviewSchema.safeParse(assembleReview(frame, parts, { pastExams, notesBuilder }));
+const printPath = join(dir, "print-sheet.json");
+const printSheet = existsSync(printPath) ? load(printPath, printSheetSchema) : undefined;
+
+const result = reviewSchema.safeParse(assembleReview(frame, parts, { pastExams, notesBuilder, printSheet }));
 const errors = result.success ? reviewErrors(result.data.sections) : result.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`);
 if (!result.success || errors.length) {
   console.error(`FAIL assembled ${slug}`);
@@ -75,5 +78,5 @@ reviewLint(review).forEach((w) => console.warn(`  warn: ${w}`));
 console.log(
   `${slug}: ${review.sections.length} sections from ${partFiles.length} parts, ${review.practiceExam.questions.length} practice questions, ` +
     `${review.flashcards.length} flashcards, ${review.selfCheck.length} self-checks, ${review.notesSheet.sides.length} notes sides, ` +
-    `${review.pastExams.length} past exams, ${review.notesBuilder ? review.notesBuilder.lectures.reduce((n, l) => n + l.items.length, 0) : 0} notes-builder items -> ${join(dir, "review.json")}`,
+    `${review.pastExams.length} past exams, ${review.notesBuilder ? review.notesBuilder.lectures.reduce((n, l) => n + l.items.length, 0) : 0} notes-builder items, ${review.printSheet ? "a" : "no"} print sheet -> ${join(dir, "review.json")}`,
 );

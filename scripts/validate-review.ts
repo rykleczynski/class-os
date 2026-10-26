@@ -6,6 +6,7 @@
  *   npm run validate:review -- --part <path>      a draft fragment {sections, practiceQuestions?, flashcards?, selfCheck?}
  *   npm run validate:review -- --past <path> --sections a,b,c   a past exam (past/*.json) against the review's section ids
  *   npm run validate:review -- --notes <path>     the notes builder (notes-builder.json)
+ *   npm run validate:review -- --print <path>     the print sheet (print-sheet.json)
  *
  * Exit 0 when everything is valid (warnings allowed), 1 otherwise.
  */
@@ -14,7 +15,7 @@ import { join, resolve } from "node:path";
 import type { z } from "zod";
 import { reviewPartSchema } from "../lib/review/assemble";
 import { reviewsRoot } from "../lib/review/paths";
-import { notesBuilderSchema, practiceSetSchema, questionIssues, reviewErrors, reviewLint, reviewSchema } from "../lib/review/schema";
+import { notesBuilderSchema, practiceSetSchema, printSheetSchema, questionIssues, reviewErrors, reviewLint, reviewSchema } from "../lib/review/schema";
 
 const issues = (e: z.ZodError) => e.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`);
 
@@ -37,6 +38,9 @@ function check(file: string, part: boolean): boolean {
   } else if (notes) {
     const p = notesBuilderSchema.safeParse(raw);
     errors = p.success ? [] : issues(p.error);
+  } else if (print) {
+    const p = printSheetSchema.safeParse(raw);
+    errors = p.success ? [] : issues(p.error);
   } else {
     const p = reviewSchema.safeParse(raw);
     errors = p.success ? reviewErrors(p.data.sections) : issues(p.error);
@@ -52,6 +56,7 @@ const args = process.argv.slice(2);
 const part = args.includes("--part");
 const past = args.includes("--past");
 const notes = args.includes("--notes");
+const print = args.includes("--print");
 // --past checks question section ids against the review's sections, given as --sections id1,id2,...
 const sectionsIdx = args.indexOf("--sections");
 const sectionIds = new Set(sectionsIdx >= 0 ? (args[sectionsIdx + 1] ?? "").split(",").filter(Boolean) : []);

@@ -7,6 +7,22 @@ const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const wordy = (c: string) => /\w/.test(c);
 
 /**
+ * The meaning cut to its name, for spelling a term out inside a line: "Annual percentage rate: the QUOTED yearly
+ * rate..." becomes "Annual percentage rate". Cuts at the first ": ", " = " or ". " outside brackets, so
+ * "Periods per year (12 = monthly, 2 = semiannual)" stays whole.
+ */
+export function shortMeaning(e: GlossaryEntry): string {
+  let depth = 0;
+  for (let i = 0; i < e.meaning.length; i++) {
+    const c = e.meaning[i];
+    if (c === "(") depth++;
+    else if (c === ")") depth = Math.max(0, depth - 1);
+    else if (depth === 0 && /^(: | = |\. )/.test(e.meaning.slice(i, i + 3))) return e.meaning.slice(0, i).trim();
+  }
+  return e.meaning.trim();
+}
+
+/**
  * Builds a matcher for a glossary: longest spelling first, so "YTM_n" wins over "YTM". A spelling only needs a
  * token boundary on an edge that is an ASCII letter, digit or underscore, so "Δ" and "AR" both match in "ΔAR".
  */

@@ -46,10 +46,16 @@ The contract is `lib/review/schema.ts`; blocks are the lesson kit in `lib/lesson
   (`notesBuilderSchema`): each line worth writing with its priority (must, should, nice) and why, how much room
   each lecture deserves, and layout tips. Ground the priorities in past exams and problem sets. Lines are terse, so
   add a `glossary` entry for every abbreviation, variable and symbol they use (the spelling exactly as written,
-  plus any `aka` variants), meaning in plain words; the tab underlines each one and spells it out under the line.
+  plus any `aka` variants), meaning in plain words, name first ("Annual percentage rate: the quoted yearly rate");
+  the tab spells each one out in brackets right after it, using the part before the first ":", " = " or ". ".
+- `content/reviews/<slug>/print-sheet.json`: the finished sheet to print (`printSheetSchema`), one entry per side
+  of the allowance (two at most). Write it so a tired reader gets it at a glance: plain words, short lines,
+  formulas in `backticks`, and every abbreviation spelled out in the line that uses it ("APR (annual percentage
+  rate)"), never in a separate key. Group blocks by question type with a `tone` per group and put mistakes in
+  `watch`. It prints at 10pt in two columns; the page at `/review/<slug>/sheet` warns when a side runs over.
 
 Check each file as you go: `npm run validate:review -- --part <file>`, `-- --past <file> --sections <ids>`,
-`-- --notes <file>`.
+`-- --notes <file>`, `-- --print <file>`.
 
 Depth bar, per section: a full summary in the professor's framing and notation; every defined term; every model,
 condition and estimating equation (for an estimating equation: what the coefficient means, what variation

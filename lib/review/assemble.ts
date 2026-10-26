@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { practiceQuestionSchema, reviewObjectSchema, reviewSectionSchema, type NotesBuilder, type PracticeSet, type Review } from "./schema";
+import { practiceQuestionSchema, reviewObjectSchema, reviewSectionSchema, type NotesBuilder, type PracticeSet, type PrintSheet, type Review } from "./schema";
 
 /**
  * A review is drafted in pieces, so no single write has to produce one very large JSON file:
@@ -17,7 +17,7 @@ export const reviewPartSchema = z.object({
   notesSheet: z.array(notesBlock).default([]),
 });
 
-export const reviewFrameSchema = reviewObjectSchema.omit({ sections: true, practiceExam: true, notesSheet: true, flashcards: true, selfCheck: true, pastExams: true, notesBuilder: true }).extend({
+export const reviewFrameSchema = reviewObjectSchema.omit({ sections: true, practiceExam: true, notesSheet: true, flashcards: true, selfCheck: true, pastExams: true, notesBuilder: true, printSheet: true }).extend({
   practiceExam: z.object({
     instructions: z.string().min(1),
     minutes: z.number().int().positive(),
@@ -75,9 +75,9 @@ export function frameIssues(frame: ReviewFrame, parts: ReviewPart[]): string[] {
 
 /**
  * Merges a frame and its parts (in the given order) into a review, with past exams (past/*.json, oldest first) and
- * the notes builder (notes-builder.json) when present. Check frameIssues first; the result still needs reviewSchema validation.
+ * the notes builder (notes-builder.json) and the print sheet (print-sheet.json) when present. Check frameIssues first; the result still needs reviewSchema validation.
  */
-export function assembleReview(frame: ReviewFrame, parts: ReviewPart[], extras: { pastExams?: PracticeSet[]; notesBuilder?: NotesBuilder } = {}): Review {
+export function assembleReview(frame: ReviewFrame, parts: ReviewPart[], extras: { pastExams?: PracticeSet[]; notesBuilder?: NotesBuilder; printSheet?: PrintSheet } = {}): Review {
   const { practiceExam: pe, notesSheet: ns, ...rest } = frame;
   const all = [...parts.flatMap((p) => p.practiceQuestions), ...pe.questions];
   const rank = new Map(pe.order.map((id, i) => [id, i]));
@@ -96,5 +96,6 @@ export function assembleReview(frame: ReviewFrame, parts: ReviewPart[], extras: 
     selfCheck: parts.flatMap((p) => p.selfCheck),
     pastExams: extras.pastExams ?? [],
     ...(extras.notesBuilder ? { notesBuilder: extras.notesBuilder } : {}),
+    ...(extras.printSheet ? { printSheet: extras.printSheet } : {}),
   };
 }
