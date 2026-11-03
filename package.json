@@ -30,6 +30,7 @@
     "validate:review": "tsx scripts/validate-review.ts",
     "test:review": "tsx scripts/test-review.ts",
     "test:generate": "tsx scripts/test-generate.ts",
+    "test:homework": "tsx scripts/test-homework-deck.ts",
     "review:sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/review-sync.ts",
     "homework:sync": "node --env-file=${SYNC_ENV_FILE:-../class_OS/.env.local} --import tsx scripts/homework-sync.ts"
   },
