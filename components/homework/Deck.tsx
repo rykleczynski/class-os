@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
 import { Md } from "@/components/Md";
 import { Button } from "@/components/ui/button";
-import { clampCardIndex, type DeckCard } from "@/lib/homework-deck";
+import { findCardIndex, type DeckCard } from "@/lib/homework-deck";
 import type { HomeworkModule, HomeworkStatus } from "@/lib/homework-spec";
 import { cn } from "@/lib/utils";
 
@@ -13,17 +13,17 @@ type DeckEntry = { answer: string; status: HomeworkStatus | null };
 /** Every storage access is guarded: without storage the deck just starts at the first card. */
 const cardKey = (slug: string) => `classos:homework:${slug}:card`;
 
-function readCard(slug: string): number {
+function readCard(slug: string): string | null {
   try {
-    return Number(localStorage.getItem(cardKey(slug)) ?? 0);
+    return localStorage.getItem(cardKey(slug));
   } catch {
-    return 0;
+    return null;
   }
 }
 
-function writeCard(slug: string, index: number) {
+function writeCard(slug: string, key: string) {
   try {
-    localStorage.setItem(cardKey(slug), String(index));
+    localStorage.setItem(cardKey(slug), key);
   } catch {
     /* storage full or blocked: the position just is not remembered */
   }
@@ -38,20 +38,22 @@ function clearCard(slug: string) {
 }
 
 /**
- * The current card, remembered per set. It lives in a hook because the page header shows the
- * position too. forget() is for Lock: a click still in flight must not write the key back.
+ * The current card, remembered per set by its key, so a re-sync that adds cards keeps him on the
+ * same card. It lives in a hook because the page header shows the position too. forget() is for
+ * Lock: a click still in flight must not write the key back.
  */
-export function useDeckPosition(slug: string, deckLength: number) {
+export function useDeckPosition(slug: string, deck: DeckCard[]) {
   const [stored, setStored] = useState(() => readCard(slug));
   const forgotten = useRef(false);
 
   const goTo = useCallback(
     (next: number) => {
-      const index = clampCardIndex(next, deckLength);
-      setStored(index);
-      if (!forgotten.current) writeCard(slug, index);
+      const card = deck[next];
+      if (!card) return;
+      setStored(card.key);
+      if (!forgotten.current) writeCard(slug, card.key);
     },
-    [slug, deckLength],
+    [slug, deck],
   );
 
   const forget = useCallback(() => {
@@ -59,7 +61,7 @@ export function useDeckPosition(slug: string, deckLength: number) {
     clearCard(slug);
   }, [slug]);
 
-  return { index: clampCardIndex(stored, deckLength), goTo, forget };
+  return { index: findCardIndex(deck, stored), goTo, forget };
 }
 
 const TYPING = 'input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"]';
@@ -96,6 +98,8 @@ export function Deck({
   // Holds the key of the flipped card, so leaving a card always brings it back to its front.
   const [flippedKey, setFlippedKey] = useState<string | null>(null);
   const flipped = flippedKey === card.key;
+  // The card reached from the finish card's review list. Any other navigation clears it.
+  const [reviewKey, setReviewKey] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   // Set by a user action: restoring the remembered card on load must not steal focus.
   const moved = useRef(false);
@@ -105,10 +109,16 @@ export function Deck({
       if (next < 0 || next >= total || next === index) return;
       moved.current = true;
       setFlippedKey(null);
+      setReviewKey(null);
       onNavigate(next);
     },
     [index, total, onNavigate],
   );
+
+  const jumpToReview = (next: number) => {
+    go(next);
+    setReviewKey(deck[next].key);
+  };
 
   const flip = useCallback(() => {
     moved.current = true;
@@ -124,12 +134,13 @@ export function Deck({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      // A held key repeats: it must not skip cards or flicker a flip.
+      if (e.repeat || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
       if (matches(e.target, TYPING)) return;
       if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
         e.preventDefault();
         go(index + (e.key === "ArrowRight" ? 1 : -1));
-      } else if (e.key === " " && card.kind === "problem" && !e.repeat && !matches(e.target, INTERACTIVE)) {
+      } else if (e.key === " " && card.kind === "problem" && !matches(e.target, INTERACTIVE)) {
         e.preventDefault();
         flip();
       }
@@ -161,10 +172,17 @@ export function Deck({
         >
           {card.kind === "intro" && <IntroCard key={card.key} title={card.title} items={card.items} />}
           {card.kind === "concept" && <ConceptCard key={card.key} title={card.title} body={card.body} />}
+          {reviewKey === card.key && (
+            <Button variant="outline" className="mb-3 h-11 px-3" onClick={() => go(total - 1)}>
+              <ArrowLeft aria-hidden />
+              Back to review list
+            </Button>
+          )}
           {card.kind === "problem" && (
             <ProblemCard
               key={card.key}
               m={card.module}
+              setup={card.setup}
               entry={entries[card.module.id]}
               flipped={flipped}
               onFlip={flip}
@@ -172,7 +190,7 @@ export function Deck({
               onStatus={(s) => onStatus(card.module.id, s)}
             />
           )}
-          {card.kind === "finish" && <FinishCard key={card.key} deck={deck} entries={entries} onJump={go} exportPanel={exportPanel} />}
+          {card.kind === "finish" && <FinishCard key={card.key} deck={deck} entries={entries} onFirst={() => go(0)} onReview={jumpToReview} exportPanel={exportPanel} />}
         </div>
       </div>
 
@@ -229,6 +247,7 @@ function ConceptCard({ title, body }: { title: string; body: string[] }) {
 
 function ProblemCard({
   m,
+  setup,
   entry,
   flipped,
   onFlip,
@@ -236,6 +255,7 @@ function ProblemCard({
   onStatus,
 }: {
   m: HomeworkModule;
+  setup: string[];
   entry: DeckEntry | undefined;
   flipped: boolean;
   onFlip: () => void;
@@ -246,18 +266,22 @@ function ProblemCard({
     <>
       {/* The key swaps and fades only this side. The answer box below stays mounted across a flip. */}
       <div key={flipped ? "back" : "front"} className={FADE}>
-        {flipped ? <ProblemBack m={m} status={entry?.status ?? null} onFlip={onFlip} onStatus={onStatus} /> : <ProblemFront m={m} onFlip={onFlip} />}
+        {flipped ? <ProblemBack m={m} setup={setup} status={entry?.status ?? null} onFlip={onFlip} onStatus={onStatus} /> : <ProblemFront m={m} setup={setup} onFlip={onFlip} />}
       </div>
       <AnswerBox id={m.id} answer={entry?.answer ?? ""} onAnswer={onAnswer} />
     </>
   );
 }
 
-function ProblemFront({ m, onFlip }: { m: HomeworkModule; onFlip: () => void }) {
+function ProblemFront({ m, setup, onFlip }: { m: HomeworkModule; setup: string[]; onFlip: () => void }) {
   return (
     <>
       <p className={LABEL}>Question {m.id}</p>
-      {m.ctx && <p className="mt-2 text-sm text-muted-foreground [overflow-wrap:anywhere]">{m.ctx}</p>}
+      {setup.map((text, i) => (
+        <p key={i} data-testid="card-setup" className="mt-2 text-sm text-muted-foreground [overflow-wrap:anywhere]">
+          {text}
+        </p>
+      ))}
       <p className="mt-2 whitespace-pre-line [overflow-wrap:anywhere]">{m.q}</p>
       {m.nudge && (
         <details className="mt-3 border-t border-border pt-2">
@@ -274,11 +298,13 @@ function ProblemFront({ m, onFlip }: { m: HomeworkModule; onFlip: () => void }) 
 
 function ProblemBack({
   m,
+  setup,
   status,
   onFlip,
   onStatus,
 }: {
   m: HomeworkModule;
+  setup: string[];
   status: HomeworkStatus | null;
   onFlip: () => void;
   onStatus: (status: HomeworkStatus) => void;
@@ -287,8 +313,12 @@ function ProblemBack({
     <>
       <p className={LABEL}>Question {m.id}</p>
       <div className="mt-2 border-l-2 border-(--course) pl-3 text-sm text-muted-foreground">
-        {m.ctx && <p className="mb-1 [overflow-wrap:anywhere]">{m.ctx}</p>}
-        <p className="whitespace-pre-line [overflow-wrap:anywhere]">{m.q}</p>
+        {setup.map((text, i) => (
+          <p key={i} data-testid="card-setup" className="mb-1 [overflow-wrap:anywhere]">
+            {text}
+          </p>
+        ))}
+        <p className="whitespace-pre-line text-foreground [overflow-wrap:anywhere]">{m.q}</p>
       </div>
 
       {m.steps && (
@@ -389,12 +419,14 @@ function AnswerBox({ id, answer, onAnswer }: { id: string; answer: string; onAns
 function FinishCard({
   deck,
   entries,
-  onJump,
+  onFirst,
+  onReview,
   exportPanel,
 }: {
   deck: DeckCard[];
   entries: Record<string, DeckEntry | undefined>;
-  onJump: (index: number) => void;
+  onFirst: () => void;
+  onReview: (index: number) => void;
   exportPanel: ReactNode;
 }) {
   const problems = deck.flatMap((card, index) => (card.kind === "problem" ? [{ m: card.module, index }] : []));
@@ -426,7 +458,7 @@ function FinishCard({
             <li key={m.id}>
               <button
                 type="button"
-                onClick={() => onJump(index)}
+                onClick={() => onReview(index)}
                 className="flex min-h-11 w-full min-w-0 items-center gap-3 rounded-lg border border-border bg-background px-3 py-2 text-left text-sm transition-colors hover:bg-muted focus-visible:border-ring focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 <span className="shrink-0 font-mono text-xs font-semibold text-(--course)">{m.id}</span>
@@ -437,7 +469,7 @@ function FinishCard({
         </ul>
       )}
 
-      <Button variant="outline" className="mt-4 h-11 px-3" onClick={() => onJump(0)}>
+      <Button variant="outline" className="mt-4 h-11 px-3" onClick={onFirst}>
         <RotateCcw aria-hidden />
         Back to first card
       </Button>

@@ -91,15 +91,19 @@ Pages: `/` dashboard, `/course/econ-106f` course page, `/lesson/econ106f-class3`
 `/homework/<slug>` is a flashcard deck for one problem set, one card at a time. The deck opens
 with an intro card when the banner has items, puts each module's concept card right before its
 problem card, and ends on a finish card. The arrow buttons, in a bar stuck to the bottom of the
-screen, or the Left and Right keys move between cards; the page remembers the current card per
-set in localStorage.
+screen, or the Left and Right keys move between cards. The page remembers the current card's key
+per set in localStorage, so a re-sync that adds cards keeps him on the same card; a key that no
+longer exists means the first card.
 
-A problem card's front shows the question and an optional nudge. "Show how to solve it" (or
-Space) flips it to a recap of the question, the numbered steps, the sample answer, the lecture
-pointer, and a "Got it" / "Needs review" mark. Both sides have a collapsed "My answer (optional)"
-box, and leaving it empty blocks nothing. Answers autosave to Supabase and are mirrored to
-localStorage. The finish card counts the marks, links to each card marked "Needs review", and
-has "Copy my answers", which exports only what he typed.
+A problem card's front shows its setup, the question and an optional nudge. The setup is every
+distinct `ctx` so far in the question group, which is the leading digits of the module id, so
+"4g" also shows the setup from "4a". "Show how to solve it" (or Space) flips it to a recap of the
+setup and question, the numbered steps, the sample answer, the lecture pointer, and a "Got it" /
+"Needs review" mark. Both sides have a collapsed "My answer (optional)" box, and leaving it empty
+blocks nothing. Answers autosave to Supabase and are mirrored to localStorage. The finish card
+counts the marks, links to each card marked "Needs review", and has "Copy my answers", which
+exports only what he typed. A card opened from that list has a "Back to review list" button until
+he navigates some other way.
 
 Two module fields feed the deck. Both are optional, so sets stored before it still load.
 `concept` (`{title, body[]}`, with body strings in the `components/Md.tsx` markdown subset) makes

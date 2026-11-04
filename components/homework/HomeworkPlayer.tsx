@@ -111,7 +111,7 @@ export function HomeworkPlayer(props: Props) {
 function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: Props) {
   const modules = spec.modules;
   const deck = useMemo(() => buildDeck(spec), [spec]);
-  const position = useDeckPosition(slug, deck.length);
+  const position = useDeckPosition(slug, deck);
   const [init] = useState(() => initialEntries(slug, modules, answers));
   const [entries, setEntries] = useState<Entries>(init.entries);
   const [sync, setSync] = useState<Record<string, Sync>>({});

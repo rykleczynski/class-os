@@ -1,10 +1,11 @@
 /**
  * Homework deck tests: the spec accepts old and new shapes and rejects malformed new fields,
- * the deck comes out in the right order, and a remembered index clamps. All content is invented.
+ * the deck comes out in the right order, setup accumulates per question group, and a remembered
+ * card key resolves. All content is invented.
  * Usage: npm run test:homework
  */
 import assert from "node:assert/strict";
-import { buildDeck, clampCardIndex } from "../lib/homework-deck";
+import { buildDeck, findCardIndex } from "../lib/homework-deck";
 import { homeworkFileSchema, homeworkModuleSchema, homeworkSpecSchema, type HomeworkModule, type HomeworkSpec } from "../lib/homework-spec";
 
 let failed = 0;
@@ -84,23 +85,82 @@ test("deck: keys are unique and stable, even for a module id that looks like a c
   assert.deepEqual(keys, buildDeck(s).map((c) => c.key));
 });
 
-test("clamp: in-range values pass through", () => {
-  assert.equal(clampCardIndex(0, 5), 0);
-  assert.equal(clampCardIndex(4, 5), 4);
+/** Setup per problem card, keyed by module id. */
+const setups = (modules: HomeworkModule[]) =>
+  Object.fromEntries(buildDeck(spec(modules)).flatMap((c) => (c.kind === "problem" ? [[c.module.id, c.setup]] : [])));
+const withCtx = (id: string, ctx?: string): HomeworkModule => ({ ...oldModule(id), ...(ctx ? { ctx } : {}) });
+
+test("setup: sub-questions accumulate their group's ctx in order, including their own", () => {
+  assert.deepEqual(setups([withCtx("3a", "Stand opens."), withCtx("3b", "Rain starts."), withCtx("3c", "Stand closes.")]), {
+    "3a": ["Stand opens."],
+    "3b": ["Stand opens.", "Rain starts."],
+    "3c": ["Stand opens.", "Rain starts.", "Stand closes."],
+  });
 });
 
-test("clamp: out-of-range values land on the nearest end", () => {
-  assert.equal(clampCardIndex(-3, 5), 0);
-  assert.equal(clampCardIndex(5, 5), 4);
-  assert.equal(clampCardIndex(999, 5), 4);
+test("setup: a card with no ctx inherits, and a first card with none is empty", () => {
+  assert.deepEqual(setups([withCtx("1a"), withCtx("1b", "Prices rise."), withCtx("1c")]), {
+    "1a": [],
+    "1b": ["Prices rise."],
+    "1c": ["Prices rise."],
+  });
 });
 
-test("clamp: junk means the first card", () => {
-  assert.equal(clampCardIndex(Number.NaN, 5), 0);
-  assert.equal(clampCardIndex(Number("not a number"), 5), 0);
-  assert.equal(clampCardIndex(Number.POSITIVE_INFINITY, 5), 0);
-  assert.equal(clampCardIndex(2.7, 5), 2);
-  assert.equal(clampCardIndex(3, 0), 0);
+test("setup: resets when the group changes", () => {
+  assert.deepEqual(setups([withCtx("1a", "First stand."), withCtx("2a"), withCtx("2b", "Second stand."), withCtx("3")]), {
+    "1a": ["First stand."],
+    "2a": [],
+    "2b": ["Second stand."],
+    "3": [],
+  });
+});
+
+test("setup: an identical string is not repeated", () => {
+  assert.deepEqual(setups([withCtx("1a", "Same."), withCtx("1b", "Other."), withCtx("1c", "Same.")]), {
+    "1a": ["Same."],
+    "1b": ["Same.", "Other."],
+    "1c": ["Same.", "Other."],
+  });
+});
+
+test("setup: the group is all the leading digits", () => {
+  assert.deepEqual(setups([withCtx("1", "One."), withCtx("12", "Twelve."), withCtx("12b"), withCtx("4b-1", "Four."), withCtx("4g")]), {
+    "1": ["One."],
+    "12": ["Twelve."],
+    "12b": ["Twelve."],
+    "4b-1": ["Four."],
+    "4g": ["Four."],
+  });
+});
+
+test("setup: an id with no leading digits is its own group", () => {
+  assert.deepEqual(setups([withCtx("bonus", "Extra."), withCtx("extra")]), { bonus: ["Extra."], extra: [] });
+});
+
+test("setup: a concept card in between changes nothing", () => {
+  assert.deepEqual(setups([withCtx("1a", "Setup."), { ...withCtx("1b"), concept }]), { "1a": ["Setup."], "1b": ["Setup."] });
+});
+
+test("lookup: finds a card by its key", () => {
+  const deck = buildDeck(spec([{ ...oldModule("1"), concept }, oldModule("2")], ["Note."]));
+  assert.equal(findCardIndex(deck, "intro"), 0);
+  assert.equal(findCardIndex(deck, "concept:1"), 1);
+  assert.equal(findCardIndex(deck, "problem:2"), 3);
+  assert.equal(findCardIndex(deck, "finish"), 4);
+});
+
+test("lookup: a re-sync that adds cards keeps the same card", () => {
+  const before = buildDeck(spec([oldModule("1"), oldModule("2")]));
+  const after = buildDeck(spec([{ ...oldModule("1"), concept }, oldModule("2")], ["Note."]));
+  const key = before[1].key;
+  assert.equal(findCardIndex(before, key), 1);
+  assert.equal(findCardIndex(after, key), 3);
+  assert.equal(after[3].key, key);
+});
+
+test("lookup: a missing, removed or junk key means the first card", () => {
+  const deck = buildDeck(spec([oldModule("1")], ["Note."]));
+  for (const key of [null, "", "problem:gone", "3", "banana"]) assert.equal(findCardIndex(deck, key), 0, String(key));
 });
 
 if (failed > 0) {
