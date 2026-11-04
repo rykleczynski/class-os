@@ -1,0 +1,170 @@
+/**
+ * Homework deck tests: the spec accepts old and new shapes and rejects malformed new fields,
+ * the deck comes out in the right order, setup accumulates per question group, and a remembered
+ * card key resolves. All content is invented.
+ * Usage: npm run test:homework
+ */
+import assert from "node:assert/strict";
+import { buildDeck, findCardIndex } from "../lib/homework-deck";
+import { homeworkFileSchema, homeworkModuleSchema, homeworkSpecSchema, type HomeworkModule, type HomeworkSpec } from "../lib/homework-spec";
+
+let failed = 0;
+function test(name: string, fn: () => void) {
+  try {
+    fn();
+    console.log(`PASS ${name}`);
+  } catch (e) {
+    failed++;
+    console.log(`FAIL ${name}\n  ${e instanceof Error ? e.message : String(e)}`);
+  }
+}
+
+const oldModule = (id: string): HomeworkModule => ({ id, q: `How many cups in round ${id}?`, ptr: "Made-up lecture 1.", nudge: null, s: ["Twelve cups.", "~6 * 2\n~= 12"] });
+const concept = { title: "Margins", body: ["A **margin** is price minus cost."] };
+const spec = (modules: HomeworkModule[], items: string[] = []): HomeworkSpec => ({ banner: { title: "Read first", items }, modules });
+const kinds = (s: HomeworkSpec) => buildDeck(s).map((c) => c.kind);
+
+test("an old-shape spec still validates", () => {
+  const parsed = homeworkSpecSchema.parse(spec([oldModule("1a"), { ...oldModule("1b"), ctx: "Shared setup.", nudge: "Think small." }]));
+  assert.equal(parsed.modules[0].concept, undefined);
+  assert.equal(parsed.modules[0].steps, undefined);
+});
+
+test("an old-shape file still validates", () => {
+  const file = { slug: "made-up-set", courseCode: "ECON 1", title: "Made up", dueAt: null, spec: spec([oldModule("1")]) };
+  assert.equal(homeworkFileSchema.safeParse(file).success, true);
+});
+
+test("concept and steps validate and survive parsing", () => {
+  const parsed = homeworkModuleSchema.parse({ ...oldModule("1"), concept, steps: ["Subtract.", "Multiply."] });
+  assert.deepEqual(parsed.concept, concept);
+  assert.deepEqual(parsed.steps, ["Subtract.", "Multiply."]);
+});
+
+const malformed: Array<[string, Record<string, unknown>]> = [
+  ["concept with an empty title", { concept: { title: "", body: ["Text."] } }],
+  ["concept with no title", { concept: { body: ["Text."] } }],
+  ["concept with an empty body", { concept: { title: "T", body: [] } }],
+  ["concept with an empty body string", { concept: { title: "T", body: [""] } }],
+  ["concept body that is a string", { concept: { title: "T", body: "Text." } }],
+  ["concept that is null", { concept: null }],
+  ["empty steps", { steps: [] }],
+  ["an empty step", { steps: ["Fine.", ""] }],
+  ["steps that are a string", { steps: "Do it." }],
+  ["a non-string step", { steps: [1] }],
+];
+for (const [name, patch] of malformed) {
+  test(`rejects ${name}`, () => {
+    assert.equal(homeworkModuleSchema.safeParse({ ...oldModule("1"), ...patch }).success, false);
+  });
+}
+
+test("deck: problems then finish, with no banner items or concepts", () => {
+  assert.deepEqual(kinds(spec([oldModule("1"), oldModule("2")])), ["problem", "problem", "finish"]);
+});
+
+test("deck: intro comes first when the banner has items", () => {
+  const deck = buildDeck(spec([oldModule("1")], ["Round to **two** decimals."]));
+  assert.deepEqual(deck.map((c) => c.kind), ["intro", "problem", "finish"]);
+  assert.deepEqual(deck[0], { kind: "intro", key: "intro", title: "Read first", items: ["Round to **two** decimals."] });
+});
+
+test("deck: a concept sits right before its own module only", () => {
+  const deck = buildDeck(spec([oldModule("1"), { ...oldModule("2"), concept }, oldModule("3")], ["Note."]));
+  assert.deepEqual(deck.map((c) => c.key), ["intro", "problem:1", "concept:2", "problem:2", "problem:3", "finish"]);
+  const card = deck[2];
+  assert.ok(card.kind === "concept");
+  assert.equal(card.title, concept.title);
+  assert.deepEqual(card.body, concept.body);
+});
+
+test("deck: keys are unique and stable, even for a module id that looks like a card kind", () => {
+  const s = spec([{ ...oldModule("intro"), concept }, oldModule("finish")], ["Note."]);
+  const keys = buildDeck(s).map((c) => c.key);
+  assert.equal(new Set(keys).size, keys.length);
+  assert.deepEqual(keys, buildDeck(s).map((c) => c.key));
+});
+
+/** Setup per problem card, keyed by module id. */
+const setups = (modules: HomeworkModule[]) =>
+  Object.fromEntries(buildDeck(spec(modules)).flatMap((c) => (c.kind === "problem" ? [[c.module.id, c.setup]] : [])));
+const withCtx = (id: string, ctx?: string): HomeworkModule => ({ ...oldModule(id), ...(ctx ? { ctx } : {}) });
+
+test("setup: sub-questions accumulate their group's ctx in order, including their own", () => {
+  assert.deepEqual(setups([withCtx("3a", "Stand opens."), withCtx("3b", "Rain starts."), withCtx("3c", "Stand closes.")]), {
+    "3a": ["Stand opens."],
+    "3b": ["Stand opens.", "Rain starts."],
+    "3c": ["Stand opens.", "Rain starts.", "Stand closes."],
+  });
+});
+
+test("setup: a card with no ctx inherits, and a first card with none is empty", () => {
+  assert.deepEqual(setups([withCtx("1a"), withCtx("1b", "Prices rise."), withCtx("1c")]), {
+    "1a": [],
+    "1b": ["Prices rise."],
+    "1c": ["Prices rise."],
+  });
+});
+
+test("setup: resets when the group changes", () => {
+  assert.deepEqual(setups([withCtx("1a", "First stand."), withCtx("2a"), withCtx("2b", "Second stand."), withCtx("3")]), {
+    "1a": ["First stand."],
+    "2a": [],
+    "2b": ["Second stand."],
+    "3": [],
+  });
+});
+
+test("setup: an identical string is not repeated", () => {
+  assert.deepEqual(setups([withCtx("1a", "Same."), withCtx("1b", "Other."), withCtx("1c", "Same.")]), {
+    "1a": ["Same."],
+    "1b": ["Same.", "Other."],
+    "1c": ["Same.", "Other."],
+  });
+});
+
+test("setup: the group is all the leading digits", () => {
+  assert.deepEqual(setups([withCtx("1", "One."), withCtx("12", "Twelve."), withCtx("12b"), withCtx("4b-1", "Four."), withCtx("4g")]), {
+    "1": ["One."],
+    "12": ["Twelve."],
+    "12b": ["Twelve."],
+    "4b-1": ["Four."],
+    "4g": ["Four."],
+  });
+});
+
+test("setup: an id with no leading digits is its own group", () => {
+  assert.deepEqual(setups([withCtx("bonus", "Extra."), withCtx("extra")]), { bonus: ["Extra."], extra: [] });
+});
+
+test("setup: a concept card in between changes nothing", () => {
+  assert.deepEqual(setups([withCtx("1a", "Setup."), { ...withCtx("1b"), concept }]), { "1a": ["Setup."], "1b": ["Setup."] });
+});
+
+test("lookup: finds a card by its key", () => {
+  const deck = buildDeck(spec([{ ...oldModule("1"), concept }, oldModule("2")], ["Note."]));
+  assert.equal(findCardIndex(deck, "intro"), 0);
+  assert.equal(findCardIndex(deck, "concept:1"), 1);
+  assert.equal(findCardIndex(deck, "problem:2"), 3);
+  assert.equal(findCardIndex(deck, "finish"), 4);
+});
+
+test("lookup: a re-sync that adds cards keeps the same card", () => {
+  const before = buildDeck(spec([oldModule("1"), oldModule("2")]));
+  const after = buildDeck(spec([{ ...oldModule("1"), concept }, oldModule("2")], ["Note."]));
+  const key = before[1].key;
+  assert.equal(findCardIndex(before, key), 1);
+  assert.equal(findCardIndex(after, key), 3);
+  assert.equal(after[3].key, key);
+});
+
+test("lookup: a missing, removed or junk key means the first card", () => {
+  const deck = buildDeck(spec([oldModule("1")], ["Note."]));
+  for (const key of [null, "", "problem:gone", "3", "banana"]) assert.equal(findCardIndex(deck, key), 0, String(key));
+});
+
+if (failed > 0) {
+  console.log(`\n${failed} failed`);
+  process.exit(1);
+}
+console.log("\nAll homework deck tests passed.");

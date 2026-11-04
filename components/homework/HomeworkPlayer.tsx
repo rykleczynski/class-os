@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { ArrowLeft, Copy, Lock } from "lucide-react";
-import { Md } from "@/components/Md";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useMounted } from "@/components/blocks/shared";
+import { Deck, useDeckPosition } from "@/components/homework/Deck";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { courseStyle } from "@/lib/course-theme";
 import { lockHomework, saveAnswer } from "@/lib/homework-actions";
+import { buildDeck } from "@/lib/homework-deck";
 import type { HomeworkModule, HomeworkSpec, HomeworkStatus } from "@/lib/homework-spec";
 
 type Props = {
@@ -110,6 +110,8 @@ export function HomeworkPlayer(props: Props) {
 
 function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: Props) {
   const modules = spec.modules;
+  const deck = useMemo(() => buildDeck(spec), [spec]);
+  const position = useDeckPosition(slug, deck);
   const [init] = useState(() => initialEntries(slug, modules, answers));
   const [entries, setEntries] = useState<Entries>(init.entries);
   const [sync, setSync] = useState<Record<string, Sync>>({});
@@ -189,6 +191,7 @@ function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: P
       for (const timer of timers.current.values()) clearTimeout(timer); // no retry may rewrite drafts
       timers.current.clear();
       clearDrafts(slug);
+      position.forget();
       await lockHomework(slug); // deleting the cookie re-renders the page as the passcode form
     });
 
@@ -209,7 +212,7 @@ function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: P
   const due = formatDue(dueAt);
 
   return (
-    <div className="min-h-dvh bg-background text-foreground" style={courseStyle(courseSlug)}>
+    <div className="flex min-h-dvh flex-col bg-background text-foreground" style={courseStyle(courseSlug)}>
       <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto max-w-3xl px-4 py-3">
           <div className="flex items-center gap-3">
@@ -226,8 +229,16 @@ function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: P
               Lock
             </Button>
           </div>
-          <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted" role="progressbar" aria-label="Questions marked Got it" aria-valuemin={0} aria-valuemax={n} aria-valuenow={got}>
-            <div className="h-full bg-good transition-[width] duration-300 motion-reduce:transition-none" style={{ width: `${(100 * got) / n}%` }} />
+          <div
+            className="mt-2 h-2 overflow-hidden rounded-full bg-muted"
+            role="progressbar"
+            aria-label="Position in the deck"
+            aria-valuemin={1}
+            aria-valuemax={deck.length}
+            aria-valuenow={position.index + 1}
+            aria-valuetext={`Card ${position.index + 1} of ${deck.length}`}
+          >
+            <div className="h-full bg-(--course) transition-[width] duration-300 motion-reduce:transition-none" style={{ width: `${(100 * (position.index + 1)) / deck.length}%` }} />
           </div>
           <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs tabular-nums text-muted-foreground">
             <span>{answered} answered</span>
@@ -243,139 +254,18 @@ function Player({ slug, title, dueAt, courseCode, courseSlug, spec, answers }: P
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl space-y-4 px-4 pb-24 pt-5">
-        {spec.banner.items.length > 0 && (
-          <aside role="note" className="rounded-2xl border border-warn/40 bg-warn-soft p-4 text-sm">
-            <p className="font-semibold text-warn">{spec.banner.title}</p>
-            <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              {spec.banner.items.map((item, i) => (
-                <li key={i}>
-                  <Md text={item} />
-                </li>
-              ))}
-            </ul>
-          </aside>
-        )}
-
-        {modules.map((m) => (
-          <ModuleCard
-            key={m.id}
-            m={m}
-            entry={entries[m.id]}
-            onAnswer={(answer) => update(m.id, { answer })}
-            onStatus={(status) => update(m.id, { status: entries[m.id]?.status === status ? null : status })}
-          />
-        ))}
-
-        <ExportPanel getText={() => exportText(modules, entriesRef.current)} />
+      <main className="flex min-w-0 flex-1 flex-col">
+        <Deck
+          deck={deck}
+          index={position.index}
+          onNavigate={position.goTo}
+          entries={entries}
+          onAnswer={(id, answer) => update(id, { answer })}
+          onStatus={(id, status) => update(id, { status: entries[id]?.status === status ? null : status })}
+          exportPanel={<ExportPanel getText={() => exportText(modules, entriesRef.current)} />}
+        />
       </main>
     </div>
-  );
-}
-
-function ModuleCard({
-  m,
-  entry,
-  onAnswer,
-  onStatus,
-}: {
-  m: HomeworkModule;
-  entry: Entry | undefined;
-  onAnswer: (answer: string) => void;
-  onStatus: (status: HomeworkStatus) => void;
-}) {
-  const [showSample, setShowSample] = useState(false);
-  const answer = entry?.answer ?? "";
-  const status = entry?.status ?? null;
-  const hasAnswer = answer.trim().length > 0;
-  const sampleVisible = showSample && hasAnswer;
-  const taId = `ans-${m.id}`;
-
-  return (
-    <section
-      id={`q${m.id}`}
-      aria-labelledby={`${taId}-label`}
-      className={cn(
-        "min-w-0 rounded-2xl border bg-card p-4 shadow-soft sm:p-5",
-        status === "got" ? "border-good" : status === "review" ? "border-warn" : "border-border",
-      )}
-    >
-      <p id={`${taId}-label`} className="font-mono text-xs font-semibold uppercase tracking-wider text-(--course)">
-        Question {m.id}
-      </p>
-      {m.ctx && <p className="mt-2 text-sm text-muted-foreground [overflow-wrap:anywhere]">{m.ctx}</p>}
-      <p className="mt-2 whitespace-pre-line [overflow-wrap:anywhere]">{m.q}</p>
-
-      <details className="mt-3 border-t border-border pt-2">
-        <summary className="cursor-pointer text-sm font-semibold text-muted-foreground">Lecture pointer</summary>
-        <p className="mt-1.5 text-sm [overflow-wrap:anywhere]">{m.ptr}</p>
-      </details>
-      {m.nudge && (
-        <details className="mt-2 border-t border-border pt-2">
-          <summary className="cursor-pointer text-sm font-semibold text-muted-foreground">Nudge</summary>
-          <p className="mt-1.5 text-sm [overflow-wrap:anywhere]">{m.nudge}</p>
-        </details>
-      )}
-
-      <textarea
-        id={taId}
-        value={answer}
-        onChange={(e) => onAnswer(e.target.value)}
-        maxLength={20000}
-        aria-label={`Your answer to question ${m.id}`}
-        placeholder="Write your own answer here before looking at the sample."
-        className="mt-3 min-h-32 w-full resize-y rounded-xl border border-border bg-background p-3 text-sm leading-relaxed outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-      />
-
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        <Button size="lg" disabled={!hasAnswer} aria-expanded={sampleVisible} onClick={() => setShowSample((v) => !v)}>
-          {sampleVisible ? "Hide sample answer" : "Show sample answer"}
-        </Button>
-        {!hasAnswer && <span className="text-xs text-muted-foreground">Type an answer to unlock the sample.</span>}
-        <div className="ml-auto inline-flex" role="group" aria-label={`Mark question ${m.id}`}>
-          <button
-            type="button"
-            aria-pressed={status === "got"}
-            onClick={() => onStatus("got")}
-            className={cn(
-              "h-9 rounded-l-lg border px-3 text-sm font-medium transition-colors",
-              status === "got" ? "border-good bg-good-soft text-good" : "border-border bg-background hover:bg-muted",
-            )}
-          >
-            Got it
-          </button>
-          <button
-            type="button"
-            aria-pressed={status === "review"}
-            onClick={() => onStatus("review")}
-            className={cn(
-              "-ml-px h-9 rounded-r-lg border px-3 text-sm font-medium transition-colors",
-              status === "review" ? "border-warn bg-warn-soft text-warn" : "border-border bg-background hover:bg-muted",
-            )}
-          >
-            Needs review
-          </button>
-        </div>
-      </div>
-
-      {sampleVisible && (
-        <div className="mt-3 rounded-xl bg-muted p-3 text-sm">
-          <p className="font-mono text-[0.7rem] uppercase tracking-wider text-muted-foreground">Sample answer</p>
-          {m.s.map((p, i) =>
-            p.startsWith("~") ? (
-              <pre key={i} className="mt-2 whitespace-pre-wrap break-words font-mono text-xs leading-relaxed">
-                {/* Continuation lines may repeat the "~" marker; it is never part of the math. */}
-                {p.slice(1).replace(/^~/gm, "")}
-              </pre>
-            ) : (
-              <p key={i} className="mt-2 whitespace-pre-line [overflow-wrap:anywhere]">
-                {p}
-              </p>
-            ),
-          )}
-        </div>
-      )}
-    </section>
   );
 }
 

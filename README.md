@@ -88,10 +88,27 @@ Pages: `/` dashboard, `/course/econ-106f` course page, `/lesson/econ106f-class3`
 
 ## Homework (passcode-gated)
 
-`/homework/<slug>` is a study page for one problem set: each sub-question has a box for
-Ryan's own answer, a lecture pointer, an optional nudge, a sample answer that unlocks once
-something is typed, and a "Got it" / "Needs review" mark. Answers autosave to Supabase and are
-mirrored to localStorage. "Copy my answers" exports only what he typed.
+`/homework/<slug>` is a flashcard deck for one problem set, one card at a time. The deck opens
+with an intro card when the banner has items, puts each module's concept card right before its
+problem card, and ends on a finish card. The arrow buttons, in a bar stuck to the bottom of the
+screen, or the Left and Right keys move between cards. The page remembers the current card's key
+per set in localStorage, so a re-sync that adds cards keeps him on the same card; a key that no
+longer exists means the first card.
+
+A problem card's front shows its setup, the question and an optional nudge. The setup is every
+distinct `ctx` so far in the question group, which is the leading digits of the module id, so
+"4g" also shows the setup from "4a". "Show how to solve it" (or Space) flips it to a recap of the
+setup and question, the numbered steps, the sample answer, the lecture pointer, and a "Got it" /
+"Needs review" mark. Both sides have a collapsed "My answer (optional)" box, and leaving it empty
+blocks nothing. Answers autosave to Supabase and are mirrored to localStorage. The finish card
+counts the marks, links to each card marked "Needs review", and has "Copy my answers", which
+exports only what he typed. A card opened from that list has a "Back to review list" button until
+he navigates some other way.
+
+Two module fields feed the deck. Both are optional, so sets stored before it still load.
+`concept` (`{title, body[]}`, with body strings in the `components/Md.tsx` markdown subset) makes
+the concept card. `steps` (`string[]`, plain text) fills "How to do it"; without it the section
+is left out. `lib/homework-deck.ts` builds the card order and `npm run test:homework` checks it.
 
 Problem sets are copyrighted and the repo is public, so the problem text and sample answers
 never go in git and are never served without the passcode. The content file lives in the
@@ -100,7 +117,7 @@ checked by `lib/homework-spec.ts`). `supabase/migrations/0003_homework.sql` adds
 `homework_sets` and `homework_answers` with RLS on and no grants for anon, plus two
 passcode-checked RPCs (`homework_get`, `homework_save`) that the app calls with the
 publishable key. The passcode sits in an httpOnly cookie scoped to `/homework/<slug>` for 90
-days; Lock deletes it and clears the local drafts. The page is noindex.
+days; Lock deletes it and clears the local drafts and the remembered card. The page is noindex.
 
 Setup: apply `0003_homework.sql`, then upload through the service-role-only `homework_upsert` RPC:
 

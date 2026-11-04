@@ -4,6 +4,8 @@ import { z } from "zod";
  * The homework contract, shared by the page (lib/homework.ts) and the upload script
  * (scripts/homework-sync.ts). It holds no content: problem text and sample answers
  * live in Supabase and in the gitignored content/homework/ directory only.
+ * `concept` and `steps` are optional, so sets stored before the flashcard deck still validate.
+ * lib/homework-deck.ts turns a spec into the ordered cards the page shows.
  */
 export const homeworkModuleSchema = z.object({
   /** Sub-question id, e.g. "4d". Also the key for saved answers. */
@@ -16,6 +18,15 @@ export const homeworkModuleSchema = z.object({
   nudge: z.string().min(1).nullable(),
   /** Sample answer paragraphs. A string starting with "~" is a monospace derivation; newlines are kept. */
   s: z.array(z.string().min(1)).min(1),
+  /** Teaching text, shown as its own card right before this module's card. Body strings are markdown for components/Md.tsx. */
+  concept: z
+    .object({
+      title: z.string().min(1),
+      body: z.array(z.string().min(1)).min(1),
+    })
+    .optional(),
+  /** Numbered how-to-solve steps, shown on the back of the card. Plain text, like `s`. */
+  steps: z.array(z.string().min(1)).min(1).optional(),
 });
 
 export const homeworkSpecSchema = z
